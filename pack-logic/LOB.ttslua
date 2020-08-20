@@ -75,9 +75,11 @@ function assemblePack(cardsMap)
 
     -- generates one more than needed for possible 9th card
     local commonsSequence = Math:randomSequence(8, cardsMap[COMMON].count)
+    
     -- 7 commons
     for i = 1, 7 do
-        pack[i] = cardsMap[COMMON][i]
+        local commonIndex = commonsSequence[i]
+        pack[i] = cardsMap[COMMON][commonIndex]
     end
 
     -- guaranteed 1 rare
