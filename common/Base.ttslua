@@ -1,5 +1,6 @@
 #include <Spawner>
 #include <CardParser>
+#include <Math>
 
 -- We are using a third party JSON library because the native JSON deserialization of TTS is very slow
 -- Benchmark of 10 decode calls for one booster set: library = ~15sec, native = ~300s
@@ -30,36 +31,4 @@ end
 -- Prints a warning to all players
 function warning(str)
     printToAll(str, Color.fromString("yellow"))
-end
-
--- Returns a number between [0, 1)
-function randomFloat()
-    return math.random()
-end
-
--- Return an integer between [1, max]
-function randomInt(max)
-    return math.random(max)
-end
-
--- Return a sequence of n numbers with distinct and unordered values between [1, max]
-function randomSequence(n, max)
-    if n > max then
-        error( string.format("randomSequence(): n %d is larger than max %d", n, max))
-    end
-
-    local sequence = {}
-    local count = 0
-    local taken = {}
-
-    while count < n do
-        local num = randomInt(max)
-        if taken[num] ~= true then
-            taken[num] = true
-            table.insert(sequence, num)
-            count = count + 1
-        end
-    end
-
-    return sequence
 end

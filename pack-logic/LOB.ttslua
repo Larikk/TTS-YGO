@@ -74,14 +74,14 @@ function assemblePack(cardsMap)
     local pack = {}
 
     -- generates one more than needed for possible 9th card
-    local commonsSequence = randomSequence(8, cardsMap[COMMON].count)
+    local commonsSequence = Math:randomSequence(8, cardsMap[COMMON].count)
     -- 7 commons
     for i = 1, 7 do
         pack[i] = cardsMap[COMMON][i]
     end
 
     -- guaranteed 1 rare
-    local rareIndex = randomInt(cardsMap[RARE].count)
+    local rareIndex = Math:randomInt(cardsMap[RARE].count)
     pack[8] = cardsMap[RARE][rareIndex]
 
     -- wild card
@@ -90,7 +90,7 @@ function assemblePack(cardsMap)
     if lastRarity == COMMON then
         lastIndex = commonsSequence[8]
     else
-        lastIndex = randomInt(cardsMap[lastRarity].count)
+        lastIndex = Math:randomInt(cardsMap[lastRarity].count)
     end
     pack[9] = cardsMap[lastRarity][lastIndex]
 
@@ -98,7 +98,7 @@ function assemblePack(cardsMap)
 end
 
 function pickRarityForLastCard()
-    local p = randomFloat()
+    local p = Math:randomFloat()
 
     for i, rarity in ipairs(RARITIES_LAST_CARD) do
         local ratio = RATIOS[rarity]
