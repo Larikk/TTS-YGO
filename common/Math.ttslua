@@ -1,0 +1,35 @@
+Math = {}
+
+math.randomseed(os.time())
+
+-- Returns a number between [0, 1)
+function Math:randomFloat()
+    return math.random()
+end
+
+-- Return an integer between [1, max]
+function Math:randomInt(max)
+    return math.random(max)
+end
+
+-- Return a sequence of n numbers with distinct and unordered values between [1, max]
+function Math:randomSequence(n, max)
+    if n > max then
+        error( string.format("randomSequence(): n %d is larger than max %d", n, max))
+    end
+
+    local sequence = {}
+    local count = 0
+    local taken = {}
+
+    while count < n do
+        local num = Math:randomInt(max)
+        if taken[num] ~= true then
+            taken[num] = true
+            table.insert(sequence, num)
+            count = count + 1
+        end
+    end
+
+    return sequence
+end
