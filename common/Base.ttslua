@@ -1,6 +1,7 @@
 #include <Spawner>
 #include <CardParser>
 #include <Math>
+#include <IO>
 
 -- We are using a third party JSON library because the native JSON deserialization of TTS is very slow
 -- Benchmark of 10 decode calls for one booster set: library = ~15sec, native = ~300s
@@ -9,7 +10,6 @@
 -- Some changes were made to make it work with TTS
 #include <Json>
 
-#include <Debug>
 
 -- Each card has all of its releases in the card_sets array
 -- Releases can have different rarities so thats why we have to determine the right one
