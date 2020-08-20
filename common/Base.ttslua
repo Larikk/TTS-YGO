@@ -27,8 +27,3 @@ function extractRarity(card, setName, rarityReplacements)
     warning( string.format("Could not extract rarity of %s, removing from card pool", card.name))
     return nil
 end
-
--- Prints a warning to all players
-function warning(str)
-    printToAll(str, Color.fromString("yellow"))
-end

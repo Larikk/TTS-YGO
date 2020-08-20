@@ -111,7 +111,7 @@ function pickRarityForLastCard()
     end
 
     local maxRarity = RARITIES_LAST_CARD[#RARITIES_LAST_CARD]
-    warning(
+    IO:warning(
       "An error occurred while determining a random rarity for a single card. "..
       "Ratios may be misconfigured (Have to add up to 1). Defaulting to highest: "..maxRarity..
       ". Provided ratios:\n"..tableToString(RATIOS)
