@@ -47,6 +47,7 @@ function buildBoosterBox(response)
 
     for i, card in ipairs(cards) do
         local rarity = extractRarity(card, SET_NAME, ALTERNATIVE_RARITIES)
+        if  rarity == nil then goto continue end
         card.rarity = rarity
 
         if cardsMap[rarity] == nil then
@@ -56,6 +57,7 @@ function buildBoosterBox(response)
 
         table.insert(cardsMap[rarity], CardParser:parseCard(card))
         cardsMap[rarity].count = cardsMap[rarity].count + 1
+        ::continue::
     end
 
     local packs = {}

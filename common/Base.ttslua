@@ -21,6 +21,8 @@ function extractRarity(card, setName, rarityReplacements)
           return rarityReplacements[set.set_rarity] or set.set_rarity
         end
     end
+
+    -- this can only occurre if the API gave us a card which isn't in the queried set
     warning( string.format("Could not extract rarity of %s, removing from card pool", card.name))
     return nil
 end
