@@ -12,11 +12,16 @@
 
 -- Each card has all of its releases in the card_sets array
 -- Releases can have different rarities so thats why we have to determine the right one
-function extractRarity(card, setName)
+-- rarityReplacements is optional
+-- It's used if we want to replace a rarity with another one (like "Short Print" to "Common")
+function extractRarity(card, setName, rarityReplacements)
+    rarityReplacements = rarityReplacements or {}
     for i, set in ipairs(card.card_sets) do
-        if set.set_name == setName then return set.set_rarity end
+        if set.set_name == setName then
+          return rarityReplacements[set.set_rarity] or set.set_rarity
+        end
     end
-    error( string.format("Could not extract rarity of %s, removing from card pool", card.name))
+    warning( string.format("Could not extract rarity of %s, removing from card pool", card.name))
     return nil
 end
 

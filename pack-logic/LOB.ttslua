@@ -46,9 +46,7 @@ function buildBoosterBox(response)
     local cardsMap = {}
 
     for i, card in ipairs(cards) do
-        local rarity = extractRarity(card, SET_NAME)
-        rarity = ALTERNATIVE_RARITIES[rarity] or rarity
-
+        local rarity = extractRarity(card, SET_NAME, ALTERNATIVE_RARITIES)
         card.rarity = rarity
 
         if cardsMap[rarity] == nil then
