@@ -32,7 +32,7 @@ RATIOS[SECRET_RARE] = 0.04
 
 
 function spawnBoosterBox()
-    --WebRequest.get("https://db.ygoprodeck.com/api/v7/cardinfo.php?cardset=legend%20of%20blue%20eyes%20white%20dragon", function(a) buildBoosterBox(a) end)
+    --WebRequest.get("https://db.ygoprodeck.com/api/v7/cardinfo.php?cardset="..SET_NAME_URL, function(a) buildBoosterBox(a) end)
     --testSpawner()
     buildBoosterBox(test_response)
     --print("done")
