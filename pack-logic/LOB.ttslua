@@ -1,0 +1,119 @@
+#include <../common/Base>
+#include <LOB-Testdata>
+
+--Constants
+local SET_NAME = "Legend of Blue Eyes White Dragon"
+local SET_NAME_URL = "legend%20of%20blue%20eyes%20white%20dragon"
+local CARDS_IN_PACKS = 9
+local PACKS_IN_BOX = 24
+
+-- Rarities
+local COMMON = "Common"
+local RARE = "Rare"
+local SUPER_RARE = "Super Rare"
+local ULTRA_RARE = "Ultra Rare"
+local SECRET_RARE = "Secret Rare"
+
+-- We want to map some rarities to other rarities (eg. when we want to treat a shortprint as a common)
+local ALTERNATIVE_RARITIES = {}
+ALTERNATIVE_RARITIES["Short Print"] = COMMON
+
+-- Must be ordered descending
+local RARITIES_LAST_CARD = {
+    COMMON, SUPER_RARE, ULTRA_RARE, SECRET_RARE
+}
+
+-- Ratios for last card, must add up to 100
+local RATIOS = {}
+RATIOS[COMMON] = 0.71
+RATIOS[SUPER_RARE] = 0.17
+RATIOS[ULTRA_RARE] = 0.08
+RATIOS[SECRET_RARE] = 0.04
+
+
+function spawnBoosterBox()
+    --WebRequest.get("https://db.ygoprodeck.com/api/v7/cardinfo.php?cardset=legend%20of%20blue%20eyes%20white%20dragon", function(a) buildBoosterBox(a) end)
+    --testSpawner()
+    buildBoosterBox(test_response)
+    --print("done")
+end
+
+function buildBoosterBox(response)
+    print("Working on response")
+    local cards = Json:decode(response.text).data
+    print("Parsed json")
+
+    local cardsMap = {}
+
+    for i, card in ipairs(cards) do
+        local rarity = extractRarity(card, SET_NAME)
+        rarity = ALTERNATIVE_RARITIES[rarity] or rarity
+
+        card.rarity = rarity
+
+        if cardsMap[rarity] == nil then
+            cardsMap[rarity] = {}
+            cardsMap[rarity].count = 0
+        end
+
+        table.insert(cardsMap[rarity], CardParser:parseCard(card))
+        cardsMap[rarity].count = cardsMap[rarity].count + 1
+    end
+
+    local packs = {}
+    for i = 1, PACKS_IN_BOX do
+      table.insert(packs, assemblePack(cardsMap))
+    end
+
+    local spawner = Spawner:new(PACKS_IN_BOX, CARDS_IN_PACKS)
+    spawner:spawnBox(packs)
+
+end
+
+function assemblePack(cardsMap)
+    local pack = {}
+
+    -- generates one more than needed for possible 9th card
+    local commonsSequence = randomSequence(8, cardsMap[COMMON].count)
+    -- 7 commons
+    for i = 1, 7 do
+        pack[i] = cardsMap[COMMON][i]
+    end
+
+    -- guaranteed 1 rare
+    local rareIndex = randomInt(cardsMap[RARE].count)
+    pack[8] = cardsMap[RARE][rareIndex]
+
+    -- wild card
+    local lastRarity = pickRarityForLastCard()
+    local lastIndex = nil
+    if lastRarity == COMMON then
+        lastIndex = commonsSequence[8]
+    else
+        lastIndex = randomInt(cardsMap[lastRarity].count)
+    end
+    pack[9] = cardsMap[lastRarity][lastIndex]
+
+    return pack
+end
+
+function pickRarityForLastCard()
+    local p = randomFloat()
+
+    for i, rarity in ipairs(RARITIES_LAST_CARD) do
+        local ratio = RATIOS[rarity]
+        if (p < ratio) then
+            return rarity
+        end
+        p = p - ratio
+    end
+
+    local maxRarity = RARITIES_LAST_CARD[#RARITIES_LAST_CARD]
+    warning(
+      "An error occurred while determining a random rarity for a single card. "..
+      "Ratios may be misconfigured (Have to add up to 1). Defaulting to highest: "..maxRarity..
+      ". Provided ratios:\n"..tableToString(RATIOS)
+    )
+
+    return maxRarity
+end

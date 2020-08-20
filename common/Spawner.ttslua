@@ -1,0 +1,130 @@
+local CARD_BACK = "https://i.imgur.com/UjbK2Wb.png"
+
+-- LUA Script for spawned containers
+local CONTAINER_LUA_SCRIPT = [[
+function filterObjectEnter(o)
+    return false
+end
+
+function onObjectLeaveContainer(container, object)
+    if self == container and self.getQuantity() < 1 then
+        self.destruct()
+    end
+end
+]]
+
+Spawner = {}
+Spawner.__index = Spawner
+
+-- Remarks to the notation:
+-- The suffix "Object" means that a variable points to a phsyical TTS object on the board.
+-- No suffix means that the variable points to a table with data.
+--
+-- Examples:
+-- packObject = bag/container on the TTS board
+-- pack = table which holds data of cards
+
+
+function Spawner:new(packsInBox, cardsInPack)
+    local spawner = {}
+    setmetatable(spawner, Spawner)
+    spawner.packsInBox = packsInBox
+    spawner.cardsInPack = cardsInPack
+    return spawner
+end
+
+function Spawner:spawnCard(card, callback)
+    spawnParams = {
+        type = "Card",
+        position = {x = 0, y = 3, z = -5},
+        rotation = {x = 0, y = 180, z = 180},
+        scale = {x = 1, y = 1, z = 1},
+        sound = true,
+        snap_to_grid = true,
+
+        callback_function = function(cardObject)
+            cardObject.setName(card.name)
+            cardObject.setDescription(card.description)
+            cardObject.setCustomObject({
+                face = card.face,
+                back = CARD_BACK
+            })
+
+            callback(cardObject)
+        end
+    }
+
+    spawnObject(spawnParams)
+end
+
+function Spawner:spawnPack(pack, callback)
+    spawnParams = {
+        type = "Bag",
+        position = {x = 0, y = 3, z = 10},
+        rotation = {x = 0, y = 0, z = 0},
+        scale = {x = 1, y = 1, z = 1},
+        sound = false,
+        snap_to_grid = true,
+
+        callback_function = function(packObject)
+            packObject.setName("Pack")
+            packObject.setColorTint(Color.fromString("green"))
+            packObject.setLuaScript(CONTAINER_LUA_SCRIPT)
+            Wait.condition(
+                function() callback(packObject) end,
+                function() return packObject.getQuantity() >= self.cardsInPack end
+            )
+            -- Iterate backwards because the first inserted element in a bag is at the bottom
+            for i = #pack, 1, -1 do
+                local card = pack[i]
+                self:spawnCard(card, function(cardObject) packObject.putObject(cardObject) end)
+            end
+        end
+    }
+
+    spawnObject(spawnParams)
+end
+
+function Spawner:spawnBox(packs)
+    spawnParams = {
+        type = "Bag",
+        position = {x = 0, y = 3, z = 15},
+        rotation = {x = 0, y = 0, z = 0},
+        scale = {x = 1, y = 1, z = 1},
+        sound = false,
+        snap_to_grid = true,
+
+        callback_function = function(boxObject)
+            boxObject.setName("Set Box")
+            boxObject.setColorTint(Color.fromString("blue"))
+            boxObject.setLuaScript(CONTAINER_LUA_SCRIPT)
+            Wait.condition(
+                function() self:finalizeBox(boxObject) end,
+                function() return boxObject.getQuantity() >= self.packsInBox end
+            )
+            for i, pack in ipairs(packs) do
+                self:spawnPack(pack, function(packObject) boxObject.putObject(packObject) end)
+            end
+        end
+    }
+
+    spawnObject(spawnParams)
+end
+
+function Spawner:finalizeBox(boxObject)
+    print("Box is ready!")
+end
+
+function testSpawner()
+    local packs = {}
+
+    for i = 0, 3 do
+        packs[i] = {}
+        for j = 0, 9 do
+            packs[i][j] = {name = "test"..j, description = "desc"..j, face = "https://ygoprodeck.com/pics/38033121.jpg"}
+        end
+    end
+
+    local spawner = Spawner:new(3, 9)
+    spawner:spawnBox(packs)
+end

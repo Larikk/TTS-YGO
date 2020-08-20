@@ -1,0 +1,43 @@
+CardParser = {}
+
+-- Takes the data from the YGOPRODECK API and transform it to an object with the relevant data
+
+local function monsterDescription(rawData)
+    local isLink = rawData.type == "Link Monster"
+    local isPendulum = rawData.type == "Pendulum Monster"
+
+    local str = rawData.type.."\n"
+    str = str..rawData.attribute.." "..rawData.race.." "..rawData.level.."\n"
+    str = str.."ATK/"..rawData.atk
+    if rawData.def != nil then str = str.."DEF/"..rawData.def end
+    str = str.."\n"..rawData.rarity.."\n"
+
+    str = str.."\n"..rawData.desc
+
+    return str
+end
+
+local function spellTrapDescription(rawData)
+  local str = rawData.type
+  if str.race != nil then str = str..rawData.race end
+  str = str.."\n"..rawData.rarity.."\n\n"..rawData.desc
+
+  return str
+end
+
+function CardParser:parseCard(rawData)
+    local card = {}
+
+    card.id = rawData.id
+    card.name = rawData.name
+    card.rarity = rawData.rarity
+    card.face = rawData.card_images[1].image_url -- first element is at index 1
+
+    if rawData.type == "Trap Card" or rawData.type == "Spell Card" then
+        card.description = spellTrapDescription(rawData)
+    else
+        card.description = monsterDescription(rawData)
+    end
+
+    return card
+end
