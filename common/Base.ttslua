@@ -95,40 +95,42 @@ function AbstractPackGenerator:spawnBoosterBox()
 
 end
 
+function AbstractPackGenerator:processAPIResponse(response, callback)
+    print("Working on response")
+    local cards = Json:decode(response.text).data
+    print("Parsed json")
+
+    local cardsMap = {}
+
+    for i, card in ipairs(cards) do
+        local rarity = self:extractRarity(card, self.setName, self.rarityReplacements)
+
+        if rarity == nil then
+            IO:warning(string.format("Could not extract rarity of %s, removing from card pool", card.name))
+            goto continue
+        end
+
+        card.rarity = rarity
+
+        if cardsMap[rarity] == nil then
+            cardsMap[rarity] = {}
+            cardsMap[rarity].count = 0
+        end
+
+        table.insert(cardsMap[rarity], CardParser:parseCard(card))
+        cardsMap[rarity].count = cardsMap[rarity].count + 1
+        ::continue::
+    end
+
+    self.cardsMap = cardsMap
+    if type(callback) == "function" then callback() end
+end
+
 -- downloads the card list from db.ygoprodeck.com and initializes initCardsMap
 -- callBack should be the action that should have been executed if cardsMap were initialized
 function AbstractPackGenerator:initCardsMap(callback)
     WebRequest.get("https://db.ygoprodeck.com/api/v7/cardinfo.php?cardset="..self.setNameUrl,
-        function(response)
-          print("Working on response")
-          local cards = Json:decode(response.text).data
-          print("Parsed json")
-
-          local cardsMap = {}
-
-          for i, card in ipairs(cards) do
-              local rarity = self:extractRarity(card, self.setName, self.rarityReplacements)
-
-              if  rarity == nil then
-                IO:warning(string.format("Could not extract rarity of %s, removing from card pool", card.name))
-                goto continue
-              end
-
-              card.rarity = rarity
-
-              if cardsMap[rarity] == nil then
-                  cardsMap[rarity] = {}
-                  cardsMap[rarity].count = 0
-              end
-
-              table.insert(cardsMap[rarity], CardParser:parseCard(card))
-              cardsMap[rarity].count = cardsMap[rarity].count + 1
-              ::continue::
-          end
-
-          self.cardsMap = cardsMap
-          if type(callback) == "function" then callback() end
-        end
+        function(response) self:processAPIResponse(response, callback) end
     )
 end
 
