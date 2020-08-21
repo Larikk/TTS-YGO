@@ -50,7 +50,7 @@ function Spawner:spawnCard(card, callback)
                 back = CARD_BACK
             })
 
-            callback(cardObject)
+            if type(callback) == "function" then callback(cardObject) end
         end
     }
 
@@ -71,7 +71,7 @@ function Spawner:spawnPack(pack, callback)
             packObject.setColorTint(Color.fromString("green"))
             packObject.setLuaScript(CONTAINER_LUA_SCRIPT)
             Wait.condition(
-                function() callback(packObject) end,
+                function() if type(callback) == "function" then callback(packObject) end end,
                 function() return packObject.getQuantity() >= self.cardsInPack end
             )
             -- Iterate backwards because the first inserted element in a bag is at the bottom
