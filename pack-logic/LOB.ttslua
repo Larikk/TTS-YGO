@@ -43,7 +43,7 @@ function PackGenerator:buildBoosterBox(response)
     local cardsMap = {}
 
     for i, card in ipairs(cards) do
-        local rarity = self:extractRarity(card, SET_NAME, ALTERNATIVE_RARITIES)
+        local rarity = self:extractRarity(card, self.setName, self.rarityReplacements)
         if  rarity == nil then goto continue end
         card.rarity = rarity
 
@@ -58,11 +58,11 @@ function PackGenerator:buildBoosterBox(response)
     end
 
     local packs = {}
-    for i = 1, PACKS_IN_BOX do
+    for i = 1, self.packsInBox do
       table.insert(packs, self:assemblePack(cardsMap))
     end
 
-    local spawner = Spawner:new(PACKS_IN_BOX, CARDS_IN_PACKS)
+    local spawner = Spawner:new(self.packsInBox, self.cardsInPacks)
     spawner:spawnBox(packs, || IO:success("Box is ready!"))
 
 end
