@@ -10,12 +10,30 @@
 -- Some changes were made to make it work with TTS
 #include <Json>
 
+AbstractPackGenerator = {}
+
+
+local function noop()
+    error("This base function has no implementation and must be overriden by a specific pack generator.")
+end
+
+function AbstractPackGenerator:spawnBoosterBox()
+    noop()
+end
+
+function AbstractPackGenerator:buildBoosterBox()
+    noop()
+end
+
+function AbstractPackGenerator:assemblePack()
+    noop()
+end
 
 -- Each card has all of its releases in the card_sets array
 -- Releases can have different rarities so thats why we have to determine the right one
 -- rarityReplacements is optional
 -- It's used if we want to replace a rarity with another one (like "Short Print" to "Common")
-function extractRarity(card, setName, rarityReplacements)
+function AbstractPackGenerator:extractRarity(card, setName, rarityReplacements)
     rarityReplacements = rarityReplacements or {}
     for i, set in ipairs(card.card_sets) do
         if set.set_name == setName then
@@ -33,7 +51,7 @@ end
 -- key: rarity
 -- value: possibility of the rarity
 -- values should add up to 1.0
-function pickRarity(ratios)
+function AbstractPackGenerator:pickRarity(ratios)
     local p = Math:randomFloat()
     local fallbackRarity = nil
 
@@ -52,4 +70,21 @@ function pickRarity(ratios)
     )
 
     return fallbackRarity
+end
+
+function AbstractPackGenerator:new(o)
+    o = o or {}
+    setmetatable(o, self)
+    self.__index = self
+
+    -- must be overridden by specific generators
+    o.setName = nil
+    o.setNameUrl = nil
+    o.cardsInPacks = nil
+    o.packsInBox = nil
+    o.rarityReplacements = {}
+
+    o.foo = "foo"
+
+    return o
 end

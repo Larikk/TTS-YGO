@@ -26,14 +26,16 @@ RATIOS[ULTRA_RARE] = 0.08
 RATIOS[SECRET_RARE] = 0.04
 
 
-function spawnBoosterBox()
+PackGenerator = AbstractPackGenerator:new()
+
+function PackGenerator:spawnBoosterBox()
     --WebRequest.get("https://db.ygoprodeck.com/api/v7/cardinfo.php?cardset="..SET_NAME_URL, function(a) buildBoosterBox(a) end)
     --testSpawner()
-    buildBoosterBox(test_response)
+    self:buildBoosterBox(test_response)
     --print("done")
 end
 
-function buildBoosterBox(response)
+function PackGenerator:buildBoosterBox(response)
     print("Working on response")
     local cards = Json:decode(response.text).data
     print("Parsed json")
@@ -41,7 +43,7 @@ function buildBoosterBox(response)
     local cardsMap = {}
 
     for i, card in ipairs(cards) do
-        local rarity = extractRarity(card, SET_NAME, ALTERNATIVE_RARITIES)
+        local rarity = self:extractRarity(card, SET_NAME, ALTERNATIVE_RARITIES)
         if  rarity == nil then goto continue end
         card.rarity = rarity
 
@@ -57,7 +59,7 @@ function buildBoosterBox(response)
 
     local packs = {}
     for i = 1, PACKS_IN_BOX do
-      table.insert(packs, assemblePack(cardsMap))
+      table.insert(packs, self:assemblePack(cardsMap))
     end
 
     local spawner = Spawner:new(PACKS_IN_BOX, CARDS_IN_PACKS)
@@ -65,7 +67,7 @@ function buildBoosterBox(response)
 
 end
 
-function assemblePack(cardsMap)
+function PackGenerator:assemblePack(cardsMap)
     local pack = {}
 
     -- generates one more than needed for possible 9th card
@@ -82,7 +84,7 @@ function assemblePack(cardsMap)
     pack[8] = cardsMap[RARE][rareIndex]
 
     -- wild card
-    local lastRarity = pickRarity(RATIOS)
+    local lastRarity = self:pickRarity(RATIOS)
     local lastIndex = nil
     if lastRarity == COMMON then
         lastIndex = commonsSequence[8]
@@ -92,4 +94,18 @@ function assemblePack(cardsMap)
     pack[9] = cardsMap[lastRarity][lastIndex]
 
     return pack
+end
+
+function PackGenerator:new()
+    o = AbstractPackGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    self.setName = SET_NAME
+    self.setNameUrl = SET_NAME_URLS
+    self.cardsInPacks = CARDS_IN_PACKS
+    self.packsInBox = PACKS_IN_BOX
+    self.rarityReplacements = ALTERNATIVE_RARITIES
+
+    return o
 end
