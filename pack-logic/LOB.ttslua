@@ -93,28 +93,3 @@ function assemblePack(cardsMap)
 
     return pack
 end
-
--- ratios is a table
--- key: rarity
--- value: possibility of the rarity
--- values should add up to 1.0
-function pickRarity(ratios)
-    local p = Math:randomFloat()
-    local fallbackRarity = nil
-
-    for rarity, ratio in pairs(ratios) do
-        if (p < ratio) then
-            return rarity
-        end
-        p = p - ratio
-        fallbackRarity = rarity
-    end
-
-    IO:warning(
-      "An error occurred while determining a random rarity for a single card. "..
-      "Ratios may be misconfigured (Have to add up to 1). Defaulting to highest: "..fallbackRarity..
-      ". Provided ratios:\n"..IO:tableToString(ratios)
-    )
-
-    return fallbackRarity
-end
