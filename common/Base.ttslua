@@ -115,11 +115,11 @@ function AbstractPackGenerator:new(o)
     self.__index = self
 
     -- must be overridden by specific generators
-    o.setName = nil
-    o.setNameUrl = nil
-    o.cardsInPacks = nil
-    o.packsInBox = nil
-    o.rarityReplacements = {}
+    self.setName = nil
+    self.setNameUrl = nil
+    self.cardsInPacks = nil
+    self.packsInBox = nil
+    self.rarityReplacements = {}
 
     return o
 end
