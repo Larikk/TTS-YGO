@@ -121,7 +121,5 @@ function AbstractPackGenerator:new(o)
     o.packsInBox = nil
     o.rarityReplacements = {}
 
-    o.foo = "foo"
-
     return o
 end

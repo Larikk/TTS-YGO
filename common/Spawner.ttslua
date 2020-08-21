@@ -110,17 +110,3 @@ function Spawner:spawnBox(packs, callback)
 
     spawnObject(spawnParams)
 end
-
-function testSpawner()
-    local packs = {}
-
-    for i = 0, 3 do
-        packs[i] = {}
-        for j = 0, 9 do
-            packs[i][j] = {name = "test"..j, description = "desc"..j, face = "https://ygoprodeck.com/pics/38033121.jpg"}
-        end
-    end
-
-    local spawner = Spawner:new(3, 9)
-    spawner:spawnBox(packs)
-end
