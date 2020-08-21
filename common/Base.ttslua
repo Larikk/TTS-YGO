@@ -96,9 +96,8 @@ function AbstractPackGenerator:spawnBoosterBox()
 end
 
 function AbstractPackGenerator:processAPIResponse(response, callback)
-    print("Working on response")
+    IO:info("Received card list, processing response...")
     local cards = Json:decode(response.text).data
-    print("Parsed json")
 
     local cardsMap = {}
 
@@ -123,12 +122,14 @@ function AbstractPackGenerator:processAPIResponse(response, callback)
     end
 
     self.cardsMap = cardsMap
+    IO:info("Processed card list, continuing with spawning.")
     if type(callback) == "function" then callback() end
 end
 
 -- downloads the card list from db.ygoprodeck.com and initializes initCardsMap
 -- callBack should be the action that should have been executed if cardsMap were initialized
 function AbstractPackGenerator:initCardsMap(callback)
+    IO:info("Downloading card list...")
     WebRequest.get("https://db.ygoprodeck.com/api/v7/cardinfo.php?cardset="..self.setNameUrl,
         function(response) self:processAPIResponse(response, callback) end
     )
