@@ -48,7 +48,7 @@ function IO:warning(str)
 end
 
 function IO:success(str)
-    printToAll(str, Color.Green))
+    printToAll(str, Color.Green)
 end
 
 function IO:info(str)
