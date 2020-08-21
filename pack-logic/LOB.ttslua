@@ -1,5 +1,4 @@
 #include <../common/Base>
-#include <LOB-Testdata>
 
 --Constants
 local SET_NAME = "Legend of Blue Eyes White Dragon"
@@ -27,45 +26,6 @@ RATIOS[SECRET_RARE] = 0.04
 
 
 PackGenerator = AbstractPackGenerator:new()
-
-function PackGenerator:spawnBoosterBox()
-    --WebRequest.get("https://db.ygoprodeck.com/api/v7/cardinfo.php?cardset="..SET_NAME_URL, function(a) buildBoosterBox(a) end)
-    --testSpawner()
-    self:buildBoosterBox(test_response)
-    --print("done")
-end
-
-function PackGenerator:buildBoosterBox(response)
-    print("Working on response")
-    local cards = Json:decode(response.text).data
-    print("Parsed json")
-
-    local cardsMap = {}
-
-    for i, card in ipairs(cards) do
-        local rarity = self:extractRarity(card, self.setName, self.rarityReplacements)
-        if  rarity == nil then goto continue end
-        card.rarity = rarity
-
-        if cardsMap[rarity] == nil then
-            cardsMap[rarity] = {}
-            cardsMap[rarity].count = 0
-        end
-
-        table.insert(cardsMap[rarity], CardParser:parseCard(card))
-        cardsMap[rarity].count = cardsMap[rarity].count + 1
-        ::continue::
-    end
-
-    local packs = {}
-    for i = 1, self.packsInBox do
-      table.insert(packs, self:assemblePack(cardsMap))
-    end
-
-    local spawner = Spawner:new(self.packsInBox, self.cardsInPacks)
-    spawner:spawnBox(packs, || IO:success("Box is ready!"))
-
-end
 
 function PackGenerator:assemblePack(cardsMap)
     local pack = {}
