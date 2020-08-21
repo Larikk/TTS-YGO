@@ -18,11 +18,6 @@ local SECRET_RARE = "Secret Rare"
 local ALTERNATIVE_RARITIES = {}
 ALTERNATIVE_RARITIES["Short Print"] = COMMON
 
--- Must be ordered descending
-local RARITIES_LAST_CARD = {
-    COMMON, SUPER_RARE, ULTRA_RARE, SECRET_RARE
-}
-
 -- Ratios for last card, must add up to 100
 local RATIOS = {}
 RATIOS[COMMON] = 0.71
@@ -87,7 +82,7 @@ function assemblePack(cardsMap)
     pack[8] = cardsMap[RARE][rareIndex]
 
     -- wild card
-    local lastRarity = pickRarityForLastCard()
+    local lastRarity = pickRarityForLastCard(RATIOS)
     local lastIndex = nil
     if lastRarity == COMMON then
         lastIndex = commonsSequence[8]
@@ -99,23 +94,23 @@ function assemblePack(cardsMap)
     return pack
 end
 
-function pickRarityForLastCard()
+function pickRarityForLastCard(ratios)
     local p = Math:randomFloat()
+    local fallbackRarity = nil
 
-    for i, rarity in ipairs(RARITIES_LAST_CARD) do
-        local ratio = RATIOS[rarity]
+    for rarity, ratio in pairs(ratios) do
         if (p < ratio) then
             return rarity
         end
         p = p - ratio
+        fallbackRarity = rarity
     end
 
-    local maxRarity = RARITIES_LAST_CARD[#RARITIES_LAST_CARD]
     IO:warning(
       "An error occurred while determining a random rarity for a single card. "..
-      "Ratios may be misconfigured (Have to add up to 1). Defaulting to highest: "..maxRarity..
-      ". Provided ratios:\n"..IO:tableToString(RATIOS)
+      "Ratios may be misconfigured (Have to add up to 1). Defaulting to highest: "..fallbackRarity..
+      ". Provided ratios:\n"..IO:tableToString(ratios)
     )
 
-    return maxRarity
+    return fallbackRarity
 end
