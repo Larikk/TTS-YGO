@@ -46,3 +46,7 @@ end
 function IO:warning(str)
     printToAll(str, Color.fromString("yellow"))
 end
+
+function IO:success(str)
+    printToAll(str, Color.fromString("green"))
+end
