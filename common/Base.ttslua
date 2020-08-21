@@ -72,6 +72,15 @@ function AbstractPackGenerator:pickRarity(ratios)
     return fallbackRarity
 end
 
+function AbstractPackGenerator:buildBoosterPack()
+    local cardsMap = self.cardsMap
+    local packs = self:assemblePack(cardsMap)
+
+
+    local spawner = Spawner:new(self.cardsInPacks)
+    spawner:spawnPack(packs, || IO:success("Pack is ready!"))
+
+end
 
 function AbstractPackGenerator:buildBoosterBox()
     local cardsMap = self.cardsMap
@@ -114,6 +123,14 @@ function AbstractPackGenerator:initCardsMap(callback)
           if type(callback) == "function" then callback() end
         end
     )
+end
+
+function AbstractPackGenerator:spawnBoosterPack()
+    if self.cardsMap == nil then
+        self:initCardsMap(|| self:buildBoosterPack())
+    else
+        self:buildBoosterPack()
+    end
 end
 
 function AbstractPackGenerator:spawnBoosterBox()
