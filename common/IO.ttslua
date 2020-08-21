@@ -50,3 +50,7 @@ end
 function IO:success(str)
     printToAll(str, Color.fromString("green"))
 end
+
+function IO:info(str)
+    printToAll(str, Color.Teal)
+end
