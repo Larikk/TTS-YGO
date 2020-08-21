@@ -17,14 +17,6 @@ local function noop()
     error("This base function has no implementation and must be overriden by a specific pack generator.")
 end
 
-function AbstractPackGenerator:spawnBoosterBox()
-    noop()
-end
-
-function AbstractPackGenerator:buildBoosterBox()
-    noop()
-end
-
 function AbstractPackGenerator:assemblePack()
     noop()
 end
