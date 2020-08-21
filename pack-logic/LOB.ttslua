@@ -14,8 +14,8 @@ local ULTRA_RARE = "Ultra Rare"
 local SECRET_RARE = "Secret Rare"
 
 -- We want to map some rarities to other rarities (eg. when we want to treat a shortprint as a common)
-local ALTERNATIVE_RARITIES = {}
-ALTERNATIVE_RARITIES["Short Print"] = COMMON
+local RARITY_REPLACEMENTS = {}
+RARITY_REPLACEMENTS["Short Print"] = COMMON
 
 -- Ratios for last card, must add up to 100
 local RATIOS = {}

@@ -1,6 +1,6 @@
 CardParser = {}
 
--- Takes the data from the YGOPRODECK API and transform it to an object with the relevant data
+-- Takes the data from the YGOPRODECK API and transform it to a condensed object with the relevant data
 
 local function monsterDescription(rawData)
     local isLink = rawData.type == "Link Monster"

@@ -7,7 +7,7 @@ function Math:randomFloat()
     return math.random()
 end
 
--- Return an integer between [1, max]
+-- Returns an integer between [1, max]
 function Math:randomInt(max)
     return math.random(max)
 end

@@ -10,20 +10,24 @@
 -- Some changes were made to make it work with TTS
 #include <Json>
 
+
+-- Abstract class which has common logic
+-- Pack-specific behavior is implemented is subclasses
 AbstractPackGenerator = {}
 
 
 local function noop()
-    error("This base function has no implementation and must be overriden by a specific pack generator.")
+    error("This abstract function has no implementation and must be overriden by a specific pack generator.")
 end
 
+-- Must be implemented by a specific generator
 function AbstractPackGenerator:assemblePack()
     noop()
 end
 
 -- Each card has all of its releases in the card_sets array
 -- Releases can have different rarities so thats why we have to determine the right one
--- rarityReplacements is optional
+-- rarityReplacements is a mapping between rarities
 -- It's used if we want to replace a rarity with another one (like "Short Print" to "Common")
 function AbstractPackGenerator:extractRarity(card)
     rarityReplacements = self.rarityReplacements or {}
@@ -55,13 +59,16 @@ function AbstractPackGenerator:pickRarity(ratios)
 
     IO:warning(
       "An error occurred while determining a random rarity for a single card. "..
-      "Ratios may be misconfigured (Have to add up to 1). Defaulting to highest: "..fallbackRarity..
+      "Ratios may be misconfigured (Have to add up to 1.0). Defaulting to highest: "..fallbackRarity..
       ". Provided ratios:\n"..IO:tableToString(ratios)
     )
 
     return fallbackRarity
 end
 
+-- spawns a booster, requires cardsMap to be initialized
+-- should only be called internally
+-- use generateBoosterPack() for external use
 function AbstractPackGenerator:spawnBoosterPack()
     local cardsMap = self.cardsMap
     local packs = self:assemblePack(cardsMap)
@@ -72,6 +79,9 @@ function AbstractPackGenerator:spawnBoosterPack()
 
 end
 
+-- spawns a box, requires cardsMap to be initialized
+-- should only be called internally
+-- use generateBoosterBox() for external use
 function AbstractPackGenerator:spawnBoosterBox()
     local cardsMap = self.cardsMap
 
@@ -85,6 +95,8 @@ function AbstractPackGenerator:spawnBoosterBox()
 
 end
 
+-- downloads the card list from db.ygoprodeck.com and initializes initCardsMap
+-- callBack should be the action that should have been executed if cardsMap were initialized
 function AbstractPackGenerator:initCardsMap(callback)
     WebRequest.get("https://db.ygoprodeck.com/api/v7/cardinfo.php?cardset="..self.setNameUrl,
         function(response)
@@ -120,6 +132,7 @@ function AbstractPackGenerator:initCardsMap(callback)
     )
 end
 
+-- spawns a booster, can be called externally
 function AbstractPackGenerator:generateBoosterPack()
     if self.cardsMap == nil then
         self:initCardsMap(|| self:spawnBoosterPack())
@@ -128,6 +141,7 @@ function AbstractPackGenerator:generateBoosterPack()
     end
 end
 
+-- spawns a box, can be called externally
 function AbstractPackGenerator:generateBoosterBox()
     if self.cardsMap == nil then
         self:initCardsMap(|| self:spawnBoosterBox())
@@ -149,6 +163,9 @@ function AbstractPackGenerator:new(o)
     self.rarityReplacements = {}
 
     -- is initialized before a box/pack is generated for the first time
+    -- holds the cards of the set partitioned by their rarity
+    -- key: rarity
+    -- value: tables with the single cards, indexed with numbers and a count field
     self.cardsMap = nil
 
     return o
