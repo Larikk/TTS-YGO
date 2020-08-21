@@ -85,7 +85,7 @@ function Spawner:spawnPack(pack, callback)
     spawnObject(spawnParams)
 end
 
-function Spawner:spawnBox(packs)
+function Spawner:spawnBox(packs, callback)
     spawnParams = {
         type = "Bag",
         position = {x = 0, y = 3, z = 15},
@@ -99,7 +99,7 @@ function Spawner:spawnBox(packs)
             boxObject.setColorTint(Color.fromString("blue"))
             boxObject.setLuaScript(CONTAINER_LUA_SCRIPT)
             Wait.condition(
-                function() self:finalizeBox(boxObject) end,
+                function() if type(callback) == "function" then callback() end end,
                 function() return boxObject.getQuantity() >= self.packsInBox end
             )
             for i, pack in ipairs(packs) do
@@ -109,10 +109,6 @@ function Spawner:spawnBox(packs)
     }
 
     spawnObject(spawnParams)
-end
-
-function Spawner:finalizeBox(boxObject)
-    print("Box is ready!")
 end
 
 function testSpawner()

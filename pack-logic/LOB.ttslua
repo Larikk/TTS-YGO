@@ -61,7 +61,7 @@ function buildBoosterBox(response)
     end
 
     local spawner = Spawner:new(PACKS_IN_BOX, CARDS_IN_PACKS)
-    spawner:spawnBox(packs)
+    spawner:spawnBox(packs, || IO:success("Box is ready!"))
 
 end
 
