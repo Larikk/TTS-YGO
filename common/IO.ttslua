@@ -44,11 +44,11 @@ end
 
 -- Prints a warning to all players
 function IO:warning(str)
-    printToAll(str, Color.fromString("yellow"))
+    printToAll(str, Color.Yellow)
 end
 
 function IO:success(str)
-    printToAll(str, Color.fromString("green"))
+    printToAll(str, Color.Green))
 end
 
 function IO:info(str)
