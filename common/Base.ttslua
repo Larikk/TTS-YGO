@@ -72,7 +72,7 @@ function AbstractPackGenerator:pickRarity(ratios)
     return fallbackRarity
 end
 
-function AbstractPackGenerator:buildBoosterPack()
+function AbstractPackGenerator:spawnBoosterPack()
     local cardsMap = self.cardsMap
     local packs = self:assemblePack(cardsMap)
 
@@ -82,7 +82,7 @@ function AbstractPackGenerator:buildBoosterPack()
 
 end
 
-function AbstractPackGenerator:buildBoosterBox()
+function AbstractPackGenerator:spawnBoosterBox()
     local cardsMap = self.cardsMap
 
     local packs = {}
@@ -125,19 +125,19 @@ function AbstractPackGenerator:initCardsMap(callback)
     )
 end
 
-function AbstractPackGenerator:spawnBoosterPack()
+function AbstractPackGenerator:generateBoosterPack()
     if self.cardsMap == nil then
-        self:initCardsMap(|| self:buildBoosterPack())
+        self:initCardsMap(|| self:spawnBoosterPack())
     else
-        self:buildBoosterPack()
+        self:spawnBoosterPack()
     end
 end
 
-function AbstractPackGenerator:spawnBoosterBox()
+function AbstractPackGenerator:generateBoosterBox()
     if self.cardsMap == nil then
-        self:initCardsMap(|| self:buildBoosterBox())
+        self:initCardsMap(|| self:spawnBoosterBox())
     else
-        self:buildBoosterBox()
+        self:spawnBoosterBox()
     end
 end
 
