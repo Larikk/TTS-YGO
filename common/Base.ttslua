@@ -24,6 +24,6 @@ function extractRarity(card, setName, rarityReplacements)
     end
 
     -- this can only occurre if the API gave us a card which isn't in the queried set
-    warning( string.format("Could not extract rarity of %s, removing from card pool", card.name))
+    IO:warning( string.format("Could not extract rarity of %s, removing from card pool", card.name))
     return nil
 end
