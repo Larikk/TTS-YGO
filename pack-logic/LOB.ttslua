@@ -82,7 +82,7 @@ function assemblePack(cardsMap)
     pack[8] = cardsMap[RARE][rareIndex]
 
     -- wild card
-    local lastRarity = pickRarityForLastCard(RATIOS)
+    local lastRarity = pickRarity(RATIOS)
     local lastIndex = nil
     if lastRarity == COMMON then
         lastIndex = commonsSequence[8]
@@ -94,7 +94,11 @@ function assemblePack(cardsMap)
     return pack
 end
 
-function pickRarityForLastCard(ratios)
+-- ratios is a table
+-- key: rarity
+-- value: possibility of the rarity
+-- values should add up to 1.0
+function pickRarity(ratios)
     local p = Math:randomFloat()
     local fallbackRarity = nil
 
