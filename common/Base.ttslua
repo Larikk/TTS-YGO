@@ -33,8 +33,6 @@ function AbstractPackGenerator:extractRarity(card)
         end
     end
 
-    -- this can only occurre if the API gave us a card which isn't in the queried set
-    IO:warning( string.format("Could not extract rarity of %s, removing from card pool", card.name))
     return nil
 end
 
@@ -98,7 +96,12 @@ function AbstractPackGenerator:initCardsMap(callback)
 
           for i, card in ipairs(cards) do
               local rarity = self:extractRarity(card, self.setName, self.rarityReplacements)
-              if  rarity == nil then goto continue end
+
+              if  rarity == nil then
+                IO:warning(string.format("Could not extract rarity of %s, removing from card pool", card.name))
+                goto continue
+              end
+
               card.rarity = rarity
 
               if cardsMap[rarity] == nil then
