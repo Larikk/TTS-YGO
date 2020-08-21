@@ -81,7 +81,7 @@ function AbstractPackGenerator:buildBoosterBox()
       table.insert(packs, self:assemblePack(cardsMap))
     end
 
-    local spawner = Spawner:new(self.packsInBox, self.cardsInPacks)
+    local spawner = Spawner:new(self.cardsInPacks, self.packsInBox)
     spawner:spawnBox(packs, || IO:success("Box is ready!"))
 
 end

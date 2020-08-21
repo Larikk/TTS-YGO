@@ -25,7 +25,7 @@ Spawner.__index = Spawner
 -- pack = table which holds data of cards
 
 
-function Spawner:new(packsInBox, cardsInPack)
+function Spawner:new(cardsInPack, packsInBox)
     local spawner = {}
     setmetatable(spawner, Spawner)
     spawner.packsInBox = packsInBox
