@@ -25,10 +25,10 @@ end
 -- Releases can have different rarities so thats why we have to determine the right one
 -- rarityReplacements is optional
 -- It's used if we want to replace a rarity with another one (like "Short Print" to "Common")
-function AbstractPackGenerator:extractRarity(card, setName, rarityReplacements)
-    rarityReplacements = rarityReplacements or {}
+function AbstractPackGenerator:extractRarity(card)
+    rarityReplacements = self.rarityReplacements or {}
     for i, set in ipairs(card.card_sets) do
-        if set.set_name == setName then
+        if set.set_name == self.setName then
           return rarityReplacements[set.set_rarity] or set.set_rarity
         end
     end
