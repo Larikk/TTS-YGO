@@ -203,15 +203,20 @@ local function codepoint_to_utf8(n)
 end
 
 
-local function parse_unicode_escape(s)
-  local n1 = tonumber( s:sub(1, 4),  16 )
-  local n2 = tonumber( s:sub(7, 10), 16 )
-   -- Surrogate pair?
-  if n2 then
-    return codepoint_to_utf8((n1 - 0xd800) * 0x400 + (n2 - 0xdc00) + 0x10000)
-  else
-    return codepoint_to_utf8(n1)
-  end
+-- local function parse_unicode_escape(s)
+--   local n1 = tonumber( s:sub(1, 4),  16 )
+--   local n2 = tonumber( s:sub(7, 10), 16 )
+--    -- Surrogate pair?
+--   if n2 then
+--     return codepoint_to_utf8((n1 - 0xd800) * 0x400 + (n2 - 0xdc00) + 0x10000)
+--   else
+--     return codepoint_to_utf8(n1)
+--   end
+-- end
+
+-- Replaced the function above because this seems better with TTS' unicode handling
+function parse_unicode_escape(s)
+  return string.char(tonumber(s, 16))
 end
 
 
