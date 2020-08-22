@@ -31,27 +31,24 @@ function PackGenerator:assemblePack(cardsMap)
     local pack = {}
 
     -- generates one more than needed for possible 9th card
-    local commonsSequence = Math:randomSequence(8, cardsMap[COMMON].count)
+    local commons = self:pickMultipleCards(COMMON, 8)
 
     -- 7 commons
     for i = 1, 7 do
-        local commonIndex = commonsSequence[i]
-        pack[i] = cardsMap[COMMON][commonIndex]
+        pack[i] = commons[i]
     end
 
     -- guaranteed 1 rare
-    local rareIndex = Math:randomInt(cardsMap[RARE].count)
-    pack[8] = cardsMap[RARE][rareIndex]
+    pack[8] = self:pickSingleCard(RARE)
 
     -- wild card
-    local lastRarity = self:pickRarity(RATIOS)
-    local lastIndex = nil
-    if lastRarity == COMMON then
-        lastIndex = commonsSequence[8]
+    local rarityOfLast = self:pickRarity(RATIOS)
+    if rarityOfLast == COMMON then
+        pack[9] = commons[8]
     else
-        lastIndex = Math:randomInt(cardsMap[lastRarity].count)
+        pack[9] = Math:randomInt(cardsMap[rarityOfLast].count)
+        pack[9] = self:pickSingleCard(rarityOfLast)
     end
-    pack[9] = cardsMap[lastRarity][lastIndex]
 
     return pack
 end
