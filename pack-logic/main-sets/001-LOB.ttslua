@@ -17,7 +17,7 @@ local SECRET_RARE = "Secret Rare"
 local RARITY_REPLACEMENTS = {}
 RARITY_REPLACEMENTS["Short Print"] = COMMON
 
--- Ratios for last card, must add up to 100
+-- Ratios for last card, must add up to 1.0
 local RATIOS = {}
 RATIOS[COMMON] = 0.71
 RATIOS[SUPER_RARE] = 0.17
