@@ -95,13 +95,11 @@ function AbstractPackGenerator:spawnBoosterBox()
 
 end
 
-function AbstractPackGenerator:processAPIResponse(response, callback)
-    IO:info("Received card list, processing response...")
-    local cards = Json:decode(response.text).data
-
+-- Can be overridden by subclasses if necessary
+function AbstractPackGenerator:parseCardList(cardList)
     local cardsMap = {}
 
-    for i, card in ipairs(cards) do
+    for i, card in ipairs(cardList) do
         local rarity = self:extractRarity(card, self.setName, self.rarityReplacements)
 
         if rarity == nil then
@@ -121,7 +119,15 @@ function AbstractPackGenerator:processAPIResponse(response, callback)
         ::continue::
     end
 
-    self.cardsMap = cardsMap
+    return cardsMap
+end
+
+
+function AbstractPackGenerator:processAPIResponse(response, callback)
+    IO:info("Received card list, processing response...")
+    local cards = Json:decode(response.text).data
+
+    self.cardsMap = self:parseCardList(cards)
     IO:info("Processed card list, continuing with spawning.")
     if type(callback) == "function" then callback() end
 end
