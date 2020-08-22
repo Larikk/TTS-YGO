@@ -1,0 +1,130 @@
+#include <../../common/Base>
+
+--Constants
+local SET_NAME = "Battle Pack: Epic Dawn"
+local SET_NAME_URL = "battle%20pack:%20epic%20dawn"
+local CARDS_IN_PACKS = 5
+local PACKS_IN_BOX = 36
+
+-- Rarities/Slots
+-- commons are splitted into four slots
+-- each pack has one rare, one common from each slot and one random card as a star foil
+local RARE = "Rare"
+local COMMON1 = "Common1"
+local COMMON2 = "Common2"
+local COMMON3 = "Common3"
+
+-- We want to map some rarities to other rarities (eg. when we want to treat a shortprint as a common)
+local RARITY_REPLACEMENTS = {}
+
+-- Ratios for last card, must add up to 1.0
+local RATIOS = {}
+RATIOS[RARE] = 0.25
+RATIOS[COMMON1] = 0.25
+RATIOS[COMMON2] = 0.25
+RATIOS[COMMON3] = 0.25
+
+
+PackGenerator = AbstractPackGenerator:new()
+
+function PackGenerator:assemblePack(cardsMap)
+    local pack = {}
+
+    -- wildcard/starfoil rare first
+    local wildCardSlot = self:pickRarity(RATIOS)
+    local wildCardIndices = Math:randomSequence(2, cardsMap[wildCardSlot].count)
+    pack[5] = cardsMap[wildCardSlot][wildCardIndices[1]]
+
+    -- Return either a random card if the slot is different from the wildcard
+    -- or the second card of the wildCardSlot
+    local f = function(slot)
+        if slot ~= wildCardSlot then
+            return self:pickSingleCard(slot)
+        else
+            return cardsMap[wildCardSlot][wildCardIndices[2]]
+        end
+    end
+
+    pack[1] = f(RARE)
+    pack[2] = f(COMMON1)
+    pack[3] = f(COMMON2)
+    pack[4] = f(COMMON3)
+
+    return pack
+end
+
+function PackGenerator:extractSetCode(card)
+    for i, set in ipairs(card.card_sets) do
+        if set.set_name == self.setName then
+          return set.set_code
+        end
+    end
+
+    return nil
+end
+
+-- overridden because there are different categories of commons
+-- then can be identified by their set code
+-- Rare: 1 to 55
+-- Common1: 56 to 110
+-- Common2: 111 to 170
+-- Common3: 171 to 220
+function PackGenerator:parseCardList(cardList)
+    local cardsMap = {}
+
+    for i, card in ipairs(cardList) do
+        local setCode = self:extractSetCode(card)
+
+        -- Must be declared before goto
+        local slot = nil
+        local rarity = nil
+
+        if setCode == nil then
+            IO:warning(string.format("Could not extract set code of %s, removing from card pool", card.name))
+            goto continue
+        end
+
+        setCode = tonumber(setCode:sub(-3)) -- get last three digits as number
+
+        if setCode <= 55 then
+            rarity = "Rare"
+            slot = rarity
+        elseif setCode <= 110 then
+            rarity = "Common"
+            slot = rarity .. "1"
+        elseif setCode <= 170 then
+            rarity = "Common"
+            slot = rarity .. "2"
+        else
+            rarity = "Common"
+            slot = rarity .. "3"
+        end
+
+        card.rarity = rarity
+
+        if cardsMap[slot] == nil then
+            cardsMap[slot] = {}
+            cardsMap[slot].count = 0
+        end
+
+        table.insert(cardsMap[slot], CardParser:parseCard(card))
+        cardsMap[slot].count = cardsMap[slot].count + 1
+        ::continue::
+    end
+
+    return cardsMap
+end
+
+function PackGenerator:new()
+    o = AbstractPackGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    self.setName = SET_NAME
+    self.setNameUrl = SET_NAME_URL
+    self.cardsInPacks = CARDS_IN_PACKS
+    self.packsInBox = PACKS_IN_BOX
+    self.rarityReplacements = RARITY_REPLACEMENTS
+
+    return o
+end
