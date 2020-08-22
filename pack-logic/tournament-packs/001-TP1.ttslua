@@ -1,0 +1,66 @@
+#include <../../common/Base>
+
+--Constants
+local SET_NAME = "Tournament Pack: 1st Season"
+local SET_NAME_URL = SET_NAME
+local CARDS_IN_PACKS = 3
+local PACKS_IN_BOX = 24
+
+-- Rarities
+local COMMON = "Common"
+local RARE = "Rare"
+local SUPER_RARE = "Super Rare"
+local ULTRA_RARE = "Ultra Rare"
+
+-- We want to map some rarities to other rarities (eg. when we want to treat a shortprint as a common)
+local RARITY_REPLACEMENTS = {}
+
+-- Ratios for last card, must add up to 1.0
+-- taken from https://youtu.be/Q-H7nckT6fU?t=101
+local RATIOS = {}
+RATIOS[COMMON] = 0.60
+RATIOS[RARE] = 0.33
+RATIOS[SUPER_RARE] = 0.06
+RATIOS[ULTRA_RARE] = 0.01
+
+
+PackGenerator = AbstractPackGenerator:new()
+
+function PackGenerator:assemblePack(cardsMap)
+    local pack = {}
+
+    -- all three cards can be commons
+    local commonsSequence = Math:randomSequence(3, cardsMap[COMMON].count)
+
+    -- 2 commons
+    for i = 1, 2 do
+        local commonIndex = commonsSequence[i]
+        pack[i] = cardsMap[COMMON][commonIndex]
+    end
+
+    -- one card which can have any rarity
+    local lastRarity = self:pickRarity(RATIOS)
+    local lastIndex = nil
+    if lastRarity == COMMON then
+        lastIndex = commonsSequence[3]
+    else
+        lastIndex = Math:randomInt(cardsMap[lastRarity].count)
+    end
+    pack[3] = cardsMap[lastRarity][lastIndex]
+
+    return pack
+end
+
+function PackGenerator:new()
+    o = AbstractPackGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    self.setName = SET_NAME
+    self.setNameUrl = SET_NAME_URL
+    self.cardsInPacks = CARDS_IN_PACKS
+    self.packsInBox = PACKS_IN_BOX
+    self.rarityReplacements = ALTERNATIVE_RARITIES
+
+    return o
+end
