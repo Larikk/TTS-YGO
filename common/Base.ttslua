@@ -153,6 +153,21 @@ function AbstractPackGenerator:generateBoosterBox()
     end
 end
 
+-- just for developing new packs
+function AbstractPackGenerator:printRarities()
+  local f = function()
+    for k, v in pairs(self.cardsMap) do
+      print(string.format("%s: %d", k, v.count))
+    end
+  end
+
+  if self.cardsMap == nil then
+      self:initCardsMap(|| f())
+  else
+      f()
+  end
+end
+
 function AbstractPackGenerator:new(o)
     o = o or {}
     setmetatable(o, self)
