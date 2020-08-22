@@ -65,7 +65,7 @@ function PackGenerator:new()
     self.setNameUrl = SET_NAME_URL
     self.cardsInPacks = CARDS_IN_PACKS
     self.packsInBox = PACKS_IN_BOX
-    self.rarityReplacements = ALTERNATIVE_RARITIES
+    self.rarityReplacements = RARITY_REPLACEMENTS
 
     return o
 end
