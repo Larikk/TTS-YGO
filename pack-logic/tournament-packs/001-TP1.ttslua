@@ -31,22 +31,20 @@ function PackGenerator:assemblePack(cardsMap)
 
     -- all three cards can be commons
     local commonsSequence = Math:randomSequence(3, cardsMap[COMMON].count)
+    local commons = self:pickMultipleCards(COMMON, 3)
 
     -- 2 commons
     for i = 1, 2 do
-        local commonIndex = commonsSequence[i]
-        pack[i] = cardsMap[COMMON][commonIndex]
+        pack[i] = commons[i]
     end
 
     -- one card which can have any rarity
-    local lastRarity = self:pickRarity(RATIOS)
-    local lastIndex = nil
-    if lastRarity == COMMON then
-        lastIndex = commonsSequence[3]
+    local rarityOfLast = self:pickRarity(RATIOS)
+    if rarityOfLast == COMMON then
+        pack[3] = commons[3]
     else
-        lastIndex = Math:randomInt(cardsMap[lastRarity].count)
+        pack[3] = self:pickSingleCard(rarityOfLast)
     end
-    pack[3] = cardsMap[lastRarity][lastIndex]
 
     return pack
 end
