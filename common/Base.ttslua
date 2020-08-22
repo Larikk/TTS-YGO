@@ -25,6 +25,22 @@ function AbstractPackGenerator:assemblePack()
     noop()
 end
 
+function AbstractPackGenerator:pickSingleCard(rarity)
+    local index = Math:randomInt(self.cardsMap[rarity].count)
+    return self.cardsMap[rarity][index]
+end
+
+function AbstractPackGenerator:pickMultipleCards(rarity, n)
+    local cards = {}
+    local sequence = Math:randomSequence(n, self.cardsMap[rarity].count)
+
+    for i, v in ipairs(sequence) do
+        cards[i] = self.cardsMap[rarity][v]
+    end
+
+    return cards
+end
+
 -- Each card has all of its releases in the card_sets array
 -- Releases can have different rarities so thats why we have to determine the right one
 -- rarityReplacements is a mapping between rarities
