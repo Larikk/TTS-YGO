@@ -13,9 +13,6 @@ function onObjectLeaveContainer(container, object)
 end
 ]]
 
-Spawner = {}
-Spawner.__index = Spawner
-
 -- Remarks to the notation:
 -- The suffix "Object" means that a variable points to a phsyical TTS object on the board.
 -- No suffix means that the variable points to a table with data.
@@ -24,16 +21,7 @@ Spawner.__index = Spawner
 -- packObject = bag/container on the TTS board
 -- pack = table which holds data of cards
 
-
-function Spawner:new(cardsInPack, packsInBox)
-    local spawner = {}
-    setmetatable(spawner, Spawner)
-    spawner.packsInBox = packsInBox
-    spawner.cardsInPack = cardsInPack
-    return spawner
-end
-
-function Spawner:spawnCard(card, callback)
+function AbstractPackGenerator:spawnCard(card, callback)
     spawnParams = {
         type = "Card",
         position = {x = 0, y = 3, z = -5},
@@ -57,7 +45,7 @@ function Spawner:spawnCard(card, callback)
     spawnObject(spawnParams)
 end
 
-function Spawner:spawnPack(pack, callback)
+function AbstractPackGenerator:spawnPack(pack, callback)
     spawnParams = {
         type = "Custom_Model",
         position = {x = 0, y = 3, z = 10},
@@ -91,7 +79,7 @@ function Spawner:spawnPack(pack, callback)
 
             Wait.condition(
                 function() if type(callback) == "function" then callback(obj()) end end,
-                function() return obj().getQuantity() >= self.cardsInPack end
+                function() return obj().getQuantity() >= self.cardsInPacks end
             )
         end
     }
@@ -99,7 +87,7 @@ function Spawner:spawnPack(pack, callback)
     spawnObject(spawnParams)
 end
 
-function Spawner:spawnBox(packs, callback)
+function AbstractPackGenerator:spawnBox(packs, callback)
     spawnParams = {
         type = "Custom_Model",
         position = {x = 0, y = 3, z = 15},
