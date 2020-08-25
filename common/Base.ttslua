@@ -65,21 +65,21 @@ function AbstractPackGenerator:parseCardList(cardList)
 end
 
 
-function AbstractPackGenerator:processAPIResponse(response, callback)
-    IO:info("Received card list, processing response...")
-    local cards = Json:decode(response.text).data
-
-    self.cardsMap = self:parseCardList(cards)
-    IO:info("Processed card list, continuing with spawning.")
-    if type(callback) == "function" then callback() end
-end
-
 -- downloads the card list from db.ygoprodeck.com and initializes initCardsMap
 -- callBack should be the action that should have been executed if cardsMap were initialized
 function AbstractPackGenerator:initCardsMap(callback)
+    local responseHandler = function(response, callback)
+        IO:info("Received card list, processing response...")
+        local cards = Json:decode(response.text).data
+
+        self.cardsMap = self:parseCardList(cards)
+        IO:info("Processed card list, continuing with spawning.")
+        if type(callback) == "function" then callback() end
+    end
+
     IO:info("Downloading card list...")
     WebRequest.get("https://db.ygoprodeck.com/api/v7/cardinfo.php?cardset="..self.setNameUrl,
-        function(response) self:processAPIResponse(response, callback) end
+        function(response) responseHandler(response, callback) end
     )
 end
 
