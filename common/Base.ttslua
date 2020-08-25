@@ -18,7 +18,7 @@ AbstractPackGenerator = {}
 #include <BaseUtil>
 
 -- Functions which handle the spawning of objects onto the table
-#include <Spawner>
+#include <BaseSpawningMethods>
 
 
 local function noop()
