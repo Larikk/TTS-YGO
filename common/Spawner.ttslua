@@ -59,7 +59,7 @@ end
 
 function Spawner:spawnPack(pack, callback)
     spawnParams = {
-        type = "Bag",
+        type = "Custom_Model",
         position = {x = 0, y = 3, z = 10},
         rotation = {x = 0, y = 0, z = 0},
         scale = {x = 1, y = 1, z = 1},
@@ -68,17 +68,31 @@ function Spawner:spawnPack(pack, callback)
 
         callback_function = function(packObject)
             packObject.setName("Pack")
-            packObject.setColorTint(Color.fromString("green"))
             packObject.setLuaScript(CONTAINER_LUA_SCRIPT)
-            Wait.condition(
-                function() if type(callback) == "function" then callback(packObject) end end,
-                function() return packObject.getQuantity() >= self.cardsInPack end
-            )
+            packObject.setLock(false)
+            packObject.setCustomObject({
+                mesh = "http://pastebin.com/raw/xdTHXJJX",
+                diffuse = "https://ms.yugipedia.com//b/bc/LOB-BoosterEN.png",
+                normal = "http://i.imgur.com/9FUxR04.png",
+                type = 6, -- bag
+                material = 3 -- cardbord
+            })
+            packObject = packObject.reload()
+
+            -- we have to get a reference to the object trough the guid for some reason for this to work
+            local guid = packObject.getGUID()
+            local obj = function() return getObjectFromGUID(guid) end
+
             -- Iterate backwards because the first inserted element in a bag is at the bottom
             for i = #pack, 1, -1 do
                 local card = pack[i]
-                self:spawnCard(card, function(cardObject) packObject.putObject(cardObject) end)
+                self:spawnCard(card, function(cardObject) obj().putObject(cardObject) end)
             end
+
+            Wait.condition(
+                function() if type(callback) == "function" then callback(obj()) end end,
+                function() return obj().getQuantity() >= self.cardsInPack end
+            )
         end
     }
 
@@ -87,7 +101,7 @@ end
 
 function Spawner:spawnBox(packs, callback)
     spawnParams = {
-        type = "Bag",
+        type = "Custom_Model",
         position = {x = 0, y = 3, z = 15},
         rotation = {x = 0, y = 0, z = 0},
         scale = {x = 1, y = 1, z = 1},
@@ -96,15 +110,29 @@ function Spawner:spawnBox(packs, callback)
 
         callback_function = function(boxObject)
             boxObject.setName("Set Box")
-            boxObject.setColorTint(Color.fromString("blue"))
             boxObject.setLuaScript(CONTAINER_LUA_SCRIPT)
+            boxObject.setLock(false)
+            boxObject.setCustomObject({
+                mesh = "http://pastebin.com/raw/Nxkp73RJ",
+                diffuse = "http://i.imgur.com/Ld7rhEF.pnghttp://i.imgur.com/Ld7rhEF.png",
+                normal = "http://i.imgur.com/gyKUJms.jpg",
+                type = 6, -- bag
+                material = 3 -- cardbord
+            })
+            boxObject = boxObject.reload()
+
+            -- we have to get a reference to the object trough the guid for some reason for this to work
+            local guid = boxObject.getGUID()
+            local obj = function() return getObjectFromGUID(guid) end
+
+            for i, pack in ipairs(packs) do
+                self:spawnPack(pack, function(packObject) obj().putObject(packObject) end)
+            end
+
             Wait.condition(
                 function() if type(callback) == "function" then callback() end end,
-                function() return boxObject.getQuantity() >= self.packsInBox end
+                function() return obj().getQuantity() >= self.packsInBox end
             )
-            for i, pack in ipairs(packs) do
-                self:spawnPack(pack, function(packObject) boxObject.putObject(packObject) end)
-            end
         end
     }
 
