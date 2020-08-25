@@ -26,8 +26,9 @@ RATIOS[ULTRA_RARE] = 0.01
 
 PackGenerator = AbstractPackGenerator:new()
 
-function PackGenerator:assemblePack(cardsMap)
+function PackGenerator:assemblePack()
     local pack = {}
+    local cardsMap = self.cardsMap
 
     -- all three cards can be commons
     local commonsSequence = Math:randomSequence(3, cardsMap[COMMON].count)

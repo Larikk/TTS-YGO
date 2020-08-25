@@ -27,8 +27,9 @@ RATIOS[COMMON3] = 0.25
 
 PackGenerator = AbstractPackGenerator:new()
 
-function PackGenerator:assemblePack(cardsMap)
+function PackGenerator:assemblePack()
     local pack = {}
+    local cardsMap = self.cardsMap
 
     -- wildcard/starfoil rare first
     local wildCardSlot = self:pickRarity(RATIOS)
