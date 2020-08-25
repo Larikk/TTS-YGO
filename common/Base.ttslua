@@ -89,7 +89,7 @@ end
 function AbstractPackGenerator:generateBoosterPack()
     local f = function()
         local pack = self:assemblePack()
-        self:spawnBox(pack, || IO:success("Pack is ready!"))
+        self:spawnPack(pack, || IO:success("Pack is ready!"))
     end
 
     if self.cardsMap == nil then
