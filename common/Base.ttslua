@@ -25,6 +25,14 @@ function AbstractPackGenerator:assemblePack()
     noop()
 end
 
+function AbstractPackGenerator:assembleBox()
+    local packs = {}
+    for i = 1, self.packsInBox do
+      table.insert(packs, self:assemblePack())
+    end
+    return packs
+end
+
 function AbstractPackGenerator:pickSingleCard(rarity)
     local index = Math:randomInt(self.cardsMap[rarity].count)
     return self.cardsMap[rarity][index]
@@ -82,35 +90,6 @@ function AbstractPackGenerator:pickRarity(ratios)
     return fallbackRarity
 end
 
--- spawns a booster, requires cardsMap to be initialized
--- should only be called internally
--- use generateBoosterPack() for external use
-function AbstractPackGenerator:spawnBoosterPack()
-    local cardsMap = self.cardsMap
-    local packs = self:assemblePack(cardsMap)
-
-
-    local spawner = Spawner:new(self.cardsInPacks)
-    spawner:spawnPack(packs, || IO:success("Pack is ready!"))
-
-end
-
--- spawns a box, requires cardsMap to be initialized
--- should only be called internally
--- use generateBoosterBox() for external use
-function AbstractPackGenerator:spawnBoosterBox()
-    local cardsMap = self.cardsMap
-
-    local packs = {}
-    for i = 1, self.packsInBox do
-      table.insert(packs, self:assemblePack(cardsMap))
-    end
-
-    local spawner = Spawner:new(self.cardsInPacks, self.packsInBox)
-    spawner:spawnBox(packs, || IO:success("Box is ready!"))
-
-end
-
 -- Can be overridden by subclasses if necessary
 function AbstractPackGenerator:parseCardList(cardList)
     local cardsMap = {}
@@ -159,19 +138,31 @@ end
 
 -- spawns a booster, can be called externally
 function AbstractPackGenerator:generateBoosterPack()
+    local f = function()
+        local pack = self:assemblePack()
+        local spawner = Spawner:new(self.cardsInPacks)
+        spawner:spawnBox(pack, || IO:success("Pack is ready!"))
+    end
+
     if self.cardsMap == nil then
-        self:initCardsMap(|| self:spawnBoosterPack())
+        self:initCardsMap(|| f())
     else
-        self:spawnBoosterPack()
+        f()
     end
 end
 
 -- spawns a box, can be called externally
 function AbstractPackGenerator:generateBoosterBox()
+    local f = function()
+        local packs = self:assembleBox()
+        local spawner = Spawner:new(self.cardsInPacks, self.packsInBox)
+        spawner:spawnBox(packs, || IO:success("Box is ready!"))
+    end
+
     if self.cardsMap == nil then
-        self:initCardsMap(|| self:spawnBoosterBox())
+        self:initCardsMap(|| f())
     else
-        self:spawnBoosterBox()
+        f()
     end
 end
 
