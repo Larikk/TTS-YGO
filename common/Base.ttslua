@@ -15,6 +15,9 @@
 -- Pack-specific behavior is implemented is subclasses
 AbstractPackGenerator = {}
 
+-- Utility functions for picking cards/rarities and other useful stuff
+#include <BaseUtil>
+
 
 local function noop()
     error("This abstract function has no implementation and must be overriden by a specific pack generator.")
@@ -33,62 +36,6 @@ function AbstractPackGenerator:assembleBox()
     return packs
 end
 
-function AbstractPackGenerator:pickSingleCard(rarity)
-    local index = Math:randomInt(self.cardsMap[rarity].count)
-    return self.cardsMap[rarity][index]
-end
-
-function AbstractPackGenerator:pickMultipleCards(rarity, n)
-    local cards = {}
-    local sequence = Math:randomSequence(n, self.cardsMap[rarity].count)
-
-    for i, v in ipairs(sequence) do
-        cards[i] = self.cardsMap[rarity][v]
-    end
-
-    return cards
-end
-
--- Each card has all of its releases in the card_sets array
--- Releases can have different rarities so thats why we have to determine the right one
--- rarityReplacements is a mapping between rarities
--- It's used if we want to replace a rarity with another one (like "Short Print" to "Common")
-function AbstractPackGenerator:extractRarity(card)
-    rarityReplacements = self.rarityReplacements or {}
-    for i, set in ipairs(card.card_sets) do
-        if set.set_name == self.setName then
-          return rarityReplacements[set.set_rarity] or set.set_rarity
-        end
-    end
-
-    return nil
-end
-
-
--- ratios is a table
--- key: rarity
--- value: possibility of the rarity
--- values should add up to 1.0
-function AbstractPackGenerator:pickRarity(ratios)
-    local p = Math:randomFloat()
-    local fallbackRarity = nil
-
-    for rarity, ratio in pairs(ratios) do
-        if (p < ratio) then
-            return rarity
-        end
-        p = p - ratio
-        fallbackRarity = rarity
-    end
-
-    IO:warning(
-      "An error occurred while determining a random rarity for a single card. "..
-      "Ratios may be misconfigured (Have to add up to 1.0). Defaulting to highest: "..fallbackRarity..
-      ". Provided ratios:\n"..IO:tableToString(ratios)
-    )
-
-    return fallbackRarity
-end
 
 -- Can be overridden by subclasses if necessary
 function AbstractPackGenerator:parseCardList(cardList)
@@ -166,20 +113,6 @@ function AbstractPackGenerator:generateBoosterBox()
     end
 end
 
--- just for developing new packs
-function AbstractPackGenerator:printRarities()
-  local f = function()
-    for k, v in pairs(self.cardsMap) do
-      print(string.format("%s: %d", k, v.count))
-    end
-  end
-
-  if self.cardsMap == nil then
-      self:initCardsMap(|| f())
-  else
-      f()
-  end
-end
 
 function AbstractPackGenerator:new(o)
     o = o or {}
