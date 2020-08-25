@@ -15,7 +15,7 @@
 AbstractPackGenerator = {}
 
 -- Utility functions for picking cards/rarities and other useful stuff
-#include <BaseUtil>
+#include <BaseUtilMethods>
 
 -- Functions which handle the spawning of objects onto the table
 #include <BaseSpawningMethods>
