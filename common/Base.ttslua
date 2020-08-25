@@ -1,4 +1,3 @@
-#include <Spawner>
 #include <CardParser>
 #include <Math>
 #include <IO>
@@ -17,6 +16,9 @@ AbstractPackGenerator = {}
 
 -- Utility functions for picking cards/rarities and other useful stuff
 #include <BaseUtil>
+
+-- Functions which handle the spawning of objects onto the table
+#include <Spawner>
 
 
 local function noop()
@@ -87,8 +89,7 @@ end
 function AbstractPackGenerator:generateBoosterPack()
     local f = function()
         local pack = self:assemblePack()
-        local spawner = Spawner:new(self.cardsInPacks)
-        spawner:spawnBox(pack, || IO:success("Pack is ready!"))
+        self:spawnBox(pack, || IO:success("Pack is ready!"))
     end
 
     if self.cardsMap == nil then
@@ -102,8 +103,7 @@ end
 function AbstractPackGenerator:generateBoosterBox()
     local f = function()
         local packs = self:assembleBox()
-        local spawner = Spawner:new(self.cardsInPacks, self.packsInBox)
-        spawner:spawnBox(packs, || IO:success("Box is ready!"))
+        self:spawnBox(packs, || IO:success("Box is ready!"))
     end
 
     if self.cardsMap == nil then
