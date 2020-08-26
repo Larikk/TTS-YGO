@@ -45,11 +45,11 @@ def addLeft(img, logo):
 def addRight(img, logo):
     size = (194, 386)
     logoSize = scaleTuple(size, 0.8)
-    left = Image.new("RGBA", size, "black")
+    right = Image.new("RGBA", size, "black")
     logo = logo.rotate(90, expand = True)
     logo.thumbnail(logoSize)
-    pasteAlphaComposite(left, logo)
-    img.paste(left, (519, 215))
+    pasteAlphaComposite(right, logo)
+    img.paste(right, (519, 215))
 
 def addFront(img, front):
     img.paste(front, (215, 215))
