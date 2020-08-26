@@ -10,12 +10,18 @@ def pasteAlphaComposite(background, foreground):
     offset = ((bw - fw) // 2, (bh - fh) // 2)
     background.alpha_composite(foreground, offset)
 
-def createFront(logo, scale):
+def createFront(cover):
     size = (290, 386)
-    logoSize = scaleTuple(size, scale) if scale != 1 else size
-    front = Image.new("RGBA", size, "black")
+    cover = cover.rotate(90, expand = True)
+    cover = cover.resize(size, Image.LANCZOS)
+    return cover
+
+def createPlaceholderFront(logo):
+    size = (290, 386)
+    logoSize = scaleTuple(size, 0.8)
     logo = logo.rotate(90, expand = True)
     logo.thumbnail(logoSize, Image.LANCZOS)
+    front = Image.new("RGBA", size, "black")
     pasteAlphaComposite(front, logo)
     return front
 
@@ -60,11 +66,10 @@ img = Image.new("RGBA", (1024, 768), None)
 front = None
 if len(sys.argv) < 2:
     print("No front image specified, creating placeholder")
-    front = createFront(logo, 0.8)
+    front = createPlaceholderFront(logo)
 else:
-    front = Image.open(sys.argv[1])
-    front = front.convert("RGBA")
-    front = createFront(front, 1)
+    cover = Image.open(sys.argv[1])
+    front = createFront(cover)
 
 
 addTop(img)
