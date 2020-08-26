@@ -1,4 +1,4 @@
-from PIL import Image
+from PIL import Image, ImageDraw
 import sys
 
 def scaleTuple(tuple, scale):
@@ -9,6 +9,11 @@ def pasteAlphaComposite(background, foreground):
     bw, bh = background.size
     offset = ((bw - fw) // 2, (bh - fh) // 2)
     background.alpha_composite(foreground, offset)
+
+def drawBorders(img):
+    draw = ImageDraw.Draw(img)
+    w, h = img.size
+    draw.rectangle((0, 0, w-1, h-1), outline="grey", width=4)
 
 def createFront(cover):
     size = (290, 386)
@@ -23,14 +28,17 @@ def createPlaceholderFront(logo):
     logo.thumbnail(logoSize, Image.LANCZOS)
     front = Image.new("RGBA", size, "black")
     pasteAlphaComposite(front, logo)
+    drawBorders(front)
     return front
 
 def addTop(img):
     top = Image.new("RGBA", (290, 194), "black")
+    drawBorders(top)
     img.paste(top, (215, 7))
 
 def addBottom(img):
     bottom = Image.new("RGBA", (290, 194), "black")
+    drawBorders(bottom)
     img.paste(bottom, (727, 7))
 
 def addLeft(img, logo):
@@ -40,6 +48,7 @@ def addLeft(img, logo):
     logo = logo.rotate(-90, expand = True)
     logo.thumbnail(logoSize)
     pasteAlphaComposite(left, logo)
+    drawBorders(left)
     img.paste(left, (7, 215))
 
 def addRight(img, logo):
@@ -49,6 +58,7 @@ def addRight(img, logo):
     logo = logo.rotate(90, expand = True)
     logo.thumbnail(logoSize)
     pasteAlphaComposite(right, logo)
+    drawBorders(right)
     img.paste(right, (519, 215))
 
 def addFront(img, front):
@@ -56,6 +66,7 @@ def addFront(img, front):
 
 def addBack(img):
     back = Image.new("RGBA", (290, 386), "black")
+    drawBorders(back)
     img.paste(back, (727, 215))
 
 
