@@ -15,6 +15,35 @@ def drawBorders(img):
     w, h = img.size
     draw.rectangle((0, 0, w-1, h-1), outline="grey", width=4)
 
+def drawBack(img):
+    draw = ImageDraw.Draw(img)
+    w, h = img.size
+
+    polygons = [
+        # Outer trapeze
+        (
+            (0, 0),
+            (w*0.6, h*0.25),
+            (w*0.6, h*0.75),
+            (0, h-1),
+        ),
+        
+        # Upper line
+        (
+            (w-1, 0),
+            (w*0.49, h*0.2)
+        ),
+
+        # Lower line
+        (
+            (w-1, h-1),
+            (w*0.49, h*0.8)
+        ),
+    ]
+
+    for polygon in polygons:
+        draw.line(polygon, fill="grey", width=4, joint="curve")
+
 def createFront(cover):
     size = (290, 386)
     cover = cover.rotate(90, expand = True)
@@ -67,6 +96,7 @@ def addFront(img, front):
 def addBack(img):
     back = Image.new("RGBA", (290, 386), "black")
     drawBorders(back)
+    drawBack(back)
     img.paste(back, (727, 215))
 
 
