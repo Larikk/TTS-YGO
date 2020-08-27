@@ -1,9 +1,28 @@
 #include <../../common/Base>
 
---Constants
+-- Name of the set
 local SET_NAME = "Battle Pack: Epic Dawn"
-local SET_NAME_URL = "battle%20pack:%20epic%20dawn"
+
+-- Name used for the query to the api
+-- In most cases setting it to SET_NAME should be okay
+-- It may be necessary to replace spaces with '%20'
+-- Example: "Metal Raiders" => "metal%20raiders"
+-- This is kept as a separate parameters in case something else than the raw set name
+-- needs to be used for the API query
+local SET_NAME_URL = SET_NAME
+
+-- Texture for packs
+-- If nil, a placeholder will be used
+local PACK_TEXTURE = "https://i.imgur.com/sz85e3z.jpga"
+
+-- Texture for boxes
+-- If nil, a placeholder will be used
+local BOX_TEXTURE = "https://i.imgur.com/qP94DEb.png"
+
+-- Number of cards in a single pack
 local CARDS_IN_PACKS = 5
+
+-- Number of packs in a set box
 local PACKS_IN_BOX = 36
 
 -- Rarities/Slots
@@ -125,6 +144,8 @@ function PackGenerator:new()
     self.setNameUrl = SET_NAME_URL
     self.cardsInPacks = CARDS_IN_PACKS
     self.packsInBox = PACKS_IN_BOX
+    self.packTexture = PACK_TEXTURE
+    self.boxTexture = BOX_TEXTURE
     self.rarityReplacements = RARITY_REPLACEMENTS
 
     return o
