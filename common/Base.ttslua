@@ -122,6 +122,8 @@ function AbstractPackGenerator:new(o)
     -- must be overridden by specific generators
     self.setName = nil
     self.setNameUrl = nil
+    self.packTexture = nil
+    self.boxTexture = nil
     self.cardsInPacks = nil
     self.packsInBox = nil
     self.rarityReplacements = {}
