@@ -1,5 +1,13 @@
 local CARD_BACK = "https://i.imgur.com/UjbK2Wb.png"
 
+local DEFAULT_PACK_TEXTURE = "https://i.imgur.com/XlF4YQW.png"
+local DEFAULT_BOX_TEXTURE = "https://i.imgur.com/hDtFLea.png"
+
+local PACK_MESH = "http://pastebin.com/raw/xdTHXJJX"
+local BOX_MESH = "https://pastebin.com/raw/WhYqmJve"
+
+local PACK_NORMAL = "http://i.imgur.com/9FUxR04.png"
+
 -- LUA Script for spawned containers
 local CONTAINER_LUA_SCRIPT = [[
 function filterObjectEnter(o)
@@ -59,11 +67,14 @@ function AbstractPackGenerator:spawnPack(pack, callback)
             packObject.setLuaScript(CONTAINER_LUA_SCRIPT)
             packObject.setLock(false)
             packObject.setCustomObject({
-                mesh = "http://pastebin.com/raw/xdTHXJJX",
-                diffuse = "https://ms.yugipedia.com//b/bc/LOB-BoosterEN.png",
-                normal = "http://i.imgur.com/9FUxR04.png",
+                mesh = PACK_MESH,
+                diffuse = self.packTexture or DEFAULT_PACK_TEXTURE,
+                normal = PACK_NORMAL,
                 type = 6, -- bag
-                material = 3 -- cardbord
+                material = 3, -- cardbord
+                specular_intensity = 0.2,
+                specular_sharpness = 7.0,
+                fresnel_strength = 0.4
             })
             packObject = packObject.reload()
 
@@ -101,11 +112,13 @@ function AbstractPackGenerator:spawnBox(packs, callback)
             boxObject.setLuaScript(CONTAINER_LUA_SCRIPT)
             boxObject.setLock(false)
             boxObject.setCustomObject({
-                mesh = "http://pastebin.com/raw/Nxkp73RJ",
-                diffuse = "http://i.imgur.com/Ld7rhEF.pnghttp://i.imgur.com/Ld7rhEF.png",
-                normal = "http://i.imgur.com/gyKUJms.jpg",
+                mesh = BOX_MESH,
+                diffuse = self.boxTexture or DEFAULT_BOX_TEXTURE,
                 type = 6, -- bag
-                material = 3 -- cardbord
+                material = 3, -- cardbord
+                specular_intensity = 0.05,
+                specular_sharpness = 5.0,
+                fresnel_strength = 0.1
             })
             boxObject = boxObject.reload()
 
