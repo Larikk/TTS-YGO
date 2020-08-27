@@ -63,7 +63,8 @@ function AbstractPackGenerator:spawnPack(pack, callback)
         snap_to_grid = true,
 
         callback_function = function(packObject)
-            packObject.setName("Pack")
+            packObject.setName(self.setName)
+            packObject.setDescription("Booster Pack")
             packObject.setLuaScript(CONTAINER_LUA_SCRIPT)
             packObject.setLock(false)
             packObject.setCustomObject({
@@ -108,7 +109,8 @@ function AbstractPackGenerator:spawnBox(packs, callback)
         snap_to_grid = true,
 
         callback_function = function(boxObject)
-            boxObject.setName("Set Box")
+            boxObject.setName(self.setName)
+            boxObject.setDescription("Set Box")
             boxObject.setLuaScript(CONTAINER_LUA_SCRIPT)
             boxObject.setLock(false)
             boxObject.setCustomObject({
