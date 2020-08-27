@@ -18,11 +18,7 @@ local RARITY_REPLACEMENTS = {}
 RARITY_REPLACEMENTS["Short Print"] = COMMON
 
 -- Ratios for last card, must add up to 1.0
-local RATIOS = {}
-RATIOS[COMMON] = 0.71
-RATIOS[SUPER_RARE] = 0.17
-RATIOS[ULTRA_RARE] = 0.08
-RATIOS[SECRET_RARE] = 0.04
+#include _RatiosPre2016
 
 
 PackGenerator = AbstractPackGenerator:new()
