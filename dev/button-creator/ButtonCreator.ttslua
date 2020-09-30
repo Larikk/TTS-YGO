@@ -1,0 +1,101 @@
+#include <../../src/common/IO>
+#include Packs
+#include ButtonLuaScript
+
+
+local DEFAULT_PACK_TEXTURE = "https://i.imgur.com/XlF4YQW.png"
+local PACK_MESH = "http://pastebin.com/raw/xdTHXJJX"
+local PACK_NORMAL = "http://i.imgur.com/9FUxR04.png"
+
+local PACKS_PER_ROW = 4
+
+local SPAWN = Vector(-30, 2, 15) -- Where spawning starts
+
+local PACK_HORIZONTAL_OFFSET = 5 -- Horizontal space between pack buttons
+local PACK_VERTICAL_OFFSET = -6 -- Vertical space between pack buttons and sections
+
+
+function isObjReady(obj)
+    return not obj.spawning and not obj.loading_custom and obj.resting
+end
+
+function spawnSectionTitle(pos, title)
+    pos = pos or Vector(0, 2, 0)
+    pos = pos + Vector(PACK_HORIZONTAL_OFFSET * ((PACKS_PER_ROW-1)/2), 0, 0)
+    spawnParams = {
+        type = "3DText",
+        --alignement = "MiddleLeft",
+        text = tile,
+        position = pos,
+        rotation = {x=90, y=0, z=0}
+    }
+
+    text = spawnObject(spawnParams)
+    text.setValue(title)
+end
+
+function spawnButton(pos, section, pack)
+    spawnParams = {
+        type = "Custom_Model",
+        position = pos,
+        rotation = {x=0, y=180, z=0},
+
+        callback_function = function(packObject)
+            packObject.setLock(true)
+            packObject.setCustomObject({
+                mesh = PACK_MESH,
+                diffuse = pack.art or DEFAULT_PACK_TEXTURE,
+                normal = PACK_NORMAL,
+                material = 3, -- cardbord
+                specular_intensity = 0.2,
+                specular_sharpness = 7.0,
+                fresnel_strength = 0.4
+            })
+            packObject = packObject.reload()
+            packObject.setLuaScript(createLuaScript(section, pack.file))
+        end
+    }
+
+    spawnObject(spawnParams)
+end
+
+function newline(cursor, x)
+    cursor = cursor + Vector(0, 0, PACK_VERTICAL_OFFSET)
+    cursor:setAt("x", x)
+    return cursor
+end
+
+function spawnSection(cursor, section)
+    cursor = cursor:copy()
+    spawnSectionTitle(cursor, section.title)
+    cursor = cursor + Vector(0, 0, -5)
+    local leftX = cursor.x
+    local packsInCurrentRow = 0
+    for i,pack in ipairs(section.packs) do
+        spawnButton(cursor, section.folder, pack)
+        cursor = cursor + Vector(PACK_HORIZONTAL_OFFSET, 0, 0) -- moves cursor to right
+        packsInCurrentRow = packsInCurrentRow + 1
+        if packsInCurrentRow == PACKS_PER_ROW then
+            -- moves cursor to left and bottom
+            cursor = newline(cursor, leftX)
+            packsInCurrentRow = 0
+        end
+    end
+
+    if packsInCurrentRow ~= 0 then
+        cursor = newline(cursor, leftX)
+    end
+
+    return cursor
+end
+
+function spawnButtons()
+    local cursor = SPAWN:copy()
+    for key,section in pairs(packSections) do
+        cursor = spawnSection(cursor, section)
+    end
+
+
+end
+
+function none() end
