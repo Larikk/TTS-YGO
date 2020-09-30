@@ -1,6 +1,6 @@
 #include <../../src/common/IO>
-#include Packs
-#include ButtonLuaScript
+local buttonSections = require("TTS-YGO-sealed-draft/dev/button-creator/Packs")
+local buttonLuaScript = require("TTS-YGO-sealed-draft/dev/button-creator/ButtonLuaScript")
 
 
 local DEFAULT_PACK_TEXTURE = "https://i.imgur.com/XlF4YQW.png"
@@ -52,7 +52,7 @@ function spawnButton(pos, section, pack)
                 fresnel_strength = 0.4
             })
             packObject = packObject.reload()
-            packObject.setLuaScript(createLuaScript(section, pack.file))
+            packObject.setLuaScript(buttonLuaScript.createLuaScript(section, pack.file))
         end
     }
 
@@ -91,7 +91,7 @@ end
 
 function spawnButtons()
     local cursor = SPAWN:copy()
-    for key,section in pairs(packSections) do
+    for key,section in pairs(buttonSections) do
         cursor = spawnSection(cursor, section)
     end
 
