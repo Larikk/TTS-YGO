@@ -3,16 +3,17 @@ local buttonSections = require("TTS-YGO-sealed-draft/dev/button-creator/Packs")
 local buttonLuaScript = require("TTS-YGO-sealed-draft/dev/button-creator/ButtonLuaScript")
 
 
-local DEFAULT_PACK_TEXTURE = "https://i.imgur.com/XlF4YQW.png"
-local PACK_MESH = "http://pastebin.com/raw/xdTHXJJX"
-local PACK_NORMAL = "http://i.imgur.com/9FUxR04.png"
+local DEFAULT_BUTTON_TEXTURE = "https://i.imgur.com/XlF4YQW.png"
+local BUTTON_MESH = "http://pastebin.com/raw/xdTHXJJX"
+local BUTTON_NORMAL = "http://i.imgur.com/9FUxR04.png"
 
-local PACKS_PER_ROW = 4
+local BUTTONS_PER_ROW = 4
 
 local SPAWN = Vector(-30, 2, 15) -- Where spawning starts
 
-local PACK_HORIZONTAL_OFFSET = 5 -- Horizontal space between pack buttons
-local PACK_VERTICAL_OFFSET = -6 -- Vertical space between pack buttons and sections
+local BUTTON_HORIZONTAL_SPACING = 5 -- Horizontal space between pack buttons
+local BUTTON_VERTICAL_SPACING = -6 -- Vertical space between pack buttons and sections
+local TITLE_SPACING_BOTTOM = -5 -- Vertical space between title and buttons
 
 
 function isObjReady(obj)
@@ -20,12 +21,9 @@ function isObjReady(obj)
 end
 
 function spawnSectionTitle(pos, title)
-    pos = pos or Vector(0, 2, 0)
-    pos = pos + Vector(PACK_HORIZONTAL_OFFSET * ((PACKS_PER_ROW-1)/2), 0, 0)
+    pos = pos + Vector(BUTTON_HORIZONTAL_SPACING * ((BUTTONS_PER_ROW-1)/2), 0, 0)
     spawnParams = {
         type = "3DText",
-        --alignement = "MiddleLeft",
-        text = tile,
         position = pos,
         rotation = {x=90, y=0, z=0}
     }
@@ -34,25 +32,26 @@ function spawnSectionTitle(pos, title)
     text.setValue(title)
 end
 
-function spawnButton(pos, section, pack)
+function spawnButton(pos, folder, buttonData)
     spawnParams = {
         type = "Custom_Model",
         position = pos,
         rotation = {x=0, y=180, z=0},
 
-        callback_function = function(packObject)
-            packObject.setLock(true)
-            packObject.setCustomObject({
-                mesh = PACK_MESH,
-                diffuse = pack.art or DEFAULT_PACK_TEXTURE,
-                normal = PACK_NORMAL,
+        callback_function = function(obj)
+            obj.setLock(true)
+            obj.setCustomObject({
+                mesh = BUTTON_MESH,
+                diffuse = buttonData.art or DEFAULT_BUTTON_TEXTURE,
+                normal = BUTTON_NORMAL,
                 material = 3, -- cardbord
                 specular_intensity = 0.2,
                 specular_sharpness = 7.0,
                 fresnel_strength = 0.4
             })
-            packObject = packObject.reload()
-            packObject.setLuaScript(buttonLuaScript.createLuaScript(section, pack.file))
+            obj = obj.reload()
+            local luaScript = buttonLuaScript.createLuaScript(folder, buttonData.file)
+            obj.setLuaScript(luaScript)
         end
     }
 
@@ -60,7 +59,7 @@ function spawnButton(pos, section, pack)
 end
 
 function newline(cursor, x)
-    cursor = cursor + Vector(0, 0, PACK_VERTICAL_OFFSET)
+    cursor = cursor + Vector(0, 0, BUTTON_VERTICAL_SPACING)
     cursor:setAt("x", x)
     return cursor
 end
@@ -68,21 +67,21 @@ end
 function spawnSection(cursor, section)
     cursor = cursor:copy()
     spawnSectionTitle(cursor, section.title)
-    cursor = cursor + Vector(0, 0, -5)
+    cursor = cursor + Vector(0, 0, TITLE_SPACING_BOTTOM)
     local leftX = cursor.x
-    local packsInCurrentRow = 0
-    for i,pack in ipairs(section.packs) do
-        spawnButton(cursor, section.folder, pack)
-        cursor = cursor + Vector(PACK_HORIZONTAL_OFFSET, 0, 0) -- moves cursor to right
-        packsInCurrentRow = packsInCurrentRow + 1
-        if packsInCurrentRow == PACKS_PER_ROW then
+    local buttonsInCurrentRow = 0
+    for i,button in ipairs(section.packs) do
+        spawnButton(cursor, section.folder, button)
+        cursor = cursor + Vector(BUTTON_HORIZONTAL_SPACING, 0, 0) -- moves cursor to right
+        buttonsInCurrentRow = buttonsInCurrentRow + 1
+        if buttonsInCurrentRow == BUTTONS_PER_ROW then
             -- moves cursor to left and bottom
             cursor = newline(cursor, leftX)
-            packsInCurrentRow = 0
+            buttonsInCurrentRow = 0
         end
     end
 
-    if packsInCurrentRow ~= 0 then
+    if buttonsInCurrentRow ~= 0 then
         cursor = newline(cursor, leftX)
     end
 
