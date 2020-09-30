@@ -1,0 +1,5 @@
+function onDrop()
+    local center = self.getBounds().center
+    local msg = string.format("x=%f\nz=%f",center.x, center.z)
+    print(msg)
+end

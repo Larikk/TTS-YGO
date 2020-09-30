@@ -1,0 +1,16 @@
+local packSections = {
+    {
+        folder = "main-sets",
+        title = "Main Sets",
+        packs = {
+            {name = "Legend of Blue Eyes White Dragon", file = "001-LOB", art = "https://i.imgur.com/uytVF0z.png"},
+        }
+    },
+    {
+        folder = "battle-packs",
+        title = "Battle Packs",
+        packs = {
+            {name = "Battle Pack: Epic Dawn", file = "001-BP01", art = "https://i.imgur.com/sz85e3z.jpga"},
+        }
+    }
+}
