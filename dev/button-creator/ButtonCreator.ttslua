@@ -2,18 +2,25 @@
 local buttonSections = require("TTS-YGO-sealed-draft/dev/button-creator/Packs")
 local buttonLuaScript = require("TTS-YGO-sealed-draft/dev/button-creator/ButtonLuaScript")
 
+-- Spawns the buttons and corresponding titles
+-- After spawning TTS will complain about error in the code (like #include/require)
+-- Ignore the errors, save the game, reload the new save, get scripts in Atom and deploy it again to TITLE_SPACING_BOTTOM
+-- During the deployment Atom will replace the import statements with the corresponding code
 
-local DEFAULT_BUTTON_TEXTURE = "https://i.imgur.com/XlF4YQW.png"
-local BUTTON_MESH = "http://pastebin.com/raw/xdTHXJJX"
-local BUTTON_NORMAL = "http://i.imgur.com/9FUxR04.png"
-
-local BUTTONS_PER_ROW = 4
+-- Constants that can be adjusted
+local BUTTONS_PER_ROW = 4 -- how many buttons should be in a row
 
 local SPAWN = Vector(-30, 2, 15) -- Where spawning starts
 
 local BUTTON_HORIZONTAL_SPACING = 5 -- Horizontal space between pack buttons
 local BUTTON_VERTICAL_SPACING = -6 -- Vertical space between pack buttons and sections
 local TITLE_SPACING_BOTTOM = -5 -- Vertical space between title and buttons
+
+
+-- Links to required Custom_Model data
+local DEFAULT_BUTTON_TEXTURE = "https://i.imgur.com/XlF4YQW.png"
+local BUTTON_MESH = "http://pastebin.com/raw/xdTHXJJX"
+local BUTTON_NORMAL = "http://i.imgur.com/9FUxR04.png"
 
 
 function isObjReady(obj)
