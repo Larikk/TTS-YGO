@@ -1,4 +1,6 @@
-local function createLuaScript(folder, file)
+local script = {}
+
+function script.createLuaScript(folder, file)
     return string.format([=====[
 %s <TTS-YGO-sealed-draft/src/pack-logic/%s/%s>
 
@@ -19,3 +21,5 @@ function onload()
 end
 ]=====], "#include", folder, file)
 end
+
+return script
