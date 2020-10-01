@@ -12,7 +12,14 @@ local packSections = {
         packs = {
             {name = "Battle Pack: Epic Dawn", file = "001-BP01", art = "https://i.imgur.com/sz85e3z.jpga"},
         }
-    }
+    },
+    {
+        folder = "tournament-packs",
+        title = "Tournament Packs",
+        packs = {
+            {name = "Tournament Pack: 1st Season", file = "001-TP1", art = "https://i.imgur.com/6LzkAa7.png"},
+        }
+    },
 }
 
 return packSections
