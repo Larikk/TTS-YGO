@@ -1,5 +1,7 @@
 local script = {}
 
+local SPAWN = "{x = 0, y = 5, z = 30}"
+
 function script.createLuaScript(folder, file)
     return string.format([=====[
 %s <TTS-YGO-sealed-draft/src/pack-logic/%s/%s>
@@ -7,7 +9,7 @@ function script.createLuaScript(folder, file)
 local packGenerator = PackGenerator:new()
 
 function onClick()
-    packGenerator:generateBoosterBox()
+    packGenerator:generateBoosterBox(%s)
 end
 
 function onload()
@@ -19,7 +21,7 @@ function onload()
         color= {r=1, g=0, b=0}
     })
 end
-]=====], "#include", folder, file)
+]=====], "#include", folder, file, SPAWN)
 end
 
 return script

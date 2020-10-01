@@ -8,6 +8,8 @@ local BOX_MESH = "https://pastebin.com/raw/WhYqmJve"
 
 local PACK_NORMAL = "http://i.imgur.com/9FUxR04.png"
 
+local DEFAULT_SPAWN_POS = Vector(0, 5, 0)
+
 -- LUA Script for spawned containers
 local CONTAINER_LUA_SCRIPT = [[
 function filterObjectEnter(o)
@@ -29,10 +31,12 @@ end
 -- packObject = bag/container on the TTS board
 -- pack = table which holds data of cards
 
-function AbstractPackGenerator:spawnCard(card, callback)
+function AbstractPackGenerator:spawnCard(card, pos, callback)
+    pos = Vector(pos) or DEFAULT_SPAWN_POS
+
     spawnParams = {
         type = "Card",
-        position = {x = 0, y = 3, z = -5},
+        position = pos,
         rotation = {x = 0, y = 180, z = 180},
         scale = {x = 1, y = 1, z = 1},
         sound = true,
@@ -53,10 +57,13 @@ function AbstractPackGenerator:spawnCard(card, callback)
     spawnObject(spawnParams)
 end
 
-function AbstractPackGenerator:spawnPack(pack, callback)
+function AbstractPackGenerator:spawnPack(pack, pos, callback)
+    pos = Vector(pos) or DEFAULT_SPAWN_POS
+    local cardPos = pos + Vector(0, 5, 0)
+
     spawnParams = {
         type = "Custom_Model",
-        position = {x = 0, y = 3, z = 10},
+        position = pos,
         rotation = {x = 0, y = 180, z = 0},
         scale = {x = 1, y = 1, z = 1},
         sound = false,
@@ -86,7 +93,7 @@ function AbstractPackGenerator:spawnPack(pack, callback)
             -- Iterate backwards because the first inserted element in a bag is at the bottom
             for i = #pack, 1, -1 do
                 local card = pack[i]
-                self:spawnCard(card, function(cardObject) obj().putObject(cardObject) end)
+                self:spawnCard(card, cardPos, function(cardObject) obj().putObject(cardObject) end)
             end
 
             Wait.condition(
@@ -99,10 +106,13 @@ function AbstractPackGenerator:spawnPack(pack, callback)
     spawnObject(spawnParams)
 end
 
-function AbstractPackGenerator:spawnBox(packs, callback)
+function AbstractPackGenerator:spawnBox(packs, pos, callback)
+    pos = Vector(pos) or DEFAULT_SPAWN_POS
+    local boosterPos = pos + Vector(0, 5, 0)
+
     spawnParams = {
         type = "Custom_Model",
-        position = {x = 0, y = 3, z = 15},
+        position = pos,
         rotation = {x = 0, y = -90, z = 0},
         scale = {x = 1, y = 1, z = 1},
         sound = false,
@@ -129,7 +139,7 @@ function AbstractPackGenerator:spawnBox(packs, callback)
             local obj = function() return getObjectFromGUID(guid) end
 
             for i, pack in ipairs(packs) do
-                self:spawnPack(pack, function(packObject) obj().putObject(packObject) end)
+                self:spawnPack(pack, boosterPos, function(packObject) obj().putObject(packObject) end)
             end
 
             Wait.condition(
