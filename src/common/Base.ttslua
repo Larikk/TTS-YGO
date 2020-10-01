@@ -86,10 +86,10 @@ function AbstractPackGenerator:initCardsMap(callback)
 end
 
 -- spawns a booster, can be called externally
-function AbstractPackGenerator:generateBoosterPack()
+function AbstractPackGenerator:generateBoosterPack(pos)
     local f = function()
         local pack = self:assemblePack()
-        self:spawnPack(pack, || IO:success("Pack is ready!"))
+        self:spawnPack(pack, pos, || IO:success("Pack is ready!"))
     end
 
     if self.cardsMap == nil then
@@ -100,10 +100,10 @@ function AbstractPackGenerator:generateBoosterPack()
 end
 
 -- spawns a box, can be called externally
-function AbstractPackGenerator:generateBoosterBox()
+function AbstractPackGenerator:generateBoosterBox(pos)
     local f = function()
         local packs = self:assembleBox()
-        self:spawnBox(packs, || IO:success("Box is ready!"))
+        self:spawnBox(packs, pos, || IO:success("Box is ready!"))
     end
 
     if self.cardsMap == nil then
