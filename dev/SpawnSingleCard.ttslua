@@ -1,0 +1,21 @@
+#include <../src/common/Base>
+
+-- Test tool for spawning single cards by NAME
+-- Used for testing card object descriptions
+
+local NAME = "Odd-Eyes Raging Dragon"
+
+function responseHandler(response)
+    local card = Json:decode(response.text).data[1]
+    card.rarity = "Test"
+    card = CardParser:parseCard(card)
+    AbstractPackGenerator:spawnCard(card, Vector(0, 0, 0))
+end
+
+function main()
+    WebRequest.get("https://db.ygoprodeck.com/api/v7/cardinfo.php?name="..NAME,
+        function(response) responseHandler(response, callback) end
+    )
+end
+
+main()
