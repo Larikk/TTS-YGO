@@ -2,14 +2,29 @@ CardParser = {}
 
 -- Takes the data from the YGOPRODECK API and transform it to a condensed object with the relevant data
 
+local function linkMonsterDescription(rawData)
+    local str = rawData.type.."\n"
+    str = str..rawData.attribute.." "..rawData.race.."\n"
+    str = str.."ATK/"..rawData.atk
+    str = str.." LINK-"..rawData.linkval
+    str = str.."\n"..rawData.rarity.."\n"
+
+    str = str.."\n"..rawData.desc
+
+    return str
+end
+
 local function monsterDescription(rawData)
     local isLink = rawData.type == "Link Monster"
-    local isPendulum = rawData.type == "Pendulum Monster"
+
+    if isLink then
+        return linkMonsterDescription(rawData)
+    end
 
     local str = rawData.type.."\n"
     str = str..rawData.attribute.." "..rawData.race.." "..rawData.level.."\n"
     str = str.."ATK/"..rawData.atk
-    if rawData.def != nil then str = str.." DEF/"..rawData.def end
+    str = str.." DEF/"..rawData.def
     str = str.."\n"..rawData.rarity.."\n"
 
     str = str.."\n"..rawData.desc
