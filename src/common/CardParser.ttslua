@@ -9,7 +9,7 @@ local function monsterDescription(rawData)
     local str = rawData.type.."\n"
     str = str..rawData.attribute.." "..rawData.race.." "..rawData.level.."\n"
     str = str.."ATK/"..rawData.atk
-    if rawData.def != nil then str = str.."DEF/"..rawData.def end
+    if rawData.def != nil then str = str.." DEF/"..rawData.def end
     str = str.."\n"..rawData.rarity.."\n"
 
     str = str.."\n"..rawData.desc
