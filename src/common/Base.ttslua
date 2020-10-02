@@ -30,11 +30,19 @@ function AbstractPackGenerator:assemblePack()
     noop()
 end
 
+-- Must be implemented by a specific generator
+-- Is called at the end of assembleBox() to make sure certain conditions are BaseUtilMethods
+-- (like at least of of ABC Rare or something like that)
+function AbstractPackGenerator:boxPostConditions(packs)
+    noop()
+end
+
 function AbstractPackGenerator:assembleBox()
     local packs = {}
     for i = 1, self.packsInBox do
       table.insert(packs, self:assemblePack())
     end
+    self:boxPostConditions(packs)
     return packs
 end
 
