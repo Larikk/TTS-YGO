@@ -1,7 +1,7 @@
 local packSections = {
     {
-        folder = "main-sets",
-        title = "Main Sets",
+        folder = "core-sets",
+        title = "Core Sets",
         packs = {
             {name = "Legend of Blue Eyes White Dragon", file = "001-LOB", art = "https://i.imgur.com/uytVF0z.png"},
         }
