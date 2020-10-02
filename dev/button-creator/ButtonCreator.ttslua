@@ -10,7 +10,8 @@ local buttonLuaScript = require("TTS-YGO-sealed-draft/dev/button-creator/ButtonL
 -- Constants that can be adjusted
 local BUTTONS_PER_ROW = 4 -- how many buttons should be in a row
 
-local SPAWN = Vector(-30, 2, 25) -- Where spawning starts
+local BUTTON_SPAWN = Vector(-10, 2, 15) -- Where spawning starts
+local BOX_SPAWN = "{x = 0, y = 5, z = 20}"
 
 local BUTTON_HORIZONTAL_SPACING = 5 -- Horizontal space between pack buttons
 local BUTTON_VERTICAL_SPACING = -6 -- Vertical space between pack buttons and sections
@@ -57,7 +58,7 @@ function spawnButton(pos, folder, buttonData)
                 fresnel_strength = 0.4
             })
             obj = obj.reload()
-            local luaScript = buttonLuaScript.createLuaScript(folder, buttonData.file)
+            local luaScript = buttonLuaScript.createLuaScript(folder, buttonData.file, BOX_SPAWN)
             obj.setLuaScript(luaScript)
             Wait.condition(||obj.setLock(true), ||isObjReady(obj), 10)
         end
@@ -97,7 +98,7 @@ function spawnSection(cursor, section)
 end
 
 function spawnButtons()
-    local cursor = SPAWN:copy()
+    local cursor = BUTTON_SPAWN:copy()
     for key,section in pairs(buttonSections) do
         cursor = spawnSection(cursor, section)
     end
