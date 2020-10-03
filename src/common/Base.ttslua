@@ -34,7 +34,7 @@ end
 -- Is called at the end of assembleBox() to make sure certain conditions are BaseUtilMethods
 -- (like at least of of ABC Rare or something like that)
 function AbstractPackGenerator:boxPostConditions(packs)
-    noop()
+    -- do nothing
 end
 
 function AbstractPackGenerator:assembleBox()
