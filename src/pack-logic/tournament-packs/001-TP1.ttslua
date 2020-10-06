@@ -51,7 +51,6 @@ function PackGenerator:assemblePack()
     local cardsMap = self.cardsMap
 
     -- all three cards can be commons
-    local commonsSequence = Math:randomSequence(3, cardsMap[COMMON].count)
     local commons = self:pickMultipleCards(COMMON, 3)
 
     -- 2 commons
