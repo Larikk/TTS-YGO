@@ -62,7 +62,6 @@ function PackGenerator:assemblePack()
     if rarityOfLast == COMMON then
         pack[9] = commons[8]
     else
-        pack[9] = Math:randomInt(cardsMap[rarityOfLast].count)
         pack[9] = self:pickSingleCard(rarityOfLast)
     end
 
