@@ -1,8 +1,18 @@
 -- Imports should be handled in Base
 
+local function copyCard(card)
+    local copy = {}
+    for k,v in pairs(card) do copy[k] = v end
+    return copy
+end
+
+function AbstractPackGenerator:pullSpecificCard(rarity, index)
+    return copyCard(self.cardsMap[rarity][index])
+end
+
 function AbstractPackGenerator:pickSingleCard(rarity)
     local index = Math:randomInt(self.cardsMap[rarity].count)
-    return self.cardsMap[rarity][index]
+    return self:pullSpecificCard(rarity, index)
 end
 
 function AbstractPackGenerator:pickMultipleCards(rarity, n)
@@ -10,7 +20,7 @@ function AbstractPackGenerator:pickMultipleCards(rarity, n)
     local sequence = Math:randomSequence(n, self.cardsMap[rarity].count)
 
     for i, v in ipairs(sequence) do
-        cards[i] = self.cardsMap[rarity][v]
+        cards[i] = self:pullSpecificCard(rarity, v)
     end
 
     return cards
