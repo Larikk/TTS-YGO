@@ -3,14 +3,14 @@ CardParser = {}
 
 -- Takes the data from the YGOPRODECK API and transform it to a condensed object with the relevant data
 
-function CardParser:parseCard(rawData)
+function CardParser:parseCard(apiData)
     local card = {}
 
-    card.id = rawData.id
-    card.name = rawData.name
-    card.rarity = rawData.rarity
-    card.face = rawData.card_images[1].image_url -- first element is at index 1
-    card.description = CardDescription:createDescription(rawData)
+    card.id = apiData.id
+    card.name = apiData.name
+    card.rarity = apiData.rarity
+    card.face = apiData.card_images[1].image_url -- first element is at index 1
+    card.description = CardDescription:createDescription(apiData)
 
     return card
 end
