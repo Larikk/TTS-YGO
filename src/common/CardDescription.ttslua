@@ -1,0 +1,55 @@
+CardDescription = {}
+
+-- parses the description of card
+-- the description includes name, attributes, type, stats etc
+-- and is displayed in the name of the object
+
+local function linkMonsterDescription(apiData)
+    local str = apiData.type.."\n"
+    str = str..apiData.attribute.." "..apiData.race.."\n"
+    str = str.."ATK/"..apiData.atk
+    str = str.." LINK-"..apiData.linkval
+    str = str.."\n"..apiData.rarity.."\n"
+
+    str = str.."\n"..apiData.desc
+
+    return str
+end
+
+local function monsterDescription(apiData)
+    local isLink = apiData.type == "Link Monster"
+
+    if isLink then
+        return linkMonsterDescription(apiData)
+    end
+
+    local str = apiData.type.."\n"
+    str = str..apiData.attribute.." "..apiData.race.." "..apiData.level.."\n"
+    str = str.."ATK/"..apiData.atk
+    str = str.." DEF/"..apiData.def
+    str = str.."\n"..apiData.rarity.."\n"
+
+    str = str.."\n"..apiData.desc
+
+    return str
+end
+
+local function spellTrapDescription(apiData)
+  local str = apiData.type
+  if str.race != nil then str = str..apiData.race end
+  str = str.."\n"..apiData.rarity.."\n\n"..apiData.desc
+
+  return str
+end
+
+function CardDescription:createDescription(apiData)
+    local description = nil
+
+    if apiData.type == "Trap Card" or apiData.type == "Spell Card" then
+        description = spellTrapDescription(apiData)
+    else
+        description = monsterDescription(apiData)
+    end
+
+    return description
+end
