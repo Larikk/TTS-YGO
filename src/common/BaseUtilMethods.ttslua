@@ -13,13 +13,13 @@ function AbstractPackGenerator:pullSpecificCard(rarity, index)
 end
 
 function AbstractPackGenerator:pickSingleCard(rarity)
-    local index = Math:randomInt(self.cardsMap[rarity].count)
+    local index = Math:randomInt(#self.cardsMap[rarity])
     return self:pullSpecificCard(rarity, index)
 end
 
 function AbstractPackGenerator:pickMultipleCards(rarity, n)
     local cards = {}
-    local sequence = Math:randomSequence(n, self.cardsMap[rarity].count)
+    local sequence = Math:randomSequence(n, #self.cardsMap[rarity])
 
     for i, v in ipairs(sequence) do
         cards[i] = self:pullSpecificCard(rarity, v)
@@ -33,11 +33,9 @@ function AbstractPackGenerator:putCardIntoCardsMap(card, cardsMap)
 
     if cardsMap[rarity] == nil then
         cardsMap[rarity] = {}
-        cardsMap[rarity].count = 0
     end
 
     table.insert(cardsMap[rarity], card)
-    cardsMap[rarity].count = cardsMap[rarity].count + 1
 end
 
 -- ratios is a table
