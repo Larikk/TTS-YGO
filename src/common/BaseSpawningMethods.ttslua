@@ -43,7 +43,7 @@ function AbstractPackGenerator:spawnCard(card, pos, callback)
         snap_to_grid = true,
 
         callback_function = function(cardObject)
-            cardObject.setName(card.name .. "\n" .. card.description)
+            cardObject.setName(card.infoText())
             cardObject.setCustomObject({
                 face = card.face,
                 back = CARD_BACK

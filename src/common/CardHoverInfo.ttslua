@@ -1,55 +1,58 @@
 CardHoverInfo = {}
 
--- parses the description of card
--- the description includes name, attributes, type, stats etc
--- and is displayed in the name of the object
+-- create the hover info text of a card
+-- the info text includes name, attributes, type, stats etc
+-- and is displayed in the name of the object when the player hovers over it
 
-local function linkMonsterDescription(apiData)
-    local str = apiData.type.."\n"
-    str = str..apiData.attribute.." "..apiData.race.."\n"
-    str = str.."ATK/"..apiData.atk
-    str = str.." LINK-"..apiData.linkval
-    str = str.."\n"..apiData.rarity.."\n"
+local function linkMonsterText(card)
+    local str = card.type.."\n"
+    str = str..card.attribute.." "..card.race.."\n"
+    str = str.."ATK/"..card.atk
+    str = str.." LINK-"..card.linkval
+    str = str.."\n"..card.rarity.."\n"
 
-    str = str.."\n"..apiData.desc
+    str = str.."\n"..card.desc
 
     return str
 end
 
-local function monsterDescription(apiData)
-    local isLink = apiData.type == "Link Monster"
+local function monsterText(card)
+    local isLink = card.type == "Link Monster"
 
     if isLink then
-        return linkMonsterDescription(apiData)
+        return linkMonsterText(card)
     end
 
-    local str = apiData.type.."\n"
-    str = str..apiData.attribute.." "..apiData.race.." "..apiData.level.."\n"
-    str = str.."ATK/"..apiData.atk
-    str = str.." DEF/"..apiData.def
-    str = str.."\n"..apiData.rarity.."\n"
+    local str = card.type.."\n"
+    str = str..card.attribute.." "..card.race.." "..card.level.."\n"
+    str = str.."ATK/"..card.atk
+    str = str.." DEF/"..card.def
+    str = str.."\n"..card.rarity.."\n"
 
-    str = str.."\n"..apiData.desc
+    str = str.."\n"..card.desc
 
     return str
 end
 
-local function spellTrapDescription(apiData)
-  local str = apiData.type
-  if str.race != nil then str = str..apiData.race end
-  str = str.."\n"..apiData.rarity.."\n\n"..apiData.desc
+local function spellTrapText(card)
+    local str = ""
 
-  return str
+    if card.race != nil then str = str .. card.race .. " " end
+
+    str = str .. card.type.."\n"
+    str = str..card.rarity.."\n\n"..card.desc
+
+    return str
 end
 
-function CardHoverInfo:createInfo(apiData)
-    local description = nil
+function CardHoverInfo:createInfo(card)
+    local result = card.name .. "\n"
 
-    if apiData.type == "Trap Card" or apiData.type == "Spell Card" then
-        description = spellTrapDescription(apiData)
+    if card.type == "Trap Card" or card.type == "Spell Card" then
+        result = result .. spellTrapText(card)
     else
-        description = monsterDescription(apiData)
+        result = result .. monsterText(card)
     end
 
-    return description
+    return result
 end
