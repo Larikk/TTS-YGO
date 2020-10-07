@@ -6,6 +6,8 @@ local function copyCard(card)
     return copy
 end
 
+-- CardMap related methods
+
 function AbstractPackGenerator:pullSpecificCard(rarity, index)
     return copyCard(self.cardsMap[rarity][index])
 end
@@ -24,6 +26,18 @@ function AbstractPackGenerator:pickMultipleCards(rarity, n)
     end
 
     return cards
+end
+
+function AbstractPackGenerator:putCardIntoCardsMap(card, cardsMap)
+    local rarity = card.rarity
+
+    if cardsMap[rarity] == nil then
+        cardsMap[rarity] = {}
+        cardsMap[rarity].count = 0
+    end
+
+    table.insert(cardsMap[rarity], card)
+    cardsMap[rarity].count = cardsMap[rarity].count + 1
 end
 
 -- ratios is a table
