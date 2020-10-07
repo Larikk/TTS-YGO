@@ -3,14 +3,21 @@ CardParser = {}
 
 -- Takes the data from the YGOPRODECK API and transform it to a condensed object with the relevant data
 
+local ATTRIBUTES_TO_BE_COPIED = {
+    "id", "name", "rarity", "type", "attribute", "race", "atk", "def",
+    "level", "linkval", "desc"
+}
+
 function CardParser:parseCard(apiData)
     local card = {}
 
-    card.id = apiData.id
-    card.name = apiData.name
-    card.rarity = apiData.rarity
+    for i, att in pairs(ATTRIBUTES_TO_BE_COPIED) do
+        card[att] = apiData[att]
+    end
+
     card.face = apiData.card_images[1].image_url -- first element is at index 1
-    card.description = CardDescription:createInfo(apiData)
+
+    card.infoText = function() return CardHoverInfo:createInfo(card) end
 
     return card
 end
