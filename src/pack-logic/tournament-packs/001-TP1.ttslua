@@ -50,7 +50,7 @@ function PackGenerator:assemblePack()
     local pack = {}
 
     -- all three cards can be commons
-    local commons = self:pickMultipleCards(COMMON, 3)
+    local commons = self:pullCards(COMMON, 3)
 
     -- 2 commons
     for i = 1, 2 do
@@ -62,7 +62,7 @@ function PackGenerator:assemblePack()
     if rarityOfLast == COMMON then
         pack[3] = commons[3]
     else
-        pack[3] = self:pickSingleCard(rarityOfLast)
+        pack[3] = self:pullCard(rarityOfLast)
     end
 
     return pack

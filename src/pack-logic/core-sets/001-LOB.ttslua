@@ -46,7 +46,7 @@ function PackGenerator:assemblePack()
     local pack = {}
 
     -- generates one more than needed for possible 9th card
-    local commons = self:pickMultipleCards(COMMON, 8)
+    local commons = self:pullCards(COMMON, 8)
 
     -- 7 commons
     for i = 1, 7 do
@@ -54,14 +54,14 @@ function PackGenerator:assemblePack()
     end
 
     -- guaranteed 1 rare
-    pack[8] = self:pickSingleCard(RARE)
+    pack[8] = self:pullCard(RARE)
 
     -- wild card
     local rarityOfLast = self:pickRarity(RATIOS)
     if rarityOfLast == COMMON then
         pack[9] = commons[8]
     else
-        pack[9] = self:pickSingleCard(rarityOfLast)
+        pack[9] = self:pullCard(rarityOfLast)
     end
 
     return pack
