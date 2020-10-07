@@ -56,17 +56,10 @@ function AbstractPackGenerator:parseCardList(cardList)
     for i, cardApiData in ipairs(cardList) do
         local f = function() return CardParser:parseCard(cardApiData, setName, rarityReplacements) end
         local wasSuccessfull, result = pcall(f)
+        -- if the operation was successfull result is a card
+        -- if not it is an error message
         if wasSuccessfull then
-            local card = result
-            local rarity = card.rarity
-
-            if cardsMap[rarity] == nil then
-                cardsMap[rarity] = {}
-                cardsMap[rarity].count = 0
-            end
-
-            table.insert(cardsMap[rarity], card)
-            cardsMap[rarity].count = cardsMap[rarity].count + 1
+            self:putCardIntoCardsMap(result, cardsMap)
         else
             IO:warning(string.format("%s, removing %s from card pool", result, cardApiData.name))
         end
@@ -142,6 +135,7 @@ function AbstractPackGenerator:new(o)
     -- holds the cards of the set partitioned by their rarity
     -- key: rarity
     -- value: tables with the single cards, indexed with numbers and a count field
+    -- use the util methods to for read and write to this map
     self.cardsMap = nil
 
     return o
