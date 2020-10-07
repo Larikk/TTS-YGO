@@ -4,15 +4,37 @@ CardParser = {}
 -- Takes the data from the YGOPRODECK API and transform it to a condensed object with the relevant data
 
 local ATTRIBUTES_TO_BE_COPIED = {
-    "id", "name", "rarity", "type", "attribute", "race", "atk", "def",
+    "id", "name", "type", "attribute", "race", "atk", "def",
     "level", "linkval", "desc"
 }
 
-function CardParser:parseCard(apiData)
+
+-- Each card has all of its releases in the card_sets array
+-- Releases can have different rarities so thats why we have to determine the right one
+-- rarityReplacements is a mapping between rarities
+-- It's used if we want to replace a rarity with another one (like "Short Print" to "Common")
+local function extractRarity(card, setName, rarityReplacements)
+    rarityReplacements = rarityReplacements or {}
+    for i, set in ipairs(card.card_sets) do
+        if set.set_name == setName then
+          return rarityReplacements[set.set_rarity] or set.set_rarity
+        end
+    end
+
+    return nil
+end
+
+function CardParser:parseCard(apiData, setName, rarityReplacements)
     local card = {}
 
     for i, att in pairs(ATTRIBUTES_TO_BE_COPIED) do
         card[att] = apiData[att]
+    end
+
+    card.rarity = extractRarity(apiData, setName, rarityReplacements)
+    if card.rarity == nil then
+        -- This should only happen if the Spawner is misconfigured
+        error("Could not extract rarity")
     end
 
     card.face = apiData.card_images[1].image_url -- first element is at index 1
