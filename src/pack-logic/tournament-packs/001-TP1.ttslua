@@ -48,7 +48,6 @@ PackGenerator = AbstractPackGenerator:new()
 
 function PackGenerator:assemblePack()
     local pack = {}
-    local cardsMap = self.cardsMap
 
     -- all three cards can be commons
     local commons = self:pickMultipleCards(COMMON, 3)

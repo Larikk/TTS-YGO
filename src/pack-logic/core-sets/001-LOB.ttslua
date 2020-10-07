@@ -44,7 +44,6 @@ PackGenerator = AbstractPackGenerator:new()
 
 function PackGenerator:assemblePack()
     local pack = {}
-    local cardsMap = self.cardsMap
 
     -- generates one more than needed for possible 9th card
     local commons = self:pickMultipleCards(COMMON, 8)
