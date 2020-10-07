@@ -50,25 +50,27 @@ end
 -- Can be overridden by subclasses if necessary
 function AbstractPackGenerator:parseCardList(cardList)
     local cardsMap = {}
+    local setName = self.setName
+    local rarityReplacements = self.rarityReplacements
 
-    for i, card in ipairs(cardList) do
-        local rarity = self:extractRarity(card, self.setName, self.rarityReplacements)
+    for i, cardApiData in ipairs(cardList) do
+        local f = function() return CardParser:parseCard(cardApiData, setName, rarityReplacements) end
+        local wasSuccessfull, result = pcall(f)
+        if wasSuccessfull then
+            local card = result
+            local rarity = card.rarity
 
-        if rarity == nil then
-            IO:warning(string.format("Could not extract rarity of %s, removing from card pool", card.name))
-            goto continue
+            if cardsMap[rarity] == nil then
+                cardsMap[rarity] = {}
+                cardsMap[rarity].count = 0
+            end
+
+            table.insert(cardsMap[rarity], card)
+            cardsMap[rarity].count = cardsMap[rarity].count + 1
+        else
+            IO:warning(string.format("%s, removing %s from card pool", result, cardApiData.name))
         end
 
-        card.rarity = rarity
-
-        if cardsMap[rarity] == nil then
-            cardsMap[rarity] = {}
-            cardsMap[rarity].count = 0
-        end
-
-        table.insert(cardsMap[rarity], CardParser:parseCard(card))
-        cardsMap[rarity].count = cardsMap[rarity].count + 1
-        ::continue::
     end
 
     return cardsMap
