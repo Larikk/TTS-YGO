@@ -1,4 +1,4 @@
-CardHoverInfo = {}
+CardHoverText = {}
 
 -- create the hover info text of a card
 -- the info text includes name, attributes, type, stats etc
@@ -45,7 +45,7 @@ local function spellTrapText(card)
     return str
 end
 
-function CardHoverInfo:createInfo(card)
+function CardHoverText:create(card)
     local result = card.name .. "\n"
 
     if card.type == "Trap Card" or card.type == "Spell Card" then
