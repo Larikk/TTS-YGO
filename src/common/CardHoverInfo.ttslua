@@ -1,4 +1,4 @@
-CardDescription = {}
+CardHoverInfo = {}
 
 -- parses the description of card
 -- the description includes name, attributes, type, stats etc
@@ -42,7 +42,7 @@ local function spellTrapDescription(apiData)
   return str
 end
 
-function CardDescription:createDescription(apiData)
+function CardHoverInfo:createInfo(apiData)
     local description = nil
 
     if apiData.type == "Trap Card" or apiData.type == "Spell Card" then
