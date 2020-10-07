@@ -8,21 +8,21 @@ end
 
 -- CardMap related methods
 
-function AbstractPackGenerator:pullSpecificCard(rarity, index)
+function AbstractPackGenerator:pickSpecificCard(rarity, index)
     return copyCard(self.cardsMap[rarity][index])
 end
 
-function AbstractPackGenerator:pickSingleCard(rarity)
+function AbstractPackGenerator:pullCard(rarity)
     local index = Math:randomInt(#self.cardsMap[rarity])
-    return self:pullSpecificCard(rarity, index)
+    return self:pickSpecificCard(rarity, index)
 end
 
-function AbstractPackGenerator:pickMultipleCards(rarity, n)
+function AbstractPackGenerator:pullCards(rarity, n)
     local cards = {}
     local sequence = Math:randomSequence(n, #self.cardsMap[rarity])
 
     for i, v in ipairs(sequence) do
-        cards[i] = self:pullSpecificCard(rarity, v)
+        cards[i] = self:pickSpecificCard(rarity, v)
     end
 
     return cards
