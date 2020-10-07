@@ -1,4 +1,4 @@
-#include <CardDescription>
+#include <CardHoverInfo>
 CardParser = {}
 
 -- Takes the data from the YGOPRODECK API and transform it to a condensed object with the relevant data
@@ -10,7 +10,7 @@ function CardParser:parseCard(apiData)
     card.name = apiData.name
     card.rarity = apiData.rarity
     card.face = apiData.card_images[1].image_url -- first element is at index 1
-    card.description = CardDescription:createDescription(apiData)
+    card.description = CardDescription:createInfo(apiData)
 
     return card
 end
