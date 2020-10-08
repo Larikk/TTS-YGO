@@ -53,10 +53,7 @@ function spawnButton(pos, folder, buttonData)
                 mesh = BUTTON_MESH,
                 diffuse = buttonData.art or DEFAULT_BUTTON_TEXTURE,
                 normal = BUTTON_NORMAL,
-                material = 3, -- cardbord
-                specular_intensity = 0.2,
-                specular_sharpness = 7.0,
-                fresnel_strength = 0.4
+                material = 3 -- cardbord
             })
             obj = obj.reload()
             local luaScript = buttonLuaScript.createLuaScript(folder, buttonData.file, BOX_SPAWN, buttonData.name)
