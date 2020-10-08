@@ -8,10 +8,7 @@ local function linkMonsterText(card)
     local str = card.type.."\n"
     str = str..card.attribute.." "..card.race.."\n"
     str = str.."ATK/"..card.atk
-    str = str.." LINK-"..card.linkval
-    str = str.."\n"..card.rarity.."\n"
-
-    str = str.."\n"..card.desc
+    str = str.." LINK-"..card.linkval.."\n"
 
     return str
 end
@@ -26,10 +23,7 @@ local function monsterText(card)
     local str = card.type.."\n"
     str = str..card.attribute.." "..card.race.." "..card.level.."\n"
     str = str.."ATK/"..card.atk
-    str = str.." DEF/"..card.def
-    str = str.."\n"..card.rarity.."\n"
-
-    str = str.."\n"..card.desc
+    str = str.." DEF/"..card.def.."\n"
 
     return str
 end
@@ -40,7 +34,6 @@ local function spellTrapText(card)
     if card.race != nil then str = str .. card.race .. " " end
 
     str = str .. card.type.."\n"
-    str = str..card.rarity.."\n\n"..card.desc
 
     return str
 end
@@ -53,6 +46,8 @@ function CardHoverText:create(card)
     else
         result = result .. monsterText(card)
     end
+
+    result = result..card.rarity.."\n\n"..card.desc
 
     return result
 end
