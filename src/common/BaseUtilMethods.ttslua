@@ -62,3 +62,13 @@ function AbstractPackGenerator:pickRarity(ratios)
 
     return fallbackRarity
 end
+
+function AbstractPackGenerator:extractSetCode(cardApiData)
+    for i, set in ipairs(cardApiData.card_sets) do
+        if set.set_name == self.setName then
+          return set.set_code
+        end
+    end
+
+    return nil
+end
