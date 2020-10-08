@@ -52,10 +52,11 @@ end
 function AbstractPackGenerator:parseCardList(cardList)
     local cardsMap = {}
     local setName = self.setName
+    local setCodePrefix = self.setCodePrefix
     local rarityReplacements = self.rarityReplacements
 
     for i, cardApiData in ipairs(cardList) do
-        local f = function() return CardParser:parseCard(cardApiData, setName, rarityReplacements) end
+        local f = function() return CardParser:parseCard(cardApiData, setName, setCodePrefix, rarityReplacements) end
         local wasSuccessfull, result = pcall(f)
         -- if the operation was successfull result is a card
         -- if not it is an error message
@@ -125,6 +126,7 @@ function AbstractPackGenerator:new(o)
 
     -- must be overridden by specific generators
     self.setName = nil
+    self.setCodePrefix = nil
     self.setNameUrl = nil
     self.packTexture = nil
     self.boxTexture = nil
