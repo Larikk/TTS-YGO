@@ -47,6 +47,7 @@ function spawnButton(pos, folder, buttonData)
         rotation = {x=0, y=180, z=0},
 
         callback_function = function(obj)
+            obj.setName(buttonData.name)
             obj.setLock(false)
             obj.setCustomObject({
                 mesh = BUTTON_MESH,
@@ -58,7 +59,7 @@ function spawnButton(pos, folder, buttonData)
                 fresnel_strength = 0.4
             })
             obj = obj.reload()
-            local luaScript = buttonLuaScript.createLuaScript(folder, buttonData.file, BOX_SPAWN)
+            local luaScript = buttonLuaScript.createLuaScript(folder, buttonData.file, BOX_SPAWN, buttonData.name)
             obj.setLuaScript(luaScript)
             Wait.condition(||obj.setLock(true), ||isObjReady(obj), 10)
         end

@@ -1,6 +1,6 @@
 local script = {}
 
-function script.createLuaScript(folder, file, spawn)
+function script.createLuaScript(folder, file, spawn, name)
     return string.format([=====[
 %s <TTS-YGO-sealed-draft/src/pack-logic/%s/%s>
 
@@ -16,10 +16,11 @@ function onload()
         function_owner = self,
         width=1150,
         height=1900,
-        color= {r=1, g=0, b=0}
+        color= {r=1, g=0, b=0},
+        tooltip="%s"
     })
 end
-]=====], "#include", folder, file, spawn)
+]=====], "#include", folder, file, spawn, name)
 end
 
 return script
