@@ -21,7 +21,7 @@ local function monsterText(card)
     end
 
     local str = card.type.."\n"
-    str = str..card.attribute.." "..card.race.." "..card.level.."\n"
+    str = str..card.attribute.." "..card.race.." [\u{2605}"..card.level.."]\n"
     str = str.."ATK/"..card.atk
     str = str.." DEF/"..card.def.."\n"
 
