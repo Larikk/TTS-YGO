@@ -8,7 +8,6 @@ local ATTRIBUTES_TO_BE_COPIED = {
 }
 
 local function isSetCodeMatching(prefix, setCode)
-    print(prefix)
     return string.sub(setCode, 1, string.len(setCode)-3) == prefix
 end
 
