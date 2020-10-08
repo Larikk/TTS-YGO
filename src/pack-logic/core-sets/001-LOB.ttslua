@@ -45,7 +45,7 @@ PackGenerator = AbstractPackGenerator:new()
 function PackGenerator:assemblePack()
     local pack = {}
 
-    -- generates one more than needed for possible 9th card
+    -- generates one more than needed because the 9th card may or may not be a common
     local commons = self:pullCards(COMMON, 8)
 
     -- 7 commons
