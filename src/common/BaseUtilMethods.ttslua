@@ -28,8 +28,8 @@ function AbstractPackGenerator:pullCards(rarity, n)
     return cards
 end
 
-function AbstractPackGenerator:putCardIntoCardsMap(card, cardsMap)
-    local rarity = card.rarity
+function AbstractPackGenerator:putCardIntoCardsMap(card, cardsMap, rarity)
+    rarity = rarity or card.rarity
 
     if cardsMap[rarity] == nil then
         cardsMap[rarity] = {}
