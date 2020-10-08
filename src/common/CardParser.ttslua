@@ -24,6 +24,9 @@ local function extractRarity(card, setName, rarityReplacements)
     return nil
 end
 
+-- setName and rarityReplacements are optional
+-- if a setName is provivied this method will try to extract the rarity which the card had in the setCode
+-- the rarityReplacements map rarities (like "Short Print" -> "Common")
 function CardParser:parseCard(apiData, setName, rarityReplacements)
     local card = {}
 
@@ -31,10 +34,12 @@ function CardParser:parseCard(apiData, setName, rarityReplacements)
         card[att] = apiData[att]
     end
 
-    card.rarity = extractRarity(apiData, setName, rarityReplacements)
-    if card.rarity == nil then
-        -- This should only happen if the Spawner is misconfigured
-        error("Could not extract rarity")
+    if setName ~= nil then
+        card.rarity = extractRarity(apiData, setName, rarityReplacements)
+        if card.rarity == nil then
+            -- This should only happen if the Spawner is misconfigured
+            error("Could not extract rarity")
+        end
     end
 
     card.face = apiData.card_images[1].image_url -- first element is at index 1
