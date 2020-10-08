@@ -51,17 +51,21 @@ function PackGenerator:assemblePack()
     local cardsMap = self.cardsMap
 
     -- wildcard/starfoil rare first
+    -- we generate two card with of the wildCardSlot
+    -- the second card is used later when the non-starfoils are added
     local wildCardSlot = self:pickRarity(RATIOS)
-    local wildCardIndices = Math:randomSequence(2, cardsMap[wildCardSlot].count)
-    pack[5] = cardsMap[wildCardSlot][wildCardIndices[1]]
+    local cardsWithWildCardRarity = self:pullCards(wildCardSlot, 2)
+    local wildCard = cardsWithWildCardRarity[1]
+    wildCard.rarity = string.format("Starfoil Rare (%s)", wildCard.rarity)
+    pack[5] = wildCard
 
     -- Return either a random card if the slot is different from the wildcard
-    -- or the second card of the wildCardSlot
+    -- or the second card of the slot of the wildcard
     local f = function(slot)
         if slot ~= wildCardSlot then
-            return self:pickSingleCard(slot)
+            return self:pullCard(slot)
         else
-            return cardsMap[wildCardSlot][wildCardIndices[2]]
+            return cardsWithWildCardRarity[2]
         end
     end
 
@@ -73,14 +77,36 @@ function PackGenerator:assemblePack()
     return pack
 end
 
-function PackGenerator:extractSetCode(card)
-    for i, set in ipairs(card.card_sets) do
-        if set.set_name == self.setName then
-          return set.set_code
-        end
+function PackGenerator:parseCard(cardApiData)
+    local setCode = self:extractSetCode(cardApiData)
+    if setCode == nil then
+        error("Could not extract set code")
     end
 
-    return nil
+    setCode = tonumber(setCode:sub(-3)) -- get last three digits as number
+
+    local slot = nil
+    local rarity = nil
+
+    if setCode <= 55 then
+        rarity = "Rare"
+        slot = rarity
+    elseif setCode <= 110 then
+        rarity = "Common"
+        slot = rarity .. "1"
+    elseif setCode <= 170 then
+        rarity = "Common"
+        slot = rarity .. "2"
+    else
+        rarity = "Common"
+        slot = rarity .. "3"
+    end
+
+    local card = CardParser:parseCard(cardApiData)
+    card.rarity = rarity
+    card.slot = slot
+
+    return card
 end
 
 -- overridden because there are different categories of commons
@@ -91,45 +117,20 @@ end
 -- Common3: 171 to 220
 function PackGenerator:parseCardList(cardList)
     local cardsMap = {}
+    local setName = self.setName
+    local rarityReplacements = self.rarityReplacements
 
-    for i, card in ipairs(cardList) do
-        local setCode = self:extractSetCode(card)
-
-        -- Must be declared before goto
-        local slot = nil
-        local rarity = nil
-
-        if setCode == nil then
-            IO:warning(string.format("Could not extract set code of %s, removing from card pool", card.name))
-            goto continue
-        end
-
-        setCode = tonumber(setCode:sub(-3)) -- get last three digits as number
-
-        if setCode <= 55 then
-            rarity = "Rare"
-            slot = rarity
-        elseif setCode <= 110 then
-            rarity = "Common"
-            slot = rarity .. "1"
-        elseif setCode <= 170 then
-            rarity = "Common"
-            slot = rarity .. "2"
+    for i, cardApiData in ipairs(cardList) do
+        local f = function() return self:parseCard(cardApiData) end
+        local wasSuccessfull, result = pcall(f)
+        -- if the operation was successfull result is a card
+        -- if not it is an error message
+        if wasSuccessfull then
+            self:putCardIntoCardsMap(result, cardsMap, result.slot)
         else
-            rarity = "Common"
-            slot = rarity .. "3"
+            IO:warning(string.format("%s, removing %s from card pool", result, cardApiData.name))
         end
 
-        card.rarity = rarity
-
-        if cardsMap[slot] == nil then
-            cardsMap[slot] = {}
-            cardsMap[slot].count = 0
-        end
-
-        table.insert(cardsMap[slot], CardParser:parseCard(card))
-        cardsMap[slot].count = cardsMap[slot].count + 1
-        ::continue::
     end
 
     return cardsMap
