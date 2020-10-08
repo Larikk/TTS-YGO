@@ -50,6 +50,11 @@ function CardHoverText:create(card)
     if card.rarity ~= nil then
         result = result .. card.rarity .. "\n"
     end
+
+    if card.setCode ~= nil then
+        result = result .. card.setCode .. "\n"
+    end
+
     result = result.."\n"..card.desc
 
     return result
