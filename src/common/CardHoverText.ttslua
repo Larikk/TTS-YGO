@@ -47,7 +47,10 @@ function CardHoverText:create(card)
         result = result .. monsterText(card)
     end
 
-    result = result..card.rarity.."\n\n"..card.desc
+    if card.rarity ~= nil then
+        result = result .. card.rarity .. "\n"
+    end
+    result = result.."\n"..card.desc
 
     return result
 end
