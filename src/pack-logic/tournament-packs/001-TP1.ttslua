@@ -29,7 +29,8 @@ local BOX_TEXTURE = nil
 local CARDS_IN_PACKS = 3
 
 -- Number of packs in a set box
-local PACKS_IN_BOX = 24
+-- If set to 1 a pack without a box is spawned
+local PACKS_IN_BOX = 1
 
 -- Rarities
 local COMMON = "Common"
