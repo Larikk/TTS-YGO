@@ -28,6 +28,7 @@ local BOX_TEXTURE = "https://i.imgur.com/qP94DEb.png"
 local CARDS_IN_PACKS = 5
 
 -- Number of packs in a set box
+-- If set to 1 a pack without a box is spawned
 local PACKS_IN_BOX = 36
 
 -- Rarities/Slots
