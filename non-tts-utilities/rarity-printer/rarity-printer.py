@@ -4,23 +4,18 @@ import json
 # this is just a script to print information about single sets
 # its very hacky and gets modfied on the fly
 
-NAME = "Pharaonic Guardian"
+NAME = "Tournament Pack: 1st Season"
+SET_CODE_PREFIX = "TP1-E"
 NAME_URL = NAME.replace(" ", "%20")
 
-def extractRarity(card):
+def extractSetData(card):
     for set in card['card_sets']:
-        if set['set_name'] == NAME:
-            return set['set_rarity']
+        if set['set_name'] == NAME and set['set_code'][:-3] == SET_CODE_PREFIX:
+            result = {}
+            result['rarity'] = set['set_rarity']
+            result['setCode'] = set['set_code']
+            return result
 
-    print("Rarity for " + card['name'] + " not found")
-    return None
-
-def extractSetCode(card):
-    for set in card['card_sets']:
-        if set['set_name'] == NAME:
-            return set['set_code']
-
-    print("SetCode for " + card['name'] + " not found")
     return None
 
 con = http.client.HTTPSConnection("db.ygoprodeck.com")
@@ -29,27 +24,31 @@ body = con.getresponse().read()
 cards = json.loads(body)
 
 counters = {}
-sum = 0
+
+parsedCards = []
 
 for card in cards['data']:
-    rarity = extractRarity(card)
-    setCode = extractSetCode(card)
+    setData = extractSetData(card)
+    if setData == None:
+        print("Set data for " + card['name'] + " not found")
+        continue
 
+    rarity = setData['rarity']
     card['rarity'] = rarity
-    card['setCode'] = setCode
+    card['setCode'] = setData['setCode']
 
     if rarity not in counters:
         counters[rarity] = 0
 
     counters[rarity] = counters[rarity] + 1
-    sum = sum + 1
+    parsedCards.append(card)
 
-sortedCards = sorted(cards['data'], key=lambda card: card['setCode'])
+sortedCards = sorted(parsedCards, key=lambda card: card['setCode'])
 
 for k, v in counters.items(): print(k, v)
 print()
-print("Sum", sum)
-#for v in sortedCards: print(v['setCode'] + " " + v['name'] + " " + v['rarity'])
+print("Sum", len(parsedCards))
+for v in sortedCards: print(v['setCode'] + " " + v['name'] + " " + v['rarity'])
 
 n = 0
 missingSetCodes = []
