@@ -7,7 +7,7 @@ local SET_NAME = "Tournament Pack: 1st Season"
 -- Is used for determining the correct rarity
 -- Using only the name alone works but may lead to problems later on
 -- This variable should hold the whole set code minus the three last digits
-local SET_CODE_PREFIX = "TP1-"
+local SET_CODE_PREFIX = "TP1-E"
 
 -- Name used for the query to the api
 -- In most cases setting it to SET_NAME should be okay
