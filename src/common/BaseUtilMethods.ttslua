@@ -1,6 +1,6 @@
 -- Imports should be handled in Base
 
-local function copyCard(card)
+function AbstractPackGenerator:copyCard(card)
     local copy = {}
     for k,v in pairs(card) do copy[k] = v end
     return copy
@@ -9,7 +9,7 @@ end
 -- CardMap related methods
 
 function AbstractPackGenerator:pickSpecificCard(rarity, index)
-    return copyCard(self.cardsMap[rarity][index])
+    return self:copyCard(self.cardsMap[rarity][index])
 end
 
 function AbstractPackGenerator:pullCard(rarity)
@@ -28,8 +28,8 @@ function AbstractPackGenerator:pullCards(rarity, n)
     return cards
 end
 
-function AbstractPackGenerator:putCardIntoCardsMap(card, cardsMap, rarity)
-    rarity = rarity or card.rarity
+function AbstractPackGenerator:putCardIntoCardsMap(card, cardsMap, rarityOverride)
+    local rarity = rarityOverride or card.rarity
 
     if cardsMap[rarity] == nil then
         cardsMap[rarity] = {}
@@ -63,12 +63,6 @@ function AbstractPackGenerator:pickRarity(ratios)
     return fallbackRarity
 end
 
-function AbstractPackGenerator:extractSetCode(cardApiData)
-    for i, set in ipairs(cardApiData.card_sets) do
-        if set.set_name == self.setName then
-          return set.set_code
-        end
-    end
-
-    return nil
+function AbstractPackGenerator:extractSetData(cardApiData)
+    return self.setDataExtractor:extract(cardApiData)
 end

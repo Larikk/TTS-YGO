@@ -38,8 +38,9 @@ local RARE = "Rare"
 local SUPER_RARE = "Super Rare"
 local ULTRA_RARE = "Ultra Rare"
 
--- We want to map some rarities to other rarities (eg. when we want to treat a shortprint as a common)
-local RARITY_REPLACEMENTS = {}
+-- Extract for card_sets array in the api setData
+-- Includes rarities and setcode of a card in this particular set
+local SET_DATA_EXTRACTOR = SetDataExtractor:new()
 
 -- Ratios for last card, must add up to 1.0
 -- taken from https://youtu.be/Q-H7nckT6fU?t=101
@@ -86,7 +87,7 @@ function PackGenerator:new()
     self.packsInBox = PACKS_IN_BOX
     self.packTexture = PACK_TEXTURE
     self.boxTexture = BOX_TEXTURE
-    self.rarityReplacements = RARITY_REPLACEMENTS
+    self.setDataExtractor = SET_DATA_EXTRACTOR:build(self)
 
     return o
 end
