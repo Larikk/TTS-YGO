@@ -1,0 +1,71 @@
+SetDataExtractor = {}
+
+function SetDataExtractor:isSetCodeMatching(setCode)
+    return string.sub(setCode, 1, string.len(setCode)-3) == self.setCodePrefix
+end
+
+-- extracts all available rarities and other set related data
+function SetDataExtractor:extract(cardApiData)
+    local variations = {}
+
+    for i, set in ipairs(cardApiData.card_sets) do
+        if set.set_name == self.setName and self:isSetCodeMatching(set.set_code) then
+            local rarity = self.replacements[set.set_rarity] or set.set_rarity -- replace if necessary
+            if not self.ignoreList[rarity] then -- only add if the rarity is not ignored
+                local variation = {}
+                variation.rarity = rarity
+                variation.setCode = set.set_code
+                table.insert(variations, variation)
+                if not self.findAllFlag then return variations end -- stop after first hit
+            end
+        end
+    end
+
+    if #variations == 0 then
+        IO:warning(string.format("Warning: Could not extract rarity/setcode of %s. It may be that this card won't be in the card pool.", cardApiData.name))
+    end
+
+    return variations
+end
+
+-- init methods
+function SetDataExtractor:replace(replacements)
+    self.replacements = replacements
+    return self
+end
+
+function SetDataExtractor:ignore(...)
+    local list = {}
+    for i,v in ipairs({...}) do
+        list[v] = true
+    end
+    self.ignoreList = list
+    return self
+end
+
+function SetDataExtractor:findAll()
+    self.findAllFlag = true
+    return self
+end
+
+function SetDataExtractor:build(spawner)
+    self.setName = spawner.setName
+    self.setCodePrefix = spawner.setCodePrefix
+    return self
+end
+
+-- Constructor
+function SetDataExtractor:new(o)
+    o = o or {}
+    setmetatable(o, self)
+    self.__index = self
+
+    self.setName = nil
+    self.setCodePrefix = nil
+
+    self.replacements = {}
+    self.ignoreList = {}
+    self.findAllFlag = false
+
+    return o
+end

@@ -7,48 +7,14 @@ local ATTRIBUTES_TO_BE_COPIED = {
     "level", "linkval", "desc"
 }
 
-local function isSetCodeMatching(prefix, setCode)
-    return string.sub(setCode, 1, string.len(setCode)-3) == prefix
-end
-
--- Each card has all of its releases in the card_sets array
--- Releases can have different rarities so thats why we have to determine the right one
--- To make sure that multiple releases which different dont lead to undefined behavior
--- we check the setCode too
--- rarityReplacements is a mapping between rarities
--- It's used if we want to replace a rarity with another one (like "Short Print" to "Common")
-local function extractSetRelatedData(card, setName, setCodePrefix, rarityReplacements)
-    rarityReplacements = rarityReplacements or {}
-    for i, set in ipairs(card.card_sets) do
-        if set.set_name == setName and isSetCodeMatching(setCodePrefix, set.set_code) then
-            local result = {}
-            result.rarity = rarityReplacements[set.set_rarity] or set.set_rarity
-            result.setCode = set.set_code
-            return result
-        end
-    end
-
-    return nil
-end
-
 -- setName and rarityReplacements are optional
 -- if a setName is provivied this method will try to extract the rarity which the card had in the setCode
 -- the rarityReplacements map rarities (like "Short Print" -> "Common")
-function CardParser:parseCard(apiData, setName, setCodePrefix, rarityReplacements)
+function CardParser:parseCard(apiData)
     local card = {}
 
     for i, att in pairs(ATTRIBUTES_TO_BE_COPIED) do
         card[att] = apiData[att]
-    end
-
-    if setName ~= nil then
-        local result = extractSetRelatedData(apiData, setName, setCodePrefix, rarityReplacements)
-        if result.rarity == nil then
-            -- This should only happen if the Spawner is misconfigured
-            error("Could not extract rarity")
-        end
-        card.rarity = result.rarity
-        card.setCode = result.setCode
     end
 
     card.face = apiData.card_images[1].image_url -- first element is at index 1

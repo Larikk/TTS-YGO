@@ -1,5 +1,6 @@
 #include <CardHoverText>
 #include <CardParser>
+#include <SetDataExtractor>
 #include <Math>
 #include <IO>
 
@@ -51,21 +52,16 @@ end
 -- Can be overridden by subclasses if necessary
 function AbstractPackGenerator:parseCardList(cardList)
     local cardsMap = {}
-    local setName = self.setName
-    local setCodePrefix = self.setCodePrefix
-    local rarityReplacements = self.rarityReplacements
 
     for i, cardApiData in ipairs(cardList) do
-        local f = function() return CardParser:parseCard(cardApiData, setName, setCodePrefix, rarityReplacements) end
-        local wasSuccessfull, result = pcall(f)
-        -- if the operation was successfull result is a card
-        -- if not it is an error message
-        if wasSuccessfull then
-            self:putCardIntoCardsMap(result, cardsMap)
-        else
-            IO:warning(string.format("%s, removing %s from card pool", result, cardApiData.name))
+        local card = CardParser:parseCard(cardApiData)
+        local setDataEntries = self:extractSetData(cardApiData)
+        for i, entry in ipairs(setDataEntries) do
+            local copy = self:copyCard(card)
+            copy.rarity = entry.rarity
+            copy.setCode = entry.setCode
+            self:putCardIntoCardsMap(copy, cardsMap)
         end
-
     end
 
     return cardsMap
@@ -137,7 +133,7 @@ function AbstractPackGenerator:new(o)
     self.boxTexture = nil
     self.cardsInPacks = nil
     self.packsInBox = nil
-    self.rarityReplacements = {}
+    self.setDataExtractor = nil
 
     -- is initialized before a box/pack is generated for the first time
     -- holds the cards of the set partitioned by their rarity
