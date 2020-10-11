@@ -6,26 +6,26 @@ end
 
 -- extracts all available rarities and other set related data
 function SetDataExtractor:extract(cardApiData)
-    local variations = {}
+    local entries = {}
 
     for i, set in ipairs(cardApiData.card_sets) do
         if set.set_name == self.setName and self:isSetCodeMatching(set.set_code) then
             local rarity = self.replacements[set.set_rarity] or set.set_rarity -- replace if necessary
             if not self.ignoreList[rarity] then -- only add if the rarity is not ignored
-                local variation = {}
-                variation.rarity = rarity
-                variation.setCode = set.set_code
-                table.insert(variations, variation)
-                if not self.findAllFlag then return variations end -- stop after first hit
+                local entry = {}
+                entry.rarity = rarity
+                entry.setCode = set.set_code
+                table.insert(entries, entry)
+                if not self.findAllFlag then return entries end -- stop after first hit
             end
         end
     end
 
-    if #variations == 0 then
+    if #entries == 0 then
         IO:warning(string.format("Warning: Could not extract rarity/setcode of %s. It may be that this card won't be in the card pool.", cardApiData.name))
     end
 
-    return variations
+    return entries
 end
 
 -- init methods
