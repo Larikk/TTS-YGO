@@ -5,8 +5,8 @@ import sys
 # this is just a script to print information about single sets
 # its very hacky and gets modfied on the fly
 
-NAME = "Battle Pack 2: War of the Giants"
-SET_CODE_PREFIX = "BP02-EN"
+NAME = "Spell Ruler"
+SET_CODE_PREFIX = "SRL-"
 NAME_URL = NAME.replace(" ", "%20")
 
 def extractSetData(card):
@@ -37,6 +37,10 @@ parsedCards = []
 
 for card in cards['data']:
     setData = extractSetData(card)
+    if len(setData) < 1:
+        print(card['name'] + " has not suitable set data attached.")
+        continue
+
     card['setData'] = setData
     card['setCode'] = setData[0]['setCode']
     parsedCards.append(card)
