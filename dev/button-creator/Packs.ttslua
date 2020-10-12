@@ -11,6 +11,7 @@ local packSections = {
         title = "Battle Packs",
         packs = {
             {name = "Battle Pack: Epic Dawn", file = "001-BP01", art = "https://i.imgur.com/sz85e3z.jpga"},
+            {name = "Battle Pack 2: War of the Giants", file = "002-BP02", art = "https://i.imgur.com/gtpqbPw.png"},
         }
     },
     {
