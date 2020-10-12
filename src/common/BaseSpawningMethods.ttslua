@@ -56,9 +56,19 @@ function AbstractPackGenerator:spawnCard(card, pos, callback)
     spawnObject(spawnParams)
 end
 
+function AbstractPackGenerator:pickPackTexture()
+    if self.packTextures == nil then return DEFAULT_PACK_TEXTURE end
+    if type(self.packTextures) == "string" then return self.packTextures end
+
+    local n = Math:randomInt(#self.packTextures)
+    return self.packTextures[n]
+end
+
 function AbstractPackGenerator:spawnPack(pack, pos, callback)
     pos = Vector(pos) or DEFAULT_SPAWN_POS
     local cardPos = pos + Vector(0, 5, 0)
+
+    local texture = self:pickPackTexture()
 
     spawnParams = {
         type = "Custom_Model",
@@ -75,7 +85,7 @@ function AbstractPackGenerator:spawnPack(pack, pos, callback)
             packObject.setLock(false)
             packObject.setCustomObject({
                 mesh = PACK_MESH,
-                diffuse = self.packTextures or DEFAULT_PACK_TEXTURE,
+                diffuse = texture,
                 normal = PACK_NORMAL,
                 type = 6, -- bag
                 material = 3, -- cardbord
