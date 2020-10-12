@@ -17,7 +17,7 @@ function onload()
         width=1150,
         height=1900,
         color= {r=1, g=0, b=0},
-        tooltip="%s"
+        tooltip=[[%s]]
     })
 end
 ]=====], "#include", folder, file, spawn, name)
