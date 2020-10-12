@@ -1,0 +1,63 @@
+#include <../../common/Base>
+
+local SET_NAME = "War of the Giants: Round 2"
+
+local SET_CODE_PREFIX = "BPW2-EN"
+
+local SET_NAME_URL = SET_NAME
+
+local PACK_TEXTURES = "https://i.imgur.com/DF6s5Rb.jpg"
+
+local BOX_TEXTURE = nil
+
+local CARDS_IN_PACKS = 16
+
+local PACKS_IN_BOX = 1
+
+-- Rarities
+local COMMON = "Common"
+local SUPER_RARE = "Super Rare"
+local ULTRA_RARE = "Ultra Rare"
+
+local SET_DATA_EXTRACTOR = SetDataExtractor:new()
+
+PackGenerator = AbstractPackGenerator:new()
+
+function PackGenerator:assemblePack()
+    local pack = {}
+
+    -- 9 commons
+    local commons = self:pullCards(COMMON, 9)
+    for i = 1, 9 do
+        pack[i] = commons[i]
+    end
+
+    -- 6 supers
+    local supers = self:pullCards(SUPER_RARE, 6)
+    for i = 1, 6 do
+        pack[i+9] = supers[i]
+    end
+
+    -- 1 ultra
+    local ultra = self:pullCard(ULTRA_RARE)
+    pack[16] = ultra
+
+    return pack
+end
+
+function PackGenerator:new()
+    o = AbstractPackGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    self.setName = SET_NAME
+    self.setCodePrefix = SET_CODE_PREFIX
+    self.setNameUrl = SET_NAME_URL
+    self.cardsInPacks = CARDS_IN_PACKS
+    self.packsInBox = PACKS_IN_BOX
+    self.packTextures = PACK_TEXTURES
+    self.boxTexture = BOX_TEXTURE
+    self.setDataExtractor = SET_DATA_EXTRACTOR:build(self)
+
+    return o
+end
