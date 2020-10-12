@@ -1,34 +1,17 @@
 #include <../../common/Base>
 
--- Name of the set
 local SET_NAME = "Battle Pack: Epic Dawn"
 
--- Is used for determining the correct rarity
--- Using only the name alone works but may lead to problems later on
--- This variable should hold the whole set code minus the three last digits
 local SET_CODE_PREFIX = "BP01-EN"
 
--- Name used for the query to the api
--- In most cases setting it to SET_NAME should be okay
--- It may be necessary to replace spaces with '%20'
--- Example: "Metal Raiders" => "metal%20raiders"
--- This is kept as a separate parameters in case something else than the raw set name
--- needs to be used for the API query
 local SET_NAME_URL = SET_NAME
 
--- Texture for packs
--- If nil, a placeholder will be used
 local PACK_TEXTURES = "https://i.imgur.com/sz85e3z.jpga"
 
--- Texture for boxes
--- If nil, a placeholder will be used
 local BOX_TEXTURE = "https://i.imgur.com/qP94DEb.png"
 
--- Number of cards in a single pack
 local CARDS_IN_PACKS = 5
 
--- Number of packs in a set box
--- If set to 1 a pack without a box is spawned
 local PACKS_IN_BOX = 36
 
 -- Rarities/Slots
@@ -39,10 +22,6 @@ local COMMON1 = "Common1"
 local COMMON2 = "Common2"
 local COMMON3 = "Common3"
 
--- Extract for card_sets array in the api setData
--- Includes rarities and setcode of a card in this particular set
-local SET_DATA_EXTRACTOR = SetDataExtractor:new():findAll()
-
 -- Ratios for last card, must add up to 1.0
 local RATIOS = {}
 RATIOS[RARE] = 0.25
@@ -50,6 +29,7 @@ RATIOS[COMMON1] = 0.25
 RATIOS[COMMON2] = 0.25
 RATIOS[COMMON3] = 0.25
 
+local SET_DATA_EXTRACTOR = SetDataExtractor:new():findAll()
 
 PackGenerator = AbstractPackGenerator:new()
 
