@@ -129,7 +129,7 @@ function AbstractPackGenerator:new(o)
     self.setName = nil
     self.setCodePrefix = nil
     self.setNameUrl = nil
-    self.packTexture = nil
+    self.packTextures = nil
     self.boxTexture = nil
     self.cardsInPacks = nil
     self.packsInBox = nil
