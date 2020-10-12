@@ -18,7 +18,7 @@ local SET_NAME_URL = SET_NAME
 
 -- Texture for packs
 -- If nil, a placeholder will be used
-local PACK_TEXTURE = "https://i.imgur.com/sz85e3z.jpga"
+local PACK_TEXTURES = "https://i.imgur.com/sz85e3z.jpga"
 
 -- Texture for boxes
 -- If nil, a placeholder will be used
@@ -142,7 +142,7 @@ function PackGenerator:new()
     self.setNameUrl = SET_NAME_URL
     self.cardsInPacks = CARDS_IN_PACKS
     self.packsInBox = PACKS_IN_BOX
-    self.packTexture = PACK_TEXTURE
+    self.packTextures = PACK_TEXTURES
     self.boxTexture = BOX_TEXTURE
     self.setDataExtractor = SET_DATA_EXTRACTOR:build(self)
 

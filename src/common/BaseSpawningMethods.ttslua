@@ -75,7 +75,7 @@ function AbstractPackGenerator:spawnPack(pack, pos, callback)
             packObject.setLock(false)
             packObject.setCustomObject({
                 mesh = PACK_MESH,
-                diffuse = self.packTexture or DEFAULT_PACK_TEXTURE,
+                diffuse = self.packTextures or DEFAULT_PACK_TEXTURE,
                 normal = PACK_NORMAL,
                 type = 6, -- bag
                 material = 3, -- cardbord
