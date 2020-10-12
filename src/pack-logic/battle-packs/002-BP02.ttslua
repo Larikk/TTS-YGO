@@ -1,0 +1,114 @@
+#include <../../common/Base>
+
+-- Name of the set
+local SET_NAME = "Battle Pack 2: War of the Giants"
+
+-- Is used for determining the correct rarity
+-- Using only the name alone works but may lead to problems later on
+-- This variable should hold the whole set code minus the three last digits
+local SET_CODE_PREFIX = "BP02-EN"
+
+-- Name used for the query to the api
+-- In most cases setting it to SET_NAME should be okay
+-- It may be necessary to replace spaces with '%20'
+-- Example: "Metal Raiders" => "metal%20raiders"
+-- This is kept as a separate parameters in case something else than the raw set name
+-- needs to be used for the API query
+local SET_NAME_URL = SET_NAME
+
+-- Texture for packs
+-- If nil, a placeholder will be used
+local PACK_TEXTURE = "https://i.imgur.com/gtpqbPw.png"
+
+-- Texture for boxes
+-- If nil, a placeholder will be used
+local BOX_TEXTURE = "https://i.imgur.com/j1gFItx.png"
+
+-- Number of cards in a single pack
+local CARDS_IN_PACKS = 5
+
+-- Number of packs in a set box
+-- If set to 1 a pack without a box is spawned
+local PACKS_IN_BOX = 36
+
+-- Rarities
+local COMMON = "Common"
+local RARE = "Rare"
+local MOSAIC_RARE = "Mosaic Rare"
+
+-- Ratios for last card, must add up to 1.0
+-- values are rounded up
+local RATIOS = {}
+RATIOS[COMMON] = 0.74
+RATIOS[RARE] = 0.24
+RATIOS[MOSAIC_RARE] = 0.02
+
+-- Extract for card_sets array in the api setData
+-- Includes rarities and setcode of a card in this particular set
+local postListener = function(entries)
+    -- Remove the Mosaic rarity from every card that can occur in another rarity
+    if #entries > 1 then
+        local newEntries = {}
+        for i, v in pairs(entries) do
+            if v.rarity ~= MOSAIC_RARE then table.insert(newEntries, v) end
+        end
+        entries = newEntries
+    end
+
+    return entries
+end
+local SET_DATA_EXTRACTOR = SetDataExtractor:new():findAll():addPostListener(postListener)
+
+
+PackGenerator = AbstractPackGenerator:new()
+
+function PackGenerator:assemblePack()
+    local pack = {}
+
+    -- generates one more than needed because the 9th card may or may not be a common
+    local commons = self:pullCards(COMMON, 4)
+    local rares = self:pullCards(RARE, 2)
+
+    -- 1 rare
+    pack[1] = rares[1]
+
+    -- 3 commons
+    for i = 2, 4 do
+        pack[i] = commons[i-1]
+    end
+
+    local f = function(card) card.rarity = string.format("%s (%s)", MOSAIC_RARE, card.rarity) end
+
+    -- last card
+    -- can be any card as a Mosaic Rare
+    -- three cards can only be Mosaic Rare
+    local rarityOfLast = self:pickRarity(RATIOS)
+    if rarityOfLast == COMMON then
+        pack[5] = commons[4]
+        f(pack[5])
+    elseif rarityOfLast == RARE then
+        pack[5] = rares[2]
+        f(pack[5])
+    else
+        pack[5] = self:pullCard(MOSAIC_RARE)
+    end
+
+    return pack
+end
+
+function PackGenerator:new()
+    o = AbstractPackGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    self.setName = SET_NAME
+    self.setCodePrefix = SET_CODE_PREFIX
+    self.setNameUrl = SET_NAME_URL
+    self.cardsInPacks = CARDS_IN_PACKS
+    self.packsInBox = PACKS_IN_BOX
+    self.packTexture = PACK_TEXTURE
+    self.boxTexture = BOX_TEXTURE
+    self.setDataExtractor = SET_DATA_EXTRACTOR:build(self)
+
+    return o
+end
