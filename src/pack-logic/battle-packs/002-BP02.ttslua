@@ -18,7 +18,11 @@ local SET_NAME_URL = SET_NAME
 
 -- Texture for packs
 -- If nil, a placeholder will be used
-local PACK_TEXTURES = "https://i.imgur.com/gtpqbPw.png"
+local PACK_TEXTURES = {
+    "https://i.imgur.com/gtpqbPw.png",
+    "https://i.imgur.com/1kwkGmG.png",
+    "https://i.imgur.com/d5Xvxa2.png"
+}
 
 -- Texture for boxes
 -- If nil, a placeholder will be used
