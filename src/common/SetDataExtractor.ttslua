@@ -61,7 +61,7 @@ function SetDataExtractor:addPostListener(listener)
 end
 
 function SetDataExtractor:build(spawner)
-    self.setName = spawner.setName
+    self.setName = spawner.setNameUrl
     self.setCodePrefix = spawner.setCodePrefix
     return self
 end
