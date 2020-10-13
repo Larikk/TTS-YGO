@@ -1,0 +1,13 @@
+#include <../../common/Base>
+
+local SET_NAME = "Legacy of Darkness"
+
+local SET_CODE_PREFIX = "LOD-"
+
+local SET_NAME_URL = SET_NAME
+
+local PACK_TEXTURES = "https://i.imgur.com/4nnn0FP.png"
+
+local BOX_TEXTURE = "https://i.imgur.com/sWP9WgM.png"
+
+#include _CoreSetLogicA

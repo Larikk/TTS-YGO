@@ -1,0 +1,13 @@
+#include <../../common/Base>
+
+local SET_NAME = "Pharaonic Guardian"
+
+local SET_CODE_PREFIX = "PGD-"
+
+local SET_NAME_URL = SET_NAME
+
+local PACK_TEXTURES = "https://i.imgur.com/rSrvpl7.png"
+
+local BOX_TEXTURE = "https://i.imgur.com/fR5F7um.png"
+
+#include _CoreSetLogicA
