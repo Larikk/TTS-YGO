@@ -1,0 +1,13 @@
+#include <../../common/Base>
+
+local SET_NAME = "Metal Raiders"
+
+local SET_CODE_PREFIX = "MRD-"
+
+local SET_NAME_URL = SET_NAME
+
+local PACK_TEXTURES = "https://i.imgur.com/0q3qAxc.png"
+
+local BOX_TEXTURE = "https://i.imgur.com/SdBwHUA.png"
+
+#include _CoreSetLogicA
