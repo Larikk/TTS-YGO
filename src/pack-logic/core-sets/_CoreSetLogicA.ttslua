@@ -1,0 +1,77 @@
+-- The logic for the first core sets is the same to thats why it is in a separate file
+-- This pack locic should be usuable for all core sets before "Soul of the Duelist"
+
+
+local CARDS_IN_PACKS = 9
+
+local PACKS_IN_BOX = 24
+
+-- Rarities
+local COMMON = "Common"
+local RARE = "Rare"
+local SUPER_RARE = "Super Rare"
+local ULTRA_RARE = "Ultra Rare"
+local SECRET_RARE = "Secret Rare"
+
+-- Ratios for last/foil card, must add up to 1.0
+-- Numbers are taken from https://yugiohblog.konami.com/articles/?p=7413
+-- They may not be completely accurate for every single set
+-- According to https://yugioh.fandom.com/wiki/Forum:Pull_ratios these numbers should be okay for most sets
+local RATIOS = {}
+RATIOS[COMMON] = 0.71
+RATIOS[SUPER_RARE] = 0.17
+RATIOS[ULTRA_RARE] = 0.08
+RATIOS[SECRET_RARE] = 0.04
+
+-- We want to map some rarities to other rarities (eg. when we want to treat a shortprint as a common)
+local RARITY_REPLACEMENTS = {}
+RARITY_REPLACEMENTS["Short Print"] = COMMON
+RARITY_REPLACEMENTS["Super Short Print"] = COMMON
+
+
+local SET_DATA_EXTRACTOR = SetDataExtractor:new():replace(RARITY_REPLACEMENTS)
+
+
+PackGenerator = AbstractPackGenerator:new()
+
+function PackGenerator:assemblePack()
+    local pack = {}
+
+    -- generates one more than needed because the 9th card may or may not be a common
+    local commons = self:pullCards(COMMON, 8)
+
+    -- 7 commons
+    for i = 1, 7 do
+        pack[i] = commons[i]
+    end
+
+    -- guaranteed 1 rare
+    pack[8] = self:pullCard(RARE)
+
+    -- wild card
+    local rarityOfLast = self:pickRarity(RATIOS)
+    if rarityOfLast == COMMON then
+        pack[9] = commons[8]
+    else
+        pack[9] = self:pullCard(rarityOfLast)
+    end
+
+    return pack
+end
+
+function PackGenerator:new()
+    o = AbstractPackGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    self.setName = SET_NAME
+    self.setCodePrefix = SET_CODE_PREFIX
+    self.setNameUrl = SET_NAME_URL
+    self.cardsInPacks = CARDS_IN_PACKS
+    self.packsInBox = PACKS_IN_BOX
+    self.packTextures = PACK_TEXTURES
+    self.boxTexture = BOX_TEXTURE
+    self.setDataExtractor = SET_DATA_EXTRACTOR:build(self)
+
+    return o
+end
