@@ -1,0 +1,13 @@
+#include <../../common/Base>
+
+local SET_NAME = "Magic Ruler"
+
+local SET_CODE_PREFIX = "SRL-"
+
+local SET_NAME_URL = "Spell Ruler"
+
+local PACK_TEXTURES = "https://i.imgur.com/vbWImNj.jpg"
+
+local BOX_TEXTURE = "https://i.imgur.com/f1s6RRM.png"
+
+#include _CoreSetLogicA

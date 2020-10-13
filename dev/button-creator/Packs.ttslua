@@ -5,6 +5,7 @@ local packSections = {
         packs = {
             {name = "Legend of Blue Eyes White Dragon", file = "001-LOB", art = "https://i.imgur.com/uytVF0z.png"},
             {name = "Metal Raiders", file = "002-MRD", art = "https://i.imgur.com/0q3qAxc.png"},
+            {name = "Magic Ruler", file = "003-MRL", art = "https://i.imgur.com/vbWImNj.jpg"},
         }
     },
     {
