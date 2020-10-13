@@ -12,8 +12,8 @@ local packSections = {
         packs = {
             {name = "Battle Pack: Epic Dawn", file = "001-BP01", art = "https://i.imgur.com/sz85e3z.jpga"},
             {name = "Battle Pack 2: War of the Giants", file = "002-BP02", art = "https://i.imgur.com/gtpqbPw.png"},
-            {name = 'War of the Giants: Round 2\n\nOne box of these has 6 "Battle Pack 2" packs and 1 Round 2 pack.', file = "002a-BPW2", art = "https://i.imgur.com/DF6s5Rb.jpg"},
-            {name = "Battle Pack 3: Monster League (This set has a special ruling: All monsters have all races.)", file = "003-BP03", art = "https://i.imgur.com/wkNCwcf.png"},
+            {name = 'War of the Giants: Round 2\n\nOne box of these has 6 "Battle Pack 2" packs and 1 "Round 2" pack.', file = "002a-BPW2", art = "https://i.imgur.com/DF6s5Rb.jpg"},
+            {name = "Battle Pack 3: Monster League\n\nThis set has a special ruling: All monsters have all races.", file = "003-BP03", art = "https://i.imgur.com/wkNCwcf.png"},
         }
     },
     {
