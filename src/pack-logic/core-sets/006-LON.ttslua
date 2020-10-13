@@ -1,0 +1,13 @@
+#include <../../common/Base>
+
+local SET_NAME = "Labyrinth of Nightmare"
+
+local SET_CODE_PREFIX = "LON-"
+
+local SET_NAME_URL = SET_NAME
+
+local PACK_TEXTURES = "https://i.imgur.com/LBayjxH.jpg"
+
+local BOX_TEXTURE = "https://i.imgur.com/kHM9pqr.png"
+
+#include _CoreSetLogicA
