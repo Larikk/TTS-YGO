@@ -4,7 +4,7 @@ local DEFAULT_PACK_TEXTURE = "https://i.imgur.com/XlF4YQW.png"
 local DEFAULT_BOX_TEXTURE = "https://i.imgur.com/hDtFLea.png"
 
 local PACK_MESH = "http://pastebin.com/raw/xdTHXJJX"
-local BOX_MESH = "https://pastebin.com/raw/WhYqmJve"
+local BOX_MESH = "https://pastebin.com/raw/8heJnvWg"
 
 local PACK_NORMAL = "http://i.imgur.com/9FUxR04.png"
 
@@ -122,7 +122,7 @@ function AbstractPackGenerator:spawnBox(packs, pos, callback)
     spawnParams = {
         type = "Custom_Model",
         position = pos,
-        rotation = {x = 0, y = -90, z = 0},
+        rotation = {x = 0, y = 180, z = 0},
         scale = {x = 1, y = 1, z = 1},
         sound = true,
         snap_to_grid = true,
