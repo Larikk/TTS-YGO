@@ -17,7 +17,13 @@ function filterObjectEnter(o)
 end
 
 function onObjectLeaveContainer(container, object)
-    if self == container and self.getQuantity() < 1 then
+    if self ~= container then return end
+
+    local rotation = container.getRotation()
+    rotation = Vector(0, rotation.y, 0)
+    object.setRotation(rotation)
+
+    if self.getQuantity() < 1 then
         self.destruct()
     end
 end
