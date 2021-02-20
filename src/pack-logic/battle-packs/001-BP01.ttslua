@@ -1,4 +1,5 @@
-#include <../../common/Base>
+local baseLogic = require("TTS-YGO-sealed-draft/src/common/BaseLogic")
+local cardParser = require("TTS-YGO-sealed-draft/src/common/CardParser")
 
 local SET_NAME = "Battle Pack: Epic Dawn"
 
@@ -29,7 +30,6 @@ RATIOS[COMMON1] = 0.25
 RATIOS[COMMON2] = 0.25
 RATIOS[COMMON3] = 0.25
 
-local SET_DATA_EXTRACTOR = SetDataExtractor:new():findAll()
 
 local function assemblePack(self)
     local pack = {}
@@ -85,7 +85,7 @@ local function parseCard(self, cardApiData)
         slot = rarity .. "3"
     end
 
-    local card = CardParser:parseCard(cardApiData)
+    local card = cardParser.parseCard(cardApiData)
     card.rarity = rarity
     card.slot = slot
     card.setCode = setCode
@@ -110,17 +110,20 @@ local function parseCardList(self, cardList)
     return cardsMap
 end
 
-function createPackGeneratorBP01()
-    local generator = createPackGenerator()
+local export = {}
+
+function export.createPackGenerator()
+    local generator = baseLogic.createPackGenerator()
 
     generator.setName = SET_NAME
     generator.setCodePrefix = SET_CODE_PREFIX
     generator.setNameUrl = SET_NAME_URL
-    generator.cardsInPacks = CARDS_IN_PACKS
+    generator.cardsInPack = CARDS_IN_PACKS
     generator.packsInBox = PACKS_IN_BOX
     generator.packTextures = PACK_TEXTURES
     generator.boxTexture = BOX_TEXTURE
-    generator.setDataExtractor = SET_DATA_EXTRACTOR
+
+    generator.setDataExtractor:findAll()
 
     generator.parseCardList = parseCardList
     generator.parseCard = parseCard
@@ -128,3 +131,5 @@ function createPackGeneratorBP01()
 
     return generator
 end
+
+return export
