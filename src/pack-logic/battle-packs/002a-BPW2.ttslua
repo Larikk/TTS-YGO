@@ -1,4 +1,4 @@
-#include <../../common/Base>
+local AbstractPackGenerator = require("TTS-YGO-sealed-draft/src/common/AbstractPackGenerator")
 
 local SET_NAME = "War of the Giants: Round 2"
 
@@ -19,9 +19,7 @@ local COMMON = "Common"
 local SUPER_RARE = "Super Rare"
 local ULTRA_RARE = "Ultra Rare"
 
-local SET_DATA_EXTRACTOR = SetDataExtractor:new()
-
-PackGenerator = AbstractPackGenerator:new()
+local PackGenerator = AbstractPackGenerator:new()
 
 function PackGenerator:assemblePack()
     local pack = {}
@@ -57,7 +55,8 @@ function PackGenerator:new()
     self.packsInBox = PACKS_IN_BOX
     self.packTextures = PACK_TEXTURES
     self.boxTexture = BOX_TEXTURE
-    self.setDataExtractor = SET_DATA_EXTRACTOR:build(self)
 
     return o
 end
+
+return PackGenerator

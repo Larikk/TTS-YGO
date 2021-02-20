@@ -30,7 +30,7 @@ RATIOS[COMMON1] = 0.25
 RATIOS[COMMON2] = 0.25
 RATIOS[COMMON3] = 0.25
 
-PackGenerator = AbstractPackGenerator:new()
+local PackGenerator = AbstractPackGenerator:new()
 
 function PackGenerator:assemblePack()
     local pack = {}
