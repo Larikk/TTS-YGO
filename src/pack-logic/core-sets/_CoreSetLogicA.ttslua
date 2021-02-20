@@ -1,4 +1,4 @@
-local baseLogic = require("TTS-YGO-sealed-draft/src/common/Base")
+local baseLogic = require("TTS-YGO-sealed-draft/src/common/BaseLogic")
 local SetDataExtractor = require("TTS-YGO-sealed-draft/src/common/SetDataExtractor")
 
 -- The logic for the first core sets is the same to thats why it is in a separate file
