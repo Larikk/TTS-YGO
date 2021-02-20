@@ -1,4 +1,5 @@
 local cardParser = require("TTS-YGO-sealed-draft/src/common/CardParser")
+local SetDataExtractor = require("TTS-YGO-sealed-draft/src/common/SetDataExtractor")
 local mathutil = require("TTS-YGO-sealed-draft/src/common/Math")
 local io = require("TTS-YGO-sealed-draft/src/common/IO")
 
@@ -226,7 +227,8 @@ function baseLogic.createPackGenerator()
     generator.boxTexture = nil
     generator.cardsInPack = nil
     generator.packsInBox = nil
-    generator.setDataExtractor = nil
+
+    generator.setDataExtractor = SetDataExtractor:new()
 
     -- is initialized before a box/pack is generated for the first time
     -- holds the cards of the set partitioned by their rarity
