@@ -11,11 +11,6 @@
 -- Some changes were made to make it work with TTS
 #include <Json>
 
-
--- Abstract class which has common logic
--- Pack-specific behavior is implemented is subclasses
-AbstractPackGenerator = {}
-
 -- Utility functions for picking cards/rarities and other useful stuff
 #include <BaseUtilMethods>
 
@@ -28,39 +23,39 @@ local function noop()
 end
 
 -- Must be implemented by a specific generator
-function AbstractPackGenerator:assemblePack()
+local function assemblePack(self)
     noop()
 end
 
 -- Must be implemented by a specific generator
 -- Is called at the end of assembleBox() to make sure certain conditions are BaseUtilMethods
 -- (like at least of of ABC Rare or something like that)
-function AbstractPackGenerator:boxPostConditions(packs)
+local function boxPostConditions(self, packs)
     -- do nothing
 end
 
-function AbstractPackGenerator:assembleBox()
+local function assembleBox(self)
     local packs = {}
     for i = 1, self.packsInBox do
-      table.insert(packs, self:assemblePack())
+      table.insert(packs, self.assemblePack(self))
     end
-    self:boxPostConditions(packs)
+    self.boxPostConditions(self, packs)
     return packs
 end
 
 
 -- Can be overridden by subclasses if necessary
-function AbstractPackGenerator:parseCardList(cardList)
+local function parseCardList(self, cardList)
     local cardsMap = {}
 
     for i, cardApiData in ipairs(cardList) do
         local card = CardParser:parseCard(cardApiData)
-        local setDataEntries = self:extractSetData(cardApiData)
+        local setDataEntries = self.extractSetData(self, cardApiData)
         for i, entry in ipairs(setDataEntries) do
-            local copy = self:copyCard(card)
+            local copy = self.copyCard(self, card)
             copy.rarity = entry.rarity
             copy.setCode = entry.setCode
-            self:putCardIntoCardsMap(copy, cardsMap)
+            self.putCardIntoCardsMap(self, copy, cardsMap)
         end
     end
 
@@ -70,12 +65,12 @@ end
 
 -- downloads the card list from db.ygoprodeck.com and initializes initCardsMap
 -- callBack should be the action that should have been executed if cardsMap were initialized
-function AbstractPackGenerator:initCardsMap(callback)
+local function initCardsMap(self, callback)
     local responseHandler = function(response, callback)
         IO:info("Received card list, processing response...")
         local cards = Json:decode(response.text).data
 
-        self.cardsMap = self:parseCardList(cards)
+        self.cardsMap = self.parseCardList(self, cards)
         IO:info("Processed card list, continuing with spawning.")
         if type(callback) == "function" then callback() end
     end
@@ -87,60 +82,72 @@ function AbstractPackGenerator:initCardsMap(callback)
 end
 
 -- spawns a booster, can be called externally
-function AbstractPackGenerator:generateBoosterPack(pos)
+local function generateBoosterPack(self, pos)
     local f = function()
-        local pack = self:assemblePack()
-        self:spawnPack(pack, pos, || IO:success("Pack is ready!"))
+        local pack = self.assemblePack(self)
+        self.spawnPack(pack, pos, || IO:success("Pack is ready!"))
     end
 
     if self.cardsMap == nil then
-        self:initCardsMap(|| f())
+        self.initCardsMap(self, || f())
     else
         f()
     end
 end
 
 -- spawns a box, can be called externally
-function AbstractPackGenerator:generateBoosterBox(pos)
+local function generateBoosterBox(self, pos)
     if self.packsInBox < 2 then
-        self:generateBoosterPack(pos)
+        self.generateBoosterPack(self, pos)
         return
     end
 
     local f = function()
-        local packs = self:assembleBox()
-        self:spawnBox(packs, pos, || IO:success("Box is ready!"))
+        local packs = self.assembleBox(self)
+        self.spawnBox(self, packs, pos, || IO:success("Box is ready!"))
     end
 
     if self.cardsMap == nil then
-        self:initCardsMap(|| f())
+        self.initCardsMap(self, || f())
     else
         f()
     end
 end
 
+local function initMethods(generator)
+    generator.generateBoosterBox = generateBoosterBox
+    generator.generateBoosterPack = generateBoosterPack
+    generator.initCardsMap = initCardsMap
+    generator.parseCardList = parseCardList
+    generator.assembleBox = assembleBox
+    generator.boxPostConditions = boxPostConditions
+    generator.assemblePack = assemblePack
+    initSpawnMethods(generator)
+    initUtilMethods(generator)
+end
 
-function AbstractPackGenerator:new(o)
-    o = o or {}
-    setmetatable(o, self)
-    self.__index = self
+
+function createPackGenerator()
+    local generator = {}
 
     -- must be overridden by specific generators
-    self.setName = nil
-    self.setCodePrefix = nil
-    self.setNameUrl = nil
-    self.packTextures = nil
-    self.boxTexture = nil
-    self.cardsInPacks = nil
-    self.packsInBox = nil
-    self.setDataExtractor = nil
+    generator.setName = nil
+    generator.setCodePrefix = nil
+    generator.setNameUrl = nil
+    generator.packTextures = nil
+    generator.boxTexture = nil
+    generator.cardsInPacks = nil
+    generator.packsInBox = nil
+    generator.setDataExtractor = nil
 
     -- is initialized before a box/pack is generated for the first time
     -- holds the cards of the set partitioned by their rarity
     -- key: rarity
     -- value: tables with the single cards, indexed with numbers and a count field
     -- use the util methods to for read and write to this map
-    self.cardsMap = nil
+    generator.cardsMap = nil
 
-    return o
+    initMethods(generator)
+
+    return generator
 end

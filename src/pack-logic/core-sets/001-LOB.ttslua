@@ -11,3 +11,15 @@ local PACK_TEXTURES = "https://i.imgur.com/uytVF0z.png"
 local BOX_TEXTURE = "https://i.imgur.com/V50GxkH.png"
 
 #include _CoreSetLogicA
+
+function createPackGeneratorLOB()
+    local generator = createGeneratorCoreSetA()
+
+    generator.setName = SET_NAME
+    generator.setCodePrefix = SET_CODE_PREFIX
+    generator.setNameUrl = SET_NAME_URL
+    generator.packTextures = PACK_TEXTURES
+    generator.boxTexture = BOX_TEXTURE
+
+    return generator
+end

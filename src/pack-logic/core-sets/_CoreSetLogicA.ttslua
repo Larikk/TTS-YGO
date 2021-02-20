@@ -31,14 +31,11 @@ RARITY_REPLACEMENTS["Super Short Print"] = COMMON
 
 local SET_DATA_EXTRACTOR = SetDataExtractor:new():replace(RARITY_REPLACEMENTS)
 
-
-PackGenerator = AbstractPackGenerator:new()
-
-function PackGenerator:assemblePack()
+local function assemblePack(self)
     local pack = {}
 
     -- generates one more than needed because the 9th card may or may not be a common
-    local commons = self:pullCards(COMMON, 8)
+    local commons = self.pullCards(self, COMMON, 8)
 
     -- 7 commons
     for i = 1, 7 do
@@ -46,32 +43,34 @@ function PackGenerator:assemblePack()
     end
 
     -- guaranteed 1 rare
-    pack[8] = self:pullCard(RARE)
+    pack[8] = self.pullCard(self, RARE)
 
     -- wild card
-    local rarityOfLast = self:pickRarity(RATIOS)
+    local rarityOfLast = self.pickRarity(self, RATIOS)
     if rarityOfLast == COMMON then
         pack[9] = commons[8]
     else
-        pack[9] = self:pullCard(rarityOfLast)
+        pack[9] = self.pullCard(self, rarityOfLast)
     end
 
     return pack
 end
 
-function PackGenerator:new()
-    o = AbstractPackGenerator:new()
-    setmetatable(o, self)
-    self.__index = self
+function createPackGeneratorCoreSetA()
+    local generator = createPackGenerator()
 
-    self.setName = SET_NAME
-    self.setCodePrefix = SET_CODE_PREFIX
-    self.setNameUrl = SET_NAME_URL
-    self.cardsInPacks = CARDS_IN_PACKS
-    self.packsInBox = PACKS_IN_BOX
-    self.packTextures = PACK_TEXTURES
-    self.boxTexture = BOX_TEXTURE
-    self.setDataExtractor = SET_DATA_EXTRACTOR:build(self)
+    -- must be overriden
+    generator.setName = nil
+    generator.setCodePrefix = nil
+    generator.setNameUrl = nil
+    generator.packTextures = nil
+    generator.boxTexture = nil
 
-    return o
+    generator.cardsInPacks = CARDS_IN_PACKS
+    generator.packsInBox = PACKS_IN_BOX
+    generator.setDataExtractor = SET_DATA_EXTRACTOR
+
+    generator.assemblePack = assemblePack
+
+    return generator
 end

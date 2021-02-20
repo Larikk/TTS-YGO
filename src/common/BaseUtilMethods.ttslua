@@ -1,6 +1,6 @@
 -- Imports should be handled in Base
 
-function AbstractPackGenerator:copyCard(card)
+local function copyCard(self, card)
     local copy = {}
     for k,v in pairs(card) do copy[k] = v end
     return copy
@@ -8,27 +8,27 @@ end
 
 -- CardMap related methods
 
-function AbstractPackGenerator:pickSpecificCard(rarity, index)
-    return self:copyCard(self.cardsMap[rarity][index])
+local function pickSpecificCard(self, rarity, index)
+    return self.copyCard(self, self.cardsMap[rarity][index])
 end
 
-function AbstractPackGenerator:pullCard(rarity)
+local function pullCard(self, rarity)
     local index = Math:randomInt(#self.cardsMap[rarity])
-    return self:pickSpecificCard(rarity, index)
+    return self.pickSpecificCard(self, rarity, index)
 end
 
-function AbstractPackGenerator:pullCards(rarity, n)
+local function pullCards(self, rarity, n)
     local cards = {}
     local sequence = Math:randomSequence(n, #self.cardsMap[rarity])
 
     for i, v in ipairs(sequence) do
-        cards[i] = self:pickSpecificCard(rarity, v)
+        cards[i] = self.pickSpecificCard(self, rarity, v)
     end
 
     return cards
 end
 
-function AbstractPackGenerator:putCardIntoCardsMap(card, cardsMap, rarityOverride)
+local function putCardIntoCardsMap(self, card, cardsMap, rarityOverride)
     local rarity = rarityOverride or card.rarity
 
     if cardsMap[rarity] == nil then
@@ -42,7 +42,7 @@ end
 -- key: rarity
 -- value: possibility of the rarity
 -- values should add up to 1.0
-function AbstractPackGenerator:pickRarity(ratios)
+local function pickRarity(self, ratios)
     local p = Math:randomFloat()
     local fallbackRarity = nil
 
@@ -63,6 +63,16 @@ function AbstractPackGenerator:pickRarity(ratios)
     return fallbackRarity
 end
 
-function AbstractPackGenerator:extractSetData(cardApiData)
-    return self.setDataExtractor:extract(cardApiData)
+local function extractSetData(self, cardApiData)
+    return self.setDataExtractor:extract(cardApiData, self.setName, self.setCodePrefix)
+end
+
+function initUtilMethods(generator)
+    generator.extractSetData = extractSetData
+    generator.pickRarity = pickRarity
+    generator.putCardIntoCardsMap = putCardIntoCardsMap
+    generator.pullCards = pullCards
+    generator.pullCard = pullCard
+    generator.pickSpecificCard = pickSpecificCard
+    generator.copyCard = copyCard
 end

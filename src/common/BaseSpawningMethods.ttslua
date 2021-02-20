@@ -37,7 +37,7 @@ end
 -- packObject = bag/container on the TTS board
 -- pack = table which holds data of cards
 
-function AbstractPackGenerator:spawnCard(card, pos, callback)
+local function spawnCard(self, card, pos, callback)
     pos = Vector(pos) or DEFAULT_SPAWN_POS
 
     spawnParams = {
@@ -62,7 +62,7 @@ function AbstractPackGenerator:spawnCard(card, pos, callback)
     spawnObject(spawnParams)
 end
 
-function AbstractPackGenerator:pickPackTexture()
+local function pickPackTexture(self)
     if self.packTextures == nil then return DEFAULT_PACK_TEXTURE end
     if type(self.packTextures) == "string" then return self.packTextures end
 
@@ -70,11 +70,11 @@ function AbstractPackGenerator:pickPackTexture()
     return self.packTextures[n]
 end
 
-function AbstractPackGenerator:spawnPack(pack, pos, callback)
+local function spawnPack(self, pack, pos, callback)
     pos = Vector(pos) or DEFAULT_SPAWN_POS
     local cardPos = pos + Vector(0, 5, 0)
 
-    local texture = self:pickPackTexture()
+    local texture = self.pickPackTexture(self)
 
     spawnParams = {
         type = "Custom_Model",
@@ -108,7 +108,7 @@ function AbstractPackGenerator:spawnPack(pack, pos, callback)
             -- Iterate backwards because the first inserted element in a bag is at the bottom
             for i = #pack, 1, -1 do
                 local card = pack[i]
-                self:spawnCard(card, cardPos, function(cardObject) obj().putObject(cardObject) end)
+                self.spawnCard(self, card, cardPos, function(cardObject) obj().putObject(cardObject) end)
             end
 
             Wait.condition(
@@ -121,7 +121,7 @@ function AbstractPackGenerator:spawnPack(pack, pos, callback)
     spawnObject(spawnParams)
 end
 
-function AbstractPackGenerator:spawnBox(packs, pos, callback)
+local function spawnBox(self, packs, pos, callback)
     pos = Vector(pos) or DEFAULT_SPAWN_POS
     local boosterPos = pos + Vector(0, 5, 0)
 
@@ -154,7 +154,7 @@ function AbstractPackGenerator:spawnBox(packs, pos, callback)
             local obj = function() return getObjectFromGUID(guid) end
 
             for i, pack in ipairs(packs) do
-                self:spawnPack(pack, boosterPos, function(packObject) obj().putObject(packObject) end)
+                self.spawnPack(self, pack, boosterPos, function(packObject) obj().putObject(packObject) end)
             end
 
             Wait.condition(
@@ -165,4 +165,11 @@ function AbstractPackGenerator:spawnBox(packs, pos, callback)
     }
 
     spawnObject(spawnParams)
+end
+
+function initSpawnMethods(generator)
+    generator.spawnBox = spawnBox
+    generator.spawnPack = spawnPack
+    generator.pickPackTexture = pickPackTexture
+    generator.spawnCard = spawnCard
 end
