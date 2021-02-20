@@ -1,0 +1,230 @@
+local cardParser = require("TTS-YGO-sealed-draft/src/common/CardParser")
+local SetDataExtractor = require("TTS-YGO-sealed-draft/src/common/SetDataExtractor")
+local mathUtil = require("TTS-YGO-sealed-draft/src/common/Math")
+local io = require("TTS-YGO-sealed-draft/src/common/IO")
+local TtsSpawner = require("TTS-YGO-sealed-draft/src/common/TtsSpawner")
+
+-- We are using a third party JSON library because the native JSON deserialization of TTS is very slow
+-- Benchmark of 10 decode calls for one booster set: library = ~15sec, native = ~300s
+--
+-- Code is taken from https://github.com/rxi/json.lua
+-- Some changes were made to make it work with TTS
+local json = require("TTS-YGO-sealed-draft/src/common/Json")
+
+
+-- Abstract class which has common logic
+-- Pack-specific behavior is implemented is subclasses
+AbstractPackGenerator = {}
+
+
+local function noop()
+    error("This abstract function has no implementation and must be overriden by a specific pack generator.")
+end
+
+-------------------------------------------------------------------------------
+-- CardMap related methods
+-------------------------------------------------------------------------------
+function AbstractPackGenerator:copyCard(card)
+    local copy = {}
+    for k,v in pairs(card) do copy[k] = v end
+    return copy
+end
+
+function AbstractPackGenerator:pickSpecificCard(rarity, index)
+    return self:copyCard(self.cardsMap[rarity][index])
+end
+
+function AbstractPackGenerator:pullCard(rarity)
+    local index = mathUtil.randomInt(#self.cardsMap[rarity])
+    return self:pickSpecificCard(rarity, index)
+end
+
+function AbstractPackGenerator:pullCards(rarity, n)
+    local cards = {}
+    local sequence = mathUtil.randomSequence(n, #self.cardsMap[rarity])
+
+    for i, v in ipairs(sequence) do
+        cards[i] = self:pickSpecificCard(rarity, v)
+    end
+
+    return cards
+end
+
+function AbstractPackGenerator:putCardIntoCardsMap(card, cardsMap, rarityOverride)
+    local rarity = rarityOverride or card.rarity
+
+    if cardsMap[rarity] == nil then
+        cardsMap[rarity] = {}
+    end
+
+    table.insert(cardsMap[rarity], card)
+end
+
+-- ratios is a table
+-- key: rarity
+-- value: possibility of the rarity
+-- values should add up to 1.0
+function AbstractPackGenerator:pickRarity(ratios)
+    local p = mathUtil.randomFloat()
+    local fallbackRarity = nil
+
+    for rarity, ratio in pairs(ratios) do
+        if (p < ratio) then
+            return rarity
+        end
+        p = p - ratio
+        fallbackRarity = rarity
+    end
+
+    io.warning(
+      "An error occurred while determining a random rarity for a single card. "..
+      "Ratios may be misconfigured (Have to add up to 1.0). Defaulting to highest: "..fallbackRarity..
+      ". Provided ratios:\n"..io.tableToString(ratios)
+    )
+
+    return fallbackRarity
+end
+
+function AbstractPackGenerator:extractSetData(cardApiData)
+    -- we use setNameUrl because this is the name that is used in the query
+    -- setName is primarily for display purposes
+    return self.setDataExtractor:extract(cardApiData, self.setNameUrl, self.setCodePrefix)
+end
+
+
+-- Can be overridden by subclasses if necessary
+function AbstractPackGenerator:parseCardList(cardList)
+    local cardsMap = {}
+
+    for i, cardApiData in ipairs(cardList) do
+        local card = cardParser.parseCard(cardApiData)
+        local setDataEntries = self:extractSetData(cardApiData)
+        for i, entry in ipairs(setDataEntries) do
+            local copy = self:copyCard(card)
+            copy.rarity = entry.rarity
+            copy.setCode = entry.setCode
+            self:putCardIntoCardsMap(copy, cardsMap)
+        end
+    end
+
+    return cardsMap
+end
+
+
+-- downloads the card list from db.ygoprodeck.com and initializes initCardsMap
+-- callBack should be the action that should have been executed if cardsMap were initialized
+function AbstractPackGenerator:initCardsMap(callback)
+    local responseHandler = function(response, callback)
+        io.info("Received card list, processing response...")
+        local cards = json.decode(response.text).data
+
+        self.cardsMap = self:parseCardList(cards)
+        io.info("Processed card list, continuing with spawning.")
+        if type(callback) == "function" then callback() end
+    end
+
+    io.info("Downloading card list...")
+    WebRequest.get("https://db.ygoprodeck.com/api/v7/cardinfo.php?cardset="..self.setNameUrl,
+        function(response) responseHandler(response, callback) end
+    )
+end
+
+-------------------------------------------------------------------------------
+-- Assembly and spawning of Packs/Boxes
+-------------------------------------------------------------------------------
+
+-- Must be implemented by a specific generator
+function AbstractPackGenerator:assemblePack()
+    noop()
+end
+
+-- Must be implemented by a specific generator
+-- Is called at the end of assembleBox() to make sure certain conditions are BaseUtilMethods
+-- (like at least of of ABC Rare or something like that)
+function AbstractPackGenerator:boxPostConditions(packs)
+    -- do nothing
+end
+
+function AbstractPackGenerator:assembleBox()
+    local packs = {}
+    for i = 1, self.packsInBox do
+      table.insert(packs, self:assemblePack())
+    end
+    self:boxPostConditions(packs)
+    return packs
+end
+
+-- spawns a booster, can be called externally
+function AbstractPackGenerator:generateBoosterPack(pos)
+    local f = function()
+        local pack = self:assemblePack()
+        local spawner = TtsSpawner:new({
+            setName = self.setName,
+            packTextures = self.packTextures,
+            boxTexture = self.boxTexture,
+            cardsInPack = self.cardsInPacks,
+            packsInBox = self.packsInBox
+        })
+        spawner:spawnPack(pack, pos, || io.success("Pack is ready!"))
+    end
+
+    if self.cardsMap == nil then
+        self:initCardsMap(|| f())
+    else
+        f()
+    end
+end
+
+-- spawns a box, can be called externally
+function AbstractPackGenerator:generateBoosterBox(pos)
+    if self.packsInBox < 2 then
+        self:generateBoosterPack(pos)
+        return
+    end
+
+    local f = function()
+        local packs = self:assembleBox()
+        local spawner = TtsSpawner:new({
+            setName = self.setName,
+            packTextures = self.packTextures,
+            boxTexture = self.boxTexture,
+            cardsInPack = self.cardsInPacks,
+            packsInBox = self.packsInBox
+        })
+        spawner:spawnBox(packs, pos, || io.success("Box is ready!"))
+    end
+
+    if self.cardsMap == nil then
+        self:initCardsMap(|| f())
+    else
+        f()
+    end
+end
+
+
+function AbstractPackGenerator:new(o)
+    o = o or {}
+    setmetatable(o, self)
+    self.__index = self
+
+    -- must be overridden by specific generators
+    self.setName = nil
+    self.setCodePrefix = nil
+    self.setNameUrl = nil
+    self.packTextures = nil
+    self.boxTexture = nil
+    self.cardsInPacks = nil
+    self.packsInBox = nil
+    self.setDataExtractor = SetDataExtractor:new()
+
+    -- is initialized before a box/pack is generated for the first time
+    -- holds the cards of the set partitioned by their rarity
+    -- key: rarity
+    -- value: tables with the single cards, indexed with numbers and a count field
+    -- use the util methods to for read and write to this map
+    self.cardsMap = nil
+
+    return o
+end
+
+return AbstractPackGenerator

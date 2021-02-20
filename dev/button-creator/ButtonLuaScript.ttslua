@@ -2,7 +2,7 @@ local script = {}
 
 function script.createLuaScript(folder, file, spawn, name)
     return string.format([=====[
-%s <TTS-YGO-sealed-draft/src/pack-logic/%s/%s>
+local PackGenerator = require("TTS-YGO-sealed-draft/src/pack-logic/%s/%s")
 
 local packGenerator = PackGenerator:new()
 
@@ -20,7 +20,7 @@ function onload()
         tooltip=[[%s]]
     })
 end
-]=====], "#include", folder, file, spawn, name)
+]=====], folder, file, spawn, name)
 end
 
 return script

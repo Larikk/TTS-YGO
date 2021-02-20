@@ -1,4 +1,3 @@
-#include <../../src/common/IO>
 local buttonSections = require("TTS-YGO-sealed-draft/dev/button-creator/Packs")
 local buttonLuaScript = require("TTS-YGO-sealed-draft/dev/button-creator/ButtonLuaScript")
 
