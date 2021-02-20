@@ -1,4 +1,4 @@
-#include <../../common/Base>
+local AbstractPackGenerator = require("TTS-YGO-sealed-draft/src/common/AbstractPackGenerator")
 
 local SET_NAME = "Tournament Pack: 1st Season"
 
@@ -28,9 +28,8 @@ RATIOS[RARE] = 0.33
 RATIOS[SUPER_RARE] = 0.06
 RATIOS[ULTRA_RARE] = 0.01
 
-local SET_DATA_EXTRACTOR = SetDataExtractor:new()
 
-PackGenerator = AbstractPackGenerator:new()
+local PackGenerator = AbstractPackGenerator:new()
 
 function PackGenerator:assemblePack()
     local pack = {}
@@ -66,7 +65,8 @@ function PackGenerator:new()
     self.packsInBox = PACKS_IN_BOX
     self.packTextures = PACK_TEXTURES
     self.boxTexture = BOX_TEXTURE
-    self.setDataExtractor = SET_DATA_EXTRACTOR:build(self)
 
     return o
 end
+
+return PackGenerator

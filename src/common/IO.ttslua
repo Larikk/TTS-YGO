@@ -1,4 +1,4 @@
-IO = {}
+io = {}
 
 local function tableToStringHelper(tt, indent, done)
     done = done or {}
@@ -26,31 +26,33 @@ local function tableToStringHelper(tt, indent, done)
     end
 end
 
-function IO:tableToString( tbl )
+function io.tableToString( tbl )
     if "nil" == type( tbl ) then
-        return IO:tableToString(nil)
+        return io.tableToString(nil)
     elseif "table" == type( tbl ) then
         return tableToStringHelper(tbl)
     elseif "string" == type( tbl ) then
         return tbl
     else
-        return IO:tableToString(tbl)
+        return io.tableToString(tbl)
     end
 end
 
-function IO:printTable(table)
-    print(IO:tableToString(table))
+function io.printTable(table)
+    print(io.tableToString(table))
 end
 
 -- Prints a warning to all players
-function IO:warning(str)
+function io.warning(str)
     broadcastToAll(str, Color.Yellow)
 end
 
-function IO:success(str)
+function io.success(str)
     broadcastToAll(str, Color.Green)
 end
 
-function IO:info(str)
+function io.info(str)
     broadcastToAll(str, Color.Teal)
 end
+
+return io
