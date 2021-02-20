@@ -1,4 +1,4 @@
-#include <../../common/Base>
+local ParentGenerator = require("TTS-YGO-sealed-draft/src/pack-logic/core-sets/_CoreSetLogicA")
 
 local SET_NAME = "Legend of Blue Eyes White Dragon"
 
@@ -10,4 +10,20 @@ local PACK_TEXTURES = "https://i.imgur.com/uytVF0z.png"
 
 local BOX_TEXTURE = "https://i.imgur.com/V50GxkH.png"
 
-#include _CoreSetLogicA
+local PackGenerator = ParentGenerator:new()
+
+function PackGenerator:new()
+    o = ParentGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = SET_NAME
+    o.setCodePrefix = SET_CODE_PREFIX
+    o.setNameUrl = SET_NAME_URL
+    o.packTextures = PACK_TEXTURES
+    o.boxTexture = BOX_TEXTURE
+
+    return o
+end
+
+return PackGenerator
