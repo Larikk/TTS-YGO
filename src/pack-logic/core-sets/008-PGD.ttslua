@@ -1,4 +1,4 @@
-#include <../../common/Base>
+local logic = require("TTS-YGO-sealed-draft/src/pack-logic/core-sets/_CoreSetLogicA")
 
 local SET_NAME = "Pharaonic Guardian"
 
@@ -10,4 +10,18 @@ local PACK_TEXTURES = "https://i.imgur.com/rSrvpl7.png"
 
 local BOX_TEXTURE = "https://i.imgur.com/fR5F7um.png"
 
-#include _CoreSetLogicA
+local export = {}
+
+function export.createPackGenerator()
+    local generator = logic.createPackGeneratorCoreSetA()
+
+    generator.setName = SET_NAME
+    generator.setCodePrefix = SET_CODE_PREFIX
+    generator.setNameUrl = SET_NAME_URL
+    generator.packTextures = PACK_TEXTURES
+    generator.boxTexture = BOX_TEXTURE
+
+    return generator
+end
+
+return export
