@@ -10,7 +10,7 @@ local io = require("TTS-YGO-sealed-draft/src/common/IO")
 local json = require("TTS-YGO-sealed-draft/src/common/Json")
 
 -- Functions which handle the spawning of objects onto the table
-local TtsSpawner = require("TTS-YGO-sealed-draft/src/common/BaseSpawningMethods")
+local TtsSpawner = require("TTS-YGO-sealed-draft/src/common/TtsSpawner")
 
 local baseLogic = {}
 
