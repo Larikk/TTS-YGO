@@ -1,3 +1,5 @@
+local io = require("TTS-YGO-sealed-draft/src/common/IO")
+
 local SetDataExtractor = {}
 
 local function isSetCodeMatching(cardCode, prefix)
@@ -24,7 +26,7 @@ function SetDataExtractor:extract(cardApiData, name, codePrefix)
     for i,v in pairs(self.postListeners) do entries = v(entries) end
 
     if #entries == 0 then
-        IO:warning(string.format("Warning: Could not extract rarity/setcode of %s. It may be that this card won't be in the card pool.", cardApiData.name))
+        io.warning(string.format("Warning: Could not extract rarity/setcode of %s. It may be that this card won't be in the card pool.", cardApiData.name))
     end
 
     return entries
@@ -54,13 +56,9 @@ function SetDataExtractor:addPostListener(listener)
     if (type(listener) == "function") then
         table.insert(self.postListeners, listener)
     else
-        IO:error(listener.." is not a function.")
+        io.error(listener.." is not a function.")
     end
 
-    return self
-end
-
-function SetDataExtractor:build(spawner)
     return self
 end
 
@@ -69,9 +67,6 @@ function SetDataExtractor:new(o)
     o = o or {}
     setmetatable(o, self)
     self.__index = self
-
-    self.setName = nil
-    self.setCodePrefix = nil
 
     self.replacements = {}
     self.ignoreList = {}
