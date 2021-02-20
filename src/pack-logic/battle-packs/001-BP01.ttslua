@@ -1,4 +1,5 @@
-#include <../../common/Base>
+local AbstractPackGenerator = require("TTS-YGO-sealed-draft/src/common/AbstractPackGenerator")
+local cardParser = require("TTS-YGO-sealed-draft/src/common/CardParser")
 
 local SET_NAME = "Battle Pack: Epic Dawn"
 
@@ -29,9 +30,7 @@ RATIOS[COMMON1] = 0.25
 RATIOS[COMMON2] = 0.25
 RATIOS[COMMON3] = 0.25
 
-local SET_DATA_EXTRACTOR = SetDataExtractor:new():findAll()
-
-PackGenerator = AbstractPackGenerator:new()
+local PackGenerator = AbstractPackGenerator:new()
 
 function PackGenerator:assemblePack()
     local pack = {}
@@ -87,7 +86,7 @@ function PackGenerator:parseCard(cardApiData)
         slot = rarity .. "3"
     end
 
-    local card = CardParser:parseCard(cardApiData)
+    local card = cardParser.parseCard(cardApiData)
     card.rarity = rarity
     card.slot = slot
     card.setCode = setCode
@@ -124,7 +123,10 @@ function PackGenerator:new()
     self.packsInBox = PACKS_IN_BOX
     self.packTextures = PACK_TEXTURES
     self.boxTexture = BOX_TEXTURE
-    self.setDataExtractor = SET_DATA_EXTRACTOR:build(self)
+
+    self.setDataExtractor:findAll()
 
     return o
 end
+
+return PackGenerator

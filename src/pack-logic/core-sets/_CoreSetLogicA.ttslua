@@ -1,3 +1,5 @@
+local AbstractPackGenerator = require("TTS-YGO-sealed-draft/src/common/AbstractPackGenerator")
+
 -- The logic for the first core sets is the same to thats why it is in a separate file
 -- This pack locic should be usuable for all core sets before "Soul of the Duelist"
 
@@ -29,10 +31,7 @@ RARITY_REPLACEMENTS["Short Print"] = COMMON
 RARITY_REPLACEMENTS["Super Short Print"] = COMMON
 
 
-local SET_DATA_EXTRACTOR = SetDataExtractor:new():replace(RARITY_REPLACEMENTS)
-
-
-PackGenerator = AbstractPackGenerator:new()
+local PackGenerator = AbstractPackGenerator:new()
 
 function PackGenerator:assemblePack()
     local pack = {}
@@ -71,7 +70,10 @@ function PackGenerator:new()
     self.packsInBox = PACKS_IN_BOX
     self.packTextures = PACK_TEXTURES
     self.boxTexture = BOX_TEXTURE
-    self.setDataExtractor = SET_DATA_EXTRACTOR:build(self)
+
+    self.setDataExtractor:replace(RARITY_REPLACEMENTS)
 
     return o
 end
+
+return PackGenerator

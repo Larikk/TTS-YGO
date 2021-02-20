@@ -1,15 +1,17 @@
+local io = require("TTS-YGO-sealed-draft/src/common/IO")
+
 SetDataExtractor = {}
 
-function SetDataExtractor:isSetCodeMatching(setCode)
-    return string.sub(setCode, 1, string.len(setCode)-3) == self.setCodePrefix
+local function isSetCodeMatching(cardCode, prefix)
+    return string.sub(cardCode, 1, string.len(cardCode)-3) == prefix
 end
 
 -- extracts all available rarities and other set related data
-function SetDataExtractor:extract(cardApiData)
+function SetDataExtractor:extract(cardApiData, name, codePrefix)
     local entries = {}
 
     for i, set in ipairs(cardApiData.card_sets) do
-        if set.set_name == self.setName and self:isSetCodeMatching(set.set_code) then
+        if set.set_name == name and isSetCodeMatching(set.set_code, codePrefix) then
             local rarity = self.replacements[set.set_rarity] or set.set_rarity -- replace if necessary
             if not self.ignoreList[rarity] then -- only add if the rarity is not ignored
                 local entry = {}
@@ -24,7 +26,7 @@ function SetDataExtractor:extract(cardApiData)
     for i,v in pairs(self.postListeners) do entries = v(entries) end
 
     if #entries == 0 then
-        IO:warning(string.format("Warning: Could not extract rarity/setcode of %s. It may be that this card won't be in the card pool.", cardApiData.name))
+        io.warning(string.format("Warning: Could not extract rarity/setcode of %s. It may be that this card won't be in the card pool.", cardApiData.name))
     end
 
     return entries
@@ -60,12 +62,6 @@ function SetDataExtractor:addPostListener(listener)
     return self
 end
 
-function SetDataExtractor:build(spawner)
-    self.setName = spawner.setNameUrl
-    self.setCodePrefix = spawner.setCodePrefix
-    return self
-end
-
 -- Constructor
 function SetDataExtractor:new(o)
     o = o or {}
@@ -83,3 +79,5 @@ function SetDataExtractor:new(o)
 
     return o
 end
+
+return SetDataExtractor
