@@ -46,14 +46,12 @@ end
 local SET_DATA_EXTRACTOR = SetDataExtractor:new():findAll():addPostListener(postListener)
 
 
-PackGenerator = AbstractPackGenerator:new()
-
-function PackGenerator:assemblePack()
+local function assemblePack(self)
     local pack = {}
 
     -- generates one more than needed because the 9th card may or may not be a common
-    local commons = self:pullCards(COMMON, 4)
-    local rares = self:pullCards(RARE, 2)
+    local commons = self.pullCards(self, COMMON, 4)
+    local rares = self.pullCards(self, RARE, 2)
 
     -- 1 rare
     pack[1] = rares[1]
@@ -68,7 +66,7 @@ function PackGenerator:assemblePack()
     -- last card
     -- can be any card as a Mosaic Rare
     -- three cards can only be Mosaic Rare
-    local rarityOfLast = self:pickRarity(RATIOS)
+    local rarityOfLast = self.pickRarity(self, RATIOS)
     if rarityOfLast == COMMON then
         pack[5] = commons[4]
         f(pack[5])
@@ -76,25 +74,25 @@ function PackGenerator:assemblePack()
         pack[5] = rares[2]
         f(pack[5])
     else
-        pack[5] = self:pullCard(MOSAIC_RARE)
+        pack[5] = self.pullCard(self, MOSAIC_RARE)
     end
 
     return pack
 end
 
-function PackGenerator:new()
-    o = AbstractPackGenerator:new()
-    setmetatable(o, self)
-    self.__index = self
+function createPackGeneratorBP02()
+    local generator = createPackGenerator()
 
-    self.setName = SET_NAME
-    self.setCodePrefix = SET_CODE_PREFIX
-    self.setNameUrl = SET_NAME_URL
-    self.cardsInPacks = CARDS_IN_PACKS
-    self.packsInBox = PACKS_IN_BOX
-    self.packTextures = PACK_TEXTURES
-    self.boxTexture = BOX_TEXTURE
-    self.setDataExtractor = SET_DATA_EXTRACTOR:build(self)
+    generator.setName = SET_NAME
+    generator.setCodePrefix = SET_CODE_PREFIX
+    generator.setNameUrl = SET_NAME_URL
+    generator.cardsInPacks = CARDS_IN_PACKS
+    generator.packsInBox = PACKS_IN_BOX
+    generator.packTextures = PACK_TEXTURES
+    generator.boxTexture = BOX_TEXTURE
+    generator.setDataExtractor = SET_DATA_EXTRACTOR
 
-    return o
+    generator.assemblePack = assemblePack
+
+    return generator
 end
