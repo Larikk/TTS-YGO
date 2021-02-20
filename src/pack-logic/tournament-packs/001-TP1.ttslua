@@ -1,4 +1,4 @@
-#include <../../common/Base>
+local baseLogic = require("TTS-YGO-sealed-draft/src/common/BaseLogic")
 
 local SET_NAME = "Tournament Pack: 1st Season"
 
@@ -28,15 +28,11 @@ RATIOS[RARE] = 0.33
 RATIOS[SUPER_RARE] = 0.06
 RATIOS[ULTRA_RARE] = 0.01
 
-local SET_DATA_EXTRACTOR = SetDataExtractor:new()
-
-PackGenerator = AbstractPackGenerator:new()
-
-function PackGenerator:assemblePack()
+local function assemblePack(self)
     local pack = {}
 
     -- all three cards can be commons
-    local commons = self:pullCards(COMMON, 3)
+    local commons = self.pullCards(self, COMMON, 3)
 
     -- 2 commons
     for i = 1, 2 do
@@ -44,29 +40,32 @@ function PackGenerator:assemblePack()
     end
 
     -- one card which can have any rarity
-    local rarityOfLast = self:pickRarity(RATIOS)
+    local rarityOfLast = self.pickRarity(self, RATIOS)
     if rarityOfLast == COMMON then
         pack[3] = commons[3]
     else
-        pack[3] = self:pullCard(rarityOfLast)
+        pack[3] = self.pullCard(self, rarityOfLast)
     end
 
     return pack
 end
 
-function PackGenerator:new()
-    o = AbstractPackGenerator:new()
-    setmetatable(o, self)
-    self.__index = self
+local export = {}
 
-    self.setName = SET_NAME
-    self.setCodePrefix = SET_CODE_PREFIX
-    self.setNameUrl = SET_NAME_URL
-    self.cardsInPacks = CARDS_IN_PACKS
-    self.packsInBox = PACKS_IN_BOX
-    self.packTextures = PACK_TEXTURES
-    self.boxTexture = BOX_TEXTURE
-    self.setDataExtractor = SET_DATA_EXTRACTOR:build(self)
+function export.createPackGenerator()
+    local generator = baseLogic.createPackGenerator()
 
-    return o
+    generator.setName = SET_NAME
+    generator.setCodePrefix = SET_CODE_PREFIX
+    generator.setNameUrl = SET_NAME_URL
+    generator.cardsInPack = CARDS_IN_PACKS
+    generator.packsInBox = PACKS_IN_BOX
+    generator.packTextures = PACK_TEXTURES
+    generator.boxTexture = BOX_TEXTURE
+
+    generator.assemblePack = assemblePack
+
+    return generator
 end
+
+return export
