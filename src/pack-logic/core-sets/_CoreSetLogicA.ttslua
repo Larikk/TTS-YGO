@@ -1,3 +1,6 @@
+local baseLogic = require("TTS-YGO-sealed-draft/src/common/Base")
+local SetDataExtractor = require("TTS-YGO-sealed-draft/src/common/SetDataExtractor")
+
 -- The logic for the first core sets is the same to thats why it is in a separate file
 -- This pack locic should be usuable for all core sets before "Soul of the Duelist"
 
@@ -56,8 +59,10 @@ local function assemblePack(self)
     return pack
 end
 
-function createPackGeneratorCoreSetA()
-    local generator = createPackGenerator()
+local logicCoreSetA = {}
+
+function logicCoreSetA.createPackGeneratorCoreSetA()
+    local generator = baseLogic.createPackGenerator()
 
     -- must be overriden
     generator.setName = nil
@@ -66,7 +71,7 @@ function createPackGeneratorCoreSetA()
     generator.packTextures = nil
     generator.boxTexture = nil
 
-    generator.cardsInPacks = CARDS_IN_PACKS
+    generator.cardsInPack = CARDS_IN_PACKS
     generator.packsInBox = PACKS_IN_BOX
     generator.setDataExtractor = SET_DATA_EXTRACTOR
 
@@ -74,3 +79,5 @@ function createPackGeneratorCoreSetA()
 
     return generator
 end
+
+return logicCoreSetA

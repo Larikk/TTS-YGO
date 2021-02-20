@@ -376,9 +376,7 @@ parse = function(str, idx)
   decode_error(str, idx, "unexpected character '" .. chr .. "'")
 end
 
-Json = {}
-
-function Json:decode(str)
+function json.decode(str)
   if type(str) ~= "string" then
     error("expected argument of type string, got " .. type(str))
   end
@@ -390,4 +388,4 @@ function Json:decode(str)
   return res
 end
 
---return json
+return json

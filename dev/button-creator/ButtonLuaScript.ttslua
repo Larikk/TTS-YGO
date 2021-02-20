@@ -2,12 +2,12 @@ local script = {}
 
 function script.createLuaScript(folder, file, spawn, name)
     return string.format([=====[
-%s <TTS-YGO-sealed-draft/src/pack-logic/%s/%s>
+local logic = require("TTS-YGO-sealed-draft/src/pack-logic/%s/%s")
 
-local packGenerator = PackGenerator:new()
+local packGenerator = logic.createPackGenerator()
 
 function onClick()
-    packGenerator:generateBoosterBox(%s)
+    packGenerator.generateBoosterBox(packGenerator, %s)
 end
 
 function onload()
@@ -20,7 +20,7 @@ function onload()
         tooltip=[[%s]]
     })
 end
-]=====], "#include", folder, file, spawn, name)
+]=====], folder, file, spawn, name)
 end
 
 return script

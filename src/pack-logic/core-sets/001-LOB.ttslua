@@ -1,4 +1,4 @@
-#include <../../common/Base>
+local logic = require("TTS-YGO-sealed-draft/src/pack-logic/core-sets/_CoreSetLogicA")
 
 local SET_NAME = "Legend of Blue Eyes White Dragon"
 
@@ -10,10 +10,12 @@ local PACK_TEXTURES = "https://i.imgur.com/uytVF0z.png"
 
 local BOX_TEXTURE = "https://i.imgur.com/V50GxkH.png"
 
-#include _CoreSetLogicA
+--#include _CoreSetLogicA
 
-function createPackGeneratorLOB()
-    local generator = createGeneratorCoreSetA()
+local export = {}
+
+function export.createPackGenerator()
+    local generator = logic.createPackGeneratorCoreSetA()
 
     generator.setName = SET_NAME
     generator.setCodePrefix = SET_CODE_PREFIX
@@ -23,3 +25,5 @@ function createPackGeneratorLOB()
 
     return generator
 end
+
+return export

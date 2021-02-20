@@ -1,26 +1,132 @@
-#include <CardHoverText>
-#include <CardParser>
-#include <SetDataExtractor>
-#include <Math>
-#include <IO>
+local cardParser = require("TTS-YGO-sealed-draft/src/common/CardParser")
+local mathutil = require("TTS-YGO-sealed-draft/src/common/Math")
+local io = require("TTS-YGO-sealed-draft/src/common/IO")
 
 -- We are using a third party JSON library because the native JSON deserialization of TTS is very slow
 -- Benchmark of 10 decode calls for one booster set: library = ~15sec, native = ~300s
 --
 -- Code is taken from https://github.com/rxi/json.lua
 -- Some changes were made to make it work with TTS
-#include <Json>
-
--- Utility functions for picking cards/rarities and other useful stuff
-#include <BaseUtilMethods>
+local json = require("TTS-YGO-sealed-draft/src/common/Json")
 
 -- Functions which handle the spawning of objects onto the table
-#include <BaseSpawningMethods>
+local TtsSpawner = require("TTS-YGO-sealed-draft/src/common/BaseSpawningMethods")
+
+local baseLogic = {}
 
 
 local function noop()
     error("This abstract function has no implementation and must be overriden by a specific pack generator.")
 end
+
+-------------------------------------------------------------------------------
+-- CardMap related methods
+-------------------------------------------------------------------------------
+local function copyCard(self, card)
+    local copy = {}
+    for k,v in pairs(card) do copy[k] = v end
+    return copy
+end
+
+local function pickSpecificCard(self, rarity, index)
+    return self.copyCard(self, self.cardsMap[rarity][index])
+end
+
+local function pullCard(self, rarity)
+    local index = mathutil.randomInt(#self.cardsMap[rarity])
+    return self.pickSpecificCard(self, rarity, index)
+end
+
+local function pullCards(self, rarity, n)
+    local cards = {}
+    local sequence = mathutil.randomSequence(n, #self.cardsMap[rarity])
+
+    for i, v in ipairs(sequence) do
+        cards[i] = self.pickSpecificCard(self, rarity, v)
+    end
+
+    return cards
+end
+
+local function putCardIntoCardsMap(self, card, cardsMap, rarityOverride)
+    local rarity = rarityOverride or card.rarity
+
+    if cardsMap[rarity] == nil then
+        cardsMap[rarity] = {}
+    end
+
+    table.insert(cardsMap[rarity], card)
+end
+
+-- ratios is a table
+-- key: rarity
+-- value: possibility of the rarity
+-- values should add up to 1.0
+local function pickRarity(self, ratios)
+    local p = mathutil.randomFloat()
+    local fallbackRarity = nil
+
+    for rarity, ratio in pairs(ratios) do
+        if (p < ratio) then
+            return rarity
+        end
+        p = p - ratio
+        fallbackRarity = rarity
+    end
+
+    io.warning(
+      "An error occurred while determining a random rarity for a single card. "..
+      "Ratios may be misconfigured (Have to add up to 1.0). Defaulting to highest: "..fallbackRarity..
+      ". Provided ratios:\n"..io.tableToString(ratios)
+    )
+
+    return fallbackRarity
+end
+
+local function extractSetData(self, cardApiData)
+    return self.setDataExtractor:extract(cardApiData, self.setName, self.setCodePrefix)
+end
+
+-- Can be overridden by subclasses if necessary
+local function parseCardList(self, cardList)
+    local cardsMap = {}
+
+    for i, cardApiData in ipairs(cardList) do
+        local card = cardParser.parseCard(cardApiData)
+        local setDataEntries = self.extractSetData(self, cardApiData)
+        for i, entry in ipairs(setDataEntries) do
+            local copy = self.copyCard(self, card)
+            copy.rarity = entry.rarity
+            copy.setCode = entry.setCode
+            self.putCardIntoCardsMap(self, copy, cardsMap)
+        end
+    end
+
+    return cardsMap
+end
+
+-- downloads the card list from db.ygoprodeck.com and initializes initCardsMap
+-- callBack should be the action that should have been executed if cardsMap were initialized
+local function initCardsMap(self, callback)
+    local responseHandler = function(response, callback)
+        io.info("Received card list, processing response...")
+        local cards = json.decode(response.text).data
+
+        self.cardsMap = self.parseCardList(self, cards)
+        io.info("Processed card list, continuing with spawning.")
+        if type(callback) == "function" then callback() end
+    end
+
+    io.info("Downloading card list...")
+    WebRequest.get("https://db.ygoprodeck.com/api/v7/cardinfo.php?cardset="..self.setNameUrl,
+        function(response) responseHandler(response, callback) end
+    )
+end
+
+
+-------------------------------------------------------------------------------
+-- Assembly and spawning of Packs/Boxes
+-------------------------------------------------------------------------------
 
 -- Must be implemented by a specific generator
 local function assemblePack(self)
@@ -43,49 +149,18 @@ local function assembleBox(self)
     return packs
 end
 
-
--- Can be overridden by subclasses if necessary
-local function parseCardList(self, cardList)
-    local cardsMap = {}
-
-    for i, cardApiData in ipairs(cardList) do
-        local card = CardParser:parseCard(cardApiData)
-        local setDataEntries = self.extractSetData(self, cardApiData)
-        for i, entry in ipairs(setDataEntries) do
-            local copy = self.copyCard(self, card)
-            copy.rarity = entry.rarity
-            copy.setCode = entry.setCode
-            self.putCardIntoCardsMap(self, copy, cardsMap)
-        end
-    end
-
-    return cardsMap
-end
-
-
--- downloads the card list from db.ygoprodeck.com and initializes initCardsMap
--- callBack should be the action that should have been executed if cardsMap were initialized
-local function initCardsMap(self, callback)
-    local responseHandler = function(response, callback)
-        IO:info("Received card list, processing response...")
-        local cards = Json:decode(response.text).data
-
-        self.cardsMap = self.parseCardList(self, cards)
-        IO:info("Processed card list, continuing with spawning.")
-        if type(callback) == "function" then callback() end
-    end
-
-    IO:info("Downloading card list...")
-    WebRequest.get("https://db.ygoprodeck.com/api/v7/cardinfo.php?cardset="..self.setNameUrl,
-        function(response) responseHandler(response, callback) end
-    )
-end
-
 -- spawns a booster, can be called externally
 local function generateBoosterPack(self, pos)
     local f = function()
         local pack = self.assemblePack(self)
-        self.spawnPack(pack, pos, || IO:success("Pack is ready!"))
+        local spawner = TtsSpawner:new({
+            setName = self.setName,
+            packTextures = self.packTextures,
+            boxTexture = self.boxTexture,
+            cardsInPack = self.cardsInPack,
+            packsInBox = self.packsInBox
+        })
+        spawner:spawnPack(pack, pos, || io.success("Pack is ready!"))
     end
 
     if self.cardsMap == nil then
@@ -104,7 +179,14 @@ local function generateBoosterBox(self, pos)
 
     local f = function()
         local packs = self.assembleBox(self)
-        self.spawnBox(self, packs, pos, || IO:success("Box is ready!"))
+        local spawner = TtsSpawner:new({
+            setName = self.setName,
+            packTextures = self.packTextures,
+            boxTexture = self.boxTexture,
+            cardsInPack = self.cardsInPack,
+            packsInBox = self.packsInBox
+        })
+        spawner:spawnBox(packs, pos, || io.success("Box is ready!"))
     end
 
     if self.cardsMap == nil then
@@ -115,19 +197,25 @@ local function generateBoosterBox(self, pos)
 end
 
 local function initMethods(generator)
-    generator.generateBoosterBox = generateBoosterBox
-    generator.generateBoosterPack = generateBoosterPack
+    generator.extractSetData = extractSetData
+    generator.pickRarity = pickRarity
+    generator.putCardIntoCardsMap = putCardIntoCardsMap
+    generator.pullCards = pullCards
+    generator.pullCard = pullCard
+    generator.pickSpecificCard = pickSpecificCard
+    generator.copyCard = copyCard
     generator.initCardsMap = initCardsMap
     generator.parseCardList = parseCardList
+
+    generator.generateBoosterBox = generateBoosterBox
+    generator.generateBoosterPack = generateBoosterPack
     generator.assembleBox = assembleBox
     generator.boxPostConditions = boxPostConditions
     generator.assemblePack = assemblePack
-    initSpawnMethods(generator)
-    initUtilMethods(generator)
 end
 
 
-function createPackGenerator()
+function baseLogic.createPackGenerator()
     local generator = {}
 
     -- must be overridden by specific generators
@@ -136,7 +224,7 @@ function createPackGenerator()
     generator.setNameUrl = nil
     generator.packTextures = nil
     generator.boxTexture = nil
-    generator.cardsInPacks = nil
+    generator.cardsInPack = nil
     generator.packsInBox = nil
     generator.setDataExtractor = nil
 
@@ -151,3 +239,5 @@ function createPackGenerator()
 
     return generator
 end
+
+return baseLogic

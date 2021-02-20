@@ -1,4 +1,4 @@
-CardParser = {}
+local cardParser = {}
 
 -- Takes the data from the YGOPRODECK API and transform it to a condensed object with the relevant data
 
@@ -10,7 +10,7 @@ local ATTRIBUTES_TO_BE_COPIED = {
 -- setName and rarityReplacements are optional
 -- if a setName is provivied this method will try to extract the rarity which the card had in the setCode
 -- the rarityReplacements map rarities (like "Short Print" -> "Common")
-function CardParser:parseCard(apiData)
+function cardParser.parseCard(apiData)
     local card = {}
 
     for i, att in pairs(ATTRIBUTES_TO_BE_COPIED) do
@@ -21,3 +21,5 @@ function CardParser:parseCard(apiData)
 
     return card
 end
+
+return cardParser

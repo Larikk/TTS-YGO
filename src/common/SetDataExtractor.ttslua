@@ -1,6 +1,6 @@
-SetDataExtractor = {}
+local SetDataExtractor = {}
 
-function SetDataExtractor:isSetCodeMatching(cardCode, prefix)
+local function isSetCodeMatching(cardCode, prefix)
     return string.sub(cardCode, 1, string.len(cardCode)-3) == prefix
 end
 
@@ -9,7 +9,7 @@ function SetDataExtractor:extract(cardApiData, name, codePrefix)
     local entries = {}
 
     for i, set in ipairs(cardApiData.card_sets) do
-        if set.set_name == name and self:isSetCodeMatching(set.set_code, codePrefix) then
+        if set.set_name == name and isSetCodeMatching(set.set_code, codePrefix) then
             local rarity = self.replacements[set.set_rarity] or set.set_rarity -- replace if necessary
             if not self.ignoreList[rarity] then -- only add if the rarity is not ignored
                 local entry = {}
@@ -81,3 +81,5 @@ function SetDataExtractor:new(o)
 
     return o
 end
+
+return SetDataExtractor
