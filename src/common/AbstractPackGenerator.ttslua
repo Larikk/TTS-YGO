@@ -160,7 +160,7 @@ function AbstractPackGenerator:generateBoosterPack(pos)
             setName = self.setName,
             packTextures = self.packTextures,
             boxTexture = self.boxTexture,
-            cardsInPack = self.cardsInPack,
+            cardsInPack = self.cardsInPacks,
             packsInBox = self.packsInBox
         })
         spawner:spawnPack(pack, pos, || io.success("Pack is ready!"))
