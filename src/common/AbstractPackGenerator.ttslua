@@ -122,11 +122,9 @@ function AbstractPackGenerator:initCardsMap(callback)
     end
 
     io.info("Downloading card list...")
-    --WebRequest.get("https://db.ygoprodeck.com/api/v7/cardinfo.php?cardset="..self.setNameUrl,
-    --    function(response) responseHandler(response, callback) end
-    --)
-    local testdata = require("TTS-YGO-sealed-draft/src/common/LOB-Testdata")
-    responseHandler(testdata, callback)
+    WebRequest.get("https://db.ygoprodeck.com/api/v7/cardinfo.php?cardset="..self.setNameUrl,
+        function(response) responseHandler(response, callback) end
+    )
 end
 
 -------------------------------------------------------------------------------
