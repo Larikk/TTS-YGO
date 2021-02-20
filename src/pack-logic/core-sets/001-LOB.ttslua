@@ -10,8 +10,6 @@ local PACK_TEXTURES = "https://i.imgur.com/uytVF0z.png"
 
 local BOX_TEXTURE = "https://i.imgur.com/V50GxkH.png"
 
---#include _CoreSetLogicA
-
 local export = {}
 
 function export.createPackGenerator()
