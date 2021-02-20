@@ -31,17 +31,15 @@ RATIOS[COMMON3] = 0.25
 
 local SET_DATA_EXTRACTOR = SetDataExtractor:new():findAll()
 
-PackGenerator = AbstractPackGenerator:new()
-
-function PackGenerator:assemblePack()
+local function assemblePack(self)
     local pack = {}
     local cardsMap = self.cardsMap
 
     -- wildcard/starfoil rare first
     -- we generate two card with of the wildCardSlot
     -- the second card is used later when the non-starfoils are added
-    local wildCardSlot = self:pickRarity(RATIOS)
-    local cardsWithWildCardRarity = self:pullCards(wildCardSlot, 2)
+    local wildCardSlot = self.pickRarity(self, RATIOS)
+    local cardsWithWildCardRarity = self.pullCards(self, wildCardSlot, 2)
     local wildCard = cardsWithWildCardRarity[1]
     wildCard.rarity = string.format("Starfoil Rare (%s)", wildCard.rarity)
     pack[5] = wildCard
@@ -50,7 +48,7 @@ function PackGenerator:assemblePack()
     -- or the second card of the slot of the wildcard
     local f = function(slot)
         if slot ~= wildCardSlot then
-            return self:pullCard(slot)
+            return self.pullCard(self, slot)
         else
             return cardsWithWildCardRarity[2]
         end
@@ -64,8 +62,8 @@ function PackGenerator:assemblePack()
     return pack
 end
 
-function PackGenerator:parseCard(cardApiData)
-    local setData = self:extractSetData(cardApiData)[1]
+local function parseCard(self, cardApiData)
+    local setData = self.extractSetData(self, cardApiData)[1]
     if setData == nil then return end
 
     setCodeNumber = tonumber(setData.setCode:sub(-3)) -- get last three digits as number
@@ -101,30 +99,32 @@ end
 -- Common1: 56 to 110
 -- Common2: 111 to 170
 -- Common3: 171 to 220
-function PackGenerator:parseCardList(cardList)
+local function parseCardList(self, cardList)
     local cardsMap = {}
 
     for i, cardApiData in ipairs(cardList) do
-        local card = self:parseCard(cardApiData)
-        self:putCardIntoCardsMap(card, cardsMap, card.slot)
+        local card = self.parseCard(self, cardApiData)
+        self.putCardIntoCardsMap(self, card, cardsMap, card.slot)
     end
 
     return cardsMap
 end
 
-function PackGenerator:new()
-    o = AbstractPackGenerator:new()
-    setmetatable(o, self)
-    self.__index = self
+function createPackGeneratorBP01()
+    local generator = createPackGenerator()
 
-    self.setName = SET_NAME
-    self.setCodePrefix = SET_CODE_PREFIX
-    self.setNameUrl = SET_NAME_URL
-    self.cardsInPacks = CARDS_IN_PACKS
-    self.packsInBox = PACKS_IN_BOX
-    self.packTextures = PACK_TEXTURES
-    self.boxTexture = BOX_TEXTURE
-    self.setDataExtractor = SET_DATA_EXTRACTOR:build(self)
+    generator.setName = SET_NAME
+    generator.setCodePrefix = SET_CODE_PREFIX
+    generator.setNameUrl = SET_NAME_URL
+    generator.cardsInPacks = CARDS_IN_PACKS
+    generator.packsInBox = PACKS_IN_BOX
+    generator.packTextures = PACK_TEXTURES
+    generator.boxTexture = BOX_TEXTURE
+    generator.setDataExtractor = SET_DATA_EXTRACTOR
 
-    return o
+    generator.parseCardList = parseCardList
+    generator.parseCard = parseCard
+    generator.assemblePack = assemblePack
+
+    return generator
 end
