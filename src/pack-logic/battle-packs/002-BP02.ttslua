@@ -1,4 +1,4 @@
-#include <../../common/Base>
+local baseLogic = require("TTS-YGO-sealed-draft/src/common/BaseLogic")
 
 local SET_NAME = "Battle Pack 2: War of the Giants"
 
@@ -43,7 +43,6 @@ local postListener = function(entries)
 
     return entries
 end
-local SET_DATA_EXTRACTOR = SetDataExtractor:new():findAll():addPostListener(postListener)
 
 
 local function assemblePack(self)
@@ -80,19 +79,24 @@ local function assemblePack(self)
     return pack
 end
 
-function createPackGeneratorBP02()
-    local generator = createPackGenerator()
+local export = {}
+
+function export.createPackGenerator()
+    local generator = baseLogic.createPackGenerator()
 
     generator.setName = SET_NAME
     generator.setCodePrefix = SET_CODE_PREFIX
     generator.setNameUrl = SET_NAME_URL
-    generator.cardsInPacks = CARDS_IN_PACKS
+    generator.cardsInPack = CARDS_IN_PACKS
     generator.packsInBox = PACKS_IN_BOX
     generator.packTextures = PACK_TEXTURES
     generator.boxTexture = BOX_TEXTURE
-    generator.setDataExtractor = SET_DATA_EXTRACTOR
+
+    generator.setDataExtractor:findAll():addPostListener(postListener)
 
     generator.assemblePack = assemblePack
 
     return generator
 end
+
+return export

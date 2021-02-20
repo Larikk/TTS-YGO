@@ -1,4 +1,4 @@
-#include <../../common/Base>
+local baseLogic = require("TTS-YGO-sealed-draft/src/common/BaseLogic")
 
 local SET_NAME = "War of the Giants: Round 2"
 
@@ -19,45 +19,45 @@ local COMMON = "Common"
 local SUPER_RARE = "Super Rare"
 local ULTRA_RARE = "Ultra Rare"
 
-local SET_DATA_EXTRACTOR = SetDataExtractor:new()
 
-PackGenerator = AbstractPackGenerator:new()
-
-function PackGenerator:assemblePack()
+function assemblePack(self)
     local pack = {}
 
     -- 9 commons
-    local commons = self:pullCards(COMMON, 9)
+    local commons = self.pullCards(self, COMMON, 9)
     for i = 1, 9 do
         pack[i] = commons[i]
     end
 
     -- 6 supers
-    local supers = self:pullCards(SUPER_RARE, 6)
+    local supers = self.pullCards(self, SUPER_RARE, 6)
     for i = 1, 6 do
         pack[i+9] = supers[i]
     end
 
     -- 1 ultra
-    local ultra = self:pullCard(ULTRA_RARE)
+    local ultra = self.pullCard(self, ULTRA_RARE)
     pack[16] = ultra
 
     return pack
 end
 
-function PackGenerator:new()
-    o = AbstractPackGenerator:new()
-    setmetatable(o, self)
-    self.__index = self
+local export = {}
 
-    self.setName = SET_NAME
-    self.setCodePrefix = SET_CODE_PREFIX
-    self.setNameUrl = SET_NAME_URL
-    self.cardsInPacks = CARDS_IN_PACKS
-    self.packsInBox = PACKS_IN_BOX
-    self.packTextures = PACK_TEXTURES
-    self.boxTexture = BOX_TEXTURE
-    self.setDataExtractor = SET_DATA_EXTRACTOR:build(self)
+function export.createPackGenerator()
+    local generator = baseLogic.createPackGenerator()
 
-    return o
+    generator.setName = SET_NAME
+    generator.setCodePrefix = SET_CODE_PREFIX
+    generator.setNameUrl = SET_NAME_URL
+    generator.cardsInPack = CARDS_IN_PACKS
+    generator.packsInBox = PACKS_IN_BOX
+    generator.packTextures = PACK_TEXTURES
+    generator.boxTexture = BOX_TEXTURE
+
+    generator.assemblePack = assemblePack
+
+    return generator
 end
+
+return export
