@@ -86,7 +86,9 @@ function AbstractPackGenerator:pickRarity(ratios)
 end
 
 function AbstractPackGenerator:extractSetData(cardApiData)
-    return self.setDataExtractor:extract(cardApiData, self.setName, self.setCodePrefix)
+    -- we use setNameUrl because this is the name that is used in the query
+    -- setName is primarily for display purposes
+    return self.setDataExtractor:extract(cardApiData, self.setNameUrl, self.setCodePrefix)
 end
 
 
