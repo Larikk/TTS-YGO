@@ -1,4 +1,4 @@
---local testdata = require("TTS-YGO-sealed-draft/src/common/LOB-Testdata")
+--local testdata = require("TTS-YGO-sealed-draft/src/pack-spawning/common/LOB-Testdata")
 --responseHandler(testdata, callback)
 
 test_response = {}

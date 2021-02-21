@@ -1,4 +1,4 @@
-local ParentGenerator = require("TTS-YGO-sealed-draft/src/pack-logic/core-sets/_CoreSetLogicA")
+local ParentGenerator = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicA")
 
 local SET_NAME = "Legend of Blue Eyes White Dragon"
 
