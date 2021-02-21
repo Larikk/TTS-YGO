@@ -2,7 +2,7 @@ local script = {}
 
 function script.createLuaScript(folder, file, spawn, name)
     return string.format([=====[
-local PackGenerator = require("TTS-YGO-sealed-draft/src/pack-logic/%s/%s")
+local PackGenerator = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/%s/%s")
 
 local packGenerator = PackGenerator:new()
 

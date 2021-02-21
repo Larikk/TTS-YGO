@@ -1,14 +1,14 @@
-local ParentGenerator = require("TTS-YGO-sealed-draft/src/pack-logic/core-sets/_CoreSetLogicA")
+local ParentGenerator = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicA")
 
-local SET_NAME = "Pharaoh's Servant"
+local SET_NAME = "Labyrinth of Nightmare"
 
-local SET_CODE_PREFIX = "PSV-"
+local SET_CODE_PREFIX = "LON-"
 
 local SET_NAME_URL = SET_NAME
 
-local PACK_TEXTURES = "https://i.imgur.com/lgqRURX.jpg"
+local PACK_TEXTURES = "https://i.imgur.com/LBayjxH.jpg"
 
-local BOX_TEXTURE = "https://i.imgur.com/Sm5yaj9.png"
+local BOX_TEXTURE = "https://i.imgur.com/kHM9pqr.png"
 
 local PackGenerator = ParentGenerator:new()
 

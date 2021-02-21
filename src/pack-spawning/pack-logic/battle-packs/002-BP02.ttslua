@@ -1,27 +1,18 @@
-local AbstractPackGenerator = require("TTS-YGO-sealed-draft/src/common/AbstractPackGenerator")
+local AbstractPackGenerator = require("TTS-YGO-sealed-draft/src/pack-spawning/common/AbstractPackGenerator")
 
-local SET_NAME = "Battle Pack 3: Monster League"
+local SET_NAME = "Battle Pack 2: War of the Giants"
 
-local SET_CODE_PREFIX = "BP03-EN"
+local SET_CODE_PREFIX = "BP02-EN"
 
 local SET_NAME_URL = SET_NAME
 
 local PACK_TEXTURES = {
-    "https://i.imgur.com/qBVPFPJ.png",
-    "https://i.imgur.com/53LHStA.png",
-    "https://i.imgur.com/wkNCwcf.png",
-    "https://i.imgur.com/YSyK53P.png",
-    "https://i.imgur.com/blcw0jr.png",
-    "https://i.imgur.com/zconWFQ.png",
-    "https://i.imgur.com/eRycCq5.png",
-    "https://i.imgur.com/520bJBT.png",
-    "https://i.imgur.com/M7NH8li.png",
-    "https://i.imgur.com/X8rrk0t.png",
-    "https://i.imgur.com/1xdsyQo.png",
-    "https://i.imgur.com/nMoLw07.png",
+    "https://i.imgur.com/gtpqbPw.png",
+    "https://i.imgur.com/1kwkGmG.png",
+    "https://i.imgur.com/d5Xvxa2.png"
 }
 
-local BOX_TEXTURE = "https://i.imgur.com/oul17zv.png"
+local BOX_TEXTURE = "https://i.imgur.com/j1gFItx.png"
 
 local CARDS_IN_PACKS = 5
 
@@ -30,14 +21,14 @@ local PACKS_IN_BOX = 36
 -- Rarities
 local COMMON = "Common"
 local RARE = "Rare"
-local SHATTERFOIL_RARE = "Shatterfoil Rare"
+local MOSAIC_RARE = "Mosaic Rare"
 
 -- Ratios for last card, must add up to 1.0
 -- values are rounded up
 local RATIOS = {}
-RATIOS[COMMON] = 0.08
+RATIOS[COMMON] = 0.74
 RATIOS[RARE] = 0.24
-RATIOS[SHATTERFOIL_RARE] = 0.68
+RATIOS[MOSAIC_RARE] = 0.02
 
 
 local postListener = function(entries)
@@ -45,13 +36,14 @@ local postListener = function(entries)
     if #entries > 1 then
         local newEntries = {}
         for i, v in pairs(entries) do
-            if v.rarity ~= SHATTERFOIL_RARE then table.insert(newEntries, v) end
+            if v.rarity ~= MOSAIC_RARE then table.insert(newEntries, v) end
         end
         entries = newEntries
     end
 
     return entries
 end
+local SET_DATA_EXTRACTOR = SetDataExtractor:new():findAll():addPostListener(postListener)
 
 
 local PackGenerator = AbstractPackGenerator:new()
@@ -71,11 +63,11 @@ function PackGenerator:assemblePack()
         pack[i] = commons[i-1]
     end
 
-    local f = function(card) card.rarity = string.format("%s (%s)", SHATTERFOIL_RARE, card.rarity) end
+    local f = function(card) card.rarity = string.format("%s (%s)", MOSAIC_RARE, card.rarity) end
 
     -- last card
-    -- any card can be a SHATTERFOIL_RARE
-    -- some cards can only be SHATTERFOIL_RARE
+    -- can be any card as a Mosaic Rare
+    -- three cards can only be Mosaic Rare
     local rarityOfLast = self:pickRarity(RATIOS)
     if rarityOfLast == COMMON then
         pack[5] = commons[4]
@@ -84,7 +76,7 @@ function PackGenerator:assemblePack()
         pack[5] = rares[2]
         f(pack[5])
     else
-        pack[5] = self:pullCard(SHATTERFOIL_RARE)
+        pack[5] = self:pullCard(MOSAIC_RARE)
     end
 
     return pack
