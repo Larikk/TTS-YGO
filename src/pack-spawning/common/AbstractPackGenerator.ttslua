@@ -1,15 +1,15 @@
-local cardParser = require("TTS-YGO-sealed-draft/src/common/CardParser")
-local SetDataExtractor = require("TTS-YGO-sealed-draft/src/common/SetDataExtractor")
-local mathUtil = require("TTS-YGO-sealed-draft/src/common/Math")
-local io = require("TTS-YGO-sealed-draft/src/common/IO")
-local TtsSpawner = require("TTS-YGO-sealed-draft/src/common/TtsSpawner")
+local cardParser = require("TTS-YGO-sealed-draft/src/pack-spawning/common/CardParser")
+local SetDataExtractor = require("TTS-YGO-sealed-draft/src/pack-spawning/common/SetDataExtractor")
+local mathUtil = require("TTS-YGO-sealed-draft/src/pack-spawning/common/Math")
+local io = require("TTS-YGO-sealed-draft/src/pack-spawning/common/IO")
+local TtsSpawner = require("TTS-YGO-sealed-draft/src/pack-spawning/common/TtsSpawner")
 
 -- We are using a third party JSON library because the native JSON deserialization of TTS is very slow
 -- Benchmark of 10 decode calls for one booster set: library = ~15sec, native = ~300s
 --
 -- Code is taken from https://github.com/rxi/json.lua
 -- Some changes were made to make it work with TTS
-local json = require("TTS-YGO-sealed-draft/src/common/Json")
+local json = require("TTS-YGO-sealed-draft/src/pack-spawning/common/Json")
 
 
 -- Abstract class which has common logic
