@@ -1,5 +1,5 @@
-local mathutil = require("TTS-YGO-sealed-draft/src/common/Math")
-local cardHoverText = require("TTS-YGO-sealed-draft/src/common/CardHoverText")
+local mathutil = require("TTS-YGO-sealed-draft/src/pack-spawning/common/Math")
+local cardHoverText = require("TTS-YGO-sealed-draft/src/pack-spawning/common/CardHoverText")
 
 
 local CARD_BACK = "https://i.imgur.com/UjbK2Wb.png"
