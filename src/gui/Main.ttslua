@@ -1,0 +1,26 @@
+function noop()
+    print("nothing")
+end
+
+function hidePackWindow(bagGUIDUsed, elementID)
+    UI.setAttribute("packSelectionWindow", "active", false)
+end
+
+function tooglePackWindow(bagGUIDUsed, elementID)
+    local state = UI.getAttribute("packSelectionWindow", "active") -- returns string
+    state = state ~= nil and state:lower() == "true"
+    UI.setAttribute("packSelectionWindow", "active", not state)
+end
+
+local LOB = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/core-sets/001-LOB"):new()
+local MRD = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/core-sets/002-MRD"):new()
+
+function spawnLOB(...)
+    log(...)
+    LOB:generateBoosterBox()
+end
+
+function spawnMRD(...)
+    log(...)
+    MRD:generateBoosterBox()
+end

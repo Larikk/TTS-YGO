@@ -5,6 +5,7 @@
 </Defaults>
 
 <Panel id="packSelectionWindow" class="TankChessPanel"
+    active="true"
     width="680"
     height="500"
     rectAlignment="UpperCenter"
@@ -25,22 +26,10 @@
         <!--Panel height="1000" rectAlignment="UpperCenter"-->
         <GridLayout padding="0 0 8 3" spacing="8 8"  height="1400"
             cellsize="150 190" childAlignment="UpperCenter">
-                <Button class="mapButton" onClick="spawnLOB" text="Legend of Blue Eyes White Dragon">
+                <Button class="mapButton" onClick="spawnLOB(LOB)" text="Legend of Blue Eyes White Dragon">
                     <Image class="mapImage" image="LOB" />
                 </Button>
-                <Button class="mapButton" onClick="spawnMRD" text="Starter Game 20x20">
-                    <Image class="mapImage" image="LOB" />
-                </Button>
-                <Button class="mapButton" onClick="noop" text="Legend of Blue Eyes White Dragon">
-                    <Image class="mapImage" image="LOB" />
-                </Button>
-                <Button class="mapButton" onClick="noop" text="Starter Game 20x20">
-                    <Image class="mapImage" image="LOB" />
-                </Button>
-                <Button class="mapButton" onClick="noop" text="Legend of Blue Eyes White Dragon">
-                    <Image class="mapImage" image="LOB" />
-                </Button>
-                <Button class="mapButton" onClick="noop" text="Starter Game 20x20">
+                <Button class="mapButton" onClick="spawnMRD" text="Metal Raiders">
                     <Image class="mapImage" image="LOB" />
                 </Button>
         </GridLayout>
@@ -62,7 +51,7 @@
 <!-- Cleanup/Show Maps button -->
 <Panel id="packSelectionButton" class="TankChessPanel"
     rectAlignment="UpperRight"
-    active="false"
+    active="true"
     offsetXY="0 -50"
     raycastTarget="true"
     width="100"
@@ -74,6 +63,6 @@
     returnToOriginalPositionWhenReleased="false">
     <Button id="packSelectionButton"
         text="Spawn Packs"
-        onClick="showPackWindow">
+        onClick="tooglePackWindow">
     </Button>
 </Panel>
