@@ -1,51 +1,118 @@
 <Defaults>
-    <Panel class="TankChessPanel"  color="#8F8478" outline="#635351" outlineSize="2 -2"/>
-    <Button class="mapButton" padding="0 0 145 0" textColor="#FFFFFF" colors="#AD9F91|#C9B9A9|#756C63|rgba(0.78,0.78,0.78,0.5)"/>
-    <Image class="mapImage" width="77" height="144" rectAlignment="UpperCenter" offsetXY="0 -3" type="Simple" />
+    <Panel class="window" color="#ecf0f1" outline="#282a2e" outlineSize="4" shadow="black" shadowDistance="2 -2" />
+    <HorizontalLayout class="titlebar" color="#282a2e" />
+    <Text class="titlebar" alignment="UpperLeft" fontSize="16" fontStyle="bold" color="#bdc3c7" padding="4" />
+    <Button class="close-button" minWidth="20" preferredWidth="20" minHeight="20" preferredHeight="20" textColor="#FFFFFF" colors="#A54242|#cc6666|#a54242|grey"/>
+
+    <VerticalLayout class="invisible" color="rgba(1,1,1,0)"  />
+    <HorizontalLayout class="invisible" color="rgba(1,1,1,0)" />
+    <GridLayout class="invisible" color="rgba(1,1,1,0)" />
+    <VerticalScrollView class="invisible" color="rgba(1,1,1,0)" />
+
+    <VerticalScrollView scrollbarBackgroundColor="#2c3e50" />
+
+    <VerticalLayout class="pack-section-container" padding="0 0 10 20" />
+    <GridLayout class="pack-section" childAlignment="UpperLeft" padding="8 8 8 8" spacing="8 8" cellsize="150 200" />
+    <Text class="pack-section" fontSize="48" fontStyle="bold" padding="10 0 0 0"/>
+    <Button class="pack-button" padding="0 0 145 0" colors="#2980b9|#3498db|#756C63|rgba(0.78,0.78,0.78,0.5)"/>
+    <Button class="pack-button" padding="8" />
+    <Image class="pack-image" rectAlignment="MiddleCenter" preserveAspect="true" />
+    <Text class="pack-name" color="#ecf0f1" minHeight="60" fontStyle="bold"/>
 </Defaults>
 
-<Panel id="packSelectionWindow" class="TankChessPanel"
+
+<Panel id="packSelectionWindow"
+    class="window"
     active="true"
-    width="680"
+    width="660"
     height="500"
-    rectAlignment="UpperCenter"
-    offsetXY="0 -250"
     allowDragging="true"
     showAnimation="FadeIn"
     showAnimationDelay="2"
     returnToOriginalPositionWhenReleased="false">
-    <VerticalScrollView
-        rectAlignment="LowerCenter"
-        offsetXY="0 -00"
-        scrollSensitivity="40"
-        padding="0 0 50 0"
-        scrollbarColors="#AD9F91|#C9B9A9|#756C63|rgba(0.78,0.78,0.78,0.5)"
-        width="680"
-        height="480"
-        color="#DDDDDD">
-        <!--Panel height="1000" rectAlignment="UpperCenter"-->
-        <GridLayout padding="0 0 8 3" spacing="8 8"  height="1400"
-            cellsize="150 190" childAlignment="UpperCenter">
-                <Button class="mapButton" onClick="spawnLOB(LOB)" text="Legend of Blue Eyes White Dragon">
-                    <Image class="mapImage" image="LOB" />
-                </Button>
-                <Button class="mapButton" onClick="spawnMRD" text="Metal Raiders">
-                    <Image class="mapImage" image="LOB" />
-                </Button>
-        </GridLayout>
-    <!--/Panel-->
-    </VerticalScrollView>
-    <Button id="closeButton"
-        width="20"
-        height="20"
-        rectAlignment="UpperRight"
-        color="#990000"
-        textColor="#FFFFFF"
-        text="X"
-        onClick="hidePackWindow">
-    </Button>
-    <Text text="Choose a pack" alignment="UpperLeft" fontSize="18" offsetXY="5 0"
-        fontStyle="Bold" color="#FFFFFF"></Text>
+    <VerticalLayout class="invisible" childForceExpandHeight="false">
+        <HorizontalLayout class="titlebar" flexibleHeight="0" childForceExpandWidth="false">
+            <VerticalLayout padding="4 0 0 0" childAlignment="MiddleCenter">
+                <Text text="Choose a pack" class="titlebar" flexibleWidth="1"/>
+            </VerticalLayout>
+            <Button class="close-button" text="X" onClick="hidePackWindow" flexibleWidth="0" flexibleHeight="0"/>
+        </HorizontalLayout>
+        <VerticalScrollView class="invisible" flexibleHeight="1">
+            <VerticalLayout class="invisible" contentSizeFitter="vertical">
+                <VerticalLayout class="pack-section-container" >
+                    <Text class="pack-section" text="Core Sets" />
+                    <GridLayout class="invisible pack-section" >
+                        <Button class="pack-button" onClick="spawnLOB(LOB)" >
+                            <VerticalLayout class="pack-button">
+                                <Image class="pack-image" image="LOB" />
+                                <Text text="Legend of Blue Eyes White Dragon" class="pack-name" />
+                            </VerticalLayout>
+                        </Button>
+                        <Button class="pack-button" onClick="spawnLOB(LOB)" >
+                            <VerticalLayout class="pack-button">
+                                <Image class="pack-image" image="LOB" />
+                                <Text text="Legend of Blue Eyes White Dragon" class="pack-name" />
+                            </VerticalLayout>
+                        </Button>
+                        <Button class="pack-button" onClick="spawnLOB(LOB)" >
+                            <VerticalLayout class="pack-button">
+                                <Image class="pack-image" image="LOB" />
+                                <Text text="Legend of Blue Eyes White Dragon" class="pack-name" />
+                            </VerticalLayout>
+                        </Button>
+                        <Button class="pack-button" onClick="spawnLOB(LOB)" >
+                            <VerticalLayout class="pack-button">
+                                <Image class="pack-image" image="LOB" />
+                                <Text text="Legend of Blue Eyes White Dragon" class="pack-name" />
+                            </VerticalLayout>
+                        </Button>
+                        <Button class="pack-button" onClick="spawnLOB(LOB)" >
+                            <VerticalLayout class="pack-button">
+                                <Image class="pack-image" image="LOB" />
+                                <Text text="Legend of Blue Eyes White Dragon" class="pack-name" />
+                            </VerticalLayout>
+                        </Button>
+                    </GridLayout>
+                </VerticalLayout>
+                <VerticalLayout class="pack-section-container" >
+                    <Text class="pack-section" text="Core Sets" />
+                    <GridLayout class="invisible pack-section" >
+                        <Button class="pack-button" onClick="spawnLOB(LOB)" >
+                            <VerticalLayout class="pack-button">
+                                <Image class="pack-image" image="LOB" />
+                                <Text text="Legend of Blue Eyes White Dragon" class="pack-name" />
+                            </VerticalLayout>
+                        </Button>
+                        <Button class="pack-button" onClick="spawnLOB(LOB)" >
+                            <VerticalLayout class="pack-button">
+                                <Image class="pack-image" image="LOB" />
+                                <Text text="Legend of Blue Eyes White Dragon" class="pack-name" />
+                            </VerticalLayout>
+                        </Button>
+                        <Button class="pack-button" onClick="spawnLOB(LOB)" >
+                            <VerticalLayout class="pack-button">
+                                <Image class="pack-image" image="LOB" />
+                                <Text text="Legend of Blue Eyes White Dragon" class="pack-name" />
+                            </VerticalLayout>
+                        </Button>
+                        <Button class="pack-button" onClick="spawnLOB(LOB)" >
+                            <VerticalLayout class="pack-button">
+                                <Image class="pack-image" image="LOB" />
+                                <Text text="Legend of Blue Eyes White Dragon" class="pack-name" />
+                            </VerticalLayout>
+                        </Button>
+                        <Button class="pack-button" onClick="spawnLOB(LOB)" >
+                            <VerticalLayout class="pack-button">
+                                <Image class="pack-image" image="LOB" />
+                                <Text text="Legend of Blue Eyes White Dragon" class="pack-name" />
+                            </VerticalLayout>
+                        </Button>
+                    </GridLayout>
+                </VerticalLayout>
+            </VerticalLayout>
+        </VerticalScrollView>
+    </VerticalLayout>
+
 </Panel>
 
 <!-- Cleanup/Show Maps button -->
