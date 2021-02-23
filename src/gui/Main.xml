@@ -1,4 +1,7 @@
 <Defaults>
+    <Panel class="sidebar" height="120" offsetXY="-5 -60" active="true" rectAlignment="MiddleRight" width="100" />
+    <Button class="sidebar-button" minWidth="100" minHeight="50" preferredWidth="100" preferredHeight="50" flexibleHeight="0" />
+
     <Panel class="window" color="#ecf0f1" outline="#282a2e" outlineSize="4" shadow="black" shadowDistance="2 -2" />
     <HorizontalLayout class="titlebar" color="#282a2e" />
     <Text class="titlebar" alignment="UpperLeft" fontSize="16" fontStyle="bold" color="#bdc3c7" padding="4" />
@@ -115,21 +118,12 @@
 
 </Panel>
 
-<!-- Cleanup/Show Maps button -->
-<Panel id="packSelectionButton" class="TankChessPanel"
-    rectAlignment="UpperRight"
-    active="true"
-    offsetXY="0 -50"
-    raycastTarget="true"
-    width="100"
-    height="50"
-    allowDragging="true"
-    padding="3 3 10 3"
-    showAnimation="FadeIn"
-    showAnimationDelay="2"
-    returnToOriginalPositionWhenReleased="false">
-    <Button id="packSelectionButton"
-        text="Spawn Packs"
-        onClick="tooglePackWindow">
-    </Button>
+<Panel class="sidebar" >
+    <VerticalLayout childForceExpandHeight="false" childForceExpandWidth="false">
+        <Button id="packSelectionButton"
+            text="Open Pack Selection"
+            class="sidebar-button"
+            onClick="tooglePackWindow">
+        </Button>
+    </VerticalLayout>
 </Panel>
