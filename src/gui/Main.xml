@@ -17,9 +17,9 @@
     <VerticalLayout class="pack-section-container" padding="0 0 10 20"/>
     <GridLayout class="pack-section" childAlignment="UpperLeft" padding="8 8 8 8" spacing="8 8" cellsize="150 200"/>
     <Text class="pack-section" fontSize="48" fontStyle="bold" padding="10 0 0 0"/>
-    <Button class="pack-button" padding="0 0 145 0" colors="#2980b9|#3498db|#756C63|rgba(0.78,0.78,0.78,0.5)"/>
-    <Button class="pack-button" padding="8"/>
-    <Image class="pack-image" rectAlignment="MiddleCenter" preserveAspect="true"/>
+    <Button class="pack-button" colors="#2980b9|#3498db|#2980b9|grey"/>
+    <VerticalLayout class="pack-button" padding="8"/>
+    <Image class="pack-image" padding="10" rectAlignment="MiddleCenter" preserveAspect="true"/>
     <Text class="pack-name" color="#ecf0f1" minHeight="60" fontStyle="bold"/>
 </Defaults>
 
@@ -37,7 +37,8 @@
                     <Text class="pack-section" text="Core Sets"/>
                     <GridLayout class="invisible pack-section">
                         <Button class="pack-button" onClick="spawnLOB(LOB)">
-                            <VerticalLayout class="pack-button">
+                            <VerticalLayout class="pack-button" padding="8">
+                                <Text text="sdf" />
                                 <Image class="pack-image" image="LOB"/>
                                 <Text text="Legend of Blue Eyes White Dragon" class="pack-name"/>
                             </VerticalLayout>
