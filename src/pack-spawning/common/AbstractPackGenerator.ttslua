@@ -3,6 +3,7 @@ local SetDataExtractor = require("TTS-YGO-sealed-draft/src/pack-spawning/common/
 local mathUtil = require("TTS-YGO-sealed-draft/src/pack-spawning/common/Math")
 local io = require("TTS-YGO-sealed-draft/src/pack-spawning/common/IO")
 local TtsSpawner = require("TTS-YGO-sealed-draft/src/pack-spawning/common/TtsSpawner")
+local resources = require("TTS-YGO-sealed-draft/src/pack-spawning/common/Resources")
 
 -- We are using a third party JSON library because the native JSON deserialization of TTS is very slow
 -- Benchmark of 10 decode calls for one booster set: library = ~15sec, native = ~300s
@@ -152,6 +153,22 @@ function AbstractPackGenerator:assembleBox()
     end
     self:boxPostConditions(packs)
     return packs
+end
+
+-------------------------------------------------------------------------------
+-- Public methods
+-------------------------------------------------------------------------------
+
+function AbstractPackGenerator:getOnePackTexture(i)
+    i = i or 1
+
+    if self.packTextures == nil then return resources.DEFAULT_PACK_TEXTURE end
+
+    if type(self.packTextures) == "table" then
+        return self.packTextures[i]
+    else
+        return self.packTextures
+    end
 end
 
 -- spawns a booster, can be called externally
