@@ -46,9 +46,9 @@ def createEntry(pack, section):
     without_extension = pack.split(".")[0]
     code = without_extension.split("-")[1]
     return f"""
-gen = require("TTS-YGO-sealed-draft/src/pack-spawning/{section}/{without_extension}")
+gen = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/{section}/{without_extension}"):new()
 packGenerators['{code}'] = gen
-table.insert(packGeneratorsPartitioned[{section_mapping[section]}], gen)
+table.insert(sections[{section_mapping[section]}], gen)
 """
 
 output = prefix

@@ -10,59 +10,59 @@ end
 local gen = nil
 
 -- core-sets
-gen = require("TTS-YGO-sealed-draft/src/pack-spawning/core-sets/001-LOB")
+gen = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/core-sets/001-LOB"):new()
 packGenerators['LOB'] = gen
-table.insert(packGeneratorsPartitioned['Core Sets'], gen)
+table.insert(sections['Core Sets'], gen)
 
-gen = require("TTS-YGO-sealed-draft/src/pack-spawning/core-sets/002-MRD")
+gen = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/core-sets/002-MRD"):new()
 packGenerators['MRD'] = gen
-table.insert(packGeneratorsPartitioned['Core Sets'], gen)
+table.insert(sections['Core Sets'], gen)
 
-gen = require("TTS-YGO-sealed-draft/src/pack-spawning/core-sets/003-MRL")
+gen = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/core-sets/003-MRL"):new()
 packGenerators['MRL'] = gen
-table.insert(packGeneratorsPartitioned['Core Sets'], gen)
+table.insert(sections['Core Sets'], gen)
 
-gen = require("TTS-YGO-sealed-draft/src/pack-spawning/core-sets/005-PSV")
+gen = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/core-sets/005-PSV"):new()
 packGenerators['PSV'] = gen
-table.insert(packGeneratorsPartitioned['Core Sets'], gen)
+table.insert(sections['Core Sets'], gen)
 
-gen = require("TTS-YGO-sealed-draft/src/pack-spawning/core-sets/006-LON")
+gen = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/core-sets/006-LON"):new()
 packGenerators['LON'] = gen
-table.insert(packGeneratorsPartitioned['Core Sets'], gen)
+table.insert(sections['Core Sets'], gen)
 
-gen = require("TTS-YGO-sealed-draft/src/pack-spawning/core-sets/007-LOD")
+gen = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/core-sets/007-LOD"):new()
 packGenerators['LOD'] = gen
-table.insert(packGeneratorsPartitioned['Core Sets'], gen)
+table.insert(sections['Core Sets'], gen)
 
-gen = require("TTS-YGO-sealed-draft/src/pack-spawning/core-sets/008-PGD")
+gen = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/core-sets/008-PGD"):new()
 packGenerators['PGD'] = gen
-table.insert(packGeneratorsPartitioned['Core Sets'], gen)
+table.insert(sections['Core Sets'], gen)
 --##################
 
 
 -- battle-packs
-gen = require("TTS-YGO-sealed-draft/src/pack-spawning/battle-packs/001-BP01")
+gen = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/battle-packs/001-BP01"):new()
 packGenerators['BP01'] = gen
-table.insert(packGeneratorsPartitioned['Battle Packs'], gen)
+table.insert(sections['Battle Packs'], gen)
 
-gen = require("TTS-YGO-sealed-draft/src/pack-spawning/battle-packs/002-BP02")
+gen = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/battle-packs/002-BP02"):new()
 packGenerators['BP02'] = gen
-table.insert(packGeneratorsPartitioned['Battle Packs'], gen)
+table.insert(sections['Battle Packs'], gen)
 
-gen = require("TTS-YGO-sealed-draft/src/pack-spawning/battle-packs/003-BPW2")
+gen = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/battle-packs/003-BPW2"):new()
 packGenerators['BPW2'] = gen
-table.insert(packGeneratorsPartitioned['Battle Packs'], gen)
+table.insert(sections['Battle Packs'], gen)
 
-gen = require("TTS-YGO-sealed-draft/src/pack-spawning/battle-packs/004-BP03")
+gen = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/battle-packs/004-BP03"):new()
 packGenerators['BP03'] = gen
-table.insert(packGeneratorsPartitioned['Battle Packs'], gen)
+table.insert(sections['Battle Packs'], gen)
 --##################
 
 
 -- tournament-packs
-gen = require("TTS-YGO-sealed-draft/src/pack-spawning/tournament-packs/001-TP1")
+gen = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/tournament-packs/001-TP1"):new()
 packGenerators['TP1'] = gen
-table.insert(packGeneratorsPartitioned['Tournament Packs'], gen)
+table.insert(sections['Tournament Packs'], gen)
 --##################
 
 
