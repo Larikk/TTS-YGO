@@ -1,45 +1,48 @@
 
 local util = {}
 
-local function searchByIdRec(id, table)
-    if type(table) ~= "table" then return nil end
+function util.getElementById(id, root)
+    if type(root) ~= "table" then return nil end
 
-    for _,v in pairs(table) do
+    for _,v in pairs(root) do
         if v.attributes ~= nil and v.attributes.id == id then
             return v
         end
 
-        local temp = searchByIdRec(id, v)
+        local temp = util.getElementById(id, v)
         if temp ~= nil then return temp end
     end
 
     return nil
 end
 
-function util.getElementById(id)
-    local table = UI.getXmlTable()
-    return searchByIdRec(id, table)
-end
-
 function util.generatorToButton(gen)
     return {
         tag = "Button",
-        class = "pack-button",
-        onClick = "spawnBox(" .. gen.assetCode .. ")",
+        attributes = {
+            class = "pack-button",
+            onClick = "spawnBox(" .. gen.assetCode .. ")"
+        },
         children = {
             {
                 tag = "VerticalLayout",
-                class = "pack-button",
+                attributes = {
+                    class = "pack-button"
+                },
                 children = {
                     {
                         tag = "Image",
-                        class = "pack-image",
-                        image = gen.assetCode
+                        attributes = {
+                            class = "pack-image",
+                            image = gen.assetCode
+                        }
                     },
                     {
                         tag = "Text",
-                        text = gen.setName,
-                        class = "pack-name"
+                        attributes = {
+                            text = gen.setName,
+                            class = "pack-name"
+                        }
                     }
                 }
             }
@@ -50,16 +53,22 @@ end
 function util.sectionToGuiSection(title, buttons)
     return {
         tag = "VerticalLayout",
-        class = "pack-section-container",
+        attributes = {
+            class = "pack-section-container"
+        },
         children = {
             {
                 tag = "Text",
-                class = "pack-section",
-                text = title
+                attributes = {
+                    class = "pack-section",
+                    text = title
+                }
             },
             {
                 tag = "GridLayout",
-                class = "invisible pack-section",
+                attributes = {
+                    class = "invisible pack-section"
+                },
                 children = buttons
             }
         }
