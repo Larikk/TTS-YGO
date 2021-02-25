@@ -3,9 +3,6 @@ local guiUtil = require("TTS-YGO-sealed-draft/src/gui/GUIUtil")
 local packGeneratorsModule = require("TTS-YGO-sealed-draft/src/gui/PackGenerators")
 local packGenerators = packGeneratorsModule.packGenerators
 
-function noop()
-    print("nothing")
-end
 
 function hidePackWindow(bagGUIDUsed, elementID)
     UI.setAttribute("packSelectionWindow", "active", false)
