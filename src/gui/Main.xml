@@ -32,13 +32,12 @@
             <Button class="close-button" text="X" onClick="hidePackWindow" flexibleWidth="0" flexibleHeight="0"/>
         </HorizontalLayout>
         <VerticalScrollView class="invisible" flexibleHeight="1">
-            <VerticalLayout class="invisible" contentSizeFitter="vertical">
+            <VerticalLayout id="pack-selection" class="invisible" contentSizeFitter="vertical">
                 <VerticalLayout class="pack-section-container">
                     <Text class="pack-section" text="Core Sets"/>
                     <GridLayout class="invisible pack-section">
                         <Button class="pack-button" onClick="spawnLOB(LOB)">
-                            <VerticalLayout class="pack-button" padding="8">
-                                <Text text="sdf" />
+                            <VerticalLayout class="pack-button" >
                                 <Image class="pack-image" image="LOB"/>
                                 <Text text="Legend of Blue Eyes White Dragon" class="pack-name"/>
                             </VerticalLayout>
