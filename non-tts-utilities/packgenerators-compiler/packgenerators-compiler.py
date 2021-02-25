@@ -48,6 +48,7 @@ def createEntry(pack, section):
     return f"""
 gen = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/{section}/{without_extension}"):new()
 packGenerators['{code}'] = gen
+gen.assetCode = '{code}'
 table.insert(sections[{section_mapping[section]}], gen)
 """
 
