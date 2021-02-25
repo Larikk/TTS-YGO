@@ -1,0 +1,70 @@
+
+local util = {}
+
+local function searchByIdRec(id, table)
+    if type(table) ~= "table" then return nil end
+
+    for _,v in pairs(table) do
+        if v.attributes ~= nil and v.attributes.id == id then
+            return v
+        end
+
+        local temp = searchByIdRec(id, v)
+        if temp ~= nil then return temp end
+    end
+
+    return nil
+end
+
+function util.getElementById(id)
+    local table = UI.getXmlTable()
+    return searchByIdRec(id, table)
+end
+
+function util.generatorToButton(gen)
+    return {
+        tag = "Button",
+        class = "pack-button",
+        onClick = "spawnBox(" .. gen.assetCode .. ")",
+        children = {
+            {
+                tag = "VerticalLayout",
+                class = "pack-button",
+                children = {
+                    {
+                        tag = "Image",
+                        class = "pack-image",
+                        image = gen.assetCode
+                    },
+                    {
+                        tag = "Text",
+                        text = gen.setName,
+                        class = "pack-name"
+                    }
+                }
+            }
+        }
+    }
+end
+
+function util.sectionToGuiSection(title, buttons)
+    return {
+        tag = "VerticalLayout",
+        class = "pack-section-container",
+        children = {
+            {
+                tag = "Text",
+                class = "pack-section",
+                text = title
+            },
+            {
+                tag = "GridLayout",
+                class = "invisible pack-section",
+                children = buttons
+            }
+        }
+    }
+end
+
+
+return util
