@@ -10,7 +10,7 @@
     <VerticalLayout class="invisible" color="rgba(1,1,1,0)"/>
     <HorizontalLayout class="invisible" color="rgba(1,1,1,0)"/>
     <GridLayout class="invisible" color="rgba(1,1,1,0)"/>
-    <VerticalScrollView class="invisible" color="rgba(1,1,1,0)"/>
+    <VerticalScrollView class="invisible" color="rgba(1,1,1,0)" scrollSensitivity="40"/>
 
     <VerticalScrollView scrollbarBackgroundColor="#2c3e50"/>
 
