@@ -15,7 +15,7 @@ function tooglePackWindow(bagGUIDUsed, elementID)
 end
 
 function spawnBox(_, code)
-    packGenerators[code]:generateBoosterBox(Vector(0, 5, 0))
+    packGenerators[code]:generateBoosterBox(Vector(0, 5, -60))
 end
 
 local function initAssets()
