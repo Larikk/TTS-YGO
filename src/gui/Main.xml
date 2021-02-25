@@ -27,7 +27,7 @@
     <VerticalLayout class="invisible" childForceExpandHeight="false">
         <HorizontalLayout class="titlebar" flexibleHeight="0" childForceExpandWidth="false">
             <VerticalLayout padding="4 0 0 0" childAlignment="MiddleCenter">
-                <Text text="Choose a pack" class="titlebar" flexibleWidth="1"/>
+                <Text text="Select a pack to spawn" class="titlebar" flexibleWidth="1"/>
             </VerticalLayout>
             <Button class="close-button" text="X" onClick="hidePackWindow" flexibleWidth="0" flexibleHeight="0"/>
         </HorizontalLayout>
