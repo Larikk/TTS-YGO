@@ -42,6 +42,6 @@
 
 <Panel class="sidebar">
     <VerticalLayout childForceExpandHeight="false" childForceExpandWidth="false">
-        <Button id="packSelectionButton" text="Open Pack Selection" class="sidebar-button" onClick="tooglePackWindow"></Button>
+        <Button id="packSelectionButton" text="Toggle Pack Selection" class="sidebar-button" onClick="tooglePackWindow"></Button>
     </VerticalLayout>
 </Panel>
