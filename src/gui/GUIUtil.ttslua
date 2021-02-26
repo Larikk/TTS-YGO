@@ -1,0 +1,79 @@
+
+local util = {}
+
+function util.getElementById(id, root)
+    if type(root) ~= "table" then return nil end
+
+    for _,v in pairs(root) do
+        if v.attributes ~= nil and v.attributes.id == id then
+            return v
+        end
+
+        local temp = util.getElementById(id, v)
+        if temp ~= nil then return temp end
+    end
+
+    return nil
+end
+
+function util.generatorToButton(gen)
+    return {
+        tag = "Button",
+        attributes = {
+            class = "pack-button",
+            onClick = "spawnBox(" .. gen.assetCode .. ")"
+        },
+        children = {
+            {
+                tag = "VerticalLayout",
+                attributes = {
+                    class = "pack-button"
+                },
+                children = {
+                    {
+                        tag = "Image",
+                        attributes = {
+                            class = "pack-image",
+                            image = gen.assetCode
+                        }
+                    },
+                    {
+                        tag = "Text",
+                        attributes = {
+                            text = gen.setName,
+                            class = "pack-name"
+                        }
+                    }
+                }
+            }
+        }
+    }
+end
+
+function util.sectionToGuiSection(title, buttons)
+    return {
+        tag = "VerticalLayout",
+        attributes = {
+            class = "pack-section-container"
+        },
+        children = {
+            {
+                tag = "Text",
+                attributes = {
+                    class = "pack-section",
+                    text = title
+                }
+            },
+            {
+                tag = "GridLayout",
+                attributes = {
+                    class = "invisible pack-section"
+                },
+                children = buttons
+            }
+        }
+    }
+end
+
+
+return util

@@ -7,9 +7,9 @@ local SET_CODE_PREFIX = "BP03-EN"
 local SET_NAME_URL = SET_NAME
 
 local PACK_TEXTURES = {
+    "https://i.imgur.com/wkNCwcf.png",
     "https://i.imgur.com/qBVPFPJ.png",
     "https://i.imgur.com/53LHStA.png",
-    "https://i.imgur.com/wkNCwcf.png",
     "https://i.imgur.com/YSyK53P.png",
     "https://i.imgur.com/blcw0jr.png",
     "https://i.imgur.com/zconWFQ.png",
