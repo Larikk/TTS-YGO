@@ -68,14 +68,14 @@ function SetDataExtractor:new(o)
     setmetatable(o, self)
     self.__index = self
 
-    self.setName = nil
-    self.setCodePrefix = nil
+    o.setName = nil
+    o.setCodePrefix = nil
 
-    self.replacements = {}
-    self.ignoreList = {}
-    self.findAllFlag = false
+    o.replacements = {}
+    o.ignoreList = {}
+    o.findAllFlag = false
 
-    self.postListeners = {}
+    o.postListeners = {}
 
     return o
 end
