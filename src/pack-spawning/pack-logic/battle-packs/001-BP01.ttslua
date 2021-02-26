@@ -116,15 +116,15 @@ function PackGenerator:new()
     setmetatable(o, self)
     self.__index = self
 
-    self.setName = SET_NAME
-    self.setCodePrefix = SET_CODE_PREFIX
-    self.setNameUrl = SET_NAME_URL
-    self.cardsInPacks = CARDS_IN_PACKS
-    self.packsInBox = PACKS_IN_BOX
-    self.packTextures = PACK_TEXTURES
-    self.boxTexture = BOX_TEXTURE
+    o.setName = SET_NAME
+    o.setCodePrefix = SET_CODE_PREFIX
+    o.setNameUrl = SET_NAME_URL
+    o.cardsInPacks = CARDS_IN_PACKS
+    o.packsInBox = PACKS_IN_BOX
+    o.packTextures = PACK_TEXTURES
+    o.boxTexture = BOX_TEXTURE
 
-    self.setDataExtractor:findAll()
+    o.setDataExtractor:findAll()
 
     return o
 end
