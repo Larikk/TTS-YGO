@@ -225,21 +225,21 @@ function AbstractPackGenerator:new(o)
     self.__index = self
 
     -- must be overridden by specific generators
-    self.setName = nil
-    self.setCodePrefix = nil
-    self.setNameUrl = nil
-    self.packTextures = nil
-    self.boxTexture = nil
-    self.cardsInPacks = nil
-    self.packsInBox = nil
-    self.setDataExtractor = SetDataExtractor:new()
+    o.setName = nil
+    o.setCodePrefix = nil
+    o.setNameUrl = nil
+    o.packTextures = nil
+    o.boxTexture = nil
+    o.cardsInPacks = nil
+    o.packsInBox = nil
+    o.setDataExtractor = SetDataExtractor:new()
 
     -- is initialized before a box/pack is generated for the first time
     -- holds the cards of the set partitioned by their rarity
     -- key: rarity
     -- value: tables with the single cards, indexed with numbers and a count field
     -- use the util methods to for read and write to this map
-    self.cardsMap = nil
+    o.cardsMap = nil
 
     return o
 end
