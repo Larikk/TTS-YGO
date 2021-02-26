@@ -43,7 +43,6 @@ local postListener = function(entries)
 
     return entries
 end
-local SET_DATA_EXTRACTOR = SetDataExtractor:new():findAll():addPostListener(postListener)
 
 
 local PackGenerator = AbstractPackGenerator:new()
