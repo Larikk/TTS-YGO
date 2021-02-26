@@ -1,0 +1,13 @@
+local resources = {}
+
+resources.CARD_BACK = "https://i.imgur.com/UjbK2Wb.png"
+
+resources.DEFAULT_PACK_TEXTURE = "https://i.imgur.com/XlF4YQW.png"
+resources.DEFAULT_BOX_TEXTURE = "https://i.imgur.com/hDtFLea.png"
+
+resources.PACK_MESH = "http://pastebin.com/raw/xdTHXJJX"
+resources.BOX_MESH = "https://pastebin.com/raw/8heJnvWg"
+
+resources.PACK_NORMAL = "http://i.imgur.com/9FUxR04.png"
+
+return resources

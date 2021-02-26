@@ -1,0 +1,47 @@
+<Defaults>
+    <Panel class="sidebar" height="120" offsetXY="-5 -60" active="true" rectAlignment="MiddleRight" width="100"/>
+    <Button class="sidebar-button" minWidth="100" minHeight="50" preferredWidth="100" preferredHeight="50" flexibleHeight="0"/>
+
+    <Panel class="window" color="#ecf0f1" outline="#282a2e" outlineSize="4" shadow="black" shadowDistance="2 -2"/>
+    <HorizontalLayout class="titlebar" color="#282a2e"/>
+    <Text class="titlebar" alignment="UpperLeft" fontSize="16" fontStyle="bold" color="#bdc3c7" padding="4"/>
+    <Button class="close-button" minWidth="20" preferredWidth="20" minHeight="20" preferredHeight="20" textColor="#FFFFFF" colors="#A54242|#cc6666|#a54242|grey"/>
+
+    <VerticalLayout class="invisible" color="rgba(1,1,1,0)"/>
+    <HorizontalLayout class="invisible" color="rgba(1,1,1,0)"/>
+    <GridLayout class="invisible" color="rgba(1,1,1,0)"/>
+    <VerticalScrollView class="invisible" color="rgba(1,1,1,0)" scrollSensitivity="40"/>
+
+    <VerticalScrollView scrollbarBackgroundColor="#2c3e50"/>
+
+    <VerticalLayout class="pack-section-container" padding="0 0 10 20"/>
+    <GridLayout class="pack-section" childAlignment="UpperLeft" padding="8 8 8 8" spacing="8 8" cellsize="150 200"/>
+    <Text class="pack-section" fontSize="48" fontStyle="bold" padding="10 0 0 0"/>
+    <Button class="pack-button" colors="#2980b9|#3498db|#2980b9|grey"/>
+    <VerticalLayout class="pack-button" padding="8"/>
+    <Image class="pack-image" padding="10" rectAlignment="MiddleCenter" preserveAspect="true"/>
+    <Text class="pack-name" color="#ecf0f1" minHeight="60" fontStyle="bold"/>
+</Defaults>
+
+<Panel id="packSelectionWindow" class="window" active="true" width="660" height="500" allowDragging="true" showAnimation="FadeIn" showAnimationDelay="2" returnToOriginalPositionWhenReleased="false">
+    <VerticalLayout class="invisible" childForceExpandHeight="false">
+        <HorizontalLayout class="titlebar" flexibleHeight="0" childForceExpandWidth="false">
+            <VerticalLayout padding="4 0 0 0" childAlignment="MiddleCenter">
+                <Text text="Select a pack to spawn" class="titlebar" flexibleWidth="1"/>
+            </VerticalLayout>
+            <Button class="close-button" text="X" onClick="hidePackWindow" flexibleWidth="0" flexibleHeight="0"/>
+        </HorizontalLayout>
+        <VerticalScrollView class="invisible" flexibleHeight="1">
+            <VerticalLayout id="pack-selection" class="invisible" contentSizeFitter="vertical">
+                <Text text="Loading..." fontSize="100" fontStyle="bold" />
+            </VerticalLayout>
+        </VerticalScrollView>
+    </VerticalLayout>
+
+</Panel>
+
+<Panel class="sidebar">
+    <VerticalLayout childForceExpandHeight="false" childForceExpandWidth="false">
+        <Button id="packSelectionButton" text="Toggle Pack Selection" class="sidebar-button" onClick="tooglePackWindow"></Button>
+    </VerticalLayout>
+</Panel>

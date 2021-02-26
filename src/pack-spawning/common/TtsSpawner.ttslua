@@ -1,16 +1,7 @@
 local mathutil = require("TTS-YGO-sealed-draft/src/pack-spawning/common/Math")
 local cardHoverText = require("TTS-YGO-sealed-draft/src/pack-spawning/common/CardHoverText")
+local resources = require("TTS-YGO-sealed-draft/src/pack-spawning/common/Resources")
 
-
-local CARD_BACK = "https://i.imgur.com/UjbK2Wb.png"
-
-local DEFAULT_PACK_TEXTURE = "https://i.imgur.com/XlF4YQW.png"
-local DEFAULT_BOX_TEXTURE = "https://i.imgur.com/hDtFLea.png"
-
-local PACK_MESH = "http://pastebin.com/raw/xdTHXJJX"
-local BOX_MESH = "https://pastebin.com/raw/8heJnvWg"
-
-local PACK_NORMAL = "http://i.imgur.com/9FUxR04.png"
 
 local DEFAULT_SPAWN_POS = Vector(0, 5, 0)
 
@@ -49,7 +40,7 @@ function TtsSpawner:spawnCard(card, pos, callback)
     spawnParams = {
         type = "Card",
         position = pos,
-        rotation = {x = 0, y = 180, z = 180},
+        rotation = {x = 0, y = 0, z = 180},
         scale = {x = 1, y = 1, z = 1},
         sound = true,
         snap_to_grid = true,
@@ -58,7 +49,7 @@ function TtsSpawner:spawnCard(card, pos, callback)
             cardObject.setName(cardHoverText.create(card))
             cardObject.setCustomObject({
                 face = card.face,
-                back = CARD_BACK
+                back = resources.CARD_BACK
             })
 
             if type(callback) == "function" then callback(cardObject) end
@@ -69,7 +60,7 @@ function TtsSpawner:spawnCard(card, pos, callback)
 end
 
 function TtsSpawner:pickPackTexture()
-    if self.packTextures == nil then return DEFAULT_PACK_TEXTURE end
+    if self.packTextures == nil then return resources.DEFAULT_PACK_TEXTURE end
     if type(self.packTextures) == "string" then return self.packTextures end
 
     local n = mathutil.randomInt(#self.packTextures)
@@ -85,7 +76,7 @@ function TtsSpawner:spawnPack(pack, pos, callback)
     spawnParams = {
         type = "Custom_Model",
         position = pos,
-        rotation = {x = 0, y = 180, z = 0},
+        rotation = {x = 0, y = 0, z = 0},
         scale = {x = 1, y = 1, z = 1},
         sound = true,
         snap_to_grid = true,
@@ -96,9 +87,9 @@ function TtsSpawner:spawnPack(pack, pos, callback)
             packObject.setLuaScript(CONTAINER_LUA_SCRIPT)
             packObject.setLock(false)
             packObject.setCustomObject({
-                mesh = PACK_MESH,
+                mesh = resources.PACK_MESH,
                 diffuse = texture,
-                normal = PACK_NORMAL,
+                normal = resources.PACK_NORMAL,
                 type = 6, -- bag
                 material = 3, -- cardbord
                 specular_intensity = 0.2,
@@ -134,7 +125,7 @@ function TtsSpawner:spawnBox(packs, pos, callback)
     spawnParams = {
         type = "Custom_Model",
         position = pos,
-        rotation = {x = 0, y = 180, z = 0},
+        rotation = {x = 0, y = 0, z = 0},
         scale = {x = 1, y = 1, z = 1},
         sound = true,
         snap_to_grid = true,
@@ -145,8 +136,8 @@ function TtsSpawner:spawnBox(packs, pos, callback)
             boxObject.setLuaScript(CONTAINER_LUA_SCRIPT)
             boxObject.setLock(false)
             boxObject.setCustomObject({
-                mesh = BOX_MESH,
-                diffuse = self.boxTexture or DEFAULT_BOX_TEXTURE,
+                mesh = resources.BOX_MESH,
+                diffuse = self.boxTexture or resources.DEFAULT_BOX_TEXTURE,
                 type = 6, -- bag
                 material = 3, -- cardbord
                 specular_intensity = 0.05,

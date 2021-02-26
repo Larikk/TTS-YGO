@@ -1,0 +1,76 @@
+local guiUtil = require("TTS-YGO-sealed-draft/src/gui/GUIUtil")
+
+local packGeneratorsModule = require("TTS-YGO-sealed-draft/src/gui/PackGenerators")
+local packGenerators = packGeneratorsModule.packGenerators
+
+
+function hidePackWindow(bagGUIDUsed, elementID)
+    UI.setAttribute("packSelectionWindow", "active", false)
+end
+
+function tooglePackWindow(bagGUIDUsed, elementID)
+    local state = UI.getAttribute("packSelectionWindow", "active") -- returns string
+    state = state ~= nil and state:lower() == "true"
+    UI.setAttribute("packSelectionWindow", "active", not state)
+end
+
+function spawnBox(_, code)
+    packGenerators[code]:generateBoosterBox(Vector(0, 5, -60))
+end
+
+local function initAssets()
+    -- names are not unique in assets...
+    -- this workaround is done to prevent duplicates
+    -- that would be created each time the mod is loaded
+    local assets = UI.getCustomAssets()
+
+    local assetMap = {}
+
+    for _,a in pairs(assets) do
+        assetMap[a.name] = a.url
+    end
+
+    for k,v in pairs(packGenerators) do
+        assetMap[k] = v:getOnePackTexture()
+    end
+
+    assets = {}
+
+    for k,v in pairs(assetMap) do
+        table.insert(assets, {
+            name = k,
+            url = v
+        })
+    end
+
+    UI.setCustomAssets(assets)
+end
+
+local function buildButtons()
+    local sections = packGeneratorsModule.sections
+    local order = packGeneratorsModule.sectionOrder
+
+    local children = {}
+
+    for _,v in ipairs(order) do
+        section = sections[v]
+        local buttons = {}
+
+        for _,gen in ipairs(section) do
+            local button = guiUtil.generatorToButton(gen)
+            table.insert(buttons, button)
+        end
+
+        table.insert(children, guiUtil.sectionToGuiSection(v, buttons))
+    end
+
+    local xmlTable = UI.getXmlTable()
+    local packSelection = guiUtil.getElementById("pack-selection", xmlTable)
+    packSelection.children = children
+    UI.setXmlTable(xmlTable)
+end
+
+function onLoad(save_state)
+    initAssets()
+    buildButtons()
+end
