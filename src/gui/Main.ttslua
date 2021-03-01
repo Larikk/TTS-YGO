@@ -9,28 +9,14 @@ function spawnBox(_, code)
 end
 
 local function initAssets()
-    -- names are not unique in assets...
-    -- this workaround is done to prevent duplicates
-    -- that would be created each time the mod is loaded
-    local assets = self.UI.getCustomAssets()
-
-    local assetMap = {}
-
-    for _,a in pairs(assets) do
-        assetMap[a.name] = a.url
-    end
+    local assets = {}
 
     for k,v in pairs(packGenerators) do
-        assetMap[k] = v:getOnePackTexture()
-    end
-
-    assets = {}
-
-    for k,v in pairs(assetMap) do
-        table.insert(assets, {
+        local asset = {
             name = k,
-            url = v
-        })
+            url = v:getOnePackTexture()
+        }
+        table.insert(assets, asset)
     end
 
     self.UI.setCustomAssets(assets)
