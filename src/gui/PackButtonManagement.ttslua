@@ -1,0 +1,105 @@
+local guiUtil = require("TTS-YGO-sealed-draft/src/gui/GUIUtil")
+local packGeneratorsModule = require("TTS-YGO-sealed-draft/src/gui/PackGenerators")
+local packGenerators = packGeneratorsModule.packGenerators
+
+local packButtonManagement = {}
+
+
+local function generatorToButton(gen)
+    return {
+        tag = "Button",
+        attributes = {
+            class = "pack-button",
+            onClick = "spawnBox(" .. gen.assetCode .. ")"
+        },
+        children = {
+            {
+                tag = "VerticalLayout",
+                attributes = {
+                    class = "pack-button"
+                },
+                children = {
+                    {
+                        tag = "Image",
+                        attributes = {
+                            class = "pack-image",
+                            image = gen.assetCode
+                        }
+                    },
+                    {
+                        tag = "Text",
+                        attributes = {
+                            text = gen.setName,
+                            class = "pack-name"
+                        }
+                    }
+                }
+            }
+        }
+    }
+end
+
+local function sectionToGuiSection(title, buttons)
+    return {
+        tag = "VerticalLayout",
+        attributes = {
+            class = "pack-section-container"
+        },
+        children = {
+            {
+                tag = "Text",
+                attributes = {
+                    class = "pack-section",
+                    text = title
+                }
+            },
+            {
+                tag = "GridLayout",
+                attributes = {
+                    class = "invisible pack-section"
+                },
+                children = buttons
+            }
+        }
+    }
+end
+
+function packButtonManagement.initAssets()
+    local assets = {}
+
+    for k,v in pairs(packGenerators) do
+        local asset = {
+            name = k,
+            url = v:getOnePackTexture()
+        }
+        table.insert(assets, asset)
+    end
+
+    self.UI.setCustomAssets(assets)
+end
+
+function packButtonManagement.buildButtons()
+    local sections = packGeneratorsModule.sections
+    local order = packGeneratorsModule.sectionOrder
+
+    local children = {}
+
+    for _,v in ipairs(order) do
+        section = sections[v]
+        local buttons = {}
+
+        for _,gen in ipairs(section) do
+            local button = generatorToButton(gen)
+            table.insert(buttons, button)
+        end
+
+        table.insert(children, sectionToGuiSection(v, buttons))
+    end
+
+    local xmlTable = self.UI.getXmlTable()
+    local packSelection = guiUtil.getElementById("pack-selection", xmlTable)
+    packSelection.children = children
+    self.UI.setXmlTable(xmlTable)
+end
+
+return packButtonManagement
