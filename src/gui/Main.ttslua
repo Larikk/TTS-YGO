@@ -1,52 +1,14 @@
 local guiUtil = require("TTS-YGO-sealed-draft/src/gui/GUIUtil")
+local packButtonManagement = require("TTS-YGO-sealed-draft/src/gui/PackButtonManagement")
 
-local packGeneratorsModule = require("TTS-YGO-sealed-draft/src/gui/PackGenerators")
-local packGenerators = packGeneratorsModule.packGenerators
+local packGenerators = require("TTS-YGO-sealed-draft/src/gui/PackGenerators").packGenerators
 
 
 function spawnBox(_, code)
     packGenerators[code]:generateBoosterBox(Vector(50, 5, -85))
 end
 
-local function initAssets()
-    local assets = {}
-
-    for k,v in pairs(packGenerators) do
-        local asset = {
-            name = k,
-            url = v:getOnePackTexture()
-        }
-        table.insert(assets, asset)
-    end
-
-    self.UI.setCustomAssets(assets)
-end
-
-local function buildButtons()
-    local sections = packGeneratorsModule.sections
-    local order = packGeneratorsModule.sectionOrder
-
-    local children = {}
-
-    for _,v in ipairs(order) do
-        section = sections[v]
-        local buttons = {}
-
-        for _,gen in ipairs(section) do
-            local button = guiUtil.generatorToButton(gen)
-            table.insert(buttons, button)
-        end
-
-        table.insert(children, guiUtil.sectionToGuiSection(v, buttons))
-    end
-
-    local xmlTable = self.UI.getXmlTable()
-    local packSelection = guiUtil.getElementById("pack-selection", xmlTable)
-    packSelection.children = children
-    self.UI.setXmlTable(xmlTable)
-end
-
 function load(save_state)
-    initAssets()
-    buildButtons()
+    packButtonManagement.initAssets()
+    packButtonManagement.buildButtons()
 end
