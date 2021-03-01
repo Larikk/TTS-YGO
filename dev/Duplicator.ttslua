@@ -1,0 +1,72 @@
+-- import:
+--#include <TTS-YGO-sealed-draft/dev/Duplicator>
+
+local hand1 = "3977c8"
+local hand2 = "65879e"
+
+local objects = {
+    "cd5bef", -- table
+    "68d3d9", -- playmat
+    "421f82", -- calculator1
+    "8da4f3", -- calculator2
+    "aa0161", -- coin
+    "7e5ad7", -- tokens
+    "893cb5", -- die
+    "96f06b", -- counters
+    hand1, -- blue hand
+    hand2, -- green hand
+}
+
+local function getObjects()
+    local result = {}
+
+    for i,o in ipairs(objects) do
+        result[i] = getObjectFromGUID(o)
+    end
+
+    return result
+end
+
+local function handTransformation(newColor)
+    return function(clone)
+        clone.setValue(newColor)
+        clone.setPosition(clone.getPosition() + vector(0, -8, 0)) -- hands are a couple units to high for some reason
+     end
+end
+
+local function move(objects, deltaMove, individualTransformations)
+    for _,o in ipairs(objects) do
+        local newPos = o.getPosition() + deltaMove
+        local clone = o.clone({
+            position = newPos,
+            snap_to_grid = true
+        })
+
+        local t = individualTransformations[o.getGUID()]
+        if type(t) == "function" then t(clone) end
+    end
+end
+
+function build()
+    local objects = getObjects()
+    local temp = nil
+
+    temp = {}
+    temp[hand1] = handTransformation("Teal")
+    temp[hand2] = handTransformation("Red")
+    move(objects, Vector(0, 0, -60), temp)
+
+    temp = {}
+    temp[hand1] = handTransformation("Blue")
+    temp[hand2] = handTransformation("Orange")
+    move(objects, Vector(0, 0, -120), temp)
+
+    temp = {}
+    temp[hand1] = handTransformation("Purple")
+    temp[hand2] = handTransformation("Yellow")
+    move(objects, Vector(0, 0, -180), temp)
+end
+
+function onChat(message, player)
+    if message == "b" then build() end
+end
