@@ -40,7 +40,7 @@ function TtsSpawner:spawnCard(card, pos, callback)
     spawnParams = {
         type = "Card",
         position = pos,
-        rotation = {x = 0, y = 0, z = 180},
+        rotation = {x = 0, y = 180, z = 180},
         scale = {x = 1, y = 1, z = 1},
         sound = true,
         snap_to_grid = true,
@@ -76,7 +76,7 @@ function TtsSpawner:spawnPack(pack, pos, callback)
     spawnParams = {
         type = "Custom_Model",
         position = pos,
-        rotation = {x = 0, y = 0, z = 0},
+        rotation = {x = 0, y = 180, z = 0},
         scale = {x = 1, y = 1, z = 1},
         sound = true,
         snap_to_grid = true,
@@ -125,7 +125,7 @@ function TtsSpawner:spawnBox(packs, pos, callback)
     spawnParams = {
         type = "Custom_Model",
         position = pos,
-        rotation = {x = 0, y = 0, z = 0},
+        rotation = {x = 0, y = 180, z = 0},
         scale = {x = 1, y = 1, z = 1},
         sound = true,
         snap_to_grid = true,
