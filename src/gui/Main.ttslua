@@ -4,25 +4,15 @@ local packGeneratorsModule = require("TTS-YGO-sealed-draft/src/gui/PackGenerator
 local packGenerators = packGeneratorsModule.packGenerators
 
 
-function hidePackWindow(bagGUIDUsed, elementID)
-    UI.setAttribute("packSelectionWindow", "active", false)
-end
-
-function tooglePackWindow(bagGUIDUsed, elementID)
-    local state = UI.getAttribute("packSelectionWindow", "active") -- returns string
-    state = state ~= nil and state:lower() == "true"
-    UI.setAttribute("packSelectionWindow", "active", not state)
-end
-
 function spawnBox(_, code)
-    packGenerators[code]:generateBoosterBox(Vector(0, 5, -60))
+    packGenerators[code]:generateBoosterBox(Vector(0, 5, 0))
 end
 
 local function initAssets()
     -- names are not unique in assets...
     -- this workaround is done to prevent duplicates
     -- that would be created each time the mod is loaded
-    local assets = UI.getCustomAssets()
+    local assets = self.UI.getCustomAssets()
 
     local assetMap = {}
 
@@ -43,7 +33,7 @@ local function initAssets()
         })
     end
 
-    UI.setCustomAssets(assets)
+    self.UI.setCustomAssets(assets)
 end
 
 local function buildButtons()
@@ -64,13 +54,13 @@ local function buildButtons()
         table.insert(children, guiUtil.sectionToGuiSection(v, buttons))
     end
 
-    local xmlTable = UI.getXmlTable()
+    local xmlTable = self.UI.getXmlTable()
     local packSelection = guiUtil.getElementById("pack-selection", xmlTable)
     packSelection.children = children
-    UI.setXmlTable(xmlTable)
+    self.UI.setXmlTable(xmlTable)
 end
 
-function onLoad(save_state)
+function load(save_state)
     initAssets()
     buildButtons()
 end
