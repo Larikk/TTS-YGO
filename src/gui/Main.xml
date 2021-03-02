@@ -5,6 +5,9 @@
     <GridLayout class="invisible" color="rgba(1,1,1,0)"/>
     <VerticalScrollView class="invisible" color="rgba(1,1,1,0)" scrollSensitivity="0"/>
 
+    <HorizontalLayout class="button-bar" padding="40" spacing="20" color="#2c3e50" childForceExpandHeight="false" />
+    <Button class="button-bar" minHeight="100" fontSize="30" fontStyle="bold" colors="#e67e22|#f39c12|#f39c12|#c0392b" textColor="#ecf0f1"/>
+
     <!-- Pack page -->
     <VerticalLayout class="pack-page" childForceExpandHeight="false" />
 
@@ -26,6 +29,11 @@
         <VerticalLayout id="page-container">
             <Text text="Loading..." fontSize="100" fontStyle="bold"/>
         </VerticalLayout>
-        <Text fontSize="100">Placeholder</Text>
+        <HorizontalLayout class="button-bar">
+            <Button class="button-bar" interactable="false">Spawn Packs</Button>
+            <Button class="button-bar">Spawn Packs</Button>
+            <Button class="button-bar">Spawn Packs</Button>
+            <Button class="button-bar">Spawn Packs</Button>
+        </HorizontalLayout>
     </VerticalLayout>
 </Panel>
