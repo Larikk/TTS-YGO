@@ -5,10 +5,14 @@ local packButtonManagement = {}
 
 local page = nil
 
+local nameCodeMapping = {} -- Mapping from setName:lower to the setCode, used for filtering/searching
+
 local function createButton(gen)
+    nameCodeMapping[gen.setName:lower()] = gen.assetCode
     return {
         tag = "Button",
         attributes = {
+            id = gen.assetCode,
             class = "pack-button",
             onClick = "spawnBox(" .. gen.assetCode .. ")"
         },
@@ -64,7 +68,31 @@ local function createSection(title, buttons)
     }
 end
 
-local function createSections()
+local function createSearchArea()
+    return {
+        tag = "HorizontalLayout",
+        attributes = {
+            class = "search-container"
+        },
+        children = {
+            {
+                tag = "Text",
+                attributes = {
+                    class = "search-label"
+                },
+                value = "Search: ",
+            },
+            {
+                tag = "InputField",
+                attributes = {
+                    class = "search-field"
+                }
+            }
+        }
+    }
+end
+
+local function createPackSelection()
     local sections = packGeneratorsModule.sections
     local order = packGeneratorsModule.sectionOrder
 
@@ -82,13 +110,19 @@ local function createSections()
         table.insert(children, createSection(v, buttons))
     end
 
-    return children
+    return {
+        tag = "VerticalLayout",
+        children = children
+    }
 end
 
 local function createPage()
     return {
         tag = "VerticalLayout",
-        children = createSections()
+        children = {
+            createSearchArea(),
+            createPackSelection()
+        },
     }
 end
 
