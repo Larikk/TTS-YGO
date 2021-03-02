@@ -126,7 +126,31 @@ local function createPage()
     }
 end
 
+local function hide(filter)
+    filter = filter:lower()
 
+    for name,code in pairs(nameCodeMapping) do
+        if string.find(name, filter, 0, true) then
+            self.UI.show(code)
+        else
+            self.UI.hide(code)
+        end
+    end
+end
+
+local function showAll()
+    for _,code in pairs(nameCodeMapping) do
+        self.UI.show(code)
+    end
+end
+
+function packButtonManagement.applyFilter(filter)
+    if filter == nil or filter == "" then
+        showAll()
+    else
+        hide(filter)
+    end
+end
 
 function packButtonManagement.getPage()
     if page == nil then

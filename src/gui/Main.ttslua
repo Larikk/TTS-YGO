@@ -14,6 +14,10 @@ local function switchPage(page)
     self.UI.setXmlTable(xmlTable)
 end
 
+function searchThroughPacks(player, value)
+    packButtonManagement.applyFilter(value)
+end
+
 function spawnBox(_, code)
     packGenerators[code]:generateBoosterBox(Vector(50, 5, -85))
 end
