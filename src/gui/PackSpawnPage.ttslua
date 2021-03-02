@@ -68,17 +68,24 @@ local function createSection(title, buttons)
     }
 end
 
-local function createSearchArea()
+local function createNavBar()
     return {
         tag = "HorizontalLayout",
         attributes = {
-            class = "search-container"
+            class = "nav-bar"
         },
         children = {
             {
                 tag = "Text",
                 attributes = {
-                    class = "search-label"
+                    class = "nav-bar",
+                },
+                value = "Click on the pack you want to spawn"
+            },
+            {
+                tag = "Text",
+                attributes = {
+                    class = "nav-bar search-label"
                 },
                 value = "Search: ",
             },
@@ -133,7 +140,7 @@ local function createPage()
             class = "pack-page"
         },
         children = {
-            createSearchArea(),
+            createNavBar(),
             createPackSelection()
         },
     }
