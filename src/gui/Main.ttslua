@@ -5,12 +5,12 @@ local packGenerators = require("TTS-YGO-sealed-draft/src/gui/PackGenerators").pa
 
 
 local xmlTable = nil
-local packSelection = nil
+local pageContainer = nil
 
 local packPage = packButtonManagement.getPage()
 
 local function switchPage(page)
-    packSelection.children = page
+    pageContainer.children = page
     self.UI.setXmlTable(xmlTable)
 end
 
@@ -25,6 +25,6 @@ end
 function load(save_state)
     assets.initAssets()
     xmlTable = self.UI.getXmlTable()
-    packSelection = guiUtil.getElementById("page-container", xmlTable)
+    pageContainer = guiUtil.getElementById("page-container", xmlTable)
     switchPage(packPage)
 end

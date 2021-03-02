@@ -111,14 +111,27 @@ local function createPackSelection()
     end
 
     return {
-        tag = "VerticalLayout",
-        children = children
+        tag = "VerticalScrollView",
+        attributes = {
+            class = "invisible",
+            flexibleHeight = "1"
+        },
+        children = {
+            tag = "VerticalLayout",
+            attributes = {
+                contentSizeFitter = "vertical"
+            },
+            children = children
+        }
     }
 end
 
 local function createPage()
     return {
         tag = "VerticalLayout",
+        attributes = {
+            class = "pack-page"
+        },
         children = {
             createSearchArea(),
             createPackSelection()
