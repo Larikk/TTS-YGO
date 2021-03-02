@@ -1,11 +1,11 @@
 local guiUtil = require("TTS-YGO-sealed-draft/src/gui/GUIUtil")
 local packGeneratorsModule = require("TTS-YGO-sealed-draft/src/gui/PackGenerators")
-local packGenerators = packGeneratorsModule.packGenerators
 
 local packButtonManagement = {}
 
+local page = nil
 
-local function generatorToButton(gen)
+local function createButton(gen)
     return {
         tag = "Button",
         attributes = {
@@ -39,7 +39,7 @@ local function generatorToButton(gen)
     }
 end
 
-local function sectionToGuiSection(title, buttons)
+local function createSection(title, buttons)
     return {
         tag = "VerticalLayout",
         attributes = {
@@ -64,21 +64,7 @@ local function sectionToGuiSection(title, buttons)
     }
 end
 
-function packButtonManagement.initAssets()
-    local assets = {}
-
-    for k,v in pairs(packGenerators) do
-        local asset = {
-            name = k,
-            url = v:getOnePackTexture()
-        }
-        table.insert(assets, asset)
-    end
-
-    self.UI.setCustomAssets(assets)
-end
-
-function packButtonManagement.buildButtons()
+local function createSections()
     local sections = packGeneratorsModule.sections
     local order = packGeneratorsModule.sectionOrder
 
@@ -89,17 +75,31 @@ function packButtonManagement.buildButtons()
         local buttons = {}
 
         for _,gen in ipairs(section) do
-            local button = generatorToButton(gen)
+            local button = createButton(gen)
             table.insert(buttons, button)
         end
 
-        table.insert(children, sectionToGuiSection(v, buttons))
+        table.insert(children, createSection(v, buttons))
     end
 
-    local xmlTable = self.UI.getXmlTable()
-    local packSelection = guiUtil.getElementById("pack-selection", xmlTable)
-    packSelection.children = children
-    self.UI.setXmlTable(xmlTable)
+    return children
+end
+
+local function createPage()
+    return {
+        tag = "VerticalLayout",
+        children = createSections()
+    }
+end
+
+
+
+function packButtonManagement.getPage()
+    if page == nil then
+        page = createPage()
+    end
+
+    return page
 end
 
 return packButtonManagement

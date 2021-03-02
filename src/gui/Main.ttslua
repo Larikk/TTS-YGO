@@ -1,14 +1,26 @@
 local guiUtil = require("TTS-YGO-sealed-draft/src/gui/GUIUtil")
+local assets = require("TTS-YGO-sealed-draft/src/gui/Assets")
 local packButtonManagement = require("TTS-YGO-sealed-draft/src/gui/PackButtonManagement")
-
 local packGenerators = require("TTS-YGO-sealed-draft/src/gui/PackGenerators").packGenerators
 
+
+local xmlTable = nil
+local packSelection = nil
+
+local packPage = packButtonManagement.getPage()
+
+local function switchPage(page)
+    packSelection.children = page
+    self.UI.setXmlTable(xmlTable)
+end
 
 function spawnBox(_, code)
     packGenerators[code]:generateBoosterBox(Vector(50, 5, -85))
 end
 
 function load(save_state)
-    packButtonManagement.initAssets()
-    packButtonManagement.buildButtons()
+    assets.initAssets()
+    xmlTable = self.UI.getXmlTable()
+    packSelection = guiUtil.getElementById("pack-selection", xmlTable)
+    switchPage(packPage)
 end
