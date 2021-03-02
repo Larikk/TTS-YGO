@@ -1,0 +1,19 @@
+local assets = {}
+
+local packGeneratorsModule = require("TTS-YGO-sealed-draft/src/gui/PackGenerators")
+
+function assets.initAssets()
+    local assets = {}
+
+    for k,v in pairs(packGeneratorsModule.packGenerators) do
+        local asset = {
+            name = k,
+            url = v:getOnePackTexture()
+        }
+        table.insert(assets, asset)
+    end
+
+    self.UI.setCustomAssets(assets)
+end
+
+return assets
