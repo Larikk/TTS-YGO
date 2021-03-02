@@ -1,0 +1,25 @@
+local settingsPage = {}
+
+local page = nil
+
+local function createPage()
+    return {
+        tag = "VerticalLayout",
+        children = {
+            {
+                tag = "Text",
+                value = "test"
+            }
+        }
+    }
+end
+
+function settingsPage.getPage()
+    if page == nil then
+        page = createPage()
+    end
+
+    return page
+end
+
+return settingsPage
