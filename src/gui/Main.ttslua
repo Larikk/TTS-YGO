@@ -5,8 +5,7 @@ local settingsPage = require("TTS-YGO-sealed-draft/src/gui/SettingsPage")
 local packGenerators = require("TTS-YGO-sealed-draft/src/gui/PackGenerators").packGenerators
 
 
-local xmlTable = nil
-local pageContainer = nil
+local selectedButtonId = nil
 
 local pages = {
     spawnPackButton = packSpawnPage.getPage(),
@@ -14,13 +13,25 @@ local pages = {
 }
 
 function switchPage(player, _, id)
-    local page = pages[id]
+    local xmlTable = self.UI.getXmlTable()
 
-    pageContainer.children = page
+    -- Set page
+    local pageContainer = guiUtil.getElementById("page-container", xmlTable)
+    pageContainer.children = pages[id]
+
+    -- Enable previously selected button
+    if selectedButtonId ~= nil then
+        local selectedButton = guiUtil.getElementById(selectedButtonId, xmlTable)
+        selectedButton.attributes.interactable = "true"
+    end
+
+    -- Disable pressed button
+    local pressedButton = guiUtil.getElementById(id, xmlTable)
+    pressedButton.attributes.interactable = "false"
+    selectedButtonId = pressedButton.attributes.id
+
+    -- Update UI
     self.UI.setXmlTable(xmlTable)
-
-    -- The UI takes 1 frame to update, therefore we need to
-    Wait.frames(||self.UI.setAttribute(id, "interactable", "false"), 2)
 end
 
 function searchThroughPacks(player, value)
@@ -33,7 +44,5 @@ end
 
 function load(save_state)
     assets.initAssets()
-    xmlTable = self.UI.getXmlTable()
-    pageContainer = guiUtil.getElementById("page-container", xmlTable)
     switchPage(nil, nil, "spawnPackButton")
 end
