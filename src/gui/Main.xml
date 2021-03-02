@@ -1,6 +1,10 @@
 <Defaults>
     <Panel class="window" color="#ecf0f1" height="16%" width="16%"/>
 
+    <HorizontalLayout class="search-container" padding="20" spacing="60" childForceExpandWidth="false"/>
+    <Text class="search-label" fontSize="30" fontStyle="bold" flexibleWidth="0"/>
+    <InputField class="search-field" fontSize="30" minWidth="500" minHeight="50"/>
+
     <VerticalLayout class="invisible" color="rgba(1,1,1,0)"/>
     <HorizontalLayout class="invisible" color="rgba(1,1,1,0)"/>
     <GridLayout class="invisible" color="rgba(1,1,1,0)"/>
