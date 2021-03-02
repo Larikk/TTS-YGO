@@ -20,7 +20,7 @@
 <Panel class="window" active="true">
     <VerticalLayout>
         <VerticalScrollView class="invisible">
-            <VerticalLayout id="pack-selection" class="invisible" contentSizeFitter="vertical">
+            <VerticalLayout id="page-container" class="invisible" contentSizeFitter="vertical">
                 <Text text="Loading..." fontSize="100" fontStyle="bold"/>
             </VerticalLayout>
         </VerticalScrollView>

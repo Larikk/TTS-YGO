@@ -21,6 +21,6 @@ end
 function load(save_state)
     assets.initAssets()
     xmlTable = self.UI.getXmlTable()
-    packSelection = guiUtil.getElementById("pack-selection", xmlTable)
+    packSelection = guiUtil.getElementById("page-container", xmlTable)
     switchPage(packPage)
 end
