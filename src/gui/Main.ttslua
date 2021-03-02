@@ -1,13 +1,13 @@
 local guiUtil = require("TTS-YGO-sealed-draft/src/gui/GUIUtil")
 local assets = require("TTS-YGO-sealed-draft/src/gui/Assets")
-local packButtonManagement = require("TTS-YGO-sealed-draft/src/gui/PackButtonManagement")
+local packSpawnPage = require("TTS-YGO-sealed-draft/src/gui/PackSpawnPage")
 local packGenerators = require("TTS-YGO-sealed-draft/src/gui/PackGenerators").packGenerators
 
 
 local xmlTable = nil
 local pageContainer = nil
 
-local packPage = packButtonManagement.getPage()
+local packPage = packSpawnPage.getPage()
 
 local function switchPage(page)
     pageContainer.children = page
@@ -15,7 +15,7 @@ local function switchPage(page)
 end
 
 function searchThroughPacks(player, value)
-    packButtonManagement.applyFilter(value)
+    packSpawnPage.applyFilter(value)
 end
 
 function spawnBox(_, code)
