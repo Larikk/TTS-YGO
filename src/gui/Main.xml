@@ -7,6 +7,7 @@
 
     <VerticalScrollView scrollbarBackgroundColor="#2c3e50"/>
     <GridLayout class="invisible" color="rgba(1,1,1,0)"/>
+    <VerticalLayout class="invisible" color="rgba(1,1,1,0)"/>
     <VerticalScrollView class="invisible" color="rgba(1,1,1,0)" scrollSensitivity="0"/>
 
     <HorizontalLayout class="button-bar" padding="40" spacing="20" color="#2c3e50" childForceExpandHeight="false" />
@@ -25,10 +26,13 @@
     <Text class="pack-name" color="#ecf0f1" minHeight="80" fontSize="30" fontStyle="bold"/>
 
     <!-- Settings page -->
-    <HorizontalLayout class="settings-row" childForceExpandHeight="false" padding="40"/>
-    <Text class="settings-label" fontSize="50" fontStyle="bold" alignment="MiddleLeft" flexibleWidth="1"/>
-    <InputField class="settings-textfield" minHeight="70" minWidth="200" fontSize="50" characterValidation="Decimal"/>
-    <HorizontalLayout class="position-row" childForceExpandHeight="false" spacing="0"/>
+    <VerticalLayout class="settings" childForceExpandHeight = "false" padding = "20" spacing="40"/>
+    <VerticalLayout class="settings-row" childForceExpandHeight="false" padding="40" spacing="20" color="#ecf0f1" outline="black" outlineSize="5"/>
+    <Text class="settings-title" fontSize="70" fontStyle="bold" alignment="MiddleLeft" />
+    <Text class="settings-description" fontSize="50" fontStyle="bold" alignment="MiddleLeft" />
+    <InputField class="settings-textfield" minHeight="70" minWidth="200" fontSize="50" alignment="MiddleRight" characterValidation="Decimal" flexibleWidth="1"/>
+    <HorizontalLayout class="position-row" childForceExpandHeight="false" childForceExpandWidth="false" spacing="0"/>
+    <Text class="position-row" fontSize="50" fontStyle="bold"/>
 </Defaults>
 
 <Panel class="window" active="true">

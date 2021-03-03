@@ -4,13 +4,32 @@ local settingsPage = {}
 
 local page = nil
 
+local function createTitle(title)
+    return {
+        tag = "Text",
+        attributes = {
+            class = "settings-title",
+        },
+        value = title
+    }
+end
+
+local function createDescription(desc)
+    return {
+        tag = "Text",
+        attributes = {
+            class = "settings-description",
+        },
+        value = desc
+    }
+end
+
 local function createPositionSetting()
     local createLabel = function(val)
         return {
             tag = "Text",
             attributes = {
-                class = "settings-label",
-                alignment = "MiddleRight"
+                class = "position-row",
             },
             value = val .. ":"
         }
@@ -21,23 +40,19 @@ local function createPositionSetting()
             tag = "InputField",
             attributes = {
                 class = "settings-textfield"
-            }
+            },
+            value = "0"
         }
     end
 
     return {
-        tag = "HorizontalLayout",
+        tag = "VerticalLayout",
         attributes = {
-            class = "settings-row",
+            class = "invisible settings-row",
         },
         children = {
-            {
-                tag = "Text",
-                attributes = {
-                    class = "settings-label",
-                },
-                value = "Position"
-            },
+            createTitle("Position"),
+            createDescription("Determines where objects spawn. (0,0,0) is the center of the room."),
             {
                 tag = "HorizontalLayout",
                 attributes = {
@@ -58,23 +73,19 @@ end
 
 local function createRotationSetting()
     return {
-        tag = "HorizontalLayout",
+        tag = "VerticalLayout",
         attributes = {
             class = "settings-row",
         },
         children = {
-            {
-                tag = "Text",
-                attributes = {
-                    class = "settings-label"
-                },
-                value = "Rotation"
-            },
+            createTitle("Rotation"),
+            createDescription("Determines the orientation the spawned objects are facing. Sensibles values are between 0 and 360."),
             {
                 tag = "InputField",
                 attributes = {
                     class = "settings-textfield"
-                }
+                },
+                value = "0"
             }
         }
     }
@@ -84,7 +95,7 @@ local function createPageBody()
     return {
         tag = "VerticalLayout",
         attributes = {
-            childForceExpandHeight = "false",
+            class = "settings"
         },
         children = {
             createPositionSetting(),
