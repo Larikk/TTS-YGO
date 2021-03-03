@@ -16,4 +16,28 @@ function util.getElementById(id, root)
     return nil
 end
 
+function util.createNavBar(title, additionalChildren)
+    additionalChildren = additionalChildren or {}
+
+    local children = {}
+
+    table.insert(children, {
+        tag = "Text",
+        attributes = {
+            class = "nav-bar",
+        },
+        value = title
+    })
+
+    for _,e in pairs(additionalChildren) do table.insert(children, e) end
+
+    return {
+        tag = "HorizontalLayout",
+        attributes = {
+            class = "nav-bar"
+        },
+        children = children
+    }
+end
+
 return util
