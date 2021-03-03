@@ -1,15 +1,107 @@
+local guiUtil = require("TTS-YGO-sealed-draft/src/gui/GUIUtil")
+
 local settingsPage = {}
 
 local page = nil
 
-local function createPage()
+local function createPositionSetting()
+    local createLabel = function(val)
+        return {
+            tag = "Text",
+            attributes = {
+                class = "settings-label",
+                alignment = "MiddleRight"
+            },
+            value = val .. ":"
+        }
+    end
+
+    local createInput = function(val)
+        return {
+            tag = "InputField",
+            attributes = {
+                class = "settings-textfield"
+            }
+        }
+    end
+
     return {
-        tag = "VerticalLayout",
+        tag = "HorizontalLayout",
+        attributes = {
+            class = "settings-row",
+        },
         children = {
             {
                 tag = "Text",
-                value = "test"
+                attributes = {
+                    class = "settings-label",
+                },
+                value = "Position"
+            },
+            {
+                tag = "HorizontalLayout",
+                attributes = {
+                    class = "position-row"
+                },
+                children = {
+                    createLabel("x"),
+                    createInput("x"),
+                    createLabel("y"),
+                    createInput("y"),
+                    createLabel("z"),
+                    createInput("z"),
+                }
             }
+        }
+    }
+end
+
+local function createRotationSetting()
+    return {
+        tag = "HorizontalLayout",
+        attributes = {
+            class = "settings-row",
+        },
+        children = {
+            {
+                tag = "Text",
+                attributes = {
+                    class = "settings-label"
+                },
+                value = "Rotation"
+            },
+            {
+                tag = "InputField",
+                attributes = {
+                    class = "settings-textfield"
+                }
+            }
+        }
+    }
+end
+
+local function createPageBody()
+    return {
+        tag = "VerticalLayout",
+        attributes = {
+            childForceExpandHeight = "false",
+        },
+        children = {
+            createPositionSetting(),
+            createRotationSetting(),
+        }
+    }
+end
+
+local function createPage()
+    return {
+        tag = "VerticalLayout",
+        attributes = {
+            class = "page"
+        },
+        children = {
+            guiUtil.createNavBar("Settings"),
+            createPageBody(),
         }
     }
 end
