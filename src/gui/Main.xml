@@ -23,6 +23,12 @@
     <VerticalLayout class="pack-button" padding="8"/>
     <Image class="pack-image" padding="10" rectAlignment="MiddleCenter" preserveAspect="true"/>
     <Text class="pack-name" color="#ecf0f1" minHeight="80" fontSize="30" fontStyle="bold"/>
+
+    <!-- Settings page -->
+    <HorizontalLayout class="settings-row" childForceExpandHeight="false" padding="40"/>
+    <Text class="settings-label" fontSize="50" fontStyle="bold" alignment="MiddleLeft" flexibleWidth="1"/>
+    <InputField class="settings-textfield" minHeight="70" minWidth="200" fontSize="50" characterValidation="Decimal"/>
+    <HorizontalLayout class="position-row" childForceExpandHeight="false" spacing="0"/>
 </Defaults>
 
 <Panel class="window" active="true">
