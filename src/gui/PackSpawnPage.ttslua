@@ -69,34 +69,24 @@ local function createSection(title, buttons)
 end
 
 local function createNavBar()
-    return {
-        tag = "HorizontalLayout",
-        attributes = {
-            class = "nav-bar"
+    local title = "Click on the pack you want to spawn"
+    local additionalElements = {
+        {
+            tag = "Text",
+            attributes = {
+                class = "nav-bar search-label"
+            },
+            value = "Search: ",
         },
-        children = {
-            {
-                tag = "Text",
-                attributes = {
-                    class = "nav-bar",
-                },
-                value = "Click on the pack you want to spawn"
-            },
-            {
-                tag = "Text",
-                attributes = {
-                    class = "nav-bar search-label"
-                },
-                value = "Search: ",
-            },
-            {
-                tag = "InputField",
-                attributes = {
-                    class = "search-field"
-                }
+        {
+            tag = "InputField",
+            attributes = {
+                class = "search-field"
             }
         }
     }
+
+    return guiUtil.createNavBar(title, additionalElements)
 end
 
 local function createPackSelection()
