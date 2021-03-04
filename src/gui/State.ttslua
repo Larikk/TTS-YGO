@@ -1,0 +1,44 @@
+local module = {}
+
+local persistentValues = {
+    "spawn_x", "spawn_y", "spawn_z", "spawn_rotation"
+}
+
+-- default values
+local state = {
+    -- persistent values, get saved and loaded with the room
+    spawn_x = "0",
+    spawn_y = "5",
+    spawn_z = "0",
+    spawn_rotation = "0",
+
+    -- ephemeral values, get reset on leaving the room
+    search = nil,
+}
+
+function module.get(key)
+    return state[key]
+end
+
+function module.put(key, value)
+    state[key] = value
+end
+
+function module.save()
+    local save = {}
+
+    for _,v in ipairs(persistentValues) do save[v] = state[v] end
+
+    return JSON.encode(save)
+end
+
+function module.loadFromSave(save)
+    if save == nil or save == "" then return end
+
+    save = JSON.decode(save)
+    for _,v in ipairs(persistentValues) do state[v] = save[v] end
+
+    print(JSON.encode_pretty(state))
+end
+
+return module

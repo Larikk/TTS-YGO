@@ -1,4 +1,5 @@
 local guiUtil = require("TTS-YGO-sealed-draft/src/gui/GUIUtil")
+local state = require("TTS-YGO-sealed-draft/src/gui/State")
 local assets = require("TTS-YGO-sealed-draft/src/gui/Assets")
 local packSpawnPage = require("TTS-YGO-sealed-draft/src/gui/PackSpawnPage")
 local settingsPage = require("TTS-YGO-sealed-draft/src/gui/SettingsPage")
@@ -8,18 +9,14 @@ local packGenerators = require("TTS-YGO-sealed-draft/src/gui/PackGenerators").pa
 local selectedButtonId = nil
 
 local pages = {
-    spawnPackButton = packSpawnPage.getPage(),
-    settingsButton = settingsPage.getPage(),
+    spawnPackButton = packSpawnPage,
+    settingsButton = settingsPage,
 }
 
 function switchPage(player, _, id)
     local xmlTable = self.UI.getXmlTable()
 
-    -- Set page
-    local pageContainer = guiUtil.getElementById("page-container", xmlTable)
-    pageContainer.children = pages[id]
-
-    -- Enable previously selected button
+    -- Enable previously selected button and save the state of the old page
     if selectedButtonId ~= nil then
         local selectedButton = guiUtil.getElementById(selectedButtonId, xmlTable)
         selectedButton.attributes.interactable = "true"
@@ -31,7 +28,17 @@ function switchPage(player, _, id)
     selectedButtonId = pressedButton.attributes.id
 
     -- Update UI
+    local page = pages[id]
+    local pageContainer = guiUtil.getElementById("page-container", xmlTable)
+    pageContainer.children = page.getPageObject()
+
+    if type(page.beforeRender) == "function" then
+        page.beforeRender()
+    end
     self.UI.setXmlTable(xmlTable)
+    if type(page.afterRender) == "function" then
+        Wait.frames(||page.afterRender(), 2)
+    end
 end
 
 function searchThroughPacks(player, value)
@@ -42,7 +49,14 @@ function spawnBox(_, code)
     packGenerators[code]:generateBoosterBox(Vector(50, 5, -85))
 end
 
-function load(save_state)
+function onSettingChange(player, value, id)
+    settingsPage.onChange(id, value)
+end
+
+local save = state.save
+
+function load(saveState)
+    state.loadFromSave(saveState)
     assets.initAssets()
     switchPage(nil, nil, "spawnPackButton")
 end

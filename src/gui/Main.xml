@@ -30,7 +30,7 @@
     <VerticalLayout class="settings-row" childForceExpandHeight="false" padding="40" spacing="20" color="#ecf0f1" outline="black" outlineSize="5"/>
     <Text class="settings-title" fontSize="70" fontStyle="bold" alignment="MiddleLeft" />
     <Text class="settings-description" fontSize="50" fontStyle="bold" alignment="MiddleLeft" />
-    <InputField class="settings-textfield" minHeight="70" minWidth="200" fontSize="50" alignment="MiddleRight" characterValidation="Decimal" flexibleWidth="1"/>
+    <InputField class="settings-textfield" onValueChanged="onSettingChange" minHeight="70" minWidth="200" fontSize="50" alignment="MiddleRight" characterValidation="Decimal" flexibleWidth="1"/>
     <HorizontalLayout class="position-row" childForceExpandHeight="false" childForceExpandWidth="false" spacing="0"/>
     <Text class="position-row" fontSize="50" fontStyle="bold"/>
 </Defaults>
