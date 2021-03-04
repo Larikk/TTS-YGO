@@ -172,7 +172,7 @@ function AbstractPackGenerator:getOnePackTexture(i)
 end
 
 -- spawns a booster, can be called externally
-function AbstractPackGenerator:generateBoosterPack(pos)
+function AbstractPackGenerator:generateBoosterPack(pos, rotation)
     local f = function()
         local pack = self:assemblePack()
         local spawner = TtsSpawner:new({
@@ -182,7 +182,7 @@ function AbstractPackGenerator:generateBoosterPack(pos)
             cardsInPack = self.cardsInPacks,
             packsInBox = self.packsInBox
         })
-        spawner:spawnPack(pack, pos, || io.success("Pack is ready!"))
+        spawner:spawnPack(pack, pos, rotation, || io.success("Pack is ready!"))
     end
 
     if self.cardsMap == nil then
@@ -193,9 +193,9 @@ function AbstractPackGenerator:generateBoosterPack(pos)
 end
 
 -- spawns a box, can be called externally
-function AbstractPackGenerator:generateBoosterBox(pos)
+function AbstractPackGenerator:generateBoosterBox(pos, rotation)
     if self.packsInBox < 2 then
-        self:generateBoosterPack(pos)
+        self:generateBoosterPack(pos, rotation)
         return
     end
 
@@ -208,7 +208,7 @@ function AbstractPackGenerator:generateBoosterBox(pos)
             cardsInPack = self.cardsInPacks,
             packsInBox = self.packsInBox
         })
-        spawner:spawnBox(packs, pos, || io.success("Box is ready!"))
+        spawner:spawnBox(packs, pos, rotation, || io.success("Box is ready!"))
     end
 
     if self.cardsMap == nil then
