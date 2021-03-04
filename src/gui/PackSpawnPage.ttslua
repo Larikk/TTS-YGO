@@ -1,9 +1,11 @@
 local guiUtil = require("TTS-YGO-sealed-draft/src/gui/GUIUtil")
+local state = require("TTS-YGO-sealed-draft/src/gui/State")
 local packGeneratorsModule = require("TTS-YGO-sealed-draft/src/gui/PackGenerators")
 
 local packButtonManagement = {}
 
 local page = nil
+local searchField = nil
 
 local nameCodeMapping = {} -- Mapping from setName:lower to the setCode, used for filtering/searching
 
@@ -70,21 +72,23 @@ end
 
 local function createNavBar()
     local title = "Click on the pack you want to spawn"
-    local additionalElements = {
-        {
-            tag = "Text",
-            attributes = {
-                class = "nav-bar search-label"
-            },
-            value = "Search: ",
+
+    local searchLabel = {
+        tag = "Text",
+        attributes = {
+            class = "nav-bar search-label"
         },
-        {
-            tag = "InputField",
-            attributes = {
-                class = "search-field"
-            }
+        value = "Search: ",
+    }
+
+    searchField = {
+        tag = "InputField",
+        attributes = {
+            class = "search-field"
         }
     }
+
+    local additionalElements = {searchLabel, searchField}
 
     return guiUtil.createNavBar(title, additionalElements)
 end
@@ -154,7 +158,16 @@ local function showAll()
     end
 end
 
+function packButtonManagement.beforeRender()
+    searchField.value = state.get("search")
+end
+
+function packButtonManagement.afterRender()
+    packButtonManagement.applyFilter(searchField.value)
+end
+
 function packButtonManagement.applyFilter(filter)
+    state.put("search", filter)
     if filter == nil or filter == "" then
         showAll()
     else
@@ -162,7 +175,7 @@ function packButtonManagement.applyFilter(filter)
     end
 end
 
-function packButtonManagement.getPage()
+function packButtonManagement.getPageObject()
     if page == nil then
         page = createPage()
     end

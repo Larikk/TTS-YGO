@@ -1,8 +1,10 @@
 local guiUtil = require("TTS-YGO-sealed-draft/src/gui/GUIUtil")
-
+local state = require("TTS-YGO-sealed-draft/src/gui/State")
 local settingsPage = {}
 
 local page = nil
+
+local inputFields = {} -- mapping value -> gui object
 
 local function createTitle(title)
     return {
@@ -39,11 +41,16 @@ local function createPositionSetting()
         return {
             tag = "InputField",
             attributes = {
+                id = "spawn_" .. val,
                 class = "settings-textfield"
             },
             value = "0"
         }
     end
+
+    inputFields["spawn_x"] = createInput("x")
+    inputFields["spawn_y"] = createInput("y")
+    inputFields["spawn_z"] = createInput("z")
 
     return {
         tag = "VerticalLayout",
@@ -60,11 +67,11 @@ local function createPositionSetting()
                 },
                 children = {
                     createLabel("x"),
-                    createInput("x"),
+                    inputFields["spawn_x"],
                     createLabel("y"),
-                    createInput("y"),
+                    inputFields["spawn_y"],
                     createLabel("z"),
-                    createInput("z"),
+                    inputFields["spawn_z"],
                 }
             }
         }
@@ -72,6 +79,15 @@ local function createPositionSetting()
 end
 
 local function createRotationSetting()
+    inputFields["spawn_rotation"] = {
+        tag = "InputField",
+        attributes = {
+            id = "spawn_rotation",
+            class = "settings-textfield"
+        },
+        value = "0"
+    }
+
     return {
         tag = "VerticalLayout",
         attributes = {
@@ -80,13 +96,7 @@ local function createRotationSetting()
         children = {
             createTitle("Rotation"),
             createDescription("Determines the orientation the spawned objects are facing. Sensibles values are between 0 and 360."),
-            {
-                tag = "InputField",
-                attributes = {
-                    class = "settings-textfield"
-                },
-                value = "0"
-            }
+            inputFields["spawn_rotation"]
         }
     }
 end
@@ -117,12 +127,22 @@ local function createPage()
     }
 end
 
-function settingsPage.getPage()
+function settingsPage.beforeRender()
+    for setting,inputField in pairs(inputFields) do
+        inputField.value = state.get(setting)
+    end
+end
+
+function settingsPage.getPageObject()
     if page == nil then
         page = createPage()
     end
 
     return page
+end
+
+function settingsPage.onChange(id, value)
+    state.put(id, value)
 end
 
 return settingsPage
