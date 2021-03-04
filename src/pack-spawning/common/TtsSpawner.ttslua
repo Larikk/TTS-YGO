@@ -4,6 +4,7 @@ local resources = require("TTS-YGO-sealed-draft/src/pack-spawning/common/Resourc
 
 
 local DEFAULT_SPAWN_POS = Vector(0, 5, 0)
+local DEFAULT_SPAWN_ROTATION = Vector(0, 0, 0)
 
 -- LUA Script for spawned containers
 local CONTAINER_LUA_SCRIPT = [[
@@ -34,13 +35,15 @@ local TtsSpawner = {}
 -- packObject = bag/container on the TTS board
 -- pack = table which holds data of cards
 
-function TtsSpawner:spawnCard(card, pos, callback)
-    pos = Vector(pos) or DEFAULT_SPAWN_POS
+function TtsSpawner:spawnCard(card, pos, rotation, callback)
+    pos = Vector(pos) or Vector(DEFAULT_SPAWN_POS)
+    rotation = Vector(rotation) or Vector(DEFAULT_SPAWN_ROTATION)
+    rotation:setAt("z", 180) -- facedown
 
     spawnParams = {
         type = "Card",
         position = pos,
-        rotation = {x = 0, y = 180, z = 180},
+        rotation = rotation,
         scale = {x = 1, y = 1, z = 1},
         sound = true,
         snap_to_grid = true,
@@ -67,8 +70,9 @@ function TtsSpawner:pickPackTexture()
     return self.packTextures[n]
 end
 
-function TtsSpawner:spawnPack(pack, pos, callback)
-    pos = Vector(pos) or DEFAULT_SPAWN_POS
+function TtsSpawner:spawnPack(pack, pos, rotation, callback)
+    pos = Vector(pos) or Vector(DEFAULT_SPAWN_POS)
+    rotation = Vector(rotation) or Vector(DEFAULT_SPAWN_ROTATION)
     local cardPos = pos + Vector(0, 5, 0)
 
     local texture = self:pickPackTexture()
@@ -76,7 +80,7 @@ function TtsSpawner:spawnPack(pack, pos, callback)
     spawnParams = {
         type = "Custom_Model",
         position = pos,
-        rotation = {x = 0, y = 180, z = 0},
+        rotation = rotation,
         scale = {x = 1, y = 1, z = 1},
         sound = true,
         snap_to_grid = true,
@@ -105,7 +109,7 @@ function TtsSpawner:spawnPack(pack, pos, callback)
             -- Iterate backwards because the first inserted element in a bag is at the bottom
             for i = #pack, 1, -1 do
                 local card = pack[i]
-                self:spawnCard(card, cardPos, function(cardObject) obj().putObject(cardObject) end)
+                self:spawnCard(card, cardPos, rotation, function(cardObject) obj().putObject(cardObject) end)
             end
 
             Wait.condition(
@@ -118,14 +122,15 @@ function TtsSpawner:spawnPack(pack, pos, callback)
     spawnObject(spawnParams)
 end
 
-function TtsSpawner:spawnBox(packs, pos, callback)
-    pos = Vector(pos) or DEFAULT_SPAWN_POS
+function TtsSpawner:spawnBox(packs, pos, rotation, callback)
+    pos = Vector(pos) or Vector(DEFAULT_SPAWN_POS)
+    rotation = Vector(rotation) or Vector(DEFAULT_SPAWN_ROTATION)
     local boosterPos = pos + Vector(0, 5, 0)
 
     spawnParams = {
         type = "Custom_Model",
         position = pos,
-        rotation = {x = 0, y = 180, z = 0},
+        rotation = rotation,
         scale = {x = 1, y = 1, z = 1},
         sound = true,
         snap_to_grid = true,
@@ -151,7 +156,7 @@ function TtsSpawner:spawnBox(packs, pos, callback)
             local obj = function() return getObjectFromGUID(guid) end
 
             for i, pack in ipairs(packs) do
-                self:spawnPack(pack, boosterPos, function(packObject) obj().putObject(packObject) end)
+                self:spawnPack(pack, boosterPos, rotation, function(packObject) obj().putObject(packObject) end)
             end
 
             Wait.condition(

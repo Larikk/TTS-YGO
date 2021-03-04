@@ -46,7 +46,9 @@ function searchThroughPacks(player, value)
 end
 
 function spawnBox(_, code)
-    packGenerators[code]:generateBoosterBox(Vector(50, 5, -85))
+    local pos = Vector(state.get("spawn_x"), state.get("spawn_y"), state.get("spawn_z"))
+    local rotation = Vector(0, state.get("spawn_rotation"), 0)
+    packGenerators[code]:generateBoosterBox(pos, rotation)
 end
 
 function onSettingChange(player, value, id)
