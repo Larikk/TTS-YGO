@@ -37,8 +37,6 @@ function module.loadFromSave(save)
 
     save = JSON.decode(save)
     for _,v in ipairs(persistentValues) do state[v] = save[v] end
-
-    print(JSON.encode_pretty(state))
 end
 
 return module
