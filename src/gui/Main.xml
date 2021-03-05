@@ -43,8 +43,6 @@
         <HorizontalLayout class="button-bar">
             <Button id="spawnPackButton" class="button-bar">Spawn Packs</Button>
             <Button id="settingsButton" class="button-bar">Settings</Button>
-            <Button class="button-bar">Spawn Packs</Button>
-            <Button class="button-bar">Spawn Packs</Button>
         </HorizontalLayout>
     </VerticalLayout>
 </Panel>
