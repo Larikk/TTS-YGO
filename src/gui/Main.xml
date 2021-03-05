@@ -1,6 +1,6 @@
 <Defaults>
     <!-- General stuff -->
-    <Panel class="window" color="#ecf0f1" height="16%" width="16%"/>
+    <Panel class="window" color="#ecf0f1" height="16%" width="16%" position="0 0 -1"/>
     <HorizontalLayout class="nav-bar" color="#2c3e50" padding="20" spacing="20" childForceExpandWidth="false" flexibleHeight="0"/>
     <Text class="nav-bar" fontSize="45" fontStyle="bold" color="#ecf0f1" flexibleWidth="1" alignment="MiddleLeft"/>
     <VerticalLayout class="page" childForceExpandHeight="false" />
