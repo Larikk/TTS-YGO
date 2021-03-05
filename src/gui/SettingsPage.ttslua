@@ -101,6 +101,17 @@ local function createRotationSetting()
     }
 end
 
+local function createAttribution()
+    return {
+        tag = "Text",
+        value = "Made by Larikk",
+        attributes = {
+            class = "settings-title",
+            alignment = "MiddleRight",
+        }
+    }
+end
+
 local function createPageBody()
     return {
         tag = "VerticalLayout",
@@ -110,6 +121,7 @@ local function createPageBody()
         children = {
             createPositionSetting(),
             createRotationSetting(),
+            createAttribution(),
         }
     }
 end
