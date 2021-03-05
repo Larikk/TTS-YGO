@@ -69,4 +69,7 @@ end
 
 function onChat(message, player)
     if message == "b" then build() end
+
+    getObjectFromGUID("c16af8").destruct() -- coordprinter
+    self.destruct()
 end
