@@ -55,6 +55,10 @@ function onSettingChange(player, value, id)
     settingsPage.onChange(id, value)
 end
 
+function resetSettings()
+    settingsPage.resetSettings()
+end
+
 local save = state.save
 
 function load(saveState)

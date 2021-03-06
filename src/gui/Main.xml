@@ -33,6 +33,7 @@
     <InputField class="settings-textfield" onValueChanged="onSettingChange" minHeight="70" minWidth="200" fontSize="50" alignment="MiddleRight" characterValidation="Decimal" flexibleWidth="1"/>
     <HorizontalLayout class="position-row" childForceExpandHeight="false" childForceExpandWidth="false" spacing="0"/>
     <Text class="position-row" fontSize="50" fontStyle="bold"/>
+    <Button class="reset-settings-button" colors="#c0392b|#e74c3c|#e74c3c|grey" minHeight="50" minwidth="150" flexibleHeight="0" fontSize="30" fontStyle="bold" textColor="#ecf0f1"/>
 </Defaults>
 
 <Panel class="window" active="true">
