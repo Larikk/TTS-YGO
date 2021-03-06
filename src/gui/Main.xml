@@ -12,7 +12,7 @@
     <VerticalScrollView class="invisible" color="rgba(1,1,1,0)" scrollSensitivity="0"/>
 
     <HorizontalLayout class="button-bar" padding="40" spacing="20" color="#2c3e50" childForceExpandHeight="false" />
-    <Button class="button-bar" onClick="switchPage" minHeight="100" fontSize="30" fontStyle="bold" colors="#e67e22|#f39c12|#f39c12|#c0392b" textColor="#ecf0f1"/>
+    <Button class="button-bar" onClick="switchPage" minHeight="100" fontSize="30" fontStyle="bold" colors="#7f8c8d|#95a5a6|#95a5a6|#c0392b" textColor="#ecf0f1"/>
 
     <!-- Pack page -->
     <Text class="search-label" flexibleWidth="0"/>
