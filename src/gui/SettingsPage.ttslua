@@ -116,8 +116,8 @@ local function createResetButton()
             childForceExpandWidth = "false"
         },
         children = {
-            createTitle("Reset Spawn Settings"),
-            createDescription("Press this if you take this object into another room."),
+            createTitle("Press this if you take this object into another room"),
+            createDescription("Spawn values are fine tuned to the original room of this object. This will reset them to the center of the room."),
             button,
         }
     }
