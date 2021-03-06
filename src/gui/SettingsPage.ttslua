@@ -4,7 +4,9 @@ local settingsPage = {}
 
 local page = nil
 
-local inputFields = {} -- mapping value -> gui object
+local inputFields = {
+    "spawn_x", "spawn_y", "spawn_z", "spawn_rotation"
+}
 
 local function createTitle(title)
     return {
@@ -48,10 +50,6 @@ local function createPositionSetting()
         }
     end
 
-    inputFields["spawn_x"] = createInput("x")
-    inputFields["spawn_y"] = createInput("y")
-    inputFields["spawn_z"] = createInput("z")
-
     return {
         tag = "VerticalLayout",
         attributes = {
@@ -67,11 +65,11 @@ local function createPositionSetting()
                 },
                 children = {
                     createLabel("x"),
-                    inputFields["spawn_x"],
+                    createInput("x"),
                     createLabel("y"),
-                    inputFields["spawn_y"],
+                    createInput("y"),
                     createLabel("z"),
-                    inputFields["spawn_z"],
+                    createInput("z"),
                 }
             }
         }
@@ -79,7 +77,7 @@ local function createPositionSetting()
 end
 
 local function createRotationSetting()
-    inputFields["spawn_rotation"] = {
+    local spawnRotation = {
         tag = "InputField",
         attributes = {
             id = "spawn_rotation",
@@ -96,7 +94,31 @@ local function createRotationSetting()
         children = {
             createTitle("Rotation"),
             createDescription("Determines the orientation the spawned objects are facing. Sensibles values are between 0 and 360."),
-            inputFields["spawn_rotation"]
+            spawnRotation,
+        }
+    }
+end
+
+local function createResetButton()
+    local button = {
+        tag = "Button",
+        attributes = {
+            class = "reset-settings-button",
+            text = "Reset",
+            onClick = "resetSettings"
+        }
+    }
+
+    return {
+        tag = "VerticalLayout",
+        attributes = {
+            class = "settings-row",
+            childForceExpandWidth = "false"
+        },
+        children = {
+            createTitle("Reset Spawn Settings"),
+            createDescription("Press this if you take this object into another room."),
+            button,
         }
     }
 end
@@ -121,6 +143,7 @@ local function createPageBody()
         children = {
             createPositionSetting(),
             createRotationSetting(),
+            createResetButton(),
             createAttribution(),
         }
     }
@@ -139,9 +162,17 @@ local function createPage()
     }
 end
 
+function settingsPage.resetSettings()
+    for _,id in ipairs(inputFields) do
+        state.reset(id)
+    end
+
+    settingsPage.afterRender()
+end
+
 function settingsPage.afterRender()
-    for setting,inputField in pairs(inputFields) do
-        self.UI.setAttribute(setting, "text", tostring(state.get(setting)))
+    for _,id in ipairs(inputFields) do
+        self.UI.setAttribute(id, "text", tostring(state.get(id)))
     end
 end
 
