@@ -139,9 +139,9 @@ local function createPage()
     }
 end
 
-function settingsPage.beforeRender()
+function settingsPage.afterRender()
     for setting,inputField in pairs(inputFields) do
-        inputField.value = state.get(setting)
+        self.UI.setAttribute(setting, "text", tostring(state.get(setting)))
     end
 end
 
