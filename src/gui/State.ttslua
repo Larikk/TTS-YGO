@@ -5,7 +5,7 @@ local persistentValues = {
 }
 
 -- default values
-local state = {
+local defaults = {
     -- persistent values, get saved and loaded with the room
     spawn_x = "0",
     spawn_y = "5",
@@ -13,8 +13,16 @@ local state = {
     spawn_rotation = "0",
 
     -- ephemeral values, get reset on leaving the room
+    -- just here for documentation
     search = nil,
 }
+
+-- gets set to defaults on load
+local state = {}
+
+function module.reset(key)
+    state[key] = defaults[key]
+end
 
 function module.get(key)
     return state[key]
@@ -33,6 +41,8 @@ function module.save()
 end
 
 function module.loadFromSave(save)
+    for k,v in pairs(defaults) do state[k] = v end
+
     if save == nil or save == "" then return end
 
     save = JSON.decode(save)
