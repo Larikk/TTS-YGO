@@ -1,4 +1,4 @@
-local mathutil = require("TTS-YGO-sealed-draft/src/pack-spawning/common/Math")
+local mathutil = require("TTS-YGO-sealed-draft/src/common/Math")
 local cardHoverText = require("TTS-YGO-sealed-draft/src/pack-spawning/common/CardHoverText")
 local resources = require("TTS-YGO-sealed-draft/src/pack-spawning/common/Resources")
 
