@@ -56,7 +56,7 @@ function SetDataExtractor:addPostListener(listener)
     if (type(listener) == "function") then
         table.insert(self.postListeners, listener)
     else
-        IO:error(listener.." is not a function.")
+        io.error(listener.." is not a function.")
     end
 
     return self
