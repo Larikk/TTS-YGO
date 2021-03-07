@@ -10,7 +10,7 @@ local resources = require("TTS-YGO-sealed-draft/src/pack-spawning/common/Resourc
 --
 -- Code is taken from https://github.com/rxi/json.lua
 -- Some changes were made to make it work with TTS
-local json = require("TTS-YGO-sealed-draft/src/pack-spawning/common/Json")
+local json = require("TTS-YGO-sealed-draft/src/common/Json")
 
 
 -- Abstract class which has common logic
