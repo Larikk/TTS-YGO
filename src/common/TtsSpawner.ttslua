@@ -1,6 +1,6 @@
 local mathutil = require("TTS-YGO-sealed-draft/src/common/Math")
 local cardHoverText = require("TTS-YGO-sealed-draft/src/pack-spawning/common/CardHoverText")
-local resources = require("TTS-YGO-sealed-draft/src/pack-spawning/common/Resources")
+local resources = require("TTS-YGO-sealed-draft/src/common/Resources")
 
 
 local DEFAULT_SPAWN_POS = Vector(0, 5, 0)
