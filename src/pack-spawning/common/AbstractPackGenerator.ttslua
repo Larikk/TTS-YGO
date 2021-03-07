@@ -1,4 +1,4 @@
-local cardParser = require("TTS-YGO-sealed-draft/src/pack-spawning/common/CardParser")
+local cardParser = require("TTS-YGO-sealed-draft/src/common/CardParser")
 local SetDataExtractor = require("TTS-YGO-sealed-draft/src/pack-spawning/common/SetDataExtractor")
 local mathUtil = require("TTS-YGO-sealed-draft/src/common/Math")
 local io = require("TTS-YGO-sealed-draft/src/pack-spawning/common/IO")
