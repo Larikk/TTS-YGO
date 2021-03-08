@@ -1,0 +1,31 @@
+local module = {}
+
+function module.startsWith(str, pattern)
+    local index = string.find(str, pattern, 0, true)
+    return index == 1
+end
+
+function module.contains(str, pattern)
+    local index = string.find(str, pattern, 0, true)
+    return index != nil
+end
+
+function module.trim(str)
+    return (str:gsub("^%s*(.-)%s*$", "%1"))
+end
+
+function module.splitByNewLine(str)
+    lines = {}
+    for s in string.gmatch(str, "[^\r\n]+") do
+        table.insert(lines, s)
+    end
+    return lines
+end
+
+-- returns true if the string consists only of digits
+function module.isNumeric(str)
+    return str ~= nil and str ~= "" and str:find("%D") == nil
+end
+
+
+return module
