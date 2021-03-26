@@ -1,5 +1,6 @@
 from PIL import Image, ImageDraw
 import sys
+import requests
 
 def scaleTuple(tuple, scale):
     return (int(tuple[0]*scale), int(tuple[1]*scale))
@@ -109,7 +110,11 @@ if len(sys.argv) < 2:
     print("No front image specified, creating placeholder")
     front = createPlaceholderFront(logo)
 else:
-    cover = Image.open(sys.argv[1])
+    cover = sys.argv[1]
+    # if true -> url, otherwise local file
+    if cover.startswith("http"):
+        cover = requests.get(cover, stream=True).raw
+    cover = Image.open(cover)
     front = createFront(cover)
 
 
