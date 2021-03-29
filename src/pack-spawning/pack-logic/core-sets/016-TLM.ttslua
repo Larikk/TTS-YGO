@@ -1,0 +1,29 @@
+local ParentGenerator = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicB")
+
+local SET_NAME = "The Lost Millennium"
+
+local SET_CODE_PREFIX = "TLM-EN"
+
+local SET_NAME_URL = SET_NAME
+
+local PACK_TEXTURES = "https://i.imgur.com/gvCarSR.png"
+
+local BOX_TEXTURE = "https://i.imgur.com/5VyfFmc.png"
+
+local PackGenerator = ParentGenerator:new()
+
+function PackGenerator:new()
+    o = ParentGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = SET_NAME
+    o.setCodePrefix = SET_CODE_PREFIX
+    o.setNameUrl = SET_NAME_URL
+    o.packTextures = PACK_TEXTURES
+    o.boxTexture = BOX_TEXTURE
+
+    return o
+end
+
+return PackGenerator
