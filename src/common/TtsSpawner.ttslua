@@ -45,7 +45,7 @@ function TtsSpawner:spawnCard(card, pos, rotation, callback)
         position = pos,
         rotation = rotation,
         scale = {x = 1, y = 1, z = 1},
-        sound = true,
+        sound = false,
         snap_to_grid = true,
 
         callback_function = function(cardObject)
@@ -82,7 +82,7 @@ function TtsSpawner:spawnPack(pack, pos, rotation, callback)
         position = pos,
         rotation = rotation,
         scale = {x = 1, y = 1, z = 1},
-        sound = true,
+        sound = false,
         snap_to_grid = true,
 
         callback_function = function(packObject)
@@ -132,7 +132,7 @@ function TtsSpawner:spawnBox(packs, pos, rotation, callback)
         position = pos,
         rotation = rotation,
         scale = {x = 1, y = 1, z = 1},
-        sound = true,
+        sound = false,
         snap_to_grid = true,
 
         callback_function = function(boxObject)
