@@ -69,6 +69,21 @@ gen = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/core-sets/013-S
 packGenerators['SOD'] = gen
 gen.assetCode = 'SOD'
 table.insert(sections['Core Sets'], gen)
+
+gen = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/core-sets/014-RDS"):new()
+packGenerators['RDS'] = gen
+gen.assetCode = 'RDS'
+table.insert(sections['Core Sets'], gen)
+
+gen = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/core-sets/015-FET"):new()
+packGenerators['FET'] = gen
+gen.assetCode = 'FET'
+table.insert(sections['Core Sets'], gen)
+
+gen = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/core-sets/016-TLM"):new()
+packGenerators['TLM'] = gen
+gen.assetCode = 'TLM'
+table.insert(sections['Core Sets'], gen)
 --##################
 
 
