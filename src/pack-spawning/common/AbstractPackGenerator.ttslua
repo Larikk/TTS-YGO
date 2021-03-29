@@ -222,12 +222,14 @@ end
 function AbstractPackGenerator:generateCardListDebug(pos, rotation)
     local f = function()
         local spawner = TtsSpawner:new()
+        print(self.setName)
         for rarity,cards in pairs(self.cardsMap) do
             print(rarity .. ": " .. #cards)
             table.sort(cards, function(a, b) return a.setCode < b.setCode end)
             spawner:spawnDeck(cards, pos, rotation)
             pos = pos + Vector(0, 0, -5)
         end
+        print("#######")
     end
 
     self:generate(f)
