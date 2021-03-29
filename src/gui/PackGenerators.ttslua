@@ -64,6 +64,11 @@ gen = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/core-sets/012-A
 packGenerators['AST'] = gen
 gen.assetCode = 'AST'
 table.insert(sections['Core Sets'], gen)
+
+gen = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/core-sets/013-SOD"):new()
+packGenerators['SOD'] = gen
+gen.assetCode = 'SOD'
+table.insert(sections['Core Sets'], gen)
 --##################
 
 
