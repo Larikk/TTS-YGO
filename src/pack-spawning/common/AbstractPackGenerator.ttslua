@@ -155,6 +155,14 @@ function AbstractPackGenerator:assembleBox()
     return packs
 end
 
+function AbstractPackGenerator:generate(f)
+    if self.cardsMap == nil then
+        self:initCardsMap(|| f())
+    else
+        f()
+    end
+end
+
 -------------------------------------------------------------------------------
 -- Public methods
 -------------------------------------------------------------------------------
@@ -185,11 +193,7 @@ function AbstractPackGenerator:generateBoosterPack(pos, rotation)
         spawner:spawnPack(pack, pos, rotation, || io.success("Pack is ready!"))
     end
 
-    if self.cardsMap == nil then
-        self:initCardsMap(|| f())
-    else
-        f()
-    end
+    self:generate(f)
 end
 
 -- spawns a box, can be called externally
@@ -211,11 +215,7 @@ function AbstractPackGenerator:generateBoosterBox(pos, rotation)
         spawner:spawnBox(packs, pos, rotation, || io.success("Box is ready!"))
     end
 
-    if self.cardsMap == nil then
-        self:initCardsMap(|| f())
-    else
-        f()
-    end
+    self:generate(f)
 end
 
 function AbstractPackGenerator:generateCardListDebug(pos, rotation)
@@ -230,11 +230,7 @@ function AbstractPackGenerator:generateCardListDebug(pos, rotation)
         end
     end
 
-    if self.cardsMap == nil then
-        self:initCardsMap(|| f())
-    else
-        f()
-    end
+    self:generate(f)
 end
 
 
