@@ -218,6 +218,25 @@ function AbstractPackGenerator:generateBoosterBox(pos, rotation)
     end
 end
 
+function AbstractPackGenerator:generateCardListDebug(pos, rotation)
+    local f = function()
+        local cards = {}
+
+        local spawner = TtsSpawner:new()
+        for _,raritySection in pairs(self.cardsMap) do
+            table.sort(raritySection, function(a, b) return a.setCode < b.setCode end)
+            spawner:spawnDeck(raritySection, pos, rotation)
+            pos = pos + Vector(0, 0, -5)
+        end
+    end
+
+    if self.cardsMap == nil then
+        self:initCardsMap(|| f())
+    else
+        f()
+    end
+end
+
 
 function AbstractPackGenerator:new(o)
     o = o or {}
