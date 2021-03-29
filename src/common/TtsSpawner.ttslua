@@ -169,6 +169,49 @@ function TtsSpawner:spawnBox(packs, pos, rotation, callback)
     spawnObject(spawnParams)
 end
 
+
+function TtsSpawner:spawnDeck(deck, pos, rotation, callback)
+    -- Constructs a linked stack like data strcture
+    -- One node is responsible for spawning one card and joining it with the deck
+    -- The callback of the card spawning fires the next node
+
+    -- Dummy node that is executed last
+    local node = {
+        card = nil,
+        next = nil,
+        activate = function() if type(callback) == "function" then callback() end end,
+    }
+
+    local deckObject = nil
+
+    local spawnCardAndActiveNextNode = function(node)
+        local spawnCardCallback = function(cardObject)
+            if deckObject == nil then
+                -- No card was spawned yet
+                deckObject = cardObject
+                pos = pos + vector(0, 1, 0)
+            else
+                -- There are already card(s) present
+                deckObject = deckObject.putObject(cardObject)
+            end
+
+            node.next.activate()
+        end
+
+        self:spawnCard(node.card, pos, rotation, spawnCardCallback)
+    end
+
+    for i=#deck, 1, -1 do
+        local newNode = {}
+        newNode.card = deck[i]
+        newNode.activate = || spawnCardAndActiveNextNode(newNode)
+        newNode.next = node
+        node = newNode
+    end
+
+    node.activate()
+end
+
 -- example argument:
 -- {
 --     setName = "Metal Raiders",
