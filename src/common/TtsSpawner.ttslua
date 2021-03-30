@@ -51,7 +51,7 @@ function TtsSpawner:spawnCard(card, pos, rotation, callback)
         callback_function = function(cardObject)
             cardObject.setName(cardHoverText.create(card))
             cardObject.setCustomObject({
-                face = card.face,
+                face = card.image,
                 back = resources.CARD_BACK
             })
 

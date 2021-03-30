@@ -14,7 +14,7 @@ function cardParser.parseCard(apiData)
         card[att] = apiData[att]
     end
 
-    card.face = apiData.card_images[1].image_url -- first element is at index 1
+    card.image = apiData.card_images[1].image_url -- first element is at index 1
 
     return card
 end
