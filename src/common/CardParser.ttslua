@@ -7,9 +7,6 @@ local ATTRIBUTES_TO_BE_COPIED = {
     "level", "linkval", "desc"
 }
 
--- setName and rarityReplacements are optional
--- if a setName is provivied this method will try to extract the rarity which the card had in the setCode
--- the rarityReplacements map rarities (like "Short Print" -> "Common")
 function cardParser.parseCard(apiData)
     local card = {}
 
