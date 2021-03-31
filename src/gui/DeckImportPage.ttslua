@@ -46,8 +46,8 @@ local function createBody()
             class="deck-import-button"
         },
         children = {
-            createButton("Clear", "red", "MiddleLeft"),
-            createButton("Import", "green", "MiddleRight"),
+            createButton("Import", "green", "MiddleLeft"),
+            createButton("Clear", "red", "MiddleRight"),
         }
     }
 
