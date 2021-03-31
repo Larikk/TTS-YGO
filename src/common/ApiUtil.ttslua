@@ -14,8 +14,11 @@ function module.cardinfo(query, callback)
     local url = endpoint .. query
 
     local handler = function(response)
-        if response.is_error then
-            io.warning("Request failed: " .. request.error)
+        if response.is_error or response.response_code != 200 then
+            local msg = "Request failed:"
+            if response.error ~= nil then msg = msg .. "\n" .. response.error end
+            if response.text ~= nil then msg = msg .. "\n" .. response.text end
+            io.warning(msg)
             return
         end
 
