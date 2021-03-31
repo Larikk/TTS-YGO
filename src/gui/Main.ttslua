@@ -43,13 +43,21 @@ function switchPage(player, _, id)
     end
 end
 
+local function getPositionSetting()
+    return Vector(state.get("spawn_x"), state.get("spawn_y"), state.get("spawn_z"))
+end
+
+local function getRotationSetting()
+    return Vector(0, state.get("spawn_rotation"), 0)
+end
+
 function searchThroughPacks(player, value)
     packSpawnPage.applyFilter(value)
 end
 
 function spawnBox(_, code)
-    local pos = Vector(state.get("spawn_x"), state.get("spawn_y"), state.get("spawn_z"))
-    local rotation = Vector(0, state.get("spawn_rotation"), 0)
+    local pos = getPositionSetting()
+    local rotation = getRotationSetting()
     packGenerators[code]:generateBoosterBox(pos, rotation)
 end
 
