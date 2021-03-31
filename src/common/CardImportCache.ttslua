@@ -1,0 +1,81 @@
+local apiUtil = require("TTS-YGO-sealed-draft/src/common/ApiUtil")
+local cardParser = require("TTS-YGO-sealed-draft/src/common/CardParser")
+local io = require("TTS-YGO-sealed-draft/src/common/IO")
+
+local module = {}
+
+-- Cache for cards that are to be imported
+-- If a card is not chached, the API is contacted
+-- Otherwise the data in the cache is returned
+
+-- Mapping from card_id to api_data
+-- IMPORTANT: key must be a string
+local cache = {}
+
+-- Value for an id that was not recognized by the API in a bulk request
+-- These are marked so that they wont be "redownloaded" later on
+local INVALID_ID = "INVALID_ID"
+
+local function processResponse(data, nonPresentCardIds, cb, cbParams)
+    -- Turn array of ids into Map with id as key
+    local requestedIds = {}
+    for _,id in ipairs(nonPresentCardIds) do
+        requestedIds[tostring(id)] = 1
+    end
+
+    -- data is array of cards
+    for _,cardData in ipairs(data) do
+        local card = cardParser.parseCard(cardData)
+        local id = tostring(card.id)
+        cache[id] = card
+        requestedIds[id] = nil
+    end
+
+    -- leftovers that the API did not recognize
+    for id,_ in pairs(requestedIds) do
+        io.warning("Card with id " .. id .. " could not be downloaded. Will be skipped during spawning.")
+        cache[id] = INVALID_ID
+    end
+
+    if type(cb) == "function" then cb(cbParams) end
+end
+
+local function getNonPresentIds(cardIds)
+    local nonPresentCardIds = {}
+
+    for _,id in ipairs(cardIds) do
+        if cache[id] == nil then
+            table.insert(nonPresentCardIds, id)
+        end
+    end
+
+    return nonPresentCardIds
+end
+
+-- downloand the cardsIds if necessary and executes the callback
+function module.ensureCardsArePresent(cardIds, cb, cbParams)
+    local nonPresentCardIds = getNonPresentIds(cardIds)
+
+    if #nonPresentCardIds == 0 then
+        cb(cbParams)
+        return
+    end
+
+    local query = "id=" .. table.concat(nonPresentCardIds, ",")
+
+    local handler = function(data) processResponse(data, nonPresentCardIds, cb, cbParams) end
+    apiUtil.cardinfo(query, handler)
+end
+
+function module.getCard(id)
+    local card = cache[id]
+
+    if card == INVALID_ID then
+        io.warning("Skipping " .. id .. "...")
+        return nil
+    end
+
+    return card
+end
+
+return module
