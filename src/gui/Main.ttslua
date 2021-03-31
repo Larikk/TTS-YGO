@@ -2,6 +2,7 @@ local guiUtil = require("TTS-YGO-sealed-draft/src/gui/GUIUtil")
 local state = require("TTS-YGO-sealed-draft/src/gui/State")
 local assets = require("TTS-YGO-sealed-draft/src/gui/Assets")
 local packSpawnPage = require("TTS-YGO-sealed-draft/src/gui/PackSpawnPage")
+local deckImportPage = require("TTS-YGO-sealed-draft/src/gui/DeckImportPage")
 local settingsPage = require("TTS-YGO-sealed-draft/src/gui/SettingsPage")
 local packGenerators = require("TTS-YGO-sealed-draft/src/gui/PackGenerators").packGenerators
 
@@ -10,6 +11,7 @@ local selectedButtonId = nil
 
 local pages = {
     spawnPackButton = packSpawnPage,
+    importDeckButton = deckImportPage,
     settingsButton = settingsPage,
 }
 

@@ -1,0 +1,84 @@
+local guiUtil = require("TTS-YGO-sealed-draft/src/gui/GUIUtil")
+local state = require("TTS-YGO-sealed-draft/src/gui/State")
+
+local module = {}
+
+local page = nil
+
+local function createBody()
+    local title = {
+        tag = "Text",
+        attributes = {
+            class = "box-title",
+        },
+        value = "Insert the contents of your YDK file here"
+    }
+
+    local input = {
+        tag = "InputField",
+        attributes = {
+            class = "deck-input",
+        }
+    }
+
+    local buttons = {
+        tag = "HorizontalLayout",
+        attributes = {
+            class="deck-import-button"
+        },
+        children = {
+            {
+                tag = "Button",
+                attributes = {
+                    class = "red button",
+                },
+                value = "Clear"
+            },
+            {
+                tag = "Button",
+                attributes = {
+                    class = "green button",
+                },
+                value = "Import"
+            }
+        }
+    }
+
+
+
+    return {
+        tag = "VerticalLayout",
+        attributes = {
+            class = "page-body"
+        },
+        children = {title, input, buttons},
+    }
+end
+
+
+local function createPage()
+    return {
+        tag = "VerticalLayout",
+        attributes = {
+            class = "page"
+        },
+        children = {
+            guiUtil.createNavBar("Import YDK File"),
+            createBody()
+        },
+    }
+end
+
+function module.afterRender()
+    -- TODO
+end
+
+function module.getPageObject()
+    if page == nil then
+        page = createPage()
+    end
+
+    return page
+end
+
+return module
