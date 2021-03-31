@@ -33,6 +33,11 @@
     <Text class="box-description" fontSize="40" fontStyle="bold" alignment="MiddleLeft" />
     <Button class="button" minHeight="50" minwidth="150" flexibleHeight="0" fontSize="30" fontStyle="bold" />
     <Button class="red" textColor="#ecf0f1" colors="#c0392b|#e74c3c|#e74c3c|grey"/>
+    <Button class="green" textColor="#ecf0f1" colors="#27ae60|#2ecc71|#2ecc71|grey"/>
+
+    <!-- Deck import page -->
+    <InputField class="deck-input" lineType = "MultiLineNewline" fontSize="30" flexibleHeight="1" />
+    <HorizontalLayout class="deck-import-button" childForceExpandHeight="false" />
 
     <!-- Settings page -->
     <InputField class="settings-textfield" onValueChanged="onSettingChange" minHeight="70" minWidth="200" fontSize="40" alignment="MiddleRight" characterValidation="Decimal" flexibleWidth="1"/>
@@ -47,6 +52,7 @@
         </VerticalLayout>
         <HorizontalLayout class="button-bar">
             <Button id="spawnPackButton" class="button-bar">Spawn Packs</Button>
+            <Button id="importDeckButton" class="button-bar">Import Deck</Button>
             <Button id="settingsButton" class="button-bar">Settings</Button>
         </HorizontalLayout>
     </VerticalLayout>
