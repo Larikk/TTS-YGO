@@ -1,6 +1,23 @@
 local stringUtil = require("TTS-YGO-sealed-draft/src/common/StringUtil")
+local cardImportCache = require("TTS-YGO-sealed-draft/src/common/CardImportCache")
+local io = require("TTS-YGO-sealed-draft/src/common/IO")
+local TtsSpawner = require("TTS-YGO-sealed-draft/src/common/TtsSpawner")
+
 
 local module = {}
+
+local function mapIdsToCards(ids)
+    local cards = {}
+
+    for _,id in ipairs(ids) do
+        local card = cardImportCache.getCard(id)
+        if card ~= nil then
+            table.insert(cards, card)
+        end
+    end
+
+    return cards
+end
 
 local function trimAndRemoveEmpty(lines)
     local result = {}
@@ -72,6 +89,52 @@ function module.spawn(ydkFileContent, allArtworks)
         error("YDK FIle could not be parsed: " .. value)
     end
 
+    local decks = value
+
+    local cardIds = {}
+
+    for _,deck in pairs(decks) do
+        for _,id in ipairs(deck) do
+            table.insert(cardIds, id)
+        end
+    end
+
+    local cb = function()
+        --executed after cache was populated
+        local spawner = TtsSpawner:new()
+        local pos = Vector(20, 5, 20)
+        for name,deck in pairs(decks) do
+            io.info("Spawning " .. name .. " deck...")
+            local onSuccess = || io.success("Finished " .. name .. " deck!")
+            deck = mapIdsToCards(deck)
+            spawner:spawnDeck(deck, pos, nil, onSuccess)
+            pos = pos + Vector(5, 0, 0)
+        end
+    end
+
+    cardImportCache.ensureCardsArePresent(cardIds, cb)
+end
+
+function module.test()
+    local ydkFile = [[
+#created by Merijn Hendriks
+#main
+46986416
+46986416
+15025844
+13039848
+70781052
+#extra
+36045450
+81510157
+33904024
+4206964
+!side
+62279055
+83133491
+1234
+]]
+    module.spawn(ydkFile, false)
 end
 
 
