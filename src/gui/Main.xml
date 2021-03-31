@@ -34,7 +34,7 @@
     <VerticalLayout class="box" padding="40" spacing="20" color="#ecf0f1" outline="black" outlineSize="5"/>
     <Text class="box-title" fontSize="60" fontStyle="bold" alignment="MiddleLeft" />
     <Text class="box-description" fontSize="40" fontStyle="bold" alignment="MiddleLeft" />
-    <Button class="button" minHeight="50" minwidth="150" fontSize="30" fontStyle="bold" />
+    <Button class="button" minHeight="80" minwidth="240" fontSize="40" fontStyle="bold" />
     <Button class="red" textColor="#ecf0f1" colors="#c0392b|#e74c3c|#e74c3c|grey"/>
     <Button class="green" textColor="#ecf0f1" colors="#27ae60|#2ecc71|#2ecc71|grey"/>
 
