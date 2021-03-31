@@ -1,6 +1,7 @@
 local apiUtil = require("TTS-YGO-sealed-draft/src/common/ApiUtil")
 local cardParser = require("TTS-YGO-sealed-draft/src/common/CardParser")
 local io = require("TTS-YGO-sealed-draft/src/common/IO")
+local tableUtil = require("TTS-YGO-sealed-draft/src/common/TableUtil")
 
 local module = {}
 
@@ -60,6 +61,8 @@ function module.ensureCardsArePresent(cardIds, cb, cbParams)
         cb(cbParams)
         return
     end
+
+    nonPresentCardIds = tableUtil.distinct(nonPresentCardIds)
 
     local query = "id=" .. table.concat(nonPresentCardIds, ",")
 
