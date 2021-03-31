@@ -5,6 +5,7 @@ local packSpawnPage = require("TTS-YGO-sealed-draft/src/gui/PackSpawnPage")
 local deckImportPage = require("TTS-YGO-sealed-draft/src/gui/DeckImportPage")
 local settingsPage = require("TTS-YGO-sealed-draft/src/gui/SettingsPage")
 local packGenerators = require("TTS-YGO-sealed-draft/src/gui/PackGenerators").packGenerators
+local ydkImport = require("TTS-YGO-sealed-draft/src/ydk-import/YdkImport")
 
 
 local selectedButtonId = nil
@@ -59,6 +60,21 @@ function spawnBox(_, code)
     local pos = getPositionSetting()
     local rotation = getRotationSetting()
     packGenerators[code]:generateBoosterBox(pos, rotation)
+end
+
+function spawnDeck()
+    local pos = getPositionSetting()
+    local rotation = getRotationSetting()
+    local ydkFile = state.get("ydkFile")
+    ydkImport.spawn(ydkFile, pos, rotation)
+end
+
+function onYDKInputChange(_, value)
+    deckImportPage.onChange(value)
+end
+
+function clearYDKInput()
+    deckImportPage.clear()
 end
 
 function onSettingChange(player, value, id)

@@ -5,7 +5,7 @@ local module = {}
 
 local page = nil
 
-local function createButton(text, color, alignment)
+local function createButton(text, color, alignment, action)
     return {
         tag = "HorizontalLayout",
         attributes = {
@@ -15,7 +15,8 @@ local function createButton(text, color, alignment)
         children = {
             tag = "Button",
             attributes = {
-                class = color .. " button"
+                class = color .. " button",
+                onClick = action,
             },
             value = text
         }
@@ -34,7 +35,9 @@ local function createBody()
     local input = {
         tag = "InputField",
         attributes = {
+            id = "ydkFile",
             class = "deck-input",
+            onValueChanged = "onYDKInputChange",
             flexibleHeight = "1",
             flexibleWidth = "1",
         }
@@ -46,8 +49,8 @@ local function createBody()
             class="deck-import-button"
         },
         children = {
-            createButton("Import", "green", "MiddleLeft"),
-            createButton("Clear", "red", "MiddleRight"),
+            createButton("Import", "green", "MiddleLeft", "spawnDeck"),
+            createButton("Clear", "red", "MiddleRight", "clearYDKInput"),
         }
     }
 
@@ -75,7 +78,18 @@ local function createPage()
 end
 
 function module.afterRender()
-    -- TODO
+    local id = "ydkFile"
+    self.UI.setAttribute(id, "text", state.get(id))
+end
+
+function module.onChange(value)
+    state.put("ydkFile", value)
+end
+
+function module.clear()
+    local id = "ydkFile"
+    self.UI.setAttribute(id, "text", "")
+    state.put(id, "")
 end
 
 function module.getPageObject()

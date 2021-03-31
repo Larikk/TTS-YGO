@@ -15,6 +15,7 @@ local defaults = {
     -- ephemeral values, get reset on leaving the room
     -- just here for documentation
     search = nil,
+    ydkFile = nil,
 }
 
 -- gets set to defaults on load
