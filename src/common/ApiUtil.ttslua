@@ -1,0 +1,31 @@
+-- We are using a third party JSON library because the native JSON deserialization of TTS is very slow
+-- Benchmark of 10 decode calls for one booster set: library = ~15sec, native = ~300s
+--
+-- Code is taken from https://github.com/rxi/json.lua
+-- Some changes were made to make it work with TTS
+local json = require("TTS-YGO-sealed-draft/src/common/Json")
+local io = require("TTS-YGO-sealed-draft/src/common/IO")
+
+
+local module = {}
+
+function module.cardinfo(query, callback)
+    local endpoint = "https://db.ygoprodeck.com/api/v7/cardinfo.php?"
+    local url = endpoint .. query
+
+    local handler = function(response)
+        if response.is_error then
+            io.warning("Request failed: " .. request.error)
+            return
+        end
+
+        -- array of cards
+        local data = json.decode(response.text).data
+
+        if type(callback) == "function" then callback(data) end
+    end
+
+    WebRequest.get(url, handler)
+end
+
+return module
