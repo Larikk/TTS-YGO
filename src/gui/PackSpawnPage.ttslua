@@ -29,6 +29,8 @@ local function createButton(gen)
                         tag = "Image",
                         attributes = {
                             class = "pack-image",
+                            flexibleHeight = "1",
+                            flexibleWidth = "1",
                             image = gen.assetCode
                         }
                     },
@@ -36,7 +38,8 @@ local function createButton(gen)
                         tag = "Text",
                         attributes = {
                             text = gen.setName,
-                            class = "pack-name"
+                            class = "pack-name",
+                            flexibleWidth = "1",
                         }
                     }
                 }
@@ -49,20 +52,23 @@ local function createSection(title, buttons)
     return {
         tag = "VerticalLayout",
         attributes = {
-            class = "pack-section-container"
+            class = "pack-section-container",
+            flexibleWidth = "1",
         },
         children = {
             {
                 tag = "Text",
                 attributes = {
                     class = "pack-section",
+                    flexibleWidth = "1",
                     text = title
                 }
             },
             {
                 tag = "GridLayout",
                 attributes = {
-                    class = "invisible pack-section"
+                    class = "invisible pack-section",
+                    flexibleWidth = "1",
                 },
                 children = buttons
             }
@@ -115,7 +121,8 @@ local function createPackSelection()
         tag = "VerticalScrollView",
         attributes = {
             class = "invisible",
-            flexibleHeight = "1"
+            flexibleHeight = "1",
+            flexibleWidth = "1"
         },
         children = {
             tag = "VerticalLayout",

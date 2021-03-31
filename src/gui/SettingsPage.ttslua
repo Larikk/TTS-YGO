@@ -113,7 +113,6 @@ local function createResetButton()
         tag = "VerticalLayout",
         attributes = {
             class = "box",
-            childForceExpandWidth = "false"
         },
         children = {
             createTitle("Press this if you take this object into another room"),
@@ -130,6 +129,7 @@ local function createAttribution()
         attributes = {
             class = "box-title",
             alignment = "MiddleRight",
+            flexibleWidth = "1"
         }
     }
 end

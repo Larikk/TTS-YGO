@@ -25,6 +25,7 @@ function util.createNavBar(title, additionalChildren)
         tag = "Text",
         attributes = {
             class = "nav-bar",
+            flexibleWidth = "1"
         },
         value = title
     })
