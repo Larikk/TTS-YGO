@@ -12,7 +12,7 @@ local function createTitle(title)
     return {
         tag = "Text",
         attributes = {
-            class = "settings-title",
+            class = "box-title",
         },
         value = title
     }
@@ -22,7 +22,7 @@ local function createDescription(desc)
     return {
         tag = "Text",
         attributes = {
-            class = "settings-description",
+            class = "box-description",
         },
         value = desc
     }
@@ -53,7 +53,7 @@ local function createPositionSetting()
     return {
         tag = "VerticalLayout",
         attributes = {
-            class = "invisible settings-row",
+            class = "invisible box",
         },
         children = {
             createTitle("Position"),
@@ -89,7 +89,7 @@ local function createRotationSetting()
     return {
         tag = "VerticalLayout",
         attributes = {
-            class = "settings-row",
+            class = "box",
         },
         children = {
             createTitle("Rotation"),
@@ -103,7 +103,7 @@ local function createResetButton()
     local button = {
         tag = "Button",
         attributes = {
-            class = "reset-settings-button",
+            class = "red button",
             text = "Reset",
             onClick = "resetSettings"
         }
@@ -112,7 +112,7 @@ local function createResetButton()
     return {
         tag = "VerticalLayout",
         attributes = {
-            class = "settings-row",
+            class = "box",
             childForceExpandWidth = "false"
         },
         children = {
@@ -128,7 +128,7 @@ local function createAttribution()
         tag = "Text",
         value = "Made by Larikk",
         attributes = {
-            class = "settings-title",
+            class = "box-title",
             alignment = "MiddleRight",
         }
     }
@@ -138,7 +138,7 @@ local function createPageBody()
     return {
         tag = "VerticalLayout",
         attributes = {
-            class = "settings"
+            class = "page-body"
         },
         children = {
             createPositionSetting(),
