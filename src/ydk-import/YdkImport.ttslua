@@ -101,13 +101,21 @@ function module.spawn(ydkFileContent, pos, rotation)
 
     local cb = function()
         --executed after cache was populated
+        local spawnPositions = {
+            main = pos,
+            extra = pos + Vector(-5, 0, 0),
+            side = pos + Vector(5, 0, 0),
+        }
+
         local spawner = TtsSpawner:new()
-        for name,deck in pairs(decks) do
-            io.info("Spawning " .. name .. " deck...")
-            local onSuccess = || io.success("Finished " .. name .. " deck!")
-            deck = mapIdsToCards(deck)
-            spawner:spawnDeck(deck, pos, rotation, onSuccess)
-            pos = pos + Vector(5, 0, 0)
+        for deckName,pos in pairs(spawnPositions) do
+            local deck = decks[deckName]
+            if deck ~= nil and #deck > 0 then
+                io.info("Spawning " .. deckName .. " deck...")
+                local onSuccess = || io.success("Finished " .. deckName .. " deck!")
+                deck = mapIdsToCards(deck)
+                spawner:spawnDeck(deck, pos, rotation, onSuccess)
+            end
         end
     end
 
