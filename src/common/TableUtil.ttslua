@@ -1,0 +1,17 @@
+local module = {}
+
+function module.distinct(input)
+    local output = {}
+    local encountered = {}
+
+    for _,v in ipairs(input) do
+        if not encountered[v] then
+            table.insert(output, v)
+            encountered[v] = true
+        end
+    end
+
+    return output
+end
+
+return module
