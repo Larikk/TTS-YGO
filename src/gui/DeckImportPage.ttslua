@@ -5,6 +5,23 @@ local module = {}
 
 local page = nil
 
+local function createButton(text, color, alignment)
+    return {
+        tag = "HorizontalLayout",
+        attributes = {
+            childAlignment = alignment,
+            flexibleWidth = "1",
+        },
+        children = {
+            tag = "Button",
+            attributes = {
+                class = color .. " button"
+            },
+            value = text
+        }
+    }
+end
+
 local function createBody()
     local title = {
         tag = "Text",
@@ -18,6 +35,8 @@ local function createBody()
         tag = "InputField",
         attributes = {
             class = "deck-input",
+            flexibleHeight = "1",
+            flexibleWidth = "1",
         }
     }
 
@@ -27,24 +46,10 @@ local function createBody()
             class="deck-import-button"
         },
         children = {
-            {
-                tag = "Button",
-                attributes = {
-                    class = "red button",
-                },
-                value = "Clear"
-            },
-            {
-                tag = "Button",
-                attributes = {
-                    class = "green button",
-                },
-                value = "Import"
-            }
+            createButton("Clear", "red", "MiddleLeft"),
+            createButton("Import", "green", "MiddleRight"),
         }
     }
-
-
 
     return {
         tag = "VerticalLayout",
