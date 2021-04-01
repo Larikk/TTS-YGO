@@ -1,0 +1,81 @@
+-- creates a mat with snap points
+
+-- import:
+--#include <TTS-YGO-sealed-draft/dev/MatCreator>
+
+local image = "https://i.imgur.com/goaxq7R.png"
+
+local v = Vector
+
+function point(p)
+    return {
+        position = p
+    }
+end
+
+function row(points, middle)
+    local mov = v(0.2975, 0, 0)
+
+    table.insert(points, point(middle))
+    table.insert(points, point(middle + mov))
+    table.insert(points, point(middle + 2*mov))
+    table.insert(points, point(middle - mov))
+    table.insert(points, point(middle - 2*mov))
+end
+
+function column(points, top, n, backwards)
+    local mov = v(0, 0, -0.325)
+    if backwards then mov = mov * -1 end
+    for i=1,n do
+        table.insert(points, point(top))
+        top = top + mov
+    end
+end
+
+function getSnapPoints()
+    local points = {}
+
+    -- center
+    table.insert(points, point(v(0, 0, 0)))
+
+    -- link
+    table.insert(points, point(v(0.3, 0, 0)))
+    table.insert(points, point(v(-0.3, 0, 0)))
+
+    -- rows
+    row(points, v(0, 0, 0.35))
+    row(points, v(0, 0, 0.656))
+    row(points, v(0, 0, -0.345))
+    row(points, v(0, 0, -0.65))
+
+    --top
+    column(points, v(-0.8975, 0, 0.825), 3)
+    column(points, v(0.8975, 0, 0.825), 2)
+
+    -- bottom
+    column(points, v(-0.8975, 0, -0.825), 2, true)
+    column(points, v(0.8975, 0, -0.825), 3, true)
+
+    return points
+end
+
+
+function create()
+    spawnParams = {
+        type = "Custom_Tile",
+        position = {x = 0, y = 0, z = 0},
+        rotation = {x = 0, y = 0, z = 0},
+        scale = {x = 12.5, y = 1, z = 12.5},
+        sound = false,
+        snap_to_grid = true,
+        callback_function = function(obj) end
+    }
+    local mat = spawnObject(spawnParams)
+    mat.setCustomObject({
+        image = image
+    })
+
+    local snapPoints = getSnapPoints()
+    Wait.frames(|| mat.setSnapPoints(snapPoints), 5)
+
+end
