@@ -6,7 +6,7 @@ local hand2 = "65879e"
 
 local objects = {
     "cd5bef", -- table
-    "68d3d9", -- playmat
+    "bc1c95", -- playmat
     "421f82", -- calculator1
     "8da4f3", -- calculator2
     "aa0161", -- coin
