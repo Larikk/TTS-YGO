@@ -1,8 +1,8 @@
 -- import:
 --local c = require("TTS-YGO-sealed-draft/dev/draft-table/DraftTableCreator")
 
-local cardGridJson = require("TTS-YGO-sealed-draft/dev/draft-table/CardGrid")
-local util = require("TTS-YGO-sealed-draft/dev/draft-table/Util")
+local cardGridJson = require("TTS-YGO-sealed-draft/dev/room-creation/draft-table/CardGrid")
+local util = require("TTS-YGO-sealed-draft/dev/room-creation/draft-table/Util")
 
 local module = {}
 
