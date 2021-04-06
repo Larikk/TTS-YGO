@@ -1,9 +1,64 @@
+local matCreator = require("TTS-YGO-sealed-draft/dev/room-creation/play-table/MatCreator")
+local calculatorJson = require("TTS-YGO-sealed-draft/dev/room-creation/play-table/CalculatorJson")
+local util = require("TTS-YGO-sealed-draft/dev/room-creation/Util")
+
+
 local module = {}
 
 local v = Vector
 
-local tableScale = v(1, 1, 1)
-local plateScale = v(0.225, 0.20, 0.225)
+local tableScale = v(0.8, 1, 0.7)
+local plateScale = v(0.18, 0.20, 0.1575)
+
+local function createCoin(pos, rotation)
+    spawnParams = {
+        type = "Quarter",
+        position = pos + v(0, 5, 0),
+        rotation = rotation,
+        sound = false,
+        snap_to_grid = false,
+    }
+    spawnObject(spawnParams)
+end
+
+local function createInfiniteBag(pos, rotation, content)
+    spawnParams = {
+        type = "Infinite_Bag",
+        position = pos + v(0, 5, 0),
+        rotation = rotation,
+        sound = false,
+        snap_to_grid = false,
+        callback_function = function(bag)
+            spawnParams = {
+                type = content,
+                position = pos + v(0, 10, 0),
+                rotation = rotation,
+                sound = false,
+                snap_to_grid = false,
+            }
+            spawnObject(spawnParams)
+        end
+    }
+    spawnObject(spawnParams)
+end
+
+local function createCalculator(pos, rotation)
+    spawnParams = {
+        json              = calculatorJson,
+        position          = pos + v(0, 5, 0),
+        rotation          = rotation,
+        scale             = cardGridScale,
+        sound             = false,
+        snap_to_grid      = true,
+        callback_function = function(calculator)
+            local f = function()
+                calculator.setLock(true)
+            end
+            Wait.time(f, 2)
+        end
+    }
+    spawnObjectJSON(spawnParams)
+end
 
 function createPlate(table)
     spawnParams = {
@@ -28,6 +83,25 @@ function createPlate(table)
 
     local f = function()
         plate.locked = true
+        matCreator.create(plate.getPosition(), plate.getRotation())
+
+        local size = v(plate.getBoundsNormalized().size)
+
+        local pos = util.relativeLocalToWorldPosition2D(plate, size, -0.75, 0.3)
+        local rotation = plate.getRotation()
+        createCalculator(pos, rotation)
+
+        pos = util.relativeLocalToWorldPosition2D(plate, size, 0.75, -0.3)
+        rotation = rotation + v(0, 180, 0)
+        createCalculator(pos, rotation)
+
+        createCoin(plate.getPosition(), plate.getRotation())
+
+        pos = util.relativeLocalToWorldPosition2D(plate, size, 0.7, 0.3)
+        createInfiniteBag(pos, plate.getRotation(), "Quarter")
+
+        pos = util.relativeLocalToWorldPosition2D(plate, size, 0.8, 0.2)
+        createInfiniteBag(pos, plate.getRotation(), "Die_6")
     end
 
     -- Wait insteal of callback because the plate needs to fall down on the table
