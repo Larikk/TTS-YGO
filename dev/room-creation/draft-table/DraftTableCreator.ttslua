@@ -38,25 +38,6 @@ local function createCardGrid(zone)
     spawnObjectJSON(spawnParams)
 end
 
-local function createCardGrids()
-    local firstLeftPosition = pos + v(-23, 1, 102)
-    local firstRightPosition = pos + v(23, 1, 102)
-    local leftRotation = rotation + v(0, 180, 0)
-    local rightRoration = rotation
-
-    local p = firstLeftPosition
-    for i=1,4 do
-        createCardGrid(p, leftRotation)
-        p = p + v(0, 0, -50)
-    end
-
-    p = firstRightPosition
-    for i=1,4 do
-        createCardGrid(p, rightRoration)
-        p = p + v(0, 0, -50)
-    end
-end
-
 local function createHiddenZone(pos, rotation, left, color)
     spawnParams = {
         type = "FogOfWarTrigger",
