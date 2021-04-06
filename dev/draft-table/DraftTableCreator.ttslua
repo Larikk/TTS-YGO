@@ -2,25 +2,40 @@
 --local c = require("TTS-YGO-sealed-draft/dev/draft-table/DraftTableCreator")
 
 local cardGridJson = require("TTS-YGO-sealed-draft/dev/draft-table/CardGrid")
+local util = require("TTS-YGO-sealed-draft/dev/draft-table/Util")
 
 local module = {}
 
 local v = Vector
-local pos = v(60, 2, 50)
-local rotation = v(0, 90, 0)
+local POS = v(0, 2, 0)
+local ROTATION = v(0, 0, 0)
 
 local tableScale = v(3.50, 1.00, 2.00)
 local plateScale = v(0.85, 0.20, 0.47)
+local hiddenZoneScale = v(40, 15, 60)
+local cardGridScale = v(9, 2, 9)
 
-function createCardGrid(pos, rotation)
+function createCardGrid(zone)
+    local size = zone.getScale()
+    local pos = util.relativeLocalToWorldPosition2D(zone, size, -1, -1)
+    local rotation = zone.getRotation()
+
     spawnParams = {
         json              = cardGridJson,
         position          = pos,
         rotation          = rotation,
-        scale             = {x=9, y=2, z=9},
+        scale             = cardGridScale,
         sound             = false,
         snap_to_grid      = true,
-        callback_function = function(obj) end
+        callback_function = function(grid)
+            local f = function()
+                local size = v(grid.getBoundsNormalized().size)
+                util.moveForwards(grid, size.z/2)
+                util.moveRight(grid, size.x/2)
+                grid.setLock(true)
+            end
+            Wait.time(f, 2)
+        end
     }
     spawnObjectJSON(spawnParams)
 end
@@ -44,62 +59,91 @@ function createCardGrids()
     end
 end
 
-function createHiddenZone(pos, color)
+function createHiddenZone(pos, rotation, left, color)
     spawnParams = {
         type = "FogOfWarTrigger",
         position = pos,
         rotation = rotation,
-        scale = v(40, 15, 60),
+        scale = hiddenZoneScale,
         sound = false,
         snap_to_grid = false,
-        callback_function = |zone| zone.setValue(color)
+        callback_function = function(zone)
+            zone.setValue(color)
+            util.moveBackwards(zone, zone.getScale().z/2)
+            if left then util.moveLeft(zone, zone.getScale().x/2) else util.moveRight(zone, zone.getScale().x/2) end
+            util.moveUp(zone, zone.getScale().y/2)
+
+            Wait.frames(||createCardGrid(zone), 2)
+         end
     }
     spawnObject(spawnParams)
 end
 
-function createHiddenZones()
+function createHiddenZones(plate)
     local color = {"Green", "Teal", "Blue", "Purple", "White", "Red", "Orange", "Yellow"}
-    local first = pos + v(-38, 7, 102.5)
-    local p = first
+    local x2d = 1.0
+    local y2d = 1.0
+    local rotation = plate.getRotation()
+    local size = plate.getBoundsNormalized().size
 
     for i=1,4 do
-        createHiddenZone(p, color[i])
-        p = p + v(0, 0, -50)
+        local pos = util.relativeLocalToWorldPosition2D(plate, size, x2d, y2d)
+        createHiddenZone(pos, rotation, true, color[i])
+        x2d = x2d - 0.42
     end
 
-    p = first + v(38*2, 0, 0)
+    x2d = 1.0
+    y2d = -1.0
+    rotation = rotation + v(0, 180, 0)
+
     for i=5,8 do
-        createHiddenZone(p, color[i])
-        p = p + v(0, 0, -50)
+        local pos = util.relativeLocalToWorldPosition2D(plate, size, x2d, y2d)
+        createHiddenZone(pos, rotation, false, color[i])
+        x2d = x2d - 0.42
     end
 
 end
 
-function createText()
+function createText(plate)
+    local parentSize = plate.getBoundsNormalized().size
+    local pos = util.relativeLocalToWorldPosition2D(plate, parentSize, -0.85, -0.4)
+
     spawnParams = {
         type = "3DText",
-        position = pos + v(15, 5, -100),
-        rotation = v(90,0,0),
-        scale = plateScale,
+        position = pos + v(0, 2, 0),
+        rotation = plate.getRotation() + v(90,0,-90),
         sound = false,
         snap_to_grid = false,
         callback_function = function(text)
             text.setValue("Cards spawn here")
             text.setColorTint("White")
+
+            local size = 2.5
+            text.setScale(v(size, size, size))
         end
     }
     spawnObject(spawnParams)
 end
 
-function createPlate()
+function createTabletSnapPoint(plate)
+    local parentSize = plate.getBoundsNormalized().size
+    local pos = util.relativeLocalToWorldPosition2D(plate, parentSize, -0.85, 0.4)
+    pos = plate.positionToLocal(pos)
+    plate.setSnapPoints({
+        {
+            position = pos
+        }
+    })
+end
+
+function createPlate(table)
     spawnParams = {
         type = "Custom_Model",
-        position = pos + v(0, 0.1, 0),
-        rotation = rotation,
+        position = table.getPosition() + v(0, 0.1, 0),
+        rotation = table.getRotation(),
         scale = plateScale,
         sound = false,
         snap_to_grid = false,
-        callback_function = function(obj) end
     }
     local plate = spawnObject(spawnParams)
     plate.setCustomObject({
@@ -115,15 +159,16 @@ function createPlate()
 
     local f = function()
         plate.locked = true
-        createCardGrids()
-        createHiddenZones()
-        createText()
+        createHiddenZones(plate)
+        createText(plate)
+        createTabletSnapPoint(plate)
     end
 
+    -- Wait insteal of callback because the plate needs to fall down on the table
     Wait.time(f, 1)
 end
 
-function createTable()
+function createTable(pos, rotation)
     spawnParams = {
         type = "Custom_Assetbundle",
         position = pos,
@@ -131,7 +176,7 @@ function createTable()
         scale = tableScale,
         sound = false,
         snap_to_grid = true,
-        callback_function = function(obj) createPlate() end
+        callback_function = |table| createPlate(table)
     }
     local table = spawnObject(spawnParams)
     table.locked = true
@@ -143,7 +188,7 @@ function createTable()
 end
 
 function module.create()
-    createTable()
+    createTable(POS, ROTATION)
 end
 
 return module

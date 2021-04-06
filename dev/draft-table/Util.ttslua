@@ -1,0 +1,96 @@
+local module = {}
+
+-----------------------------
+-- Move functions
+-----------------------------
+
+local function moveX(obj, distance)
+    pos_target = obj.getTransformRight()
+    pos_current = obj.getPosition()
+    pos = {
+        x = pos_current.x + pos_target.x * distance,
+        y = pos_current.y + pos_target.y * distance,
+        z = pos_current.z + pos_target.z * distance,
+    }
+    obj.setPosition(pos)
+end
+
+local function moveY(obj, distance)
+    pos_target = obj.getTransformUp()
+    pos_current = obj.getPosition()
+    pos = {
+        x = pos_current.x + pos_target.x * distance,
+        y = pos_current.y + pos_target.y * distance,
+        z = pos_current.z + pos_target.z * distance,
+    }
+    obj.setPosition(pos)
+end
+
+local function moveZ(obj, distance)
+    pos_target = obj.getTransformForward()
+    pos_current = obj.getPosition()
+    pos = {
+        x = pos_current.x + pos_target.x * distance,
+        y = pos_current.y + pos_target.y * distance,
+        z = pos_current.z + pos_target.z * distance,
+    }
+    obj.setPosition(pos)
+end
+
+function module.moveRight(obj, distance)
+    moveX(obj, distance)
+end
+
+function module.moveLeft(obj, distance)
+    moveX(obj, -distance)
+end
+
+function module.moveUp(obj, distance)
+    moveY(obj, distance)
+end
+
+function module.moveDown(obj, distance)
+    moveY(obj, -distance)
+end
+
+function module.moveForwards(obj, distance)
+    moveZ(obj, distance)
+end
+
+function module.moveBackwards(obj, distance)
+    moveZ(obj, -distance)
+end
+
+
+-------------------------
+-- Position translation
+-------------------------
+
+-- (-1, -1) => lower left corner
+-- (0, 0) => center
+-- (1, 1) => upper right corner
+function module.relativeLocalToWorldPosition2D(obj, size, x2d, y2d)
+    relativePos = Vector(x2d, 1, y2d)
+
+    local movement = Vector(size):scale(relativePos):scale(0.5)
+
+    local result = Vector(0, 0, 0) -- start with center
+
+    local pos_target = obj.getTransformRight()
+    result = {
+        x = result.x + pos_target.x * movement.x,
+        y = result.y + pos_target.y * movement.x,
+        z = result.z + pos_target.z * movement.x,
+    }
+
+    pos_target = obj.getTransformForward()
+    result = {
+        x = result.x + pos_target.x * movement.z,
+        y = result.y + pos_target.y * movement.z,
+        z = result.z + pos_target.z * movement.z,
+    }
+
+    return obj.getPosition() + result
+end
+
+return module
