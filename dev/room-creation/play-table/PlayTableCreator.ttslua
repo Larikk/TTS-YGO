@@ -1,0 +1,60 @@
+local module = {}
+
+local v = Vector
+
+local tableScale = v(1, 1, 1)
+local plateScale = v(0.225, 0.20, 0.225)
+
+function createPlate(table)
+    spawnParams = {
+        type = "Custom_Model",
+        position = table.getPosition() + v(0, 0.1, 0),
+        rotation = table.getRotation(),
+        scale = plateScale,
+        sound = false,
+        snap_to_grid = false,
+    }
+    local plate = spawnObject(spawnParams)
+    plate.setCustomObject({
+        mesh = "http://cloud-3.steamusercontent.com/ugc/783002817662121296/661D8FFE6699A4D022FB10D87979B2028D8D1806/",
+        diffuse = "http://cloud-3.steamusercontent.com/ugc/783002817662118580/EEF2FF28224A83EB29EC7D5B3CA728782F1554FC/",
+        collider = "http://cloud-3.steamusercontent.com/ugc/783002817662121296/661D8FFE6699A4D022FB10D87979B2028D8D1806/",
+        type = 4,
+        material = 1,
+        specular_intensity = 0,
+        specular_sharpness = 3,
+
+    })
+
+    local f = function()
+        plate.locked = true
+    end
+
+    -- Wait insteal of callback because the plate needs to fall down on the table
+    Wait.time(f, 1)
+end
+
+function createTable(pos, rotation)
+    spawnParams = {
+        type = "Custom_Assetbundle",
+        position = pos,
+        rotation = rotation,
+        scale = tableScale,
+        sound = false,
+        snap_to_grid = true,
+        callback_function = |table| createPlate(table)
+    }
+    local table = spawnObject(spawnParams)
+    table.locked = true
+    table.setCustomObject({
+        assetbundle = "http://cloud-3.steamusercontent.com/ugc/1011563587901306704/1ED59A7E6C52632AF229D6017BB616F051EAE049/",
+        type = 4,
+        material = 1,
+    })
+end
+
+function module.create(pos, rotation)
+    createTable(pos, rotation)
+end
+
+return module
