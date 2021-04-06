@@ -7,8 +7,6 @@ local util = require("TTS-YGO-sealed-draft/dev/room-creation/draft-table/Util")
 local module = {}
 
 local v = Vector
-local POS = v(0, 2, 0)
-local ROTATION = v(0, 0, 0)
 
 local tableScale = v(3.50, 1.00, 2.00)
 local plateScale = v(0.85, 0.20, 0.47)
@@ -187,8 +185,8 @@ function createTable(pos, rotation)
     })
 end
 
-function module.create()
-    createTable(POS, ROTATION)
+function module.create(pos, rotation)
+    createTable(pos, rotation)
 end
 
 return module
