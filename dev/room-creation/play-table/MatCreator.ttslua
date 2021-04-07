@@ -3,6 +3,8 @@
 -- import:
 --#include <TTS-YGO-sealed-draft/dev/MatCreator>
 
+local util = require("TTS-YGO-sealed-draft/dev/room-creation/Util")
+
 local image = "https://i.imgur.com/goaxq7R.png"
 
 local module = {}
@@ -81,6 +83,7 @@ function module.create(pos, rotation)
     Wait.time(function()
         mat.setSnapPoints(snapPoints)
         mat.setLock(true)
+        mat.setLuaScript(util.getNonInteractableLuaScript())
     end, 2)
 
 end
