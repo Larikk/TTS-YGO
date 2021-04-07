@@ -30,7 +30,7 @@ local function createCardGrid(zone)
                 local size = v(grid.getBoundsNormalized().size)
                 util.moveForwards(grid, size.z/2)
                 util.moveRight(grid, size.x/2)
-                grid.setLock(true)
+                Wait.time(||grid.setLock(true), 2)
             end
             Wait.time(f, 2)
         end
