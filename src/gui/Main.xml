@@ -4,9 +4,9 @@
     <HorizontalLayout childForceExpandHeight="false" childForceExpandWidth="false"/>
     <VerticalLayout childForceExpandHeight="false" childForceExpandWidth="false"/>
 
-    <Panel class="window" color="#ecf0f1" height="16%" width="16%" position="0 0 -1"/>
-    <HorizontalLayout class="nav-bar" color="#2c3e50" padding="20" spacing="20" flexibleWidth="1"/>
-    <Text class="nav-bar" fontSize="45" fontStyle="bold" color="#ecf0f1" alignment="MiddleLeft"/>
+    <Panel class="window" color="#ecf0f1" height="3500" width="3500" position="0 0 -50"/>
+    <HorizontalLayout class="nav-bar" color="#2c3e50" padding="50" spacing="50" flexibleWidth="1"/>
+    <Text class="nav-bar" fontSize="100" fontStyle="bold" color="#ecf0f1" alignment="MiddleLeft"/>
     <VerticalLayout class="page"/>
 
     <VerticalScrollView scrollbarBackgroundColor="#2c3e50"/>
@@ -14,38 +14,38 @@
     <VerticalLayout class="invisible" color="rgba(1,1,1,0)"/>
     <VerticalScrollView class="invisible" color="rgba(1,1,1,0)" scrollSensitivity="0"/>
 
-    <HorizontalLayout class="button-bar" padding="40" spacing="20" color="#2c3e50" flexibleWidth="1"/>
-    <Button class="button-bar" onClick="switchPage" minHeight="100" fontSize="30" fontStyle="bold" colors="#7f8c8d|#95a5a6|#95a5a6|#c0392b" textColor="#ecf0f1" flexibleWidth="1"/>
+    <HorizontalLayout class="button-bar" padding="80" spacing="40" color="#2c3e50" flexibleWidth="1"/>
+    <Button class="button-bar" onClick="switchPage" minHeight="200" fontSize="80" fontStyle="bold" colors="#7f8c8d|#95a5a6|#95a5a6|#c0392b" textColor="#ecf0f1" flexibleWidth="1"/>
 
     <!-- Pack page -->
     <Text class="search-label"/>
-    <InputField class="search-field" fontSize="30" minWidth="500" minHeight="50" onValueChanged="searchThroughPacks"/>
+    <InputField class="search-field" fontSize="100" minWidth="700" minHeight="140" onValueChanged="searchThroughPacks"/>
 
-    <VerticalLayout class="pack-section-container" padding="0 0 10 20"/>
-    <GridLayout class="pack-section" childAlignment="UpperLeft" padding="8 8 8 8" spacing="8 8" cellsize="300 400"/>
-    <Text class="pack-section" fontSize="100" fontStyle="bold"/>
+    <VerticalLayout class="pack-section-container" padding="0 0 25 50"/>
+    <GridLayout class="pack-section" childAlignment="UpperLeft" padding="20" spacing="20 20" cellsize="650 950"/>
+    <Text class="pack-section" fontSize="160" fontStyle="bold"/>
     <Button class="pack-button" colors="#2980b9|#3498db|#2980b9|grey"/>
-    <VerticalLayout class="pack-button" padding="8"/>
-    <Image class="pack-image" padding="10" rectAlignment="MiddleCenter" preserveAspect="true"/>
-    <Text class="pack-name" color="#ecf0f1" minHeight="80" fontSize="30" fontStyle="bold"/>
+    <VerticalLayout class="pack-button" padding="20"/>
+    <Image class="pack-image" padding="20" rectAlignment="MiddleCenter" preserveAspect="true"/>
+    <Text class="pack-name" color="#ecf0f1" minHeight="200" fontSize="60" fontStyle="bold"/>
 
     <!-- General stuff for pages -->
-    <VerticalLayout class="page-body" padding="20" spacing="40"/>
-    <VerticalLayout class="box" padding="40" spacing="20" color="#ecf0f1" outline="black" outlineSize="5"/>
-    <Text class="box-title" fontSize="60" fontStyle="bold" alignment="MiddleLeft"/>
-    <Text class="box-description" fontSize="40" fontStyle="bold" alignment="MiddleLeft"/>
-    <Button class="button" minHeight="80" minwidth="240" fontSize="40" fontStyle="bold"/>
+    <VerticalLayout class="page-body" padding="50" spacing="100"/>
+    <VerticalLayout class="box" padding="100" spacing="50" color="#ecf0f1" outline="black" outlineSize="10"/>
+    <Text class="box-title" fontSize="120" fontStyle="bold" alignment="MiddleLeft"/>
+    <Text class="box-description" fontSize="80" fontStyle="bold" alignment="MiddleLeft"/>
+    <Button class="button" minHeight="200" minwidth="500" fontSize="100" fontStyle="bold"/>
     <Button class="red" textColor="#ecf0f1" colors="#c0392b|#e74c3c|#e74c3c|grey"/>
     <Button class="green" textColor="#ecf0f1" colors="#27ae60|#2ecc71|#2ecc71|grey"/>
 
     <!-- Deck import page -->
-    <InputField class="deck-input" lineType="MultiLineNewline" fontSize="30"/>
+    <InputField class="deck-input" lineType="MultiLineNewline" fontSize="100"/>
     <HorizontalLayout class="deck-import-button"/>
 
     <!-- Settings page -->
-    <InputField class="settings-textfield" onValueChanged="onSettingChange" minHeight="70" minWidth="200" fontSize="40" alignment="MiddleRight" characterValidation="Decimal" flexibleWidth="1"/>
+    <InputField class="settings-textfield" onValueChanged="onSettingChange" minHeight="150" minWidth="400" fontSize="100" alignment="MiddleRight" characterValidation="Decimal" flexibleWidth="1"/>
     <HorizontalLayout class="position-row" spacing="0"/>
-    <Text class="position-row" fontSize="40" fontStyle="bold"/>
+    <Text class="position-row" fontSize="100" fontStyle="bold"/>
 </Defaults>
 
 <Panel class="window" active="true">
