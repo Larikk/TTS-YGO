@@ -31,6 +31,7 @@ local function createCardGrid(zone)
                 util.moveForwards(grid, size.z/2)
                 util.moveRight(grid, size.x/2)
                 Wait.time(||grid.setLock(true), 2)
+                grid.setLuaScript(util.getNonInteractableLuaScript())
             end
             Wait.time(f, 2)
         end
@@ -141,6 +142,7 @@ local function createPlate(table)
         createHiddenZones(plate)
         createText(plate)
         createTabletSnapPoint(plate)
+        plate.setLuaScript(util.getNonInteractableLuaScript())
     end
 
     -- Wait insteal of callback because the plate needs to fall down on the table
@@ -164,6 +166,7 @@ local function createTable(pos, rotation)
         type = 4,
         material = 1,
     })
+    table.setLuaScript(util.getNonInteractableLuaScript())
 end
 
 function module.create(pos, rotation)

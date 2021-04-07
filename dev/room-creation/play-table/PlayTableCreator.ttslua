@@ -123,6 +123,8 @@ local function createPlate(table, color1, color2)
 
         pos = util.relativeLocalToWorldPosition2D(plate, size, 0, 0.85)
         createHand(pos, plate.getRotation() + v(0, 180, 0), color2)
+
+        plate.setLuaScript(util.getNonInteractableLuaScript())
     end
 
     -- Wait insteal of callback because the plate needs to fall down on the table
@@ -146,6 +148,7 @@ local function createTable(pos, rotation, color1, color2)
         type = 4,
         material = 1,
     })
+    table.setLuaScript(util.getNonInteractableLuaScript())
 end
 
 function module.create(pos, rotation, color1, color2)
