@@ -1,5 +1,7 @@
 
 local draftTable = require("TTS-YGO-sealed-draft/dev/room-creation/draft-table/DraftTableCreator")
+local playTable = require("TTS-YGO-sealed-draft/dev/room-creation/play-table/PlayTableCreator")
+local util = require("TTS-YGO-sealed-draft/dev/room-creation/Util")
 
 local POS = Vector(0, 2, 0)
 local ROTATION = Vector(0, 0, 0)
@@ -7,7 +9,19 @@ local ROTATION = Vector(0, 0, 0)
 local module = {}
 
 function module.create()
-    --draftTable.create(POS, ROTATION)
+    local pos = POS + Vector(0, 0, -100)
+    local rotation = ROTATION
+    draftTable.create(pos, rotation)
+
+    pos = pos + Vector(-96, 0, 150)
+    local colors = util.getPlayerColors()
+
+    for i=1,4 do
+        local temp = pos:copy()
+        Wait.time(||playTable.create(temp, rotation, colors[i], colors[i+4]), 3)
+        pos = pos + Vector(64, 0, 0)
+    end
+
 end
 
 return module

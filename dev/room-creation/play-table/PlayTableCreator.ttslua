@@ -16,7 +16,7 @@ local function createCoin(pos, rotation)
         position = pos + v(0, 5, 0),
         rotation = rotation,
         sound = false,
-        snap_to_grid = false,
+        snap_to_grid = true,
     }
     spawnObject(spawnParams)
 end
@@ -27,14 +27,14 @@ local function createInfiniteBag(pos, rotation, content)
         position = pos + v(0, 5, 0),
         rotation = rotation,
         sound = false,
-        snap_to_grid = false,
+        snap_to_grid = true,
         callback_function = function(bag)
             spawnParams = {
                 type = content,
                 position = pos + v(0, 10, 0),
                 rotation = rotation,
                 sound = false,
-                snap_to_grid = false,
+                snap_to_grid = true,
             }
             spawnObject(spawnParams)
         end
@@ -60,14 +60,29 @@ local function createCalculator(pos, rotation)
     spawnObjectJSON(spawnParams)
 end
 
-function createPlate(table)
+local function createHand(pos, rotation, color)
+    spawnParams = {
+        type = "HandTrigger",
+        position = pos + v(0, 5, 0),
+        rotation = rotation,
+        scale = v(15, 7.5, 5),
+        sound = false,
+        snap_to_grid = true,
+        callback_function = function(zone)
+            zone.setValue(color)
+         end
+    }
+    spawnObject(spawnParams)
+end
+
+local function createPlate(table, color1, color2)
     spawnParams = {
         type = "Custom_Model",
         position = table.getPosition() + v(0, 0.1, 0),
         rotation = table.getRotation(),
         scale = plateScale,
         sound = false,
-        snap_to_grid = false,
+        snap_to_grid = true,
     }
     local plate = spawnObject(spawnParams)
     plate.setCustomObject({
@@ -102,13 +117,19 @@ function createPlate(table)
 
         pos = util.relativeLocalToWorldPosition2D(plate, size, 0.8, 0.2)
         createInfiniteBag(pos, plate.getRotation(), "Die_6")
+
+        pos = util.relativeLocalToWorldPosition2D(plate, size, 0, -0.85)
+        createHand(pos, plate.getRotation(), color1)
+
+        pos = util.relativeLocalToWorldPosition2D(plate, size, 0, 0.85)
+        createHand(pos, plate.getRotation() + v(0, 180, 0), color2)
     end
 
     -- Wait insteal of callback because the plate needs to fall down on the table
     Wait.time(f, 1)
 end
 
-function createTable(pos, rotation)
+local function createTable(pos, rotation, color1, color2)
     spawnParams = {
         type = "Custom_Assetbundle",
         position = pos,
@@ -116,7 +137,7 @@ function createTable(pos, rotation)
         scale = tableScale,
         sound = false,
         snap_to_grid = true,
-        callback_function = |table| createPlate(table)
+        callback_function = |table| createPlate(table, color1, color2)
     }
     local table = spawnObject(spawnParams)
     table.locked = true
@@ -127,8 +148,8 @@ function createTable(pos, rotation)
     })
 end
 
-function module.create(pos, rotation)
-    createTable(pos, rotation)
+function module.create(pos, rotation, color1, color2)
+    createTable(pos, rotation, color1, color2)
 end
 
 return module

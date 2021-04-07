@@ -93,4 +93,12 @@ function module.relativeLocalToWorldPosition2D(obj, size, x2d, y2d)
     return obj.getPosition() + result
 end
 
+-------------------------
+-- Player colors
+-------------------------
+
+function module.getPlayerColors()
+    return {"Green", "Teal", "Blue", "Purple", "White", "Red", "Orange", "Yellow"}
+end
+
 return module
