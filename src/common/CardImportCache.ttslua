@@ -26,10 +26,13 @@ local function processResponse(data, nonPresentCardIds, cb, cbParams)
 
     -- data is array of cards
     for _,cardData in ipairs(data) do
-        local card = cardParser.parseCard(cardData)
-        local id = tostring(card.id)
-        cache[id] = card
-        requestedIds[id] = nil
+        -- We can get multiple cards as a result because we try to parse all artworks as separate cards
+        local cards = cardParser.parseCardWithAllArtworks(cardData)
+        for _,card in ipairs(cards) do
+            local id = tostring(card.id)
+            cache[id] = card
+            requestedIds[id] = nil
+        end
     end
 
     -- leftovers that the API did not recognize

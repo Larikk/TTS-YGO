@@ -19,4 +19,27 @@ function cardParser.parseCard(apiData)
     return card
 end
 
+function cardParser.parseCardWithAllArtworks(apiData)
+    local cards = {}
+    local ids = {}
+
+    for _,image in ipairs(apiData.card_images) do
+        local card = cardParser.parseCard(apiData)
+        card.id = image.id
+        card.image = image.image_url
+        table.insert(cards, card)
+        table.insert(ids, card.id)
+    end
+
+    for _,card in ipairs(cards) do
+        local otherArtworks = {}
+        for _,id in ipairs(ids) do
+            if id ~= card.id then table.insert(otherArtworks, id) end
+        end
+        card.otherArtworks = otherArtworks
+    end
+
+    return cards
+end
+
 return cardParser
