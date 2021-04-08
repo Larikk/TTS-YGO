@@ -29,7 +29,7 @@ function TtsSpawner:spawnPack(pack, pos, rotation, callback)
     pos = Vector(pos) or Vector(DEFAULT_SPAWN_POS)
     rotation = Vector(rotation) or Vector(DEFAULT_SPAWN_ROTATION)
 
-    local data = ttsDataMapper.pack(pack, self.setName, self.packTextureGenerator)
+    local data = ttsDataMapper.pack(pack, self.setName, self.packTextures)
 
     spawnParams = {
         json = JSON.encode(data),
@@ -48,7 +48,7 @@ function TtsSpawner:spawnBox(packs, pos, rotation, callback)
     pos = Vector(pos) or Vector(DEFAULT_SPAWN_POS)
     rotation = Vector(rotation) or Vector(DEFAULT_SPAWN_ROTATION)
 
-    local data = ttsDataMapper.box(packs, self.setName, self.boxTexture, self.packTextureGenerator)
+    local data = ttsDataMapper.box(packs, self.setName, self.boxTexture, self.packTextures)
 
     spawnParams = {
         json = JSON.encode(data),
@@ -85,17 +85,6 @@ function TtsSpawner:new(o)
     o = o or {}
     setmetatable(o, self)
     self.__index = self
-
-    if o.packTextures == nil then
-        o.packTextureGenerator = || resources.DEFAULT_PACK_TEXTURE
-    elseif type(o.packTextures) == "string" then
-        o.packTextureGenerator = || o.packTextures
-    elseif type(o.packTextures) == "table" then
-        o.packTextureGenerator = function()
-            local n = mathutil.randomInt(#o.packTextures)
-            return o.packTextures[n]
-        end
-    end
 
     return o
 end
