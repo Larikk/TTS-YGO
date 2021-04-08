@@ -1,4 +1,4 @@
-local AbstractPackGenerator = require("TTS-YGO-sealed-draft/src/pack-spawning/common/AbstractPackGenerator")
+local AbstractPackGenerator = require("TTS-YGO/src/pack-spawning/common/AbstractPackGenerator")
 
 -- The logic for the first core sets is the same to thats why it is in a separate file
 -- This pack locic should be usuable for all core sets before "Soul of the Duelist"

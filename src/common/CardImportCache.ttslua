@@ -1,7 +1,7 @@
-local apiUtil = require("TTS-YGO-sealed-draft/src/common/ApiUtil")
-local cardParser = require("TTS-YGO-sealed-draft/src/common/CardParser")
-local io = require("TTS-YGO-sealed-draft/src/common/IO")
-local tableUtil = require("TTS-YGO-sealed-draft/src/common/TableUtil")
+local apiUtil = require("TTS-YGO/src/common/ApiUtil")
+local cardParser = require("TTS-YGO/src/common/CardParser")
+local io = require("TTS-YGO/src/common/IO")
+local tableUtil = require("TTS-YGO/src/common/TableUtil")
 
 local module = {}
 

@@ -10,77 +10,77 @@ end
 local gen = nil
 
 -- core-sets
-gen = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/core-sets/001-LOB"):new()
+gen = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/001-LOB"):new()
 packGenerators['LOB'] = gen
 gen.assetCode = 'LOB'
 table.insert(sections['Core Sets'], gen)
 
-gen = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/core-sets/002-MRD"):new()
+gen = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/002-MRD"):new()
 packGenerators['MRD'] = gen
 gen.assetCode = 'MRD'
 table.insert(sections['Core Sets'], gen)
 
-gen = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/core-sets/003-MRL"):new()
+gen = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/003-MRL"):new()
 packGenerators['MRL'] = gen
 gen.assetCode = 'MRL'
 table.insert(sections['Core Sets'], gen)
 
-gen = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/core-sets/005-PSV"):new()
+gen = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/005-PSV"):new()
 packGenerators['PSV'] = gen
 gen.assetCode = 'PSV'
 table.insert(sections['Core Sets'], gen)
 
-gen = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/core-sets/006-LON"):new()
+gen = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/006-LON"):new()
 packGenerators['LON'] = gen
 gen.assetCode = 'LON'
 table.insert(sections['Core Sets'], gen)
 
-gen = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/core-sets/007-LOD"):new()
+gen = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/007-LOD"):new()
 packGenerators['LOD'] = gen
 gen.assetCode = 'LOD'
 table.insert(sections['Core Sets'], gen)
 
-gen = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/core-sets/008-PGD"):new()
+gen = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/008-PGD"):new()
 packGenerators['PGD'] = gen
 gen.assetCode = 'PGD'
 table.insert(sections['Core Sets'], gen)
 
-gen = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/core-sets/009-MFC"):new()
+gen = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/009-MFC"):new()
 packGenerators['MFC'] = gen
 gen.assetCode = 'MFC'
 table.insert(sections['Core Sets'], gen)
 
-gen = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/core-sets/010-DCR"):new()
+gen = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/010-DCR"):new()
 packGenerators['DCR'] = gen
 gen.assetCode = 'DCR'
 table.insert(sections['Core Sets'], gen)
 
-gen = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/core-sets/011-IOC"):new()
+gen = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/011-IOC"):new()
 packGenerators['IOC'] = gen
 gen.assetCode = 'IOC'
 table.insert(sections['Core Sets'], gen)
 
-gen = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/core-sets/012-AST"):new()
+gen = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/012-AST"):new()
 packGenerators['AST'] = gen
 gen.assetCode = 'AST'
 table.insert(sections['Core Sets'], gen)
 
-gen = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/core-sets/013-SOD"):new()
+gen = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/013-SOD"):new()
 packGenerators['SOD'] = gen
 gen.assetCode = 'SOD'
 table.insert(sections['Core Sets'], gen)
 
-gen = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/core-sets/014-RDS"):new()
+gen = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/014-RDS"):new()
 packGenerators['RDS'] = gen
 gen.assetCode = 'RDS'
 table.insert(sections['Core Sets'], gen)
 
-gen = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/core-sets/015-FET"):new()
+gen = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/015-FET"):new()
 packGenerators['FET'] = gen
 gen.assetCode = 'FET'
 table.insert(sections['Core Sets'], gen)
 
-gen = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/core-sets/016-TLM"):new()
+gen = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/016-TLM"):new()
 packGenerators['TLM'] = gen
 gen.assetCode = 'TLM'
 table.insert(sections['Core Sets'], gen)
@@ -88,22 +88,22 @@ table.insert(sections['Core Sets'], gen)
 
 
 -- battle-packs
-gen = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/battle-packs/001-BP01"):new()
+gen = require("TTS-YGO/src/pack-spawning/pack-logic/battle-packs/001-BP01"):new()
 packGenerators['BP01'] = gen
 gen.assetCode = 'BP01'
 table.insert(sections['Battle Packs'], gen)
 
-gen = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/battle-packs/002-BP02"):new()
+gen = require("TTS-YGO/src/pack-spawning/pack-logic/battle-packs/002-BP02"):new()
 packGenerators['BP02'] = gen
 gen.assetCode = 'BP02'
 table.insert(sections['Battle Packs'], gen)
 
-gen = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/battle-packs/003-BPW2"):new()
+gen = require("TTS-YGO/src/pack-spawning/pack-logic/battle-packs/003-BPW2"):new()
 packGenerators['BPW2'] = gen
 gen.assetCode = 'BPW2'
 table.insert(sections['Battle Packs'], gen)
 
-gen = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/battle-packs/004-BP03"):new()
+gen = require("TTS-YGO/src/pack-spawning/pack-logic/battle-packs/004-BP03"):new()
 packGenerators['BP03'] = gen
 gen.assetCode = 'BP03'
 table.insert(sections['Battle Packs'], gen)
@@ -111,7 +111,7 @@ table.insert(sections['Battle Packs'], gen)
 
 
 -- tournament-packs
-gen = require("TTS-YGO-sealed-draft/src/pack-spawning/pack-logic/tournament-packs/001-TP1"):new()
+gen = require("TTS-YGO/src/pack-spawning/pack-logic/tournament-packs/001-TP1"):new()
 packGenerators['TP1'] = gen
 gen.assetCode = 'TP1'
 table.insert(sections['Tournament Packs'], gen)
