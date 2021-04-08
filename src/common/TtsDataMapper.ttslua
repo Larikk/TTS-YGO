@@ -149,7 +149,7 @@ function module.box(box, name, boxTexture, packTextures)
         MeshIndex = -1,
         CustomMesh = {
             MeshURL = resources.BOX_MESH,
-            DiffuseURL = boxTexture,
+            DiffuseURL = boxTexture or resources.DEFAULT_BOX_TEXTURE,
             MaterialIndex = 3,
             TypeIndex = 6,
             SpecularIntensity = 0.05,
