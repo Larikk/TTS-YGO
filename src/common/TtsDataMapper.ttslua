@@ -1,0 +1,187 @@
+local resources = require("TTS-YGO-sealed-draft/src/common/Resources")
+local cardHoverText = require("TTS-YGO-sealed-draft/src/common/CardHoverText")
+local mathutil = require("TTS-YGO-sealed-draft/src/common/Math")
+
+local module = {}
+
+local TRANSFORM_ATTRIBUTE_DUMMY = {
+    posX = 0,
+    posY = 3,
+    posZ = 0,
+    rotX = 0,
+    rotY = 0,
+    rotZ = 0,
+    scaleX = 1,
+    scaleY = 1,
+    scaleZ = 1,
+}
+
+local CARD_ID_DUMMY = 1
+
+-- LUA Script for spawned containers
+local CONTAINER_LUA_SCRIPT = [[
+function filterObjectEnter(o)
+    return false
+end
+
+function onObjectLeaveContainer(container, object)
+    if self ~= container then return end
+
+    local rotation = container.getRotation()
+    rotation = Vector(0, rotation.y, 0)
+    object.setRotation(rotation)
+
+    if self.getQuantity() < 1 then
+        self.destruct()
+    end
+end
+]]
+
+local function pickPackTexture(textures)
+    if textures == nil then return resources.DEFAULT_PACK_TEXTURE end
+    if type(textures) == "string" then return textures end
+
+    local n = mathutil.randomInt(#textures)
+    return textures[n]
+end
+
+function module.card(card)
+    return {
+        Name = "Card",
+        Nickname = cardHoverText.create(card),
+        Transform = TRANSFORM_ATTRIBUTE_DUMMY,
+        CardID = CARD_ID_DUMMY * 100,
+        CustomDeck = {
+            [tostring(CARD_ID_DUMMY)] = {
+                FaceURL = card.image,
+                BackURL = resources.CARD_BACK,
+                NumWidth = 1,
+                NumHeight = 1,
+                BackIsHidden = true,
+                UniqueBack = false,
+                Type = 0,
+            }
+        }
+    }
+end
+
+function module.deck(deck)
+    local data = {
+        Name = "Deck",
+        Transform = TRANSFORM_ATTRIBUTE_DUMMY,
+        DeckIDS = {}, -- integers: 1000, 800, 600, 400, 200
+        CustomDeck = {}, -- objects with FaceURL and BackURL; Index: 10, 8, 6, 4, 2
+        ContainedObjects = {}, -- objects with Nickname (string) and CardID (see DeckIDS): 1, 2, 3...
+    }
+
+    local n = #deck
+
+    -- We reverse so that the first card is with the face at the bottom
+    -- Iterating backwards does not work
+    local reversedDeck = {}
+    for i = 1, n do
+        reversedDeck[i] = deck[n+1-i]
+    end
+    deck = reversedDeck
+
+    local currentCardId = n * 200
+
+    for i = 1, n do
+        local card = deck[i]
+        local cardData = module.card(card)
+
+        data.DeckIDS[i] = currentCardId
+        cardData.CardID = currentCardId
+
+        local customDeckIndex = tostring(currentCardId / 100)
+        local customDeckEntry = cardData.CustomDeck[tostring(CARD_ID_DUMMY)]
+
+        data.CustomDeck[customDeckIndex] = customDeckEntry
+        data.ContainedObjects[i] = cardData
+        data.ContainedObjects[i].CustomDeck = {
+            [customDeckIndex] = customDeckEntry
+        }
+
+        cardData.CustomDeck[tostring(CARD_ID_DUMMY)] = nil
+
+        currentCardId = currentCardId - 200
+    end
+
+    return data
+end
+
+function module.pack(pack, name, packTextures)
+    local data = {
+        Name = "Custom_Model_Bag",
+        Transform = TRANSFORM_ATTRIBUTE_DUMMY,
+        Nickname = name,
+        Description = "Booster Pack",
+        MaterialIndex = -1,
+        MeshIndex = -1,
+        CustomMesh = {
+            MeshURL = resources.PACK_MESH,
+            DiffuseURL = pickPackTexture(packTextures),
+            NormalURL = resources.PACK_NORMAL,
+            MaterialIndex = 3,
+            TypeIndex = 6,
+            SpecularIntensity = 0.2,
+            SpecularSharpness = 7.0,
+            FresnelStrength = 0.4,
+        },
+        Bag = {
+            Order = 0,
+        },
+        LuaScript = CONTAINER_LUA_SCRIPT,
+        ContainedObjects = nil,
+    }
+
+    local content = {}
+    for i = #pack, 1, -1 do
+        local card = pack[i]
+        card = module.card(card)
+        table.insert(content, card)
+    end
+
+    data.ContainedObjects = content
+
+    return data
+end
+
+function module.box(box, name, boxTexture, packTextures)
+    local data = {
+        Name = "Custom_Model_Bag",
+        Transform = TRANSFORM_ATTRIBUTE_DUMMY,
+        Nickname = name,
+        Description = "Set Box",
+        MaterialIndex = -1,
+        MeshIndex = -1,
+        CustomMesh = {
+            MeshURL = resources.BOX_MESH,
+            DiffuseURL = boxTexture or resources.DEFAULT_BOX_TEXTURE,
+            MaterialIndex = 3,
+            TypeIndex = 6,
+            SpecularIntensity = 0.05,
+            SpecularSharpness = 5.0,
+            FresnelStrength = 0.1,
+        },
+        Bag = {
+            Order = 0,
+        },
+        LuaScript = CONTAINER_LUA_SCRIPT,
+        ContainedObjects = nil,
+    }
+
+    local content = {}
+    for i = #box, 1, -1 do
+        local pack = box[i]
+        pack = module.pack(pack, name, packTextures)
+        table.insert(content, pack)
+    end
+
+    data.ContainedObjects = content
+
+    return data
+
+end
+
+return module
