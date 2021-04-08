@@ -1,6 +1,7 @@
 local mathutil = require("TTS-YGO-sealed-draft/src/common/Math")
 local cardHoverText = require("TTS-YGO-sealed-draft/src/common/CardHoverText")
 local resources = require("TTS-YGO-sealed-draft/src/common/Resources")
+local ttsDataMapper = require("TTS-YGO-sealed-draft/src/common/TtsDataMapper")
 
 
 local DEFAULT_SPAWN_POS = Vector(0, 5, 0)
@@ -41,25 +42,15 @@ function TtsSpawner:spawnCard(card, pos, rotation, callback)
     rotation:setAt("z", 180) -- facedown
 
     spawnParams = {
-        type = "Card",
+        json = JSON.encode(ttsDataMapper.card(card)),
         position = pos,
         rotation = rotation,
         scale = {x = 1, y = 1, z = 1},
         sound = false,
         snap_to_grid = true,
-
-        callback_function = function(cardObject)
-            cardObject.setName(cardHoverText.create(card))
-            cardObject.setCustomObject({
-                face = card.image,
-                back = resources.CARD_BACK
-            })
-
-            if type(callback) == "function" then callback(cardObject) end
-        end
+        callback_function = callback
     }
-
-    spawnObject(spawnParams)
+    spawnObjectJSON(spawnParams)
 end
 
 function TtsSpawner:pickPackTexture()
@@ -171,45 +162,12 @@ end
 
 
 function TtsSpawner:spawnDeck(deck, pos, rotation, callback)
-    -- Constructs a linked stack like data strcture
-    -- One node is responsible for spawning one card and joining it with the deck
-    -- The callback of the card spawning fires the next node
-
-    -- Dummy node that is executed last
-    local node = {
-        card = nil,
-        next = nil,
-        activate = function() if type(callback) == "function" then callback() end end,
+    spawnParams = {
+        json = JSON.encode(ttsDataMapper.deck(deck)),
+        position = pos,
+        rotation = rotation,
     }
-
-    local deckObject = nil
-
-    local spawnCardAndActiveNextNode = function(node)
-        local spawnCardCallback = function(cardObject)
-            if deckObject == nil then
-                -- No card was spawned yet
-                deckObject = cardObject
-                pos = pos + vector(0, 1, 0)
-            else
-                -- There are already card(s) present
-                deckObject = deckObject.putObject(cardObject)
-            end
-
-            node.next.activate()
-        end
-
-        self:spawnCard(node.card, pos, rotation, spawnCardCallback)
-    end
-
-    for i=#deck, 1, -1 do
-        local newNode = {}
-        newNode.card = deck[i]
-        newNode.activate = || spawnCardAndActiveNextNode(newNode)
-        newNode.next = node
-        node = newNode
-    end
-
-    node.activate()
+    spawnObjectJSON(spawnParams)
 end
 
 -- example argument:

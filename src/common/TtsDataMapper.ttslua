@@ -16,7 +16,30 @@ local TRANSFORM_ATTRIBUTE_DUMMY = {
     scaleZ = 1,
 }
 
-function module.deckToJson(deck)
+local CARD_ID_DUMMY = 1
+
+function module.card(card)
+    return {
+        Name = "Card",
+        --Nickname = cardHoverText.create(card),
+        Nickname = card.name,
+        Transform = TRANSFORM_ATTRIBUTE_DUMMY,
+        CardID = CARD_ID_DUMMY * 100,
+        CustomDeck = {
+            [tostring(CARD_ID_DUMMY)] = {
+                FaceURL = card.image,
+                BackURL = resources.CARD_BACK,
+                NumWidth = 1,
+                NumHeight = 1,
+                BackIsHidden = true,
+                UniqueBack = false,
+                Type = 0,
+            }
+        }
+    }
+end
+
+function module.deck(deck)
     local data = {
         Name = "Deck",
         Transform = TRANSFORM_ATTRIBUTE_DUMMY,
@@ -30,29 +53,21 @@ function module.deckToJson(deck)
 
     for i = 1, n do
         local card = deck[i]
+        local cardData = module.card(card)
 
         data.DeckIDS[i] = currentCardId
-        data.ContainedObjects[i] = {
-            Name = "Card",
-            Nickname = cardHoverText.create(card),
-            CardID = currentCardId,
-        }
+        cardData.CardID = currentCardId
 
         local customDeckIndex = tostring(currentCardId / 100)
-        local customDeckEntry = {
-            FaceURL = card.image,
-            BackURL = resources.CARD_BACK,
-            NumWidth = 1,
-            NumHeight = 1,
-            BackIsHidden = true,
-            UniqueBack = false,
-            Type = 0,
-        }
+        local customDeckEntry = cardData.CustomDeck[tostring(CARD_ID_DUMMY)]
 
         data.CustomDeck[customDeckIndex] = customDeckEntry
+        data.ContainedObjects[i] = cardData
         data.ContainedObjects[i].CustomDeck = {
             [customDeckIndex] = customDeckEntry
         }
+
+        cardData.CustomDeck[tostring(CARD_ID_DUMMY)] = nil
 
         currentCardId = currentCardId - 200
     end
