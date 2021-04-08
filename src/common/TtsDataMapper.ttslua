@@ -1,0 +1,63 @@
+local resources = require("TTS-YGO-sealed-draft/src/common/Resources")
+local cardHoverText = require("TTS-YGO-sealed-draft/src/common/CardHoverText")
+
+
+local module = {}
+
+local TRANSFORM_ATTRIBUTE_DUMMY = {
+    posX = 0,
+    posY = 3,
+    posZ = 0,
+    rotX = 0,
+    rotY = 0,
+    rotZ = 0,
+    scaleX = 1,
+    scaleY = 1,
+    scaleZ = 1,
+}
+
+function module.deckToJson(deck)
+    local data = {
+        Name = "Deck",
+        Transform = TRANSFORM_ATTRIBUTE_DUMMY,
+        DeckIDS = {}, -- integers: 1000, 800, 600, 400, 200
+        CustomDeck = {}, -- objects with FaceURL and BackURL; Index: 10, 8, 6, 4, 2
+        ContainedObjects = {}, -- objects with Nickname (string) and CardID (see DeckIDS): 1, 2, 3...
+    }
+
+    local n = #deck
+    local currentCardId = n * 200
+
+    for i = 1, n do
+        local card = deck[i]
+
+        data.DeckIDS[i] = currentCardId
+        data.ContainedObjects[i] = {
+            Name = "Card",
+            Nickname = cardHoverText.create(card),
+            CardID = currentCardId,
+        }
+
+        local customDeckIndex = tostring(currentCardId / 100)
+        local customDeckEntry = {
+            FaceURL = card.image,
+            BackURL = resources.CARD_BACK,
+            NumWidth = 1,
+            NumHeight = 1,
+            BackIsHidden = true,
+            UniqueBack = false,
+            Type = 0,
+        }
+
+        data.CustomDeck[customDeckIndex] = customDeckEntry
+        data.ContainedObjects[i].CustomDeck = {
+            [customDeckIndex] = customDeckEntry
+        }
+
+        currentCardId = currentCardId - 200
+    end
+
+    return data
+end
+
+return module
