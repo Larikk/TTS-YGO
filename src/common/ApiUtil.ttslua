@@ -3,8 +3,8 @@
 --
 -- Code is taken from https://github.com/rxi/json.lua
 -- Some changes were made to make it work with TTS
-local json = require("TTS-YGO-sealed-draft/src/common/Json")
-local io = require("TTS-YGO-sealed-draft/src/common/IO")
+local json = require("TTS-YGO/src/common/Json")
+local io = require("TTS-YGO/src/common/IO")
 
 
 local module = {}

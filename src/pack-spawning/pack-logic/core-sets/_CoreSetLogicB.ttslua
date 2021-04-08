@@ -1,4 +1,4 @@
-local AbstractPackGenerator = require("TTS-YGO-sealed-draft/src/pack-spawning/common/AbstractPackGenerator")
+local AbstractPackGenerator = require("TTS-YGO/src/pack-spawning/common/AbstractPackGenerator")
 
 -- Pack logic for sets between "Soul of the Duelist" and "Force of the Breaker"
 -- Both are includes

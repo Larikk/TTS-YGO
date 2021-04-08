@@ -1,4 +1,4 @@
-local io = require("TTS-YGO-sealed-draft/src/common/IO")
+local io = require("TTS-YGO/src/common/IO")
 
 SetDataExtractor = {}
 

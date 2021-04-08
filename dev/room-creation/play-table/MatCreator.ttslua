@@ -1,9 +1,9 @@
 -- creates a mat with snap points
 
 -- import:
---#include <TTS-YGO-sealed-draft/dev/MatCreator>
+--#include <TTS-YGO/dev/MatCreator>
 
-local util = require("TTS-YGO-sealed-draft/dev/room-creation/Util")
+local util = require("TTS-YGO/dev/room-creation/Util")
 
 local image = "https://i.imgur.com/goaxq7R.png"
 

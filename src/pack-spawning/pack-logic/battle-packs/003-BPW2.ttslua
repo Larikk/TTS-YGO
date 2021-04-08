@@ -1,4 +1,4 @@
-local AbstractPackGenerator = require("TTS-YGO-sealed-draft/src/pack-spawning/common/AbstractPackGenerator")
+local AbstractPackGenerator = require("TTS-YGO/src/pack-spawning/common/AbstractPackGenerator")
 
 local SET_NAME = "War of the Giants: Round 2"
 
