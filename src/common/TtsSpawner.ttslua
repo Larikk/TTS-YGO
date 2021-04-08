@@ -67,50 +67,23 @@ function TtsSpawner:spawnPack(pack, pos, rotation, callback)
     local cardPos = pos + Vector(0, 5, 0)
 
     local texture = self:pickPackTexture()
+    pack = {
+        name = self.setName,
+        texture = texture,
+        cards = pack,
+    }
 
     spawnParams = {
-        type = "Custom_Model",
+        json = JSON.encode(ttsDataMapper.pack(pack)),
         position = pos,
         rotation = rotation,
         scale = {x = 1, y = 1, z = 1},
         sound = false,
         snap_to_grid = true,
-
-        callback_function = function(packObject)
-            packObject.setName(self.setName)
-            packObject.setDescription("Booster Pack")
-            packObject.setLuaScript(CONTAINER_LUA_SCRIPT)
-            packObject.setLock(false)
-            packObject.setCustomObject({
-                mesh = resources.PACK_MESH,
-                diffuse = texture,
-                normal = resources.PACK_NORMAL,
-                type = 6, -- bag
-                material = 3, -- cardbord
-                specular_intensity = 0.2,
-                specular_sharpness = 7.0,
-                fresnel_strength = 0.4
-            })
-            packObject = packObject.reload()
-
-            -- we have to get a reference to the object trough the guid for some reason for this to work
-            local guid = packObject.getGUID()
-            local obj = function() return getObjectFromGUID(guid) end
-
-            -- Iterate backwards because the first inserted element in a bag is at the bottom
-            for i = #pack, 1, -1 do
-                local card = pack[i]
-                self:spawnCard(card, cardPos, rotation, function(cardObject) obj().putObject(cardObject) end)
-            end
-
-            Wait.condition(
-                function() if type(callback) == "function" then callback(obj()) end end,
-                function() return obj().getQuantity() >= self.cardsInPack end
-            )
-        end
+        callback_function = callback
     }
 
-    spawnObject(spawnParams)
+    spawnObjectJSON(spawnParams)
 end
 
 function TtsSpawner:spawnBox(packs, pos, rotation, callback)

@@ -18,6 +18,25 @@ local TRANSFORM_ATTRIBUTE_DUMMY = {
 
 local CARD_ID_DUMMY = 1
 
+-- LUA Script for spawned containers
+local CONTAINER_LUA_SCRIPT = [[
+function filterObjectEnter(o)
+    return false
+end
+
+function onObjectLeaveContainer(container, object)
+    if self ~= container then return end
+
+    local rotation = container.getRotation()
+    rotation = Vector(0, rotation.y, 0)
+    object.setRotation(rotation)
+
+    if self.getQuantity() < 1 then
+        self.destruct()
+    end
+end
+]]
+
 function module.card(card)
     return {
         Name = "Card",
@@ -71,6 +90,43 @@ function module.deck(deck)
 
         currentCardId = currentCardId - 200
     end
+
+    return data
+end
+
+function module.pack(pack)
+    local data = {
+        Name = "Custom_Model_Bag",
+        Transform = TRANSFORM_ATTRIBUTE_DUMMY,
+        Nickname = pack.name,
+        Description = "Booster Pack",
+        MaterialIndex = -1,
+        MeshIndex = -1,
+        CustomMesh = {
+            MeshURL = resources.PACK_MESH,
+            DiffuseURL = pack.texture,
+            NormalURL = resources.PACK_NORMAL,
+            MaterialIndex = 3,
+            TypeIndex = 6,
+            SpecularIntensity = 0.2,
+            SpecularSharpness = 7.0,
+            FresnelStrength = 0.4,
+        },
+        Bag = {
+            Order = 0,
+        },
+        LuaScript = CONTAINER_LUA_SCRIPT,
+        ContainedObjects = nil,
+    }
+
+    local content = {}
+    for i = #pack.cards, 1, -1 do
+        local card = pack.cards[i]
+        card = module.card(card)
+        table.insert(content, card)
+    end
+
+    data.ContainedObjects = content
 
     return data
 end
