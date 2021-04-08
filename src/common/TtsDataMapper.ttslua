@@ -48,8 +48,7 @@ end
 function module.card(card)
     return {
         Name = "Card",
-        --Nickname = cardHoverText.create(card),
-        Nickname = card.name,
+        Nickname = cardHoverText.create(card),
         Transform = TRANSFORM_ATTRIBUTE_DUMMY,
         CardID = CARD_ID_DUMMY * 100,
         CustomDeck = {
