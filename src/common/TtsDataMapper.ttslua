@@ -94,17 +94,17 @@ function module.deck(deck)
     return data
 end
 
-function module.pack(pack)
+function module.pack(pack, name, packTextureGenerator)
     local data = {
         Name = "Custom_Model_Bag",
         Transform = TRANSFORM_ATTRIBUTE_DUMMY,
-        Nickname = pack.name,
+        Nickname = name,
         Description = "Booster Pack",
         MaterialIndex = -1,
         MeshIndex = -1,
         CustomMesh = {
             MeshURL = resources.PACK_MESH,
-            DiffuseURL = pack.texture,
+            DiffuseURL = packTextureGenerator(),
             NormalURL = resources.PACK_NORMAL,
             MaterialIndex = 3,
             TypeIndex = 6,
@@ -120,8 +120,8 @@ function module.pack(pack)
     }
 
     local content = {}
-    for i = #pack.cards, 1, -1 do
-        local card = pack.cards[i]
+    for i = #pack, 1, -1 do
+        local card = pack[i]
         card = module.card(card)
         table.insert(content, card)
     end
@@ -129,6 +129,43 @@ function module.pack(pack)
     data.ContainedObjects = content
 
     return data
+end
+
+function module.box(box, name, boxTexture, packTextureGenerator)
+    local data = {
+        Name = "Custom_Model_Bag",
+        Transform = TRANSFORM_ATTRIBUTE_DUMMY,
+        Nickname = name,
+        Description = "Set Box",
+        MaterialIndex = -1,
+        MeshIndex = -1,
+        CustomMesh = {
+            MeshURL = resources.BOX_MESH,
+            DiffuseURL = boxTexture,
+            MaterialIndex = 3,
+            TypeIndex = 6,
+            SpecularIntensity = 0.05,
+            SpecularSharpness = 5.0,
+            FresnelStrength = 0.1,
+        },
+        Bag = {
+            Order = 0,
+        },
+        LuaScript = CONTAINER_LUA_SCRIPT,
+        ContainedObjects = nil,
+    }
+
+    local content = {}
+    for i = #box, 1, -1 do
+        local pack = box[i]
+        pack = module.pack(pack, name, packTextureGenerator)
+        table.insert(content, pack)
+    end
+
+    data.ContainedObjects = content
+
+    return data
+
 end
 
 return module

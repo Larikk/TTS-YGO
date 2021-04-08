@@ -53,28 +53,15 @@ function TtsSpawner:spawnCard(card, pos, rotation, callback)
     spawnObjectJSON(spawnParams)
 end
 
-function TtsSpawner:pickPackTexture()
-    if self.packTextures == nil then return resources.DEFAULT_PACK_TEXTURE end
-    if type(self.packTextures) == "string" then return self.packTextures end
-
-    local n = mathutil.randomInt(#self.packTextures)
-    return self.packTextures[n]
-end
-
 function TtsSpawner:spawnPack(pack, pos, rotation, callback)
     pos = Vector(pos) or Vector(DEFAULT_SPAWN_POS)
     rotation = Vector(rotation) or Vector(DEFAULT_SPAWN_ROTATION)
     local cardPos = pos + Vector(0, 5, 0)
 
-    local texture = self:pickPackTexture()
-    pack = {
-        name = self.setName,
-        texture = texture,
-        cards = pack,
-    }
+    local data = ttsDataMapper.pack(pack, self.setName, self.packTextureGenerator)
 
     spawnParams = {
-        json = JSON.encode(ttsDataMapper.pack(pack)),
+        json = JSON.encode(data),
         position = pos,
         rotation = rotation,
         scale = {x = 1, y = 1, z = 1},
@@ -91,46 +78,19 @@ function TtsSpawner:spawnBox(packs, pos, rotation, callback)
     rotation = Vector(rotation) or Vector(DEFAULT_SPAWN_ROTATION)
     local boosterPos = pos + Vector(0, 5, 0)
 
+    local data = ttsDataMapper.box(packs, self.setName, self.boxTexture, self.packTextureGenerator)
+
     spawnParams = {
-        type = "Custom_Model",
+        json = JSON.encode(data),
         position = pos,
         rotation = rotation,
         scale = {x = 1, y = 1, z = 1},
         sound = false,
         snap_to_grid = true,
-
-        callback_function = function(boxObject)
-            boxObject.setName(self.setName)
-            boxObject.setDescription("Set Box")
-            boxObject.setLuaScript(CONTAINER_LUA_SCRIPT)
-            boxObject.setLock(false)
-            boxObject.setCustomObject({
-                mesh = resources.BOX_MESH,
-                diffuse = self.boxTexture or resources.DEFAULT_BOX_TEXTURE,
-                type = 6, -- bag
-                material = 3, -- cardbord
-                specular_intensity = 0.05,
-                specular_sharpness = 5.0,
-                fresnel_strength = 0.1
-            })
-            boxObject = boxObject.reload()
-
-            -- we have to get a reference to the object trough the guid for some reason for this to work
-            local guid = boxObject.getGUID()
-            local obj = function() return getObjectFromGUID(guid) end
-
-            for i, pack in ipairs(packs) do
-                self:spawnPack(pack, boosterPos, rotation, function(packObject) obj().putObject(packObject) end)
-            end
-
-            Wait.condition(
-                function() if type(callback) == "function" then callback() end end,
-                function() return obj().getQuantity() >= self.packsInBox end
-            )
-        end
+        callback_function = callback,
     }
 
-    spawnObject(spawnParams)
+    spawnObjectJSON(spawnParams)
 end
 
 
@@ -155,6 +115,17 @@ function TtsSpawner:new(o)
     o = o or {}
     setmetatable(o, self)
     self.__index = self
+
+    if o.packTextures == nil then
+        o.packTextureGenerator = || resources.DEFAULT_PACK_TEXTURE
+    elseif type(o.packTextures) == "string" then
+        o.packTextureGenerator = || o.packTextures
+    elseif type(o.packTextures) == "table" then
+        o.packTextureGenerator = function()
+            local n = mathutil.randomInt(#o.packTextures)
+            return o.packTextures[n]
+        end
+    end
 
     return o
 end
