@@ -1,4 +1,4 @@
-local ttsDataMapper = require("TTS-YGO-sealed-draft/src/common/TtsDataMapper")
+local ttsDataMapper = require("TTS-YGO/src/common/TtsDataMapper")
 
 
 local DEFAULT_SPAWN_POS = Vector(0, 5, 0)

@@ -1,7 +1,7 @@
 
-local draftTable = require("TTS-YGO-sealed-draft/dev/room-creation/draft-table/DraftTableCreator")
-local playTable = require("TTS-YGO-sealed-draft/dev/room-creation/play-table/PlayTableCreator")
-local util = require("TTS-YGO-sealed-draft/dev/room-creation/Util")
+local draftTable = require("TTS-YGO/dev/room-creation/draft-table/DraftTableCreator")
+local playTable = require("TTS-YGO/dev/room-creation/play-table/PlayTableCreator")
+local util = require("TTS-YGO/dev/room-creation/Util")
 
 local POS = Vector(0, 2, 0)
 local ROTATION = Vector(0, 0, 0)

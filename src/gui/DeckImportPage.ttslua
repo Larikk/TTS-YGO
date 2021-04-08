@@ -1,5 +1,5 @@
-local guiUtil = require("TTS-YGO-sealed-draft/src/gui/GUIUtil")
-local state = require("TTS-YGO-sealed-draft/src/gui/State")
+local guiUtil = require("TTS-YGO/src/gui/GUIUtil")
+local state = require("TTS-YGO/src/gui/State")
 
 local module = {}
 

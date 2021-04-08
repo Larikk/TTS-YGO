@@ -1,5 +1,5 @@
-local AbstractPackGenerator = require("TTS-YGO-sealed-draft/src/pack-spawning/common/AbstractPackGenerator")
-local cardParser = require("TTS-YGO-sealed-draft/src/common/CardParser")
+local AbstractPackGenerator = require("TTS-YGO/src/pack-spawning/common/AbstractPackGenerator")
+local cardParser = require("TTS-YGO/src/common/CardParser")
 
 local SET_NAME = "Battle Pack: Epic Dawn"
 

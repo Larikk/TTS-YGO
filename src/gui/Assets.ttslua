@@ -1,6 +1,6 @@
 local assets = {}
 
-local packGeneratorsModule = require("TTS-YGO-sealed-draft/src/gui/PackGenerators")
+local packGeneratorsModule = require("TTS-YGO/src/gui/PackGenerators")
 
 function assets.initAssets()
     local assets = {}

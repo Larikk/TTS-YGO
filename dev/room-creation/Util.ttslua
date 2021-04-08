@@ -102,7 +102,7 @@ function module.getPlayerColors()
 end
 
 function module.getNonInteractableLuaScript()
-    return [[#include <TTS-YGO-sealed-draft/src/gui/NonInteractable>]]
+    return [[#include <TTS-YGO/src/gui/NonInteractable>]]
 end
 
 return module

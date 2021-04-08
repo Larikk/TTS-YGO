@@ -1,7 +1,7 @@
-local stringUtil = require("TTS-YGO-sealed-draft/src/common/StringUtil")
-local cardImportCache = require("TTS-YGO-sealed-draft/src/common/CardImportCache")
-local io = require("TTS-YGO-sealed-draft/src/common/IO")
-local TtsSpawner = require("TTS-YGO-sealed-draft/src/common/TtsSpawner")
+local stringUtil = require("TTS-YGO/src/common/StringUtil")
+local cardImportCache = require("TTS-YGO/src/common/CardImportCache")
+local io = require("TTS-YGO/src/common/IO")
+local TtsSpawner = require("TTS-YGO/src/common/TtsSpawner")
 
 
 local module = {}

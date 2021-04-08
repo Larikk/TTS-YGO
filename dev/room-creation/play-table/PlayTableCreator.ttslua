@@ -1,6 +1,6 @@
-local matCreator = require("TTS-YGO-sealed-draft/dev/room-creation/play-table/MatCreator")
-local calculatorJson = require("TTS-YGO-sealed-draft/dev/room-creation/play-table/CalculatorJson")
-local util = require("TTS-YGO-sealed-draft/dev/room-creation/Util")
+local matCreator = require("TTS-YGO/dev/room-creation/play-table/MatCreator")
+local calculatorJson = require("TTS-YGO/dev/room-creation/play-table/CalculatorJson")
+local util = require("TTS-YGO/dev/room-creation/Util")
 
 
 local module = {}

@@ -1,4 +1,4 @@
---#include <TTS-YGO-sealed-draft/src/gui/NonInteractable>
+--#include <TTS-YGO/src/gui/NonInteractable>
 function onLoad()
     self.interactable = false
 end
