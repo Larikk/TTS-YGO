@@ -105,4 +105,22 @@ function module.getNonInteractableLuaScript()
     return [[#include <TTS-YGO/src/gui/NonInteractable>]]
 end
 
+function module.getTabletLuaScript()
+    return [[
+#include TTS-YGO/src/gui/Main
+
+function onLoad(save_state)
+    load(save_state)
+end
+
+function onSave()
+    return save()
+end
+]]
+end
+
+function module.getTabletXml()
+    return [[<Include src="TTS-YGO/src/gui/Main.xml"/>]]
+end
+
 return module

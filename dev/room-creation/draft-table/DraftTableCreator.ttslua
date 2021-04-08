@@ -86,7 +86,7 @@ end
 
 local function createText(plate)
     local parentSize = plate.getBoundsNormalized().size
-    local pos = util.relativeLocalToWorldPosition2D(plate, parentSize, -0.85, -0.4)
+    local pos = util.relativeLocalToWorldPosition2D(plate, parentSize, -0.85, -0.2)
 
     spawnParams = {
         type = "3DText",
@@ -105,15 +105,38 @@ local function createText(plate)
     spawnObject(spawnParams)
 end
 
-local function createTabletSnapPoint(plate)
+local function createTablet(plate)
     local parentSize = plate.getBoundsNormalized().size
-    local pos = util.relativeLocalToWorldPosition2D(plate, parentSize, -0.85, 0.4)
-    pos = plate.positionToLocal(pos)
-    plate.setSnapPoints({
-        {
-            position = pos
-        }
+    local pos = util.relativeLocalToWorldPosition2D(plate, parentSize, -0.8, 0.4)
+
+    spawnParams = {
+        type = "Custom_Model",
+        position = pos + v(0, 2, 0),
+        rotation = plate.getRotation() + v(0, 90, 0),
+        scale = v(1, 1, 1),
+        sound = false,
+        snap_to_grid = true,
+    }
+    local tablet = spawnObject(spawnParams)
+    tablet.setCustomObject({
+        mesh = "http://cloud-3.steamusercontent.com/ugc/1804229846313094263/6C41D40E9318D40586B21366DCE99988AA0D2400/",
+        diffuse = "https://i.imgur.com/niAZIBT.png",
+        material = 2,
+        specular_intensity = 0,
+        specular_sharpness = 2,
+        freshnel_strength = 0,
+        cast_shadows = true
     })
+    tablet = tablet.reload()
+
+    local f = function()
+        tablet.setLock(true)
+        tablet.setDescription("Yu-Gi-Oh! TTS Edition\nMade by Larikk")
+        tablet.setLuaScript(util.getTabletLuaScript())
+        print("Set XML of tablet to:\n" .. util.getTabletXml())
+    end
+
+    Wait.time(f, 1)
 end
 
 local function createPlate(table)
@@ -141,7 +164,7 @@ local function createPlate(table)
         plate.locked = true
         createHiddenZones(plate)
         createText(plate)
-        createTabletSnapPoint(plate)
+        createTablet(plate)
         plate.setLuaScript(util.getNonInteractableLuaScript())
     end
 
