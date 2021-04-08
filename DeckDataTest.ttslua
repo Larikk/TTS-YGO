@@ -1,0 +1,109 @@
+local CARD_BACK = "https://i.imgur.com/UjbK2Wb.png"
+
+function getCards()
+    return {
+        {
+            name = "XZ-Tank Cannon",
+            image = "https://storage.googleapis.com/ygoprodeck.com/pics/99724761.jpg",
+        },
+        {
+            name = "XY-Dragon Cannon",
+            image = "https://storage.googleapis.com/ygoprodeck.com/pics/2111707.jpg",
+        },
+        {
+            name = "XYZ-Dragon Cannon",
+            image = "https://storage.googleapis.com/ygoprodeck.com/pics/91998121.jpg",
+        },
+        {
+            name = "ABC-Dragon Buster",
+            image = "https://storage.googleapis.com/ygoprodeck.com/pics/1561110.jpg",
+        },
+        {
+            name = "A-to-Z-Dragon Buster Cannon",
+            image = "https://storage.googleapis.com/ygoprodeck.com/pics/65172015.jpg",
+        },
+
+    }
+end
+
+function onLoad()
+    local data = {
+        Name = "Deck",
+        Transform = {
+            posX = 0,
+            posY = 3,
+            posZ = 0,
+            rotX = 0,
+            rotY = 0,
+            rotZ = 0,
+            scaleX = 1,
+            scaleY = 1,
+            scaleZ = 1,
+        },
+        DeckIDS = {}, -- integers: 1000, 800, 600, 400, 200
+        CustomDeck = {}, -- objects with FaceURL and BackURL; Index: 10, 8, 6, 4, 2
+        ContainedObjects = {}, -- objects with Nickname (string) and CardID (see DeckIDS): 1, 2, 3...
+    }
+
+    local cards = getCards()
+    local n = #cards
+    local currentCardId = n * 200
+
+    for i = 1, n do
+        local card = cards[i]
+
+        data.DeckIDS[i] = currentCardId
+        data.ContainedObjects[i] = {
+            Name = "Card",
+            Nickname = card.name,
+            CardID = currentCardId,
+            Transform = {
+                posX = 0,
+                posY = 3,
+                posZ = 0,
+                rotX = 0,
+                rotY = 0,
+                rotZ = 0,
+                scaleX = 1,
+                scaleY = 1,
+                scaleZ = 1,
+            },
+        }
+
+        local customDeckIndex = tostring(currentCardId / 100)
+        local customDeckEntry = {
+            FaceURL = card.image,
+            BackURL = CARD_BACK,
+            NumWidth = 1,
+            NumHeight = 1,
+            BackIsHidden = true,
+            UniqueBack = false,
+            Type = 0,
+        }
+
+        data.CustomDeck[customDeckIndex] = customDeckEntry
+        data.ContainedObjects[i].CustomDeck = {
+            [customDeckIndex] = customDeckEntry
+        }
+
+        currentCardId = currentCardId - 200
+    end
+
+    spawnParams = {
+        json = JSON.encode(data),
+        position = Vector(0, 5, 15),
+        rotation = Vector(0, 180, 0),
+        scale = Vector(1, 1, 1),
+    }
+    local obj = spawnObjectJSON(spawnParams) -- this works
+    print(logString)
+
+    spawnParams = {
+        data = data,
+        position = Vector(10, 5, 15),
+        rotation = Vector(0, 180, 0),
+        scale = Vector(1, 1, 1),
+    }
+    --spawnObjectData(spawnParams) -- this does not
+
+end
