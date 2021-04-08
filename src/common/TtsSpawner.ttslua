@@ -1,6 +1,3 @@
-local mathutil = require("TTS-YGO-sealed-draft/src/common/Math")
-local cardHoverText = require("TTS-YGO-sealed-draft/src/common/CardHoverText")
-local resources = require("TTS-YGO-sealed-draft/src/common/Resources")
 local ttsDataMapper = require("TTS-YGO-sealed-draft/src/common/TtsDataMapper")
 
 
@@ -9,12 +6,12 @@ local DEFAULT_SPAWN_ROTATION = Vector(0, 0, 0)
 
 local TtsSpawner = {}
 
-function TtsSpawner:spawnCard(card, pos, rotation, callback)
+local function spawn(data, pos, rotation, callback)
     pos = Vector(pos) or Vector(DEFAULT_SPAWN_POS)
     rotation = Vector(rotation) or Vector(DEFAULT_SPAWN_ROTATION)
 
     spawnParams = {
-        json = JSON.encode(ttsDataMapper.card(card)),
+        json = JSON.encode(data),
         position = pos,
         rotation = rotation,
         scale = {x = 1, y = 1, z = 1},
@@ -23,54 +20,27 @@ function TtsSpawner:spawnCard(card, pos, rotation, callback)
         callback_function = callback
     }
     spawnObjectJSON(spawnParams)
+end
+
+function TtsSpawner:spawnCard(card, pos, rotation, callback)
+    local data = ttsDataMapper.card(card)
+    spawn(data, pos, rotation, callback)
 end
 
 function TtsSpawner:spawnPack(pack, pos, rotation, callback)
-    pos = Vector(pos) or Vector(DEFAULT_SPAWN_POS)
-    rotation = Vector(rotation) or Vector(DEFAULT_SPAWN_ROTATION)
-
     local data = ttsDataMapper.pack(pack, self.setName, self.packTextures)
-
-    spawnParams = {
-        json = JSON.encode(data),
-        position = pos,
-        rotation = rotation,
-        scale = {x = 1, y = 1, z = 1},
-        sound = false,
-        snap_to_grid = true,
-        callback_function = callback
-    }
-
-    spawnObjectJSON(spawnParams)
+    spawn(data, pos, rotation, callback)
 end
 
 function TtsSpawner:spawnBox(packs, pos, rotation, callback)
-    pos = Vector(pos) or Vector(DEFAULT_SPAWN_POS)
-    rotation = Vector(rotation) or Vector(DEFAULT_SPAWN_ROTATION)
-
     local data = ttsDataMapper.box(packs, self.setName, self.boxTexture, self.packTextures)
-
-    spawnParams = {
-        json = JSON.encode(data),
-        position = pos,
-        rotation = rotation,
-        scale = {x = 1, y = 1, z = 1},
-        sound = false,
-        snap_to_grid = true,
-        callback_function = callback,
-    }
-
-    spawnObjectJSON(spawnParams)
+    spawn(data, pos, rotation, callback)
 end
 
 
 function TtsSpawner:spawnDeck(deck, pos, rotation, callback)
-    spawnParams = {
-        json = JSON.encode(ttsDataMapper.deck(deck)),
-        position = pos,
-        rotation = rotation,
-    }
-    spawnObjectJSON(spawnParams)
+    local data = ttsDataMapper.deck(deck)
+    spawn(data, pos, rotation, callback)
 end
 
 -- example argument:

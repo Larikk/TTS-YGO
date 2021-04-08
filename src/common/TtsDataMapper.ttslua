@@ -1,6 +1,6 @@
 local resources = require("TTS-YGO-sealed-draft/src/common/Resources")
 local cardHoverText = require("TTS-YGO-sealed-draft/src/common/CardHoverText")
-
+local mathutil = require("TTS-YGO-sealed-draft/src/common/Math")
 
 local module = {}
 
