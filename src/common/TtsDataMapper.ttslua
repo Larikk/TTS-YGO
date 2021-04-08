@@ -75,6 +75,15 @@ function module.deck(deck)
     }
 
     local n = #deck
+
+    -- We reverse so that the first card is with the face at the bottom
+    -- Iterating backwards does not work
+    local reversedDeck = {}
+    for i = 1, n do
+        reversedDeck[i] = deck[n+1-i]
+    end
+    deck = reversedDeck
+
     local currentCardId = n * 200
 
     for i = 1, n do
