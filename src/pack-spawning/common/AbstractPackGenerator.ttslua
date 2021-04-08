@@ -4,6 +4,7 @@ local mathUtil = require("TTS-YGO/src/common/Math")
 local io = require("TTS-YGO/src/common/IO")
 local TtsSpawner = require("TTS-YGO/src/common/TtsSpawner")
 local resources = require("TTS-YGO/src/common/Resources")
+local apiUtil = require("TTS-YGO/src/common/ApiUtil")
 
 -- We are using a third party JSON library because the native JSON deserialization of TTS is very slow
 -- Benchmark of 10 decode calls for one booster set: library = ~15sec, native = ~300s
@@ -112,22 +113,15 @@ function AbstractPackGenerator:parseCardList(cardList)
 end
 
 
--- downloads the card list from db.ygoprodeck.com and initializes initCardsMap
+-- downloads the card list and initializes cardsMap
 -- callBack should be the action that should have been executed if cardsMap were initialized
 function AbstractPackGenerator:initCardsMap(callback)
-    local responseHandler = function(response, callback)
-        io.info("Received card list, processing response...")
-        local cards = json.decode(response.text).data
+    local query = "cardset=" .. self.setNameUrl
 
-        self.cardsMap = self:parseCardList(cards)
-        io.info("Processed card list, continuing with spawning.")
+    apiUtil.cardinfo(query, function(cardData)
+        self.cardsMap = self:parseCardList(cardData)
         if type(callback) == "function" then callback() end
-    end
-
-    io.info("Downloading card list...")
-    WebRequest.get("https://db.ygoprodeck.com/api/v7/cardinfo.php?cardset="..self.setNameUrl,
-        function(response) responseHandler(response, callback) end
-    )
+    end)
 end
 
 -------------------------------------------------------------------------------
