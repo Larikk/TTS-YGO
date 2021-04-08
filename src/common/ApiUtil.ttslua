@@ -24,10 +24,12 @@ function module.cardinfo(query, callback)
 
         -- array of cards
         local data = json.decode(response.text).data
+        io.success("Download completed.")
 
         if type(callback) == "function" then callback(data) end
     end
 
+    io.info("Downloading cards...")
     WebRequest.get(url, handler)
 end
 
