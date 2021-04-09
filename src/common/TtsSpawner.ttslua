@@ -39,6 +39,11 @@ end
 
 
 function TtsSpawner:spawnDeck(deck, pos, rotation, callback)
+    if #deck == 1 then
+        self:spawnCard(deck[1], pos, rotation, callback)
+        return
+    end
+
     local data = ttsDataMapper.deck(deck)
     spawn(data, pos, rotation, callback)
 end
