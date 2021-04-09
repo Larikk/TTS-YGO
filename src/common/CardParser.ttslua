@@ -4,7 +4,7 @@ cardParser = {}
 
 local ATTRIBUTES_TO_BE_COPIED = {
     "id", "name", "type", "attribute", "race", "atk", "def",
-    "level", "linkval", "desc"
+    "level", "scale", "linkval", "desc"
 }
 
 function cardParser.parseCard(apiData)
