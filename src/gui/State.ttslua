@@ -8,7 +8,7 @@ local persistentValues = {
 local defaults = {
     -- persistent values, get saved and loaded with the room
     spawn_x = "0",
-    spawn_y = "5",
+    spawn_y = "10",
     spawn_z = "0",
     spawn_rotation = "0",
 
