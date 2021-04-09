@@ -3,7 +3,7 @@ local draftTable = require("TTS-YGO/dev/room-creation/draft-table/DraftTableCrea
 local playTable = require("TTS-YGO/dev/room-creation/play-table/PlayTableCreator")
 local util = require("TTS-YGO/dev/room-creation/Util")
 
-local POS = Vector(0, 2, 0)
+local POS = Vector(13.5, 2, 0)
 local ROTATION = Vector(0, 90, 0)
 
 local module = {}
