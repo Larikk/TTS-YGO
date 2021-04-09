@@ -1,3 +1,5 @@
+local stringUtil = require("TTS-YGO/src/common/StringUtil")
+
 cardHoverText = {}
 
 -- create the hover info text of a card
@@ -14,16 +16,24 @@ local function linkMonsterText(card)
 end
 
 local function monsterText(card)
-    local isLink = card.type == "Link Monster"
+    local isXYZ = stringUtil.contains(card.type, "XYZ")
+    local isPendulum = stringUtil.contains(card.type, "Pendulum")
+    local isLink = stringUtil.contains(card.type, "Link")
 
     if isLink then
         return linkMonsterText(card)
     end
 
+    local starType = isXYZ and "Rank" or "Level"
+
     local str = card.type.."\n"
-    str = str..card.attribute.." "..card.race.." [\u{2605}"..card.level.."]\n"
+    str = str .. string.format("%s %s [%s %d]\n", card.attribute, card.race, starType, card.level)
     str = str.."ATK/"..card.atk
     str = str.." DEF/"..card.def.."\n"
+
+    if isPendulum then
+        str = str .. "Pendulum Scale: " .. card.scale .. "\n"
+    end
 
     return str
 end
