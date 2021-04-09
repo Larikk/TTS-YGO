@@ -1,3 +1,4 @@
+-- require("TTS-YGO/dev/room-creation/RoomCreator").create()
 
 local draftTable = require("TTS-YGO/dev/room-creation/draft-table/DraftTableCreator")
 local playTable = require("TTS-YGO/dev/room-creation/play-table/PlayTableCreator")
@@ -8,7 +9,7 @@ local ROTATION = Vector(0, 90, 0)
 
 local module = {}
 
-function module.create()
+local function spawnStuff()
     local pos = POS + Vector(0, 0, -100)
     local rotation = ROTATION
     draftTable.create(pos, rotation)
@@ -23,6 +24,33 @@ function module.create()
         pos = pos + Vector(0, 0, 64)
     end
 
+end
+
+function module.create()
+    -- Info section
+    Info.name = "Yu-Gi-Oh! TTS Edition"
+    Info.type = "Game"
+    Info.complexity = "Medium Complexity"
+    Info.number_of_players = {2, 8}
+    Info.tags = {"Card Games", "Cards", "Scripting", "User Interfaces", "Yu-Gi-Oh", "Yu-Gi-Oh!", "YuGiOh", "YuGiOh!", "deck", "build", "Progressive", "sealed", "draft", "import"}
+
+    Physics.play_area = 1
+    Tables.setTable("None")
+    Backgrounds.setCustomURL("http://cloud-3.steamusercontent.com/ugc/1804229846320834487/463F17DD295878A1FA27B4825CC3496905BC5E13/")
+
+    print(Lighting.light_intensity)
+    Lighting.light_intensity = 0.7
+    Lighting.apply()
+
+    -- Hands are not spawned in the first frame
+    local f = function()
+        for _,hand in ipairs(Hands.getHands()) do
+            hand.destruct()
+        end
+        spawnStuff()
+    end
+
+    Wait.frames(f, 2)
 end
 
 return module
