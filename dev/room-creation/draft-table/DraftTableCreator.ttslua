@@ -31,7 +31,6 @@ local function createCardGrid(zone)
                 util.moveForwards(grid, size.z/2)
                 util.moveRight(grid, size.x/2)
                 Wait.time(||grid.setLock(true), 2)
-                grid.setLuaScript(util.getNonInteractableLuaScript())
             end
             Wait.time(f, 2)
         end
