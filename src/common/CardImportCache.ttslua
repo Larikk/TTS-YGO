@@ -40,7 +40,7 @@ local function processResponse(data, nonPresentCardIds, cb, cbParams)
         local cards = cardParser.parseCardWithAllArtworks(cardData)
         for _,card in ipairs(cards) do
             insertIntoCache(card)
-            requestedIds[id] = nil
+            requestedIds[tostring(card.id)] = nil
         end
     end
 
