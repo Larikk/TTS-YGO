@@ -23,7 +23,7 @@ local nameCache = {}
 local INVALID_ID = "INVALID_ID"
 
 local function insertIntoCache(card)
-    local id = tostring(card.id)
+    local id = card.id
     cache[id] = card
 end
 
@@ -31,7 +31,7 @@ local function processResponse(data, nonPresentCardIds, cb, cbParams)
     -- Turn array of ids into Map with id as key
     local requestedIds = {}
     for _,id in ipairs(nonPresentCardIds) do
-        requestedIds[tostring(id)] = 1
+        requestedIds[id] = 1
     end
 
     -- data is array of cards
@@ -40,7 +40,7 @@ local function processResponse(data, nonPresentCardIds, cb, cbParams)
         local cards = cardParser.parseCardWithAllArtworks(cardData)
         for _,card in ipairs(cards) do
             insertIntoCache(card)
-            requestedIds[tostring(card.id)] = nil
+            requestedIds[card.id] = nil
         end
     end
 
@@ -64,7 +64,7 @@ local function processResponseByName(data, cb, cbParams)
 
     local cardWithMainArtwork = cards[1]
     local name = cardWithMainArtwork.name:lower()
-    local id = tostring(cardWithMainArtwork.id)
+    local id = cardWithMainArtwork.id
     nameCache[name] = id
 
     if type(cb) == "function" then cb(cbParams) end
@@ -114,7 +114,7 @@ function module.ensureCardIsPresentByName(name, cb, cbParams)
 end
 
 function module.getCard(id)
-    id = tostring(id)
+    id = id
     local card = cache[id]
 
     if card == INVALID_ID then
