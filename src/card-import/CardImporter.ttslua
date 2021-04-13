@@ -13,5 +13,23 @@ function module.spawnById(id, pos, rotation)
     cardImportCache.ensureCardIsPresent(id, cb)
 end
 
+function module.spawnByName(name, allArtworks, pos, rotation)
+    local cb = function()
+        local cardWithMainArtwork = cardImportCache.getCardByName(name)
+        local cardsToSpawn = {cardWithMainArtwork}
+
+        if allArtworks then
+            for _,id in ipairs(cardWithMainArtwork.otherArtworks) do
+                local card = cardImportCache.getCard(id)
+                table.insert(cardsToSpawn, card)
+            end
+        end
+
+        local spawner = TtsSpawner:new()
+        spawner:spawnDeck(cardsToSpawn, pos, rotation)
+    end
+
+    cardImportCache.ensureCardIsPresentByName(name, cb)
+end
 
 return module

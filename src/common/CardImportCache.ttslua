@@ -13,9 +13,19 @@ local module = {}
 -- IMPORTANT: key must be a string
 local cache = {}
 
+-- Used to cache requests done by name
+-- Mapping from name to card_id
+-- cache should be used to get the card data
+local nameCache = {}
+
 -- Value for an id that was not recognized by the API in a bulk request
 -- These are marked so that they wont be "redownloaded" later on
 local INVALID_ID = "INVALID_ID"
+
+local function insertIntoCache(card)
+    local id = tostring(card.id)
+    cache[id] = card
+end
 
 local function processResponse(data, nonPresentCardIds, cb, cbParams)
     -- Turn array of ids into Map with id as key
@@ -29,8 +39,7 @@ local function processResponse(data, nonPresentCardIds, cb, cbParams)
         -- We can get multiple cards as a result because we try to parse all artworks as separate cards
         local cards = cardParser.parseCardWithAllArtworks(cardData)
         for _,card in ipairs(cards) do
-            local id = tostring(card.id)
-            cache[id] = card
+            insertIntoCache(card)
             requestedIds[id] = nil
         end
     end
@@ -40,6 +49,23 @@ local function processResponse(data, nonPresentCardIds, cb, cbParams)
         io.warning("Card with id " .. id .. " could not be downloaded. Will be skipped during spawning.")
         cache[id] = INVALID_ID
     end
+
+    if type(cb) == "function" then cb(cbParams) end
+end
+
+-- can be consolodated with processResponse() once querying by ID returns all artworks
+-- no checking for missing cards because this is only used for single cards for now
+local function processResponseByName(data, cb, cbParams)
+    local cardData = data[1]
+    local cards = cardParser.parseCardWithAllArtworks(cardData)
+    for _,card in ipairs(cards) do
+        insertIntoCache(card)
+    end
+
+    local cardWithMainArtwork = cards[1]
+    local name = cardWithMainArtwork.name:lower()
+    local id = tostring(cardWithMainArtwork.id)
+    nameCache[name] = id
 
     if type(cb) == "function" then cb(cbParams) end
 end
@@ -77,12 +103,39 @@ function module.ensureCardIsPresent(id, cb, cbParams)
     module.ensureCardsArePresent({id}, cb, cbParams)
 end
 
+function module.ensureCardIsPresentByName(name, cb, cbParams)
+    if nameCache[name:lower()] then
+        cb(cbParams)
+    end
+
+    local query = "name=" .. name
+    local handler = function(data) processResponseByName(data, cb, cbParams) end
+    apiUtil.cardinfo(query, handler)
+end
+
 function module.getCard(id)
+    id = tostring(id)
     local card = cache[id]
 
     if card == INVALID_ID then
         io.warning("Skipping " .. id .. "...")
         return nil
+    end
+
+    return card
+end
+
+function module.getCardByName(name)
+    local id = nameCache[name:lower()]
+
+    if id == nil then
+        error("No card with name " .. name)
+    end
+
+    local card = cache[id]
+
+    if card == nil or card == INVALID_ID then
+        error("No card with id " .. id)
     end
 
     return card
