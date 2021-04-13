@@ -38,8 +38,9 @@ function module.create()
     Tables.setTable("None")
     Backgrounds.setCustomURL("http://cloud-3.steamusercontent.com/ugc/1804229846320834487/463F17DD295878A1FA27B4825CC3496905BC5E13/")
 
-    print(Lighting.light_intensity)
     Lighting.light_intensity = 0.7
+    Lighting.ambient_type = 2
+    Lighting.reflection_intensity = 0
     Lighting.apply()
 
     -- Hands are not spawned in the first frame
