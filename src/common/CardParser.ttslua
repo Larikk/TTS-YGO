@@ -3,12 +3,14 @@ cardParser = {}
 -- Takes the data from the YGOPRODECK API and transform it to a condensed object with the relevant data
 
 local ATTRIBUTES_TO_BE_COPIED = {
-    "id", "name", "type", "attribute", "race", "atk", "def",
+    "name", "type", "attribute", "race", "atk", "def",
     "level", "scale", "linkval", "desc"
 }
 
 function cardParser.parseCard(apiData)
     local card = {}
+
+    card.id = tostring(apiData.id)
 
     for i, att in pairs(ATTRIBUTES_TO_BE_COPIED) do
         card[att] = apiData[att]
@@ -25,7 +27,7 @@ function cardParser.parseCardWithAllArtworks(apiData)
 
     for _,image in ipairs(apiData.card_images) do
         local card = cardParser.parseCard(apiData)
-        card.id = image.id
+        card.id = tostring(image.id)
         card.image = image.image_url
         table.insert(cards, card)
         table.insert(ids, card.id)
