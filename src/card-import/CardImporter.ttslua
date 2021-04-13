@@ -1,0 +1,17 @@
+local TtsSpawner = require("TTS-YGO/src/common/TtsSpawner")
+local cardImportCache = require("TTS-YGO/src/common/CardImportCache")
+
+local module = {}
+
+function module.spawnById(id, pos, rotation)
+    local cb = function()
+        local card = cardImportCache.getCard(id)
+        local spawner = TtsSpawner:new()
+        spawner:spawnCard(card, pos, rotation)
+    end
+
+    cardImportCache.ensureCardIsPresent(id, cb)
+end
+
+
+return module

@@ -73,6 +73,10 @@ function module.ensureCardsArePresent(cardIds, cb, cbParams)
     apiUtil.cardinfo(query, handler)
 end
 
+function module.ensureCardIsPresent(id, cb, cbParams)
+    module.ensureCardsArePresent({id}, cb, cbParams)
+end
+
 function module.getCard(id)
     local card = cache[id]
 
