@@ -45,9 +45,6 @@ local function createBody()
 
     local buttons = {
         tag = "HorizontalLayout",
-        attributes = {
-            class="deck-import-button"
-        },
         children = {
             createButton("Import", "green", "MiddleLeft", "spawnDeck"),
             createButton("Clear", "red", "MiddleRight", "clearYDKInput"),
