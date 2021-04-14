@@ -38,9 +38,6 @@ function switchPage(player, _, id)
     local pageContainer = guiUtil.getElementById("page-container", xmlTable)
     pageContainer.children = page.getPageObject()
 
-    if type(page.beforeRender) == "function" then
-        page.beforeRender()
-    end
     self.UI.setXmlTable(xmlTable)
     if type(page.afterRender) == "function" then
         Wait.frames(||page.afterRender(), 2)

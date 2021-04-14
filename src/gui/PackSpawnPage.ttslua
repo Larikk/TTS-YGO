@@ -5,7 +5,6 @@ local packGeneratorsModule = require("TTS-YGO/src/gui/PackGenerators")
 local packButtonManagement = {}
 
 local page = nil
-local searchField = nil
 
 local nameCodeMapping = {} -- Mapping from setName:lower to the setCode, used for filtering/searching
 
@@ -87,9 +86,10 @@ local function createNavBar()
         value = "Search: ",
     }
 
-    searchField = {
+    local searchField = {
         tag = "InputField",
         attributes = {
+            id = "search-field",
             class = "search-field"
         }
     }
@@ -165,12 +165,10 @@ local function showAll()
     end
 end
 
-function packButtonManagement.beforeRender()
-    searchField.value = state.get("search")
-end
-
 function packButtonManagement.afterRender()
-    packButtonManagement.applyFilter(searchField.value)
+    local filter = state.get("search")
+    self.UI.setAttribute("search-field", "text", filter)
+    packButtonManagement.applyFilter(filter)
 end
 
 function packButtonManagement.applyFilter(filter)
