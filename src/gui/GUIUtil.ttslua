@@ -41,4 +41,55 @@ function util.createNavBar(title, additionalChildren)
     }
 end
 
+function util.createBox(title, description, content)
+    local children = {}
+
+    table.insert(children, {
+        tag = "Text",
+        attributes = {
+            class = "box-title",
+        },
+        value = title
+    })
+
+    if description ~= nil and description ~= "" then
+        table.insert(children, {
+            tag = "Text",
+            attributes = {
+                class = "box-description",
+            },
+            value = description
+        })
+    end
+
+    table.insert(children, content)
+
+    return {
+        tag = "VerticalLayout",
+        attributes = {
+            class = "box",
+            flexibleWidth = "1"
+        },
+        children = children
+    }
+end
+
+function util.createAlignedButton(text, color, alignment, action)
+    return {
+        tag = "HorizontalLayout",
+        attributes = {
+            childAlignment = alignment,
+            flexibleWidth = "1",
+        },
+        children = {
+            tag = "Button",
+            attributes = {
+                class = color .. " button",
+                onClick = action,
+            },
+            value = text
+        }
+    }
+end
+
 return util

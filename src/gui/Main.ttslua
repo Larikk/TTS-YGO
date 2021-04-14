@@ -2,9 +2,11 @@ local guiUtil = require("TTS-YGO/src/gui/GUIUtil")
 local state = require("TTS-YGO/src/gui/State")
 local assets = require("TTS-YGO/src/gui/Assets")
 local packSpawnPage = require("TTS-YGO/src/gui/PackSpawnPage")
+local cardImportPage = require("TTS-YGO/src/gui/CardImportPage")
 local deckImportPage = require("TTS-YGO/src/gui/DeckImportPage")
 local settingsPage = require("TTS-YGO/src/gui/SettingsPage")
 local packGenerators = require("TTS-YGO/src/gui/PackGenerators").packGenerators
+local cardImport = require("TTS-YGO/src/card-import/CardImporter")
 local ydkImport = require("TTS-YGO/src/ydk-import/YdkImport")
 
 
@@ -12,6 +14,7 @@ local selectedButtonId = nil
 
 local pages = {
     spawnPackButton = packSpawnPage,
+    importCardButton = cardImportPage,
     importDeckButton = deckImportPage,
     settingsButton = settingsPage,
 }
@@ -60,6 +63,26 @@ function spawnBox(_, code)
     local pos = getPositionSetting()
     local rotation = getRotationSetting()
     packGenerators[code]:generateBoosterBox(pos, rotation)
+end
+
+function spawnCardById()
+    local pos = getPositionSetting()
+    local rotation = getRotationSetting()
+    local id = state.get("import_card_by_id")
+    cardImport.spawnById(id, pos, rotation)
+end
+
+function spawnCardByName()
+    local pos = getPositionSetting()
+    local rotation = getRotationSetting()
+    local name = state.get("import_card_by_name")
+    local allArtworks = state.get("import_card_by_name_artwork_toggle")
+    allArtworks = allArtworks:lower() == "true"
+    cardImport.spawnByName(name, allArtworks, pos, rotation)
+end
+
+function onCardImportInputChange(_, value, id)
+    cardImportPage.onChange(id, value)
 end
 
 function spawnDeck()
