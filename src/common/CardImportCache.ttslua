@@ -55,7 +55,7 @@ end
 
 -- can be consolodated with processResponse() once querying by ID returns all artworks
 -- no checking for missing cards because this is only used for single cards for now
-local function processResponseByName(data, cb, cbParams)
+local function processResponseByName(data, name, cb, cbParams)
     local cardData = data[1]
     local cards = cardParser.parseCardWithAllArtworks(cardData)
     for _,card in ipairs(cards) do
@@ -63,9 +63,8 @@ local function processResponseByName(data, cb, cbParams)
     end
 
     local cardWithMainArtwork = cards[1]
-    local name = cardWithMainArtwork.name:lower()
     local id = cardWithMainArtwork.id
-    nameCache[name] = id
+    nameCache[name:lower()] = id
 
     if type(cb) == "function" then cb(cbParams) end
 end
@@ -110,7 +109,7 @@ function module.ensureCardIsPresentByName(name, cb, cbParams)
     end
 
     local query = "name=" .. name
-    local handler = function(data) processResponseByName(data, cb, cbParams) end
+    local handler = function(data) processResponseByName(data, name, cb, cbParams) end
     apiUtil.cardinfo(query, handler)
 end
 
