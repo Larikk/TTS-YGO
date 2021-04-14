@@ -1,0 +1,57 @@
+local url = nil
+
+function onInput(obj, color, input)
+    url = input
+end
+
+function updateCustomDeckField(data)
+    if not data.CustomDeck then
+        error("Object is not a custom card/deck")
+    end
+
+    for _,entry in pairs(data.CustomDeck) do
+        entry.BackURL = url
+    end
+end
+
+function updateData(data)
+    if data.Name == "Card" or data.Name == "CardCustom" then
+        updateCustomDeckField(data)
+    elseif data.Name == "Deck" then
+        updateCustomDeckField(data)
+
+        for _,cardData in pairs(data.ContainedObjects) do
+            updateCustomDeckField(cardData)
+        end
+    else
+        error("Invalid object of type " .. tostring(data.Name))
+    end
+end
+
+function onObjectEnterContainer(container, object)
+    if container == self then
+        if url == nil or url == "" then
+            error("No url set")
+        end
+
+        local data = object.getData()
+        updateData(data)
+        local pos = self.positionToWorld(self.getPosition() + Vector(0, 2, 5))
+        spawnObjectData({
+            data = data,
+            position = pos,
+            rotation = self.getRotation(),
+        })
+    end
+end
+
+function onLoad()
+    self.createInput({
+        function_owner = self,
+        input_function = "onInput",
+        label = "URL to a card back",
+        position = Vector(0, 3, -1.8),
+        width = 1800,
+        height = 200
+    })
+end
