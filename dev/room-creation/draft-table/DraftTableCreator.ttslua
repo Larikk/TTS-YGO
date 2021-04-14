@@ -50,7 +50,7 @@ local function createHiddenZone(pos, rotation, left, color)
             zone.setValue(color)
             util.moveBackwards(zone, zone.getScale().z/2)
             if left then util.moveLeft(zone, zone.getScale().x/2) else util.moveRight(zone, zone.getScale().x/2) end
-            util.moveUp(zone, zone.getScale().y/2)
+            util.moveUp(zone, zone.getScale().y/1.8)
 
             Wait.frames(||createCardGrid(zone), 2)
          end
