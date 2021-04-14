@@ -106,6 +106,7 @@ end
 function module.ensureCardIsPresentByName(name, cb, cbParams)
     if nameCache[name:lower()] then
         cb(cbParams)
+        return
     end
 
     local query = "name=" .. name
