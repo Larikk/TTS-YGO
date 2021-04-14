@@ -1,0 +1,123 @@
+local guiUtil = require("TTS-YGO/src/gui/GUIUtil")
+local state = require("TTS-YGO/src/gui/State")
+local module = {}
+
+local page = nil
+
+local inputFields = {
+    "import_card_by_id", "import_card_by_name"
+}
+
+local artworkToggleId= "import_card_by_name_artwork_toggle"
+
+local function createImportById()
+    local inputField = {
+        tag = "InputField",
+        attributes = {
+            id = "import_card_by_id",
+            onValueChanged = "onCardImportInputChange",
+            flexibleWidth = "1",
+            class = "inputfield"
+        }
+    }
+
+    local button = {
+        tag = "Button",
+        value = "Import",
+        attributes = {
+            class = "green button",
+            onClick = "spawnCardById"
+        }
+    }
+
+    local content = {
+        tag = "HorizontalLayout",
+        children = {inputField, button}
+    }
+
+    return guiUtil.createBox("Spawn by ID/Passcode", "", content)
+end
+
+local function createImportByName()
+    local inputField = {
+        tag = "InputField",
+        attributes = {
+            id = "import_card_by_name",
+            onValueChanged = "onCardImportInputChange",
+            flexibleWidth = "1",
+            class = "inputfield",
+        }
+    }
+
+    local toggle = {
+        tag = "Toggle",
+        value = "Include alternative Artworks",
+        attributes = {
+            id = artworkToggleId,
+            onValueChanged = "onCardImportInputChange",
+            class = "toggle",
+            isOn = "false",
+            flexibleWidth = "1",
+        },
+    }
+
+    local button = guiUtil.createAlignedButton("Import", "green", "MiddleRight", "spawnCardByName")
+
+    local content = {
+        tag = "VerticalLayout",
+        attributes = {
+            spacing = "50"
+        },
+        children = {inputField, toggle, button}
+    }
+
+    return guiUtil.createBox("Spawn by Name", "", content)
+end
+
+local function createPageBody()
+    return {
+        tag = "VerticalLayout",
+        attributes = {
+            class = "page-body"
+        },
+        children = {
+            createImportById(),
+            createImportByName(),
+        }
+    }
+end
+
+local function createPage()
+    return {
+        tag = "VerticalLayout",
+        attributes = {
+            class = "page"
+        },
+        children = {
+            guiUtil.createNavBar("Import Single Cards"),
+            createPageBody(),
+        }
+    }
+end
+
+function module.afterRender()
+    for _,id in ipairs(inputFields) do
+        self.UI.setAttribute(id, "text", state.get(id))
+    end
+
+    self.UI.setAttribute(artworkToggleId, "isOn", state.get(artworkToggleId))
+end
+
+function module.getPageObject()
+    if page == nil then
+        page = createPage()
+    end
+
+    return page
+end
+
+function module.onChange(id, value)
+    state.put(id, value)
+end
+
+return module

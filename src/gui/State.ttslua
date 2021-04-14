@@ -16,6 +16,9 @@ local defaults = {
     -- just here for documentation
     search = nil,
     ydkFile = nil,
+    import_card_by_id = nil,
+    import_card_by_name = nil,
+    import_card_by_name_artwork_toggle = "false",
 }
 
 -- gets set to defaults on load
