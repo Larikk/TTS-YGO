@@ -42,7 +42,6 @@
 
     <!-- Deck import page -->
     <InputField class="deck-input" lineType="MultiLineNewline" fontSize="100"/>
-    <HorizontalLayout class="deck-import-button"/>
 
     <!-- Settings page -->
     <InputField class="settings-textfield" onValueChanged="onSettingChange" minHeight="150" minWidth="400" fontSize="100" alignment="MiddleRight" characterValidation="Decimal" flexibleWidth="1"/>
