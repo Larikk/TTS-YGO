@@ -1,21 +1,27 @@
 local guiUtil = require("TTS-YGO/src/gui/GUIUtil")
 local state = require("TTS-YGO/src/gui/State")
+local cardImport = require("TTS-YGO/src/card-import/CardImporter")
+
 local module = {}
 
 local page = nil
 
-local inputFields = {
-    "import_card_by_id", "import_card_by_name"
-}
+-- IDS of element
+local PAGE_ID = "card-import"
+local IMPORT_BY_ID_INPUT = PAGE_ID .. ":import-by-id-input"
+local IMPORT_BY_ID_BUTTON = PAGE_ID .. ":import-by-id-button"
+local IMPORT_BY_NAME_INPUT = PAGE_ID .. ":import-by-name-input"
+local IMPORT_BY_NAME_BUTTON = PAGE_ID .. ":import-by-name-button"
+local IMPORT_BY_NAME_ARTWORK_TOGGLE = PAGE_ID .. ":import-by-name-artwork-toogle"
 
-local artworkToggleId= "import_card_by_name_artwork_toggle"
+
 
 local function createImportById()
     local inputField = {
         tag = "InputField",
         attributes = {
-            id = "import_card_by_id",
-            onValueChanged = "onCardImportInputChange",
+            id = IMPORT_BY_ID_INPUT,
+            onValueChanged = "handleInputChange",
             flexibleWidth = "1",
             class = "inputfield"
         }
@@ -25,8 +31,9 @@ local function createImportById()
         tag = "Button",
         value = "Import",
         attributes = {
+            id = IMPORT_BY_ID_BUTTON,
             class = "green button",
-            onClick = "spawnCardById"
+            onClick = "handleEvent"
         }
     }
 
@@ -42,8 +49,8 @@ local function createImportByName()
     local inputField = {
         tag = "InputField",
         attributes = {
-            id = "import_card_by_name",
-            onValueChanged = "onCardImportInputChange",
+            id = IMPORT_BY_NAME_INPUT,
+            onValueChanged = "handleInputChange",
             flexibleWidth = "1",
             class = "inputfield",
         }
@@ -53,15 +60,15 @@ local function createImportByName()
         tag = "Toggle",
         value = "Include alternative Artworks",
         attributes = {
-            id = artworkToggleId,
-            onValueChanged = "onCardImportInputChange",
+            id = IMPORT_BY_NAME_ARTWORK_TOGGLE,
+            onValueChanged = "handleInputChange",
             class = "toggle",
             isOn = "false",
             flexibleWidth = "1",
         },
     }
 
-    local button = guiUtil.createAlignedButton("Import", "green", "MiddleRight", "spawnCardByName")
+    local button = guiUtil.createAlignedButton(IMPORT_BY_NAME_BUTTON, "Import", "green", "MiddleRight")
 
     local content = {
         tag = "VerticalLayout",
@@ -88,6 +95,8 @@ local function createPageBody()
 end
 
 local function createPage()
+    state.put(IMPORT_BY_NAME_ARTWORK_TOGGLE, "false")
+
     return {
         tag = "VerticalLayout",
         attributes = {
@@ -101,11 +110,43 @@ local function createPage()
 end
 
 function module.afterRender()
-    for _,id in ipairs(inputFields) do
+    local textInputs = {IMPORT_BY_ID_INPUT, IMPORT_BY_NAME_INPUT}
+    for _,id in ipairs(textInputs) do
         self.UI.setAttribute(id, "text", state.get(id))
     end
 
-    self.UI.setAttribute(artworkToggleId, "isOn", state.get(artworkToggleId))
+    local id = IMPORT_BY_NAME_ARTWORK_TOGGLE
+    self.UI.setAttribute(id, "isOn", state.get(id))
+end
+
+local function importById()
+    local pos = state.getSpawnPosition()
+    local rotation = state.getSpawnRotation()
+    local id = state.get(IMPORT_BY_ID_INPUT)
+    cardImport.spawnById(id, pos, rotation)
+end
+
+local function importByName()
+    local pos = state.getSpawnPosition()
+    local rotation = state.getSpawnRotation()
+    local name = state.get(IMPORT_BY_NAME_INPUT)
+    local allArtworks = state.get(IMPORT_BY_NAME_ARTWORK_TOGGLE):lower() == "true"
+    cardImport.spawnByName(name, allArtworks, pos, rotation)
+end
+
+local eventHandlers = {
+    [IMPORT_BY_ID_BUTTON] = importById,
+    [IMPORT_BY_NAME_BUTTON] = importByName,
+}
+
+function module.handleEvent(id, value, player)
+    local handler = eventHandlers[id]
+
+    if not handler then
+        error("No handler registered for id " .. id)
+    end
+
+    handler(value, player)
 end
 
 function module.getPageObject()
@@ -114,10 +155,6 @@ function module.getPageObject()
     end
 
     return page
-end
-
-function module.onChange(id, value)
-    state.put(id, value)
 end
 
 return module
