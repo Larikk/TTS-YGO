@@ -13,24 +13,6 @@ local DECK_INPUT = PAGE_ID .. ":deck-input"
 local IMPORT_BUTTON = PAGE_ID .. ":import-button"
 local CLEAR_BUTTON = PAGE_ID .. ":clear-button"
 
-local function createButton(id, text, color, alignment, action)
-    return {
-        tag = "HorizontalLayout",
-        attributes = {
-            childAlignment = alignment,
-            flexibleWidth = "1",
-        },
-        children = {
-            tag = "Button",
-            attributes = {
-                id = id,
-                class = color .. " button",
-                onClick = "handleEvent",
-            },
-            value = text
-        }
-    }
-end
 
 local function createBody()
     local title = {
@@ -55,8 +37,8 @@ local function createBody()
     local buttons = {
         tag = "HorizontalLayout",
         children = {
-            createButton(IMPORT_BUTTON, "Import", "green", "MiddleLeft", "spawnDeck"),
-            createButton(CLEAR_BUTTON, "Clear", "red", "MiddleRight", "clearYDKInput"),
+            guiUtil.createButton(IMPORT_BUTTON, "Import", "green", "MiddleLeft"),
+            guiUtil.createButton(CLEAR_BUTTON, "Clear", "red", "MiddleRight"),
         }
     }
 
