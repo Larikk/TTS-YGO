@@ -21,6 +21,7 @@ local pages = {
 }
 
 local eventMapping = {
+    ["card-import"] = cardImportPage,
     ["ydk-file-import"] = deckImportPage,
     ["settings"] = settingsPage,
 }
@@ -66,26 +67,6 @@ function spawnBox(_, code)
     local pos = getPositionSetting()
     local rotation = getRotationSetting()
     packGenerators[code]:generateBoosterBox(pos, rotation)
-end
-
-function spawnCardById()
-    local pos = getPositionSetting()
-    local rotation = getRotationSetting()
-    local id = state.get("import_card_by_id")
-    cardImport.spawnById(id, pos, rotation)
-end
-
-function spawnCardByName()
-    local pos = getPositionSetting()
-    local rotation = getRotationSetting()
-    local name = state.get("import_card_by_name")
-    local allArtworks = state.get("import_card_by_name_artwork_toggle")
-    allArtworks = allArtworks:lower() == "true"
-    cardImport.spawnByName(name, allArtworks, pos, rotation)
-end
-
-function onCardImportInputChange(_, value, id)
-    cardImportPage.onChange(id, value)
 end
 
 -- Stores content of input fields into state
