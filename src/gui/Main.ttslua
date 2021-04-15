@@ -2,10 +2,11 @@ local guiUtil = require("TTS-YGO/src/gui/GUIUtil")
 local stringUtil = require("TTS-YGO/src/common/StringUtil")
 local state = require("TTS-YGO/src/gui/State")
 local assets = require("TTS-YGO/src/gui/Assets")
-local packSpawnPage = require("TTS-YGO/src/gui/PackSpawnPage")
-local cardImportPage = require("TTS-YGO/src/gui/CardImportPage")
-local deckImportPage = require("TTS-YGO/src/gui/DeckImportPage")
-local settingsPage = require("TTS-YGO/src/gui/SettingsPage")
+
+local packSpawnPage = require("TTS-YGO/src/gui/pages/PackSpawnPage")
+local cardImportPage = require("TTS-YGO/src/gui/pages/CardImportPage")
+local deckImportPage = require("TTS-YGO/src/gui/pages/DeckImportPage")
+local settingsPage = require("TTS-YGO/src/gui/pages/SettingsPage")
 
 
 local selectedButtonId = nil
