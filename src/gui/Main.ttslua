@@ -6,9 +6,6 @@ local packSpawnPage = require("TTS-YGO/src/gui/PackSpawnPage")
 local cardImportPage = require("TTS-YGO/src/gui/CardImportPage")
 local deckImportPage = require("TTS-YGO/src/gui/DeckImportPage")
 local settingsPage = require("TTS-YGO/src/gui/SettingsPage")
-local packGenerators = require("TTS-YGO/src/gui/PackGenerators").packGenerators
-local cardImport = require("TTS-YGO/src/card-import/CardImporter")
-local ydkImport = require("TTS-YGO/src/ydk-import/YdkImport")
 
 
 local selectedButtonId = nil
