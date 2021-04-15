@@ -1,0 +1,152 @@
+local guiUtil = require("TTS-YGO/src/gui/GUIUtil")
+local state = require("TTS-YGO/src/gui/State")
+local preconstructedDecks = require("TTS-YGO/src/preconstructed-decks/Decks")
+
+local module = {}
+
+local page = nil
+
+local PAGE_ID = "preconstructed-decks"
+
+local function spawnDeck(code)
+    local pos = state.getSpawnPosition()
+    local rotation = state.getSpawnRotation()
+    preconstructedDecks.spawn(code, pos, rotation)
+end
+
+local function createButton(deck)
+    local id = PAGE_ID .. ":" .. deck.code
+    module.eventHandlers[id] = || spawnDeck(deck.code)
+
+    return {
+        tag = "Button",
+        attributes = {
+            id = id,
+            class = "pack-button",
+            onClick = "handleEvent"
+        },
+        children = {
+            {
+                tag = "VerticalLayout",
+                attributes = {
+                    class = "pack-button"
+                },
+                children = {
+                    {
+                        tag = "Image",
+                        attributes = {
+                            class = "pack-image",
+                            flexibleHeight = "1",
+                            flexibleWidth = "1",
+                            image = deck.code
+                        }
+                    },
+                    {
+                        tag = "Text",
+                        attributes = {
+                            text = deck.name,
+                            class = "pack-name",
+                            flexibleWidth = "1",
+                        }
+                    }
+                }
+            }
+        }
+    }
+end
+
+local function createSection(title, buttons)
+    return {
+        tag = "VerticalLayout",
+        attributes = {
+            class = "pack-section-container",
+            flexibleWidth = "1",
+        },
+        children = {
+            {
+                tag = "Text",
+                attributes = {
+                    class = "pack-section",
+                    flexibleWidth = "1",
+                    text = title
+                }
+            },
+            {
+                tag = "GridLayout",
+                attributes = {
+                    class = "invisible pack-section",
+                    flexibleWidth = "1",
+                },
+                children = buttons
+            }
+        }
+    }
+end
+
+local function createDeckSelection()
+    local children = {}
+
+    -- Starter Decks
+    local starterDeckButtons = {}
+    local starterDecks = preconstructedDecks.getStarterDecks()
+    for _,deck in ipairs(starterDecks) do
+        local button = createButton(deck)
+        table.insert(starterDeckButtons, button)
+    end
+    table.insert(children, createSection("Starter Decks", starterDeckButtons))
+
+    -- Structure Decks
+    local structureDeckButtons = {}
+    local structureDecks = preconstructedDecks.getStructureDecks()
+    for _,deck in ipairs(structureDecks) do
+        local button = createButton(deck)
+        table.insert(structureDeckButtons, button)
+    end
+    table.insert(children, createSection("Structure Decks", structureDeckButtons))
+
+
+    return {
+        tag = "VerticalScrollView",
+        attributes = {
+            class = "invisible",
+            flexibleHeight = "1",
+            flexibleWidth = "1"
+        },
+        children = {
+            tag = "VerticalLayout",
+            attributes = {
+                contentSizeFitter = "vertical"
+            },
+            children = children
+        }
+    }
+end
+
+local function createPage()
+    return {
+        tag = "VerticalLayout",
+        attributes = {
+            class = "page"
+        },
+        children = {
+            guiUtil.createNavBar("Spawn Starter and Structure Decks"),
+            createDeckSelection()
+        },
+    }
+end
+
+function module.afterRender()
+end
+
+function module.getPageObject()
+    if page == nil then
+        module.eventHandlers = {
+            -- event handlers for buttons are added somewhere else
+        }
+        page = createPage()
+    end
+
+    return page
+end
+
+return module

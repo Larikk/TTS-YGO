@@ -56,6 +56,7 @@
         </VerticalLayout>
         <HorizontalLayout class="button-bar">
             <Button id="packs" class="button-bar" onClick="switchPage">Spawn Packs</Button>
+            <Button id="preconstructed-decks" class="button-bar" onClick="switchPage">Structure Decks</Button>
             <Button id="card-import" class="button-bar" onClick="switchPage">Import Card</Button>
             <Button id="ydk-file-import" class="button-bar" onClick="switchPage">Import Deck</Button>
             <Button id="settings" class="button-bar" onClick="switchPage">Settings</Button>
