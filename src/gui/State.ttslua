@@ -24,6 +24,14 @@ local defaults = {
 -- gets set to defaults on load
 local state = {}
 
+function module.getSpawnPosition()
+    return Vector(state["spawn_x"], state["spawn_y"], state["spawn_z"])
+end
+
+function module.getSpawnRotation()
+    return Vector(0, state["spawn_rotation"], 0)
+end
+
 function module.reset(key)
     state[key] = defaults[key]
 end
