@@ -4,8 +4,15 @@ local module = {}
 
 local page = nil
 
+-- IDs of GUI elements
+local PAGE_ID = "settings"
+local SPAWN_X_INPUT = PAGE_ID .. ":spawn-x"
+local SPAWN_Y_INPUT = PAGE_ID .. ":spawn-y"
+local SPAWN_Z_INPUT = PAGE_ID .. ":spawn-z"
+local SPAWN_ROTATION_INPUT = PAGE_ID .. ":spawn-rotation"
+
 local inputFields = {
-    "spawn_x", "spawn_y", "spawn_z", "spawn_rotation"
+    SPAWN_X_INPUT, SPAWN_Y_INPUT, SPAWN_Z_INPUT, SPAWN_ROTATION_INPUT
 }
 
 local function createTitle(title)
@@ -39,12 +46,13 @@ local function createPositionSetting()
         }
     end
 
-    local createInput = function(val)
+    local createInput = function(id, val)
         return {
             tag = "InputField",
             attributes = {
-                id = "spawn_" .. val,
-                class = "settings-textfield"
+                id = id,
+                class = "settings-textfield",
+                onValueChanged = "handleEvent"
             },
             value = "0"
         }
@@ -65,11 +73,11 @@ local function createPositionSetting()
                 },
                 children = {
                     createLabel("x"),
-                    createInput("x"),
+                    createInput(SPAWN_X_INPUT, "x"),
                     createLabel("y"),
-                    createInput("y"),
+                    createInput(SPAWN_Y_INPUT, "y"),
                     createLabel("z"),
-                    createInput("z"),
+                    createInput(SPAWN_Z_INPUT, "z"),
                 }
             }
         }
@@ -80,8 +88,9 @@ local function createRotationSetting()
     local spawnRotation = {
         tag = "InputField",
         attributes = {
-            id = "spawn_rotation",
-            class = "settings-textfield"
+            id = SPAWN_ROTATION_INPUT,
+            class = "settings-textfield",
+            onValueChanged = "handleEvent"
         },
         value = "0"
     }
@@ -176,16 +185,33 @@ function module.afterRender()
     end
 end
 
+local function updateSetting(id, value)
+    state.put(id, value)
+end
+
+local eventHandlers = {
+    [SPAWN_X_INPUT] = updateSetting,
+    [SPAWN_Y_INPUT] = updateSetting,
+    [SPAWN_Z_INPUT] = updateSetting,
+    [SPAWN_ROTATION_INPUT] = updateSetting,
+}
+
+function module.handleEvent(id, value, player)
+    local handler = eventHandlers[id]
+
+    if not handler then
+        error("No handler registered for id " .. id)
+    end
+
+    handler(id, value, player)
+end
+
 function module.getPageObject()
     if page == nil then
         page = createPage()
     end
 
     return page
-end
-
-function module.onChange(id, value)
-    state.put(id, value)
 end
 
 return module

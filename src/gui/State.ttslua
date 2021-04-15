@@ -1,16 +1,23 @@
 local module = {}
 
+-- persistent settings constants
+-- same as in SettingsPage.ttslua
+local SPAWN_X = "settings:spawn-x"
+local SPAWN_Y = "settings:spawn-y"
+local SPAWN_Z = "settings:spawn-z"
+local SPAWN_ROTATION = "settings:spawn-rotation"
+
 local persistentValues = {
-    "spawn_x", "spawn_y", "spawn_z", "spawn_rotation"
+     SPAWN_X, SPAWN_Y, SPAWN_Z, SPAWN_ROTATION
 }
 
 -- default values
 local defaults = {
     -- persistent values, get saved and loaded with the room
-    spawn_x = "0",
-    spawn_y = "10",
-    spawn_z = "0",
-    spawn_rotation = "0",
+    [SPAWN_X] = "0",
+    [SPAWN_Y] = "10",
+    [SPAWN_Z] = "0",
+    [SPAWN_ROTATION] = "0",
 
     -- ephemeral values, get reset on leaving the room
     -- just here for documentation
@@ -25,11 +32,11 @@ local defaults = {
 local state = {}
 
 function module.getSpawnPosition()
-    return Vector(state["spawn_x"], state["spawn_y"], state["spawn_z"])
+    return Vector(state[SPAWN_X], state[SPAWN_Y], state[SPAWN_Z])
 end
 
 function module.getSpawnRotation()
-    return Vector(0, state["spawn_rotation"], 0)
+    return Vector(0, state[SPAWN_ROTATION], 0)
 end
 
 function module.reset(key)
@@ -58,7 +65,7 @@ function module.loadFromSave(save)
     if save == nil or save == "" then return end
 
     save = JSON.decode(save)
-    for _,v in ipairs(persistentValues) do state[v] = save[v] end
+    for _,v in ipairs(persistentValues) do if save[v] then state[v] = save[v] end end
 end
 
 return module

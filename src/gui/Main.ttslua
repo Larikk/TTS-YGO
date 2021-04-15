@@ -21,7 +21,8 @@ local pages = {
 }
 
 local eventMapping = {
-    ["ydk-file-import"] = deckImportPage
+    ["ydk-file-import"] = deckImportPage,
+    ["settings"] = settingsPage,
 }
 
 function switchPage(player, _, id)
@@ -85,14 +86,6 @@ end
 
 function onCardImportInputChange(_, value, id)
     cardImportPage.onChange(id, value)
-end
-
-function onSettingChange(player, value, id)
-    settingsPage.onChange(id, value)
-end
-
-function resetSettings()
-    settingsPage.resetSettings()
 end
 
 function handleEvent(player, value, id)
