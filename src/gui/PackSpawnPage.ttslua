@@ -2,7 +2,7 @@ local guiUtil = require("TTS-YGO/src/gui/GUIUtil")
 local state = require("TTS-YGO/src/gui/State")
 local packGeneratorsModule = require("TTS-YGO/src/gui/PackGenerators")
 
-local packButtonManagement = {}
+local module = {}
 
 local page = nil
 
@@ -165,13 +165,13 @@ local function showAll()
     end
 end
 
-function packButtonManagement.afterRender()
+function module.afterRender()
     local filter = state.get("search")
     self.UI.setAttribute("search-field", "text", filter)
-    packButtonManagement.applyFilter(filter)
+    module.applyFilter(filter)
 end
 
-function packButtonManagement.applyFilter(filter)
+function module.applyFilter(filter)
     state.put("search", filter)
     if filter == nil or filter == "" then
         showAll()
@@ -180,7 +180,7 @@ function packButtonManagement.applyFilter(filter)
     end
 end
 
-function packButtonManagement.getPageObject()
+function module.getPageObject()
     if page == nil then
         page = createPage()
     end
@@ -188,4 +188,4 @@ function packButtonManagement.getPageObject()
     return page
 end
 
-return packButtonManagement
+return module
