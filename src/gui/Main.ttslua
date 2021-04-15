@@ -11,20 +11,13 @@ local settingsPage = require("TTS-YGO/src/gui/SettingsPage")
 local selectedButtonId = nil
 
 local pages = {
-    spawnPackButton = packSpawnPage,
-    importCardButton = cardImportPage,
-    importDeckButton = deckImportPage,
-    settingsButton = settingsPage,
-}
-
-local eventMapping = {
     ["packs"] = packSpawnPage,
     ["card-import"] = cardImportPage,
     ["ydk-file-import"] = deckImportPage,
     ["settings"] = settingsPage,
 }
 
-function switchPage(player, _, id)
+function switchPage(_, _, id)
     local xmlTable = self.UI.getXmlTable()
 
     -- Enable previously selected button and save the state of the old page
@@ -71,5 +64,5 @@ local save = state.save
 function load(saveState)
     state.loadFromSave(saveState)
     assets.initAssets()
-    switchPage(nil, nil, "spawnPackButton")
+    switchPage(nil, nil, "packs")
 end

@@ -15,7 +15,7 @@
     <VerticalScrollView class="invisible" color="rgba(1,1,1,0)" scrollSensitivity="0"/>
 
     <HorizontalLayout class="button-bar" padding="80" spacing="40" color="#2c3e50" flexibleWidth="1"/>
-    <Button class="button-bar" onClick="switchPage" minHeight="200" fontSize="80" fontStyle="bold" colors="#7f8c8d|#95a5a6|#95a5a6|#c0392b" textColor="#ecf0f1" flexibleWidth="1"/>
+    <Button class="button-bar" minHeight="200" fontSize="80" fontStyle="bold" colors="#7f8c8d|#95a5a6|#95a5a6|#c0392b" textColor="#ecf0f1" flexibleWidth="1"/>
 
     <!-- Pack page -->
     <Text class="search-label"/>
@@ -55,10 +55,10 @@
             <Text text="Loading..." fontSize="100" fontStyle="bold"/>
         </VerticalLayout>
         <HorizontalLayout class="button-bar">
-            <Button id="spawnPackButton" class="button-bar">Spawn Packs</Button>
-            <Button id="importCardButton" class="button-bar">Import Card</Button>
-            <Button id="importDeckButton" class="button-bar">Import Deck</Button>
-            <Button id="settingsButton" class="button-bar">Settings</Button>
+            <Button id="packs" class="button-bar" onClick="switchPage">Spawn Packs</Button>
+            <Button id="card-import" class="button-bar" onClick="switchPage">Import Card</Button>
+            <Button id="ydk-file-import" class="button-bar" onClick="switchPage">Import Deck</Button>
+            <Button id="settings" class="button-bar" onClick="switchPage">Settings</Button>
         </HorizontalLayout>
     </VerticalLayout>
 </Panel>
