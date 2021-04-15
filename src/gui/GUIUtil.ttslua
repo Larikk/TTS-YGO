@@ -74,23 +74,30 @@ function util.createBox(title, description, content)
     }
 end
 
-function util.createAlignedButton(id, text, color, alignment)
-    return {
-        tag = "HorizontalLayout",
+function util.createButton(id, text, color, alignment)
+    local result = {
+        tag = "Button",
         attributes = {
-            childAlignment = alignment,
-            flexibleWidth = "1",
+            id = id,
+            class = color .. " button",
+            onClick = "handleEvent",
         },
-        children = {
-            tag = "Button",
-            attributes = {
-                id = id,
-                class = color .. " button",
-                onClick = "handleEvent",
-            },
-            value = text
-        }
+        value = text
     }
+
+    if alignment then
+        result = {
+            tag = "HorizontalLayout",
+            attributes = {
+                childAlignment = alignment,
+                flexibleWidth = "1",
+            },
+            children = result
+        }
+    end
+
+
+    return result
 end
 
 return util

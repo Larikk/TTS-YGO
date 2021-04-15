@@ -27,15 +27,7 @@ local function createImportById()
         }
     }
 
-    local button = {
-        tag = "Button",
-        value = "Import",
-        attributes = {
-            id = IMPORT_BY_ID_BUTTON,
-            class = "green button",
-            onClick = "handleEvent"
-        }
-    }
+    local button = guiUtil.createButton(IMPORT_BY_ID_BUTTON, "Import", "green")
 
     local content = {
         tag = "HorizontalLayout",
@@ -68,7 +60,7 @@ local function createImportByName()
         },
     }
 
-    local button = guiUtil.createAlignedButton(IMPORT_BY_NAME_BUTTON, "Import", "green", "MiddleRight")
+    local button = guiUtil.createButton(IMPORT_BY_NAME_BUTTON, "Import", "green", "MiddleRight")
 
     local content = {
         tag = "VerticalLayout",
