@@ -46,7 +46,7 @@ local function createBody()
         attributes = {
             id = DECK_INPUT,
             class = "deck-input",
-            onValueChanged = "handleEvent",
+            onValueChanged = "handleInputChange",
             flexibleHeight = "1",
             flexibleWidth = "1",
         }
@@ -94,10 +94,6 @@ function spawnDeck()
     ydkImport.spawn(deck, pos, rotation)
 end
 
-function updateDeck(value)
-    state.put(DECK_INPUT, value)
-end
-
 function clearInput()
     self.UI.setAttribute(DECK_INPUT, "text", "")
     state.put(DECK_INPUT, "")
@@ -107,7 +103,6 @@ end
 local eventHandlers = {
     [IMPORT_BUTTON] = spawnDeck,
     [CLEAR_BUTTON] = clearInput,
-    [DECK_INPUT] = updateDeck,
 }
 
 function module.handleEvent(id, value, player)

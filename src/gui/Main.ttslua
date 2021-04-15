@@ -88,6 +88,12 @@ function onCardImportInputChange(_, value, id)
     cardImportPage.onChange(id, value)
 end
 
+-- Stores content of input fields into state
+-- Contents is used for logic and to restore a page on page switch
+function handleInputChange(play, value, id)
+    state.put(id, value)
+end
+
 function handleEvent(player, value, id)
     local pageId = stringUtil.split(id, ":")[1]
     eventMapping[pageId].handleEvent(id, value, player)

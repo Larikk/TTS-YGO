@@ -52,7 +52,7 @@ local function createPositionSetting()
             attributes = {
                 id = id,
                 class = "settings-textfield",
-                onValueChanged = "handleEvent"
+                onValueChanged = "handleInputChange"
             },
             value = "0"
         }
@@ -90,7 +90,7 @@ local function createRotationSetting()
         attributes = {
             id = SPAWN_ROTATION_INPUT,
             class = "settings-textfield",
-            onValueChanged = "handleEvent"
+            onValueChanged = "handleInputChange"
         },
         value = "0"
     }
@@ -189,21 +189,9 @@ local function updateSetting(id, value)
     state.put(id, value)
 end
 
-local eventHandlers = {
-    [SPAWN_X_INPUT] = updateSetting,
-    [SPAWN_Y_INPUT] = updateSetting,
-    [SPAWN_Z_INPUT] = updateSetting,
-    [SPAWN_ROTATION_INPUT] = updateSetting,
-}
 
 function module.handleEvent(id, value, player)
-    local handler = eventHandlers[id]
-
-    if not handler then
-        error("No handler registered for id " .. id)
-    end
-
-    handler(id, value, player)
+    -- no special event handler
 end
 
 function module.getPageObject()
