@@ -108,29 +108,6 @@ local function createRotationSetting()
     }
 end
 
-local function createResetButton()
-    local button = {
-        tag = "Button",
-        attributes = {
-            class = "red button",
-            text = "Reset",
-            onClick = "resetSettings"
-        }
-    }
-
-    return {
-        tag = "VerticalLayout",
-        attributes = {
-            class = "box",
-        },
-        children = {
-            createTitle("Press this if you take this object into another room"),
-            createDescription("Spawn values are fine tuned to the original room of this object. This will reset them to the center of the room."),
-            button,
-        }
-    }
-end
-
 local function createAttribution()
     return {
         tag = "Text",
@@ -152,7 +129,6 @@ local function createPageBody()
         children = {
             createPositionSetting(),
             createRotationSetting(),
-            --createResetButton(),
             createAttribution(),
         }
     }
@@ -171,27 +147,10 @@ local function createPage()
     }
 end
 
-function module.resetSettings()
-    for _,id in ipairs(inputFields) do
-        state.reset(id)
-    end
-
-    module.afterRender()
-end
-
 function module.afterRender()
     for _,id in ipairs(inputFields) do
         self.UI.setAttribute(id, "text", tostring(state.get(id)))
     end
-end
-
-local function updateSetting(id, value)
-    state.put(id, value)
-end
-
-
-function module.handleEvent(id, value, player)
-    -- no special event handler
 end
 
 function module.getPageObject()
