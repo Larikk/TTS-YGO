@@ -134,23 +134,13 @@ local function importByName()
     cardImport.spawnByName(name, allArtworks, pos, rotation)
 end
 
-local eventHandlers = {
-    [IMPORT_BY_ID_BUTTON] = importById,
-    [IMPORT_BY_NAME_BUTTON] = importByName,
-}
-
-function module.handleEvent(id, value, player)
-    local handler = eventHandlers[id]
-
-    if not handler then
-        error("No handler registered for id " .. id)
-    end
-
-    handler(value, player)
-end
-
 function module.getPageObject()
     if page == nil then
+        module.eventHandlers = {
+            [IMPORT_BY_ID_BUTTON] = importById,
+            [IMPORT_BY_NAME_BUTTON] = importByName,
+        }
+
         page = createPage()
     end
 
