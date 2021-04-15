@@ -1,6 +1,6 @@
 local guiUtil = require("TTS-YGO/src/gui/GUIUtil")
 local state = require("TTS-YGO/src/gui/State")
-local settingsPage = {}
+local module = {}
 
 local page = nil
 
@@ -162,21 +162,21 @@ local function createPage()
     }
 end
 
-function settingsPage.resetSettings()
+function module.resetSettings()
     for _,id in ipairs(inputFields) do
         state.reset(id)
     end
 
-    settingsPage.afterRender()
+    module.afterRender()
 end
 
-function settingsPage.afterRender()
+function module.afterRender()
     for _,id in ipairs(inputFields) do
         self.UI.setAttribute(id, "text", tostring(state.get(id)))
     end
 end
 
-function settingsPage.getPageObject()
+function module.getPageObject()
     if page == nil then
         page = createPage()
     end
@@ -184,8 +184,8 @@ function settingsPage.getPageObject()
     return page
 end
 
-function settingsPage.onChange(id, value)
+function module.onChange(id, value)
     state.put(id, value)
 end
 
-return settingsPage
+return module
