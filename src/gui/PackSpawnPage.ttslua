@@ -4,18 +4,63 @@ local packGeneratorsModule = require("TTS-YGO/src/gui/PackGenerators")
 
 local module = {}
 
+local packGenerators = packGeneratorsModule.packGenerators
+
 local page = nil
+
+local PAGE_ID = "packs"
+local SEARCH_INPUT = PAGE_ID .. ":search-field"
 
 local nameCodeMapping = {} -- Mapping from setName:lower to the setCode, used for filtering/searching
 
+local function hide(filter)
+    filter = filter:lower()
+
+    for name,code in pairs(nameCodeMapping) do
+        if string.find(name, filter, 0, true) then
+            self.UI.show(code)
+        else
+            self.UI.hide(code)
+        end
+    end
+end
+
+local function showAll()
+    for _,code in pairs(nameCodeMapping) do
+        self.UI.show(code)
+    end
+end
+
+local function applyFilter(filter)
+    state.put(SEARCH_INPUT, filter)
+    if filter == nil or filter == "" then
+        showAll()
+    else
+        hide(filter)
+    end
+end
+
+local function spawnPack(generator)
+    local pos = state.getSpawnPosition()
+    local rotation = state.getSpawnRotation()
+    generator:generateBoosterBox(pos, rotation)
+end
+
+local eventHandlers = {
+    [SEARCH_INPUT] = applyFilter
+}
+
 local function createButton(gen)
-    nameCodeMapping[gen.setName:lower()] = gen.assetCode
+    local id = PAGE_ID .. ":" .. gen.assetCode
+    nameCodeMapping[gen.setName:lower()] = id
+    eventHandlers[id] = || spawnPack(gen)
+
     return {
         tag = "Button",
         attributes = {
-            id = gen.assetCode,
+            id = id,
             class = "pack-button",
-            onClick = "spawnBox(" .. gen.assetCode .. ")"
+            onClick = "handleEvent(" .. gen.assetCode .. ")"
         },
         children = {
             {
@@ -89,8 +134,9 @@ local function createNavBar()
     local searchField = {
         tag = "InputField",
         attributes = {
-            id = "search-field",
-            class = "search-field"
+            id = SEARCH_INPUT,
+            class = "search-field",
+            onValueChanged = "handleEvent"
         }
     }
 
@@ -147,37 +193,20 @@ local function createPage()
     }
 end
 
-local function hide(filter)
-    filter = filter:lower()
-
-    for name,code in pairs(nameCodeMapping) do
-        if string.find(name, filter, 0, true) then
-            self.UI.show(code)
-        else
-            self.UI.hide(code)
-        end
-    end
-end
-
-local function showAll()
-    for _,code in pairs(nameCodeMapping) do
-        self.UI.show(code)
-    end
-end
-
 function module.afterRender()
-    local filter = state.get("search")
-    self.UI.setAttribute("search-field", "text", filter)
-    module.applyFilter(filter)
+    local filter = state.get(SEARCH_INPUT)
+    self.UI.setAttribute(SEARCH_INPUT, "text", filter)
+    applyFilter(filter)
 end
 
-function module.applyFilter(filter)
-    state.put("search", filter)
-    if filter == nil or filter == "" then
-        showAll()
-    else
-        hide(filter)
+function module.handleEvent(id, value, player)
+    local handler = eventHandlers[id]
+
+    if not handler then
+        error("No handler registered for id " .. id)
     end
+
+    handler(value, player)
 end
 
 function module.getPageObject()
