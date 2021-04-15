@@ -51,7 +51,7 @@ end
 
 function handleEvent(player, value, id)
     local pageId = stringUtil.split(id, ":")[1]
-    local page = eventMapping[pageId]
+    local page = pages[pageId]
 
     if not page then error("Page " .. pageId .. " does not exist") end
 
