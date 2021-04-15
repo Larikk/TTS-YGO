@@ -1,0 +1,63 @@
+local ydkImport = require("TTS-YGO/src/ydk-import/YdkImport")
+
+local module = {}
+
+local initialized = false
+
+local codeToDeckMap = nil
+local starterDecks = nil
+local structureDecks = nil
+
+
+function module.getStarterDecks()
+    module.init()
+    return starterDecks
+end
+
+function module.getStructureDecks()
+    module.init()
+    return structureDecks
+end
+
+function module.spawn(code, pos, rotation)
+    module.init()
+
+    local deck = codeToDeckMap[code]
+
+    if not deck then
+        error("No preconstructed deck with the code " .. code)
+    end
+
+    local ydkFile = deck.cards
+    ydkImport.spawn(ydkFile, pos, rotation)
+end
+
+function module.init()
+    if initialized then
+        return
+    end
+
+    local codeToDeckMapTemp = {}
+
+    local starterDecksTemp = {
+        require("TTS-YGO/src/preconstructed-decks/starter-decks/001-SDY"),
+    }
+
+    local structureDecksTemp = {
+    }
+
+    for _,deck in ipairs(starterDecksTemp) do
+        codeToDeckMapTemp[deck.code] = deck
+    end
+
+    for _,fileName in ipairs(structureDecksTemp) do
+        codeToDeckMapTemp[deck.code] = deck
+    end
+
+    codeToDeckMap = codeToDeckMapTemp
+    starterDecks = starterDecksTemp
+    structureDecks = structureDecksTemp
+    initialized = true
+end
+
+return module

@@ -22,6 +22,14 @@ function assets.initAssets()
         insertAsset(k, v:getOnePackTexture())
     end
 
+    for _,deck in pairs(preconstructedDecks.getStarterDecks()) do
+        insertAsset(deck.code, deck.image)
+    end
+
+    for _,deck in pairs(preconstructedDecks.getStructureDecks()) do
+        insertAsset(deck.code, deck.image)
+    end
+
     self.UI.setCustomAssets(assets)
 end
 
