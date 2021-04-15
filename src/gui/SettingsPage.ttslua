@@ -1,5 +1,6 @@
 local guiUtil = require("TTS-YGO/src/gui/GUIUtil")
 local state = require("TTS-YGO/src/gui/State")
+
 local module = {}
 
 local page = nil
@@ -14,26 +15,6 @@ local SPAWN_ROTATION_INPUT = PAGE_ID .. ":spawn-rotation"
 local inputFields = {
     SPAWN_X_INPUT, SPAWN_Y_INPUT, SPAWN_Z_INPUT, SPAWN_ROTATION_INPUT
 }
-
-local function createTitle(title)
-    return {
-        tag = "Text",
-        attributes = {
-            class = "box-title",
-        },
-        value = title
-    }
-end
-
-local function createDescription(desc)
-    return {
-        tag = "Text",
-        attributes = {
-            class = "box-description",
-        },
-        value = desc
-    }
-end
 
 local function createPositionSetting()
     local createLabel = function(val)
@@ -58,30 +39,24 @@ local function createPositionSetting()
         }
     end
 
-    return {
-        tag = "VerticalLayout",
+    local content = {
+        tag = "HorizontalLayout",
         attributes = {
-            class = "invisible box",
+            class = "position-row"
         },
         children = {
-            createTitle("Position"),
-            createDescription("Determines where objects spawn. (0,0,0) is the center of the room."),
-            {
-                tag = "HorizontalLayout",
-                attributes = {
-                    class = "position-row"
-                },
-                children = {
-                    createLabel("x"),
-                    createInput(SPAWN_X_INPUT, "x"),
-                    createLabel("y"),
-                    createInput(SPAWN_Y_INPUT, "y"),
-                    createLabel("z"),
-                    createInput(SPAWN_Z_INPUT, "z"),
-                }
-            }
+            createLabel("x"),
+            createInput(SPAWN_X_INPUT, "x"),
+            createLabel("y"),
+            createInput(SPAWN_Y_INPUT, "y"),
+            createLabel("z"),
+            createInput(SPAWN_Z_INPUT, "z"),
         }
     }
+
+    local title = "Position"
+    local description = "Determines where objects spawn. (0,0,0) is the center of the room."
+    return guiUtil.createBox(title, description, content)
 end
 
 local function createRotationSetting()
@@ -95,17 +70,9 @@ local function createRotationSetting()
         value = "0"
     }
 
-    return {
-        tag = "VerticalLayout",
-        attributes = {
-            class = "box",
-        },
-        children = {
-            createTitle("Rotation"),
-            createDescription("Determines the orientation the spawned objects are facing. Sensibles values are between 0 and 360."),
-            spawnRotation,
-        }
-    }
+    local title = "Rotation"
+    local description = "Determines the orientation the spawned objects are facing. Sensibles values are between 0 and 360."
+    return guiUtil.createBox(title, description, spawnRotation)
 end
 
 local function createAttribution()
