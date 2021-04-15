@@ -1,11 +1,19 @@
 local guiUtil = require("TTS-YGO/src/gui/GUIUtil")
 local state = require("TTS-YGO/src/gui/State")
+local ydkImport = require("TTS-YGO/src/ydk-import/YdkImport")
+
 
 local module = {}
 
 local page = nil
 
-local function createButton(text, color, alignment, action)
+-- IDs of elements
+local PAGE_ID = "ydk-file-import"
+local DECK_INPUT = PAGE_ID .. ":deck-input"
+local IMPORT_BUTTON = PAGE_ID .. ":import-button"
+local CLEAR_BUTTON = PAGE_ID .. ":clear-button"
+
+local function createButton(id, text, color, alignment, action)
     return {
         tag = "HorizontalLayout",
         attributes = {
@@ -15,8 +23,9 @@ local function createButton(text, color, alignment, action)
         children = {
             tag = "Button",
             attributes = {
+                id = id,
                 class = color .. " button",
-                onClick = action,
+                onClick = "handleEvent",
             },
             value = text
         }
@@ -35,9 +44,9 @@ local function createBody()
     local input = {
         tag = "InputField",
         attributes = {
-            id = "ydkFile",
+            id = DECK_INPUT,
             class = "deck-input",
-            onValueChanged = "onYDKInputChange",
+            onValueChanged = "handleEvent",
             flexibleHeight = "1",
             flexibleWidth = "1",
         }
@@ -46,8 +55,8 @@ local function createBody()
     local buttons = {
         tag = "HorizontalLayout",
         children = {
-            createButton("Import", "green", "MiddleLeft", "spawnDeck"),
-            createButton("Clear", "red", "MiddleRight", "clearYDKInput"),
+            createButton(IMPORT_BUTTON, "Import", "green", "MiddleLeft", "spawnDeck"),
+            createButton(CLEAR_BUTTON, "Clear", "red", "MiddleRight", "clearYDKInput"),
         }
     }
 
@@ -75,18 +84,40 @@ local function createPage()
 end
 
 function module.afterRender()
-    local id = "ydkFile"
-    self.UI.setAttribute(id, "text", state.get(id))
+    self.UI.setAttribute(DECK_INPUT, "text", state.get(DECK_INPUT))
 end
 
-function module.onChange(value)
-    state.put("ydkFile", value)
+function spawnDeck()
+    local pos = state.getSpawnPosition()
+    local rotation = state.getSpawnRotation()
+    local deck = state.get(DECK_INPUT)
+    ydkImport.spawn(deck, pos, rotation)
 end
 
-function module.clear()
-    local id = "ydkFile"
-    self.UI.setAttribute(id, "text", "")
-    state.put(id, "")
+function updateDeck(value)
+    state.put(DECK_INPUT, value)
+end
+
+function clearInput()
+    self.UI.setAttribute(DECK_INPUT, "text", "")
+    state.put(DECK_INPUT, "")
+end
+
+
+local eventHandlers = {
+    [IMPORT_BUTTON] = spawnDeck,
+    [CLEAR_BUTTON] = clearInput,
+    [DECK_INPUT] = updateDeck,
+}
+
+function module.handleEvent(id, value, player)
+    local handler = eventHandlers[id]
+
+    if not handler then
+        error("No handler registered for id " .. id)
+    end
+
+    handler(value, player)
 end
 
 function module.getPageObject()

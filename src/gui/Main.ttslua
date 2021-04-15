@@ -1,4 +1,5 @@
 local guiUtil = require("TTS-YGO/src/gui/GUIUtil")
+local stringUtil = require("TTS-YGO/src/common/StringUtil")
 local state = require("TTS-YGO/src/gui/State")
 local assets = require("TTS-YGO/src/gui/Assets")
 local packSpawnPage = require("TTS-YGO/src/gui/PackSpawnPage")
@@ -17,6 +18,10 @@ local pages = {
     importCardButton = cardImportPage,
     importDeckButton = deckImportPage,
     settingsButton = settingsPage,
+}
+
+local eventMapping = {
+    ["ydk-file-import"] = deckImportPage
 }
 
 function switchPage(player, _, id)
@@ -82,27 +87,17 @@ function onCardImportInputChange(_, value, id)
     cardImportPage.onChange(id, value)
 end
 
-function spawnDeck()
-    local pos = getPositionSetting()
-    local rotation = getRotationSetting()
-    local ydkFile = state.get("ydkFile")
-    ydkImport.spawn(ydkFile, pos, rotation)
-end
-
-function onYDKInputChange(_, value)
-    deckImportPage.onChange(value)
-end
-
-function clearYDKInput()
-    deckImportPage.clear()
-end
-
 function onSettingChange(player, value, id)
     settingsPage.onChange(id, value)
 end
 
 function resetSettings()
     settingsPage.resetSettings()
+end
+
+function handleEvent(player, value, id)
+    local pageId = stringUtil.split(id, ":")[1]
+    eventMapping[pageId].handleEvent(id, value, player)
 end
 
 local save = state.save
