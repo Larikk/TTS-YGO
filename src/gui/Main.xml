@@ -19,7 +19,7 @@
 
     <!-- Pack page -->
     <Text class="search-label"/>
-    <InputField class="search-field" fontSize="100" minWidth="700" minHeight="140" onValueChanged="searchThroughPacks"/>
+    <InputField class="search-field" fontSize="100" minWidth="700" minHeight="140"/>
 
     <VerticalLayout class="pack-section-container" padding="0 0 25 50"/>
     <GridLayout class="pack-section" childAlignment="UpperLeft" padding="20" spacing="20 20" cellsize="650 950"/>
