@@ -46,14 +46,10 @@ local function spawnPack(generator)
     generator:generateBoosterBox(pos, rotation)
 end
 
-local eventHandlers = {
-    [SEARCH_INPUT] = applyFilter
-}
-
 local function createButton(gen)
     local id = PAGE_ID .. ":" .. gen.assetCode
     nameCodeMapping[gen.setName:lower()] = id
-    eventHandlers[id] = || spawnPack(gen)
+    module.eventHandlers[id] = || spawnPack(gen)
 
     return {
         tag = "Button",
@@ -199,18 +195,12 @@ function module.afterRender()
     applyFilter(filter)
 end
 
-function module.handleEvent(id, value, player)
-    local handler = eventHandlers[id]
-
-    if not handler then
-        error("No handler registered for id " .. id)
-    end
-
-    handler(value, player)
-end
-
 function module.getPageObject()
     if page == nil then
+        module.eventHandlers = {
+            -- event handlers for buttons are added somewhere else
+            [SEARCH_INPUT] = applyFilter,
+        }
         page = createPage()
     end
 

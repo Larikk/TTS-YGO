@@ -99,24 +99,13 @@ function clearInput()
     state.put(DECK_INPUT, "")
 end
 
-
-local eventHandlers = {
-    [IMPORT_BUTTON] = spawnDeck,
-    [CLEAR_BUTTON] = clearInput,
-}
-
-function module.handleEvent(id, value, player)
-    local handler = eventHandlers[id]
-
-    if not handler then
-        error("No handler registered for id " .. id)
-    end
-
-    handler(value, player)
-end
-
 function module.getPageObject()
     if page == nil then
+        module.eventHandlers = {
+            [IMPORT_BUTTON] = spawnDeck,
+            [CLEAR_BUTTON] = clearInput,
+        }
+
         page = createPage()
     end
 

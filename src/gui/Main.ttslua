@@ -60,7 +60,13 @@ end
 
 function handleEvent(player, value, id)
     local pageId = stringUtil.split(id, ":")[1]
-    eventMapping[pageId].handleEvent(id, value, player)
+    local page = eventMapping[pageId]
+
+    if not page then error("Page " .. pageId .. " does not exist") end
+
+    local handler = page.eventHandlers[id]
+    if not handler then error("Handler for " .. id .. " does not exist") end
+    handler(value, player)
 end
 
 local save = state.save
