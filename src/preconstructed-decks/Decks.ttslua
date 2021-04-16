@@ -53,7 +53,7 @@ function module.init()
         codeToDeckMapTemp[deck.code] = deck
     end
 
-    for _,fileName in ipairs(structureDecksTemp) do
+    for _,deck in ipairs(structureDecksTemp) do
         codeToDeckMapTemp[deck.code] = deck
     end
 
