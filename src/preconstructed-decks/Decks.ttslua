@@ -47,6 +47,10 @@ function module.init()
     }
 
     local structureDecksTemp = {
+        require("TTS-YGO/src/preconstructed-decks/structure-decks/001-SD1"),
+        require("TTS-YGO/src/preconstructed-decks/structure-decks/002-SD2"),
+        require("TTS-YGO/src/preconstructed-decks/structure-decks/003-SD3"),
+        require("TTS-YGO/src/preconstructed-decks/structure-decks/004-SD4"),
     }
 
     for _,deck in ipairs(starterDecksTemp) do
