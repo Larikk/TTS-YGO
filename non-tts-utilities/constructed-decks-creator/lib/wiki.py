@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import re
+import datetime
 
 def ensureSingleSearchResult(resultSet, name):
     if len(resultSet) > 1:
@@ -44,6 +45,17 @@ def extractImage(soup, name):
 
     return url
 
+def extractReleaseDate(soup):
+    infobox = soup.body.div.p.aside
+    date = infobox.find("h2", string="Release dates").find_next_sibling()
+
+    while date.h3.text != "North America":
+        date = date.find_next_sibling()
+    
+    date = date.div.text
+    date = datetime.datetime.strptime(date, "%B %d, %Y")
+    date = date.strftime("%Y-%m-%d")
+    return date
 
 def extractCode(soup):
     infobox = soup.body.div.p.aside
@@ -105,6 +117,7 @@ def download(title):
     deck['name'] = title.split(":")[1].strip()
     deck['code'] = extractCode(soup)
     deck['image'] = extractImage(soup, deck['name'])
+    deck['release-date'] = extractReleaseDate(soup)
     deck['cards'] = extractCards(soup)
     deck['next'] = extractNext(soup)
 
