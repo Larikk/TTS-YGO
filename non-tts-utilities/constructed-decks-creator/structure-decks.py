@@ -1,4 +1,5 @@
 import lib.wiki as wiki
+import lib.imgur as imgur
 
 def printDeck(deck):
     print("Name", deck['name'])
@@ -18,6 +19,10 @@ def printDeck(deck):
 
     print(cards)
 
-title = "Structure Deck: Dragon's Roar"
+albumHash = "dhSibop" # can be found in url
+imgur = imgur.Client(albumHash)
+
+title = "Structure Deck: Zombie World"
 deck = wiki.download(title)
+deck['imgur'] = imgur.getUrl(deck)
 printDeck(deck)
