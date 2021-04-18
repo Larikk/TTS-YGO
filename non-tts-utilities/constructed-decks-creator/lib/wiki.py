@@ -114,7 +114,7 @@ def download(title):
     deck = {}
 
     soup = getSoup(title)
-    deck['name'] = title.split(":")[1].strip()
+    deck['name'] = title.split("-")[1].strip()
     deck['code'] = extractCode(soup)
     deck['image'] = extractImage(soup, deck['name'])
     deck['release-date'] = extractReleaseDate(soup)
