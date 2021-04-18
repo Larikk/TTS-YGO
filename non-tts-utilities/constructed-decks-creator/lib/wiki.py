@@ -75,7 +75,7 @@ def extractNext(soup):
     infobox = soup.body.div.p.aside
     next = infobox.find_all("td", {"data-source" : "next"})
     next = ensureSingleSearchResult(next, "Next")
-    next = next.i.a['title']
+    next = next.i.a.text
     return next
 
 def extractCards(soup):
@@ -114,12 +114,12 @@ def download(title):
     deck = {}
 
     soup = getSoup(title)
-    deck['name'] = title.split(":")[1].strip()
+    deck['name'] = title.split("-")[1].strip()
     deck['code'] = extractCode(soup)
     deck['image'] = extractImage(soup, deck['name'])
     deck['release-date'] = extractReleaseDate(soup)
     deck['cards'] = extractCards(soup)
-    deck['next'] = extractNext(soup)
+    deck['next'] = "Structure Deck - " + extractNext(soup)
 
     return deck
 
