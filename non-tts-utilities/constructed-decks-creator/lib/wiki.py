@@ -76,19 +76,7 @@ def extractNext(soup):
     infobox = soup.body.div.p.aside
     nextRelease = infobox.find_all("td", {"data-source" : "next"})
     nextRelease = ensureSingleSearchResult(nextRelease, "Next")
-
-    nextRelease = nextRelease.contents[0]
-
-    if nextRelease.name == "i":
-        nextRelease = nextRelease.a.text
-    elif nextRelease.name == "ul":
-        items = nextRelease.contents
-        nextRelease = next(filter(lambda e: "TCG" in e.find_all(text=True), items))
-        nextRelease = nextRelease.i.a.text
-    else:
-        print("Unkown next release structure encountered")
-        exit(1)
-
+    nextRelease = nextRelease.i.a.text.strip()
     return nextRelease
 
 def getTableHeaders(row):
@@ -150,17 +138,17 @@ def download(title):
     deck = {}
 
     soup = getSoup(title)
-    deck['name'] = getName(title)
+    deck['name'] = title
     deck['code'] = extractCode(soup)
     deck['image'] = extractImage(soup, deck['name'])
     deck['release-date'] = extractReleaseDate(soup)
     deck['cards'] = extractCards(soup)
 
-    #try:
-    deck['next'] = extractNext(soup)
-    #except:
-    #    print("WARNING: Extraction of next failed")
-    #    deck['next'] = None
+    try:
+        deck['next'] = extractNext(soup)
+    except:
+        print("WARNING: Extraction of next failed")
+        deck['next'] = None
 
     return deck
 
