@@ -30,6 +30,13 @@ def handleDeck(title):
 
     return deck
 
+nextReleaseExceptions = {
+    "Starter Deck: Kaiba Evolution": "Starter Deck 2006",
+    "Starter Deck 2006": "Starter Deck: Jaden Yuki",
+    "Starter Deck: Xyz Symphony": "Super Starter: V for Victory",
+    "Starter Deck Kaiba Reloaded": "Super Starter: Space-Time Showdown",
+    "Super Starter: Space-Time Showdown": "Saber Force Starter Deck",
+}
 
 while True:
     deck = handleDeck(title)
@@ -37,5 +44,9 @@ while True:
     inp = input("Enter to continue, anything else to quit: ")
     if "next" not in deck or inp != "": break
 
+    if deck['name'] in nextReleaseExceptions:
+        title = nextReleaseExceptions[deck['name']]
+    else:
     title = "Starter Deck: " + deck['next']
+            
     counter += 1
