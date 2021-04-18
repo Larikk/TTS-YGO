@@ -24,6 +24,7 @@ def getSoup(title):
         url += f"{key}={value}&"
 
     r = requests.get(url)
+    print(r.url)
 
     if not r.ok:
         raise RuntimeError("Request failed.\n" + r)
@@ -79,7 +80,7 @@ def extractNext(soup):
     return next
 
 def extractCards(soup):
-    tableContainer = soup.find("div", {"title": re.compile(r"[\s]*English[\s]*")}, class_="tabbertab")
+    tableContainer = soup.find("div", {"title": re.compile(r"[\s]*(English|North American)[\s]*")}, class_="tabbertab")
     table = tableContainer.find("table", {"id": "Top_table"})
 
     rows = table.tbody(recursive=False)
@@ -87,7 +88,7 @@ def extractCards(soup):
     headerRow = rows[0]
     headers = [e.text for e in headerRow.children]
 
-    linkExtractor = lambda e: e.a["title"]
+    linkExtractor = lambda e: e.a.text
     directExtractor = lambda e: e.text
     extractors = [
         linkExtractor,
@@ -130,7 +131,7 @@ def download(title):
 
 def writeToFile(title, path):
     soup = getSoup(title)
-    with open("test.html", "w", encoding="utf-8") as f:
+    with open(path, "w", encoding="utf-8") as f:
         f.write(soup.prettify())
 
 def foo():
