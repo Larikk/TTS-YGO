@@ -21,18 +21,30 @@ def printDeck(deck):
     print(cards)
 
 #Sorts by rarity and then set code
-#Rarity abuses the fact that Ultra < Super < Rare < Common
+rarityOrder = ["Secret Rare", "Ultra Rare", "Shatterfoil Rare", "Super Rare", "Rare", "Common"]
 def compareCards(a, b):
-    if a['Rarity'] == b['Rarity']:
-        if a['Card number'] == b['Card number']: return 0
-        elif a['Card number'] < b['Card number']: return -1
-        else: return 1
-    else:
-        if a['Rarity'] < b['Rarity']: return 1
-        else: return -1
+    deltaRarity = a['__r'] - b['__r']
+    
+    if deltaRarity == 0:
+        return a['__n'] - b['__n']
+    
+    return deltaRarity
 
 def sortCards(deck):
     cards = deck['cards']
+
+    lengthCodeNumber = 0
+    for c in reversed(cards[0]['Card number']):
+        if c.isdigit():
+            lengthCodeNumber += 1
+        else:
+            break
+
+    # makes comparing above faster and easier
+    for card in cards:
+        card['__r'] = rarityOrder.index(card['Rarity'])
+        card['__n'] = int(card['Card number'][-lengthCodeNumber])
+
     return sorted(cards, key=cmp_to_key(compareCards))
 
 
