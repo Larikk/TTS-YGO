@@ -1,4 +1,5 @@
 import requests
+from functools import cmp_to_key
 
 def printDeck(deck):
     print("Name", deck['name'])
@@ -17,6 +18,22 @@ def printDeck(deck):
         cards += "\n"
 
     print(cards)
+
+#Sorts by rarity and then set code
+#Rarity abuses the fact that Ultra < Super < Rare < Common
+def compareCards(a, b):
+    if a['Rarity'] == b['Rarity']:
+        if a['Card number'] == b['Card number']: return 0
+        elif a['Card number'] < b['Card number']: return -1
+        else: return 1
+    else:
+        if a['Rarity'] < b['Rarity']: return 1
+        else: return -1
+
+def sortCards(deck):
+    cards = deck['cards']
+    return sorted(cards, key=cmp_to_key(compareCards))
+
 
 def getIds(deck):
     cards = deck['cards']
