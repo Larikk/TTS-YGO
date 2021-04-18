@@ -79,14 +79,29 @@ def extractNext(soup):
     next = next.i.a.text
     return next
 
+def getTableHeaders(row):
+    cells = row.find_all("th")
+    headers = [e.text.strip() for e in cells]
+
+    replacements = {
+        "Set number": "Card number"
+    }
+
+    result = []
+
+    for header in headers:
+        if header in replacements: result.append(replacements[header])
+        else: result.append(header)
+
+    return result
+
 def extractCards(soup):
     tableContainer = soup.find("div", {"title": re.compile(r"[\s]*(English|North American)[\s]*")}, class_="tabbertab")
-    table = tableContainer.find("table", {"id": "Top_table"})
+    table = tableContainer.find("table")
 
     rows = table.tbody(recursive=False)
 
-    headerRow = rows[0]
-    headers = [e.text for e in headerRow.children]
+    headers = getTableHeaders(rows[0])
 
     linkExtractor = lambda e: e.a.text
     directExtractor = lambda e: e.text
