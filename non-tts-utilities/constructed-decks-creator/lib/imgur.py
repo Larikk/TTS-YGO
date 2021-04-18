@@ -19,13 +19,11 @@ class Client:
         album = response.json()
         return album
 
-    def getUrl(self, deck):
-        name = deck['name']
-
+    def getUrl(self, name):
         imageOnImgur = self.__searchImageOnImgur(name)
         if imageOnImgur == None:
             print("Uploading image to imgur...")
-            return self.__uploadImageToAlbum(deck)
+            return self.__uploadImageToAlbum(name)
         else:
             print("Image is on imgur, skipping.")
             return imageOnImgur['link']
