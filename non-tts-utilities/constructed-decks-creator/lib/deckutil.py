@@ -99,11 +99,11 @@ def asYdkFile(deck):
     return result
 
 def asTtsLuaFile(deck):
-    return f"""
+    return f"""\
 return {{
-    code = {deck['code']},
-    name = {deck['name']},
-    image = {deck['imgur']},
+    code = "{deck['code']}",
+    name = "{deck['name']}",
+    image = "{deck['imgur']}",
     cards = [[
 {deck['ydk']}
 ]]
