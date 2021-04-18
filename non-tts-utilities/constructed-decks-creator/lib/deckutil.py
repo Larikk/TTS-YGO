@@ -97,3 +97,15 @@ def asYdkFile(deck):
     result += "!side"
 
     return result
+
+def asTtsLuaFile(deck):
+    return f"""
+return {{
+    code = {deck['code']},
+    name = {deck['name']},
+    image = {deck['imgur']},
+    cards = [[
+{deck['ydk']}
+]]
+}}
+"""
