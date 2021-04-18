@@ -127,11 +127,19 @@ def extractCards(soup):
 
     return cards
 
+def getName(title):
+    sep = ":"
+
+    if sep in title:
+        return title.split(sep)[1].strip()
+    else:
+        return title
+
 def download(title):
     deck = {}
 
     soup = getSoup(title)
-    deck['name'] = title.split(":")[1].strip()
+    deck['name'] = getName(title)
     deck['code'] = extractCode(soup)
     deck['image'] = extractImage(soup, deck['name'])
     deck['release-date'] = extractReleaseDate(soup)
