@@ -119,7 +119,12 @@ def download(title):
     deck['image'] = extractImage(soup, deck['name'])
     deck['release-date'] = extractReleaseDate(soup)
     deck['cards'] = extractCards(soup)
-    deck['next'] = "Structure Deck - " + extractNext(soup)
+
+    try:
+        deck['next'] = "Structure Deck - " + extractNext(soup)
+    except:
+        print("WARNING: Extraction of next failed")
+        deck['next'] = None
 
     return deck
 
