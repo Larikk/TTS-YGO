@@ -104,7 +104,7 @@ def asTtsLuaFile(deck):
 return {{
     code = "{deck['code']}",
     name = "{deck['name']}",
-    release-date = "{deck['release-date']},
+    release-date = "{deck['release-date']}",
     image = "{deck['imgur']}",
     cards = [[
 {deck['ydk']}
