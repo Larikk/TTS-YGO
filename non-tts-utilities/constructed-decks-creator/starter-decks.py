@@ -38,5 +38,5 @@ while True:
     inp = input("Enter to continue, anything else to quit: ")
     if "next" not in deck or inp != "": break
 
-    title = deck['next']
+    title = "Starter Deck: " + deck['next']
     counter += 1

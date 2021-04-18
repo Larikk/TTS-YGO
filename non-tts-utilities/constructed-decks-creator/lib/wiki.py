@@ -122,7 +122,7 @@ def download(title):
     deck['cards'] = extractCards(soup)
 
     try:
-        deck['next'] = "Structure Deck: " + extractNext(soup)
+        deck['next'] = extractNext(soup)
     except:
         print("WARNING: Extraction of next failed")
         deck['next'] = None
