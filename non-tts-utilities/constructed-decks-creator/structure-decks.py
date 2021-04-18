@@ -18,7 +18,7 @@ atexit.register(files.compileDeckList, folder, "src/preconstructed-decks/structu
 def handleDeck(title):
     os.system('cls' if os.name=='nt' else 'clear') # works in powershell too
     deck = wiki.download(title)
-    deck['imgur'] = imgur.getUrl(deck['name'])
+    deck['imgur'] = imgur.getUrl(deck['name'], deck['image'])
     deck['cards'] = deckutil.sortCards(deck)
     deck['ydk'] = deckutil.asYdkFile(deck)
     deckutil.printDeck(deck)

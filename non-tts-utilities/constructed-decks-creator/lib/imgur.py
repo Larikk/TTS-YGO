@@ -19,11 +19,11 @@ class Client:
         album = response.json()
         return album
 
-    def getUrl(self, name):
+    def getUrl(self, name, imageSrc):
         imageOnImgur = self.__searchImageOnImgur(name)
         if imageOnImgur == None:
             print("Uploading image to imgur...")
-            return self.__uploadImageToAlbum(name)
+            return self.__uploadImageToAlbum(name, imageSrc)
         else:
             print("Image is on imgur, skipping.")
             return imageOnImgur['link']
@@ -33,14 +33,14 @@ class Client:
 
         return next(filter(lambda e: e['description'] == description, images), None)
 
-    def __uploadImageToAlbum(self, deck):
+    def __uploadImageToAlbum(self, name, imageSrc):
         url = "https://api.imgur.com/3/image"
 
         payload={
-            'image': deck['image'],
+            'image': imageSrc,
             'album': self.albumHash,
             'type': 'url',
-            'description': deck['name']
+            'description': name
         }
         headers = {
             'Authorization': f'Bearer {self.access_token}'
