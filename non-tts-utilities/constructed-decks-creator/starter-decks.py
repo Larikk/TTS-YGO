@@ -25,7 +25,7 @@ def handleDeck(title):
 
     # Write deck
     content = deckutil.asTtsLuaFile(deck)
-    filename = f"{counter:03d} - {deck['name']}.ttslua"
+    filename = f"{counter:03d}-{deck['code']}.ttslua"
     files.write(folder, filename, content)
 
     return deck
