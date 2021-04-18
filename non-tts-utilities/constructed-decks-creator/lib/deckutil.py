@@ -12,7 +12,7 @@ def printDeck(deck):
     for card in deck['cards']:
         cards += card['Card number'] + " "
         cards += card['Name'].ljust(60) + " "
-        cards += card['Rarity'].ljust(15) + " "
+        cards += card['Rarity'].ljust(25) + " "
         cards += card['Category'].ljust(30) + " "
         if 'Qty' in card:
             cards += card['Qty'] + " "
