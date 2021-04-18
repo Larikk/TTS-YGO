@@ -4,6 +4,7 @@ from functools import cmp_to_key
 def printDeck(deck):
     print("Name", deck['name'])
     print("Code", deck['code'])
+    print("Date", deck['release-date'])
     print("Image", deck['image'])
     print("Next", deck['next'])
 
@@ -103,6 +104,7 @@ def asTtsLuaFile(deck):
 return {{
     code = "{deck['code']}",
     name = "{deck['name']}",
+    release-date = "{deck['release-date']},
     image = "{deck['imgur']}",
     cards = [[
 {deck['ydk']}
