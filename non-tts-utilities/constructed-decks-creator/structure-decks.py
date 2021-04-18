@@ -5,7 +5,7 @@ import lib.files as files
 import os
 import atexit
 
-title = "Structure Deck - Dragon's Roar"
+title = "Structure Deck: Dragon's Roar"
 counter = 1
 folder = "../../src/preconstructed-decks/structure-decks"
 
