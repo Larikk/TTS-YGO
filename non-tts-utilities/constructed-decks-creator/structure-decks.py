@@ -35,7 +35,7 @@ while True:
     deck = handleDeck(title)
     
     inp = input("Enter to continue, anything else to quit: ")
-    if inp != "": break
+    if "next" not in deck or inp != "": break
 
     title = deck['next']
     counter += 1
