@@ -48,7 +48,7 @@ def getIds(deck):
 
     for card in json['data']:
         id = card['id']
-        name = card['name']
+        name = card['name'].lower()
         nameToIdMapping[name] = str(id)
     
     return nameToIdMapping
@@ -72,7 +72,7 @@ def asYdkFile(deck):
 
     for card in deck['cards']:
         isExtra = isExtraDeckCard(card)
-        id = nameToIdMapping[card['Name']]
+        id = nameToIdMapping[card['Name'].lower()]
         n = 1
         if 'Qty' in card: n = int(card['Qty'])
         for _ in range(n):
