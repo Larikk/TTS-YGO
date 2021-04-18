@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import datetime
+import traceback
 
 def ensureSingleSearchResult(resultSet, name):
     if len(resultSet) > 1:
@@ -161,9 +162,10 @@ def download(title):
 
     try:
         deck['next'] = extractNext(soup)
-    except:
+    except Exception as e:
         print("WARNING: Extraction of next failed")
-        deck['next'] = None
+        print(e)
+        print(traceback.format_exc())
 
     return deck
 
