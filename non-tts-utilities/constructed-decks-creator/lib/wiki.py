@@ -115,8 +115,8 @@ def extractCards(soup):
 
     headers = getTableHeaders(rows[0])
 
-    linkExtractor = lambda e: e.a.text
-    directExtractor = lambda e: e.text
+    linkExtractor = lambda e: e.a.text.strip()
+    directExtractor = lambda e: e.text.strip()
     extractors = [
         linkExtractor,
         linkExtractor,
