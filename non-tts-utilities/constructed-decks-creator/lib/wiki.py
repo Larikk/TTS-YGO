@@ -98,7 +98,16 @@ def getTableHeaders(row):
 
 def extractCards(soup):
     tableContainer = soup.find("div", {"title": re.compile(r"[\s]*(English|North American)[\s]*")}, class_="tabbertab")
-    table = tableContainer.find("table")
+
+    table = None
+    if tableContainer != None:
+        # tables under tabs
+        table = tableContainer.find("table")
+    else:
+        # no tabs, occurs when something releases only in one language
+        tables = soup.find_all(table, class_="card-list")
+        table = ensureSingleSearchResult(tables, "Card Table")
+        
 
     rows = table.tbody(recursive=False)
 
