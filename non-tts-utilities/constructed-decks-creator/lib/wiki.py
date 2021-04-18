@@ -7,6 +7,11 @@ def ensureSingleSearchResult(resultSet, name):
     if len(resultSet) > 1:
         print(f"more than one hit for '{name}' found")
         exit(1)
+    
+    if len(resultSet) == 0:
+        print(f"No hit for '{name}' found")
+        exit(1)
+
     return resultSet[0]
 
 def getSoup(title):
