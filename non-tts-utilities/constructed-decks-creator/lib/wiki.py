@@ -50,7 +50,8 @@ def extractReleaseDate(soup):
     infobox = soup.body.div.p.aside
     date = infobox.find("h2", string="Release dates").find_next_sibling()
 
-    while date.h3.text != "North America":
+    regions = ["North America", "Worldwide"]
+    while date.h3.text not in regions :
         date = date.find_next_sibling()
     
     date = date.div.text
