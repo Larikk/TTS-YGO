@@ -37,9 +37,10 @@ def getSoup(title):
 
 def extractImage(soup, name):
     infobox = soup.body.div.p.aside
-    pattern = re.compile("[.]*" + name + "$")
-    image = infobox.find_all("img", {"alt": pattern})
-    image = ensureSingleSearchResult(image, "Image")
+    #pattern = re.compile("[.]*" + name + "$")
+    #image = infobox.find_all("img", {"alt": pattern})
+    #image = ensureSingleSearchResult(image, "Image")
+    image = infobox.find("img") # just take the first, should be good enough
     url = image['src']
     url = url.split("/revision")[0]
 
