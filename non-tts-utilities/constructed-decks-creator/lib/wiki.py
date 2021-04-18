@@ -69,7 +69,7 @@ def extractCode(soup):
         .li \
         .text
 
-    prefix = prefix.split("-")[0]
+    prefix = prefix.split(" ")[0].split("-")[0]
     return prefix
 
 def extractNext(soup):
