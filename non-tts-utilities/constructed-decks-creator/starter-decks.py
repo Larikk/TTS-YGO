@@ -18,6 +18,14 @@ atexit.register(files.compileDeckList, folder, "src/preconstructed-decks/starter
 
 def handleDeck(title):
     deck = wiki.download(title)
+
+    # These two have the same code prefix
+    name = deck['name']
+    if name == "Saber Force Starter Deck":
+        deck['code'] = "YS15F"
+    elif name == "Dark Legion Starter Deck":
+        deck['code'] = "YS15L"
+    
     deck['imgur'] = imgur.getUrl(deck['name'], deck['image'])
     deck['cards'] = deckutil.sortCards(deck)
     deck['ydk'] = deckutil.asYdkFile(deck)
