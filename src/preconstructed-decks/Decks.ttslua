@@ -38,20 +38,8 @@ function module.init()
     end
 
     local codeToDeckMapTemp = {}
-
-    local starterDecksTemp = {
-        require("TTS-YGO/src/preconstructed-decks/starter-decks/001-SDY"),
-        require("TTS-YGO/src/preconstructed-decks/starter-decks/002-SDK"),
-        require("TTS-YGO/src/preconstructed-decks/starter-decks/003-SDJ"),
-        require("TTS-YGO/src/preconstructed-decks/starter-decks/004-SDP"),
-    }
-
-    local structureDecksTemp = {
-        require("TTS-YGO/src/preconstructed-decks/structure-decks/001-SD1"),
-        require("TTS-YGO/src/preconstructed-decks/structure-decks/002-SD2"),
-        require("TTS-YGO/src/preconstructed-decks/structure-decks/003-SD3"),
-        require("TTS-YGO/src/preconstructed-decks/structure-decks/004-SD4"),
-    }
+    local starterDecksTemp = require("TTS-YGO/src/preconstructed-decks/starter-decks/_all")
+    local structureDecksTemp = require("TTS-YGO/src/preconstructed-decks/structure-decks/_all")
 
     for _,deck in ipairs(starterDecksTemp) do
         codeToDeckMapTemp[deck.code] = deck
