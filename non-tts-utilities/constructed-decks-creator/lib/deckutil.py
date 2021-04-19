@@ -48,8 +48,17 @@ def sortCards(deck):
 
     return sorted(cards, key=cmp_to_key(compareCards))
 
+def isExtraDeckCard(cardType):
+    types = ["Fusion", "Synchro", "Xyz", "Link"]
 
-def getIds(deck):
+    isExtra = False
+    for type_ in types:
+        if type_ in cardType:
+            isExtra = True
+            break
+    return isExtra
+
+def attachAdditionalData(deck):
     cards = deck['cards']
 
     names = [card['Name'] for card in cards]
@@ -57,36 +66,29 @@ def getIds(deck):
 
     r = requests.get("https://db.ygoprodeck.com/api/v7/cardinfo.php", params={"name": names})
     
-    nameToIdMapping = {}
+    nameToDataMapping = {}
     json = r.json()
 
-    for card in json['data']:
-        id = card['id']
-        name = card['name'].lower()
-        nameToIdMapping[name] = str(id)
+    for cardData in json['data']:
+        name = cardData['name'].lower()
+        nameToDataMapping[name] = cardData
+
+    for card in cards:
+        name = card['Name'].lower()
+        data = nameToDataMapping[name]
+        card['id'] = str(data['id'])
+        card['isExtraDeckCard'] = isExtraDeckCard(data['type'])
     
-    return nameToIdMapping
-
-def isExtraDeckCard(card):
-    category = card['Category']
-    types = ["Fusion", "Synchro", "Xyz", "Link"]
-
-    isExtra = False
-    for type_ in types:
-        if type_ in category:
-            isExtra = True
-            break
-    return isExtra
 
 def asYdkFile(deck):
-    nameToIdMapping = getIds(deck)
+    attachAdditionalData(deck)
 
     main = []
     extra = []
 
     for card in deck['cards']:
-        isExtra = isExtraDeckCard(card)
-        id = nameToIdMapping[card['Name'].lower()]
+        id = card['id']
+        isExtra = card['isExtraDeckCard']
         n = 1
         if 'Qty' in card: n = int(card['Qty'])
         for _ in range(n):
