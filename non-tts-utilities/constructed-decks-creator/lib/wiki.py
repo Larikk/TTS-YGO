@@ -2,7 +2,6 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import datetime
-import traceback
 
 def ensureSingleSearchResult(resultSet, name):
     if len(resultSet) > 1:
@@ -150,29 +149,8 @@ def getName(title):
     else:
         return title
 
-def download(title):
-    deck = {}
-
-    soup = getSoup(title)
-    deck['name'] = title
-    deck['code'] = extractCode(soup)
-    deck['image'] = extractImage(soup, deck['name'])
-    deck['release-date'] = extractReleaseDate(soup)
-    deck['cards'] = extractCards(soup)
-
-    try:
-        deck['next'] = extractNext(soup)
-    except Exception as e:
-        print("WARNING: Extraction of next failed")
-        print(e)
-        print(traceback.format_exc())
-
-    return deck
-
 def writeToFile(title, path):
     soup = getSoup(title)
     with open(path, "w", encoding="utf-8") as f:
         f.write(soup.prettify())
 
-def foo():
-    print("Foo")
