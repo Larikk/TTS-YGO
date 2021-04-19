@@ -6,7 +6,8 @@ def printDeck(deck):
     print("Code", deck['code'])
     print("Date", deck['release-date'])
     print("Image", deck['image'])
-    print("Next", deck['next'])
+    if 'next' in deck:
+        print("Next", deck['next'])
 
     cards = ""
     for card in deck['cards']:
