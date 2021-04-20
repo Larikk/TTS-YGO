@@ -64,7 +64,7 @@ def attachAdditionalData(deck):
     names = [card['Name'] for card in cards]
     names = "|".join(names)
 
-    r = requests.get("https://db.ygoprodeck.com/api/v7/cardinfo.php", params={"name": names})
+    r = requests.get("https://db.ygoprodeck.com/api/v7/cardinfo.php", params={"name": names, "misc": "yes"})
     
     nameToDataMapping = {}
     json = r.json()
@@ -72,6 +72,12 @@ def attachAdditionalData(deck):
     for cardData in json['data']:
         name = cardData['name'].lower()
         nameToDataMapping[name] = cardData
+
+        # handle renames
+        for misc in cardData['misc_info']:
+            if 'beta_name' in misc:
+                name = misc['beta_name'].lower()
+                nameToDataMapping[name] = cardData
 
     for card in cards:
         name = card['Name'].lower()
