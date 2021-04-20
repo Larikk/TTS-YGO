@@ -6,6 +6,7 @@ import os
 import atexit
 import traceback
 import time
+import re
 
 
 title = "Structure Deck: Dragon's Roar"
@@ -38,7 +39,7 @@ def handleDeck(title):
     deck = {}
 
     soup = wiki.getSoup(title)
-    name = title
+    name = re.sub(r"[\s]*\(TCG\)[\s]*", "", title)
     deck['name'] = name
     deck['code'] = wiki.extractCode(soup)
     deck['image'] = wiki.extractImage(soup, name)
