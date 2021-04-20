@@ -25,6 +25,15 @@ nextReleaseOutliers = {
     "Structure Deck: Seto Kaiba": "Structure Deck: Pendulum Domination",
 }
 
+# this structure dont have the card list on their page bc something is broken on the wiki
+# the list exeists on a separate site though; the linking just fails
+# TODO: check in the future if its still broken
+missingCardList = {
+    "Structure Deck: Spellcaster's Judgment",
+    "Structure Deck: Invincible Fortress",
+    "Structure Deck: Lord of the Storm",
+}
+
 def handleDeck(title):
     deck = {}
 
@@ -34,7 +43,13 @@ def handleDeck(title):
     deck['code'] = wiki.extractCode(soup)
     deck['image'] = wiki.extractImage(soup, name)
     deck['release-date'] = wiki.extractReleaseDate(soup)
-    deck['cards'] = wiki.extractCards(soup)
+
+    if name in missingCardList:
+        cardListTitle = f"Set Card Lists:{name} (TCG-EN)"
+        cardListSoup = wiki.getSoup(cardListTitle)
+        deck['cards'] = wiki.extractCards(cardListSoup)
+    else:
+        deck['cards'] = wiki.extractCards(soup)
 
     if name in nextReleaseOutliers:
         deck['next'] = nextReleaseOutliers[name]
