@@ -24,6 +24,8 @@ atexit.register(files.compileDeckList, folder, "src/preconstructed-decks/structu
 nextReleaseOutliers = {
     "Structure Deck: Machine Re-Volt": "Structure Deck: Rise of the Dragon Lords",
     "Structure Deck: Seto Kaiba": "Structure Deck: Pendulum Domination",
+    "Structure Deck: Machina Mayhem": "Structure Deck: Marik (TCG)",
+    "Structure Deck: Dragunity Legion": "Structure Deck: Lost Sanctuary (TCG)"
 }
 
 # this structure dont have the card list on their page bc something is broken on the wiki
