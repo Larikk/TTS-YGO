@@ -137,6 +137,7 @@ def extractCards(soup):
             text = extractors[i](cell)
             card[headers[i]] = text
             i = i+1
+        if card['Name'] == "Token": continue
         cards.append(card)
 
     return cards
