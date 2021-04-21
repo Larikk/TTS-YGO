@@ -85,8 +85,9 @@ while True:
     deck = handleDeck(title)
     
     if interactive:
+        if "next" not in deck: break
         inp = input("Enter to continue, anything else to quit: ")
-        if "next" not in deck or inp != "": break
+        if inp != "": break
     else:
         time.sleep(1)
 
