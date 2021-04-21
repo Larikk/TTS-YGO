@@ -27,6 +27,11 @@ nextReleaseOutliers = {
     "Machina Mayhem": "Structure Deck: Marik (TCG)",
     "Dragunity Legion": "Structure Deck: Lost Sanctuary (TCG)",
     "Realm of the Sea Emperor": "Structure Deck: Onslaught of the Fire Kings (TCG)",
+    "Seto Kaiba": "Pendulum Domination Structure Deck",
+    "Cyberse Link": "Structure Deck: Wave of Light",
+    "Powercode Link": "Structure Deck: Zombie Horde",
+    "Soulburner": "Structure Deck: Order of the Spellcasters",
+    "Freezing Chains": None,
 }
 
 # this structure dont have the card list on their page bc something is broken on the wiki
@@ -45,15 +50,30 @@ def handleDeck(title):
     name = re.sub(r"[\s]*(\(TCG\)|Structure Deck)[:]*[\s]*[-]*[\s]*", "", title)
     deck['name'] = name
     deck['code'] = wiki.extractCode(soup)
-    deck['image'] = wiki.extractImage(soup, name)
+
+    if deck['code'] == "SR10":
+        deck['image'] = "https://ms.yugipedia.com//0/09/SR10-DeckEN.png"
+    else:
+        deck['image'] = wiki.extractImage(soup, name)
+
     deck['release-date'] = wiki.extractReleaseDate(soup)
 
     if name in missingCardList:
         cardListTitle = f"Set Card Lists:Structure Deck: {name} (TCG-EN)"
         cardListSoup = wiki.getSoup(cardListTitle)
         deck['cards'] = wiki.extractCards(cardListSoup)
+    elif deck['code'] == "SDCH":
+        # Spirit charmers has three tables on its page
+        tableOverride = soup.find("table", id="Preconstructed_Deck")
+        deck['cards'] = wiki.extractCards(soup, tableOverride=tableOverride)
     else:
         deck['cards'] = wiki.extractCards(soup)
+
+    # temporary shuffle of the cards to fix query to the API
+    # TODO revisit this again in a couple days
+    if deck['code'] == "SDMP":
+        cards = deck['cards']
+        cards[0], cards[1] = cards[1], cards[0]
 
     if name in nextReleaseOutliers:
         deck['next'] = nextReleaseOutliers[name]

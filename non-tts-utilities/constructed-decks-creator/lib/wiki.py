@@ -101,11 +101,13 @@ def getTableHeaders(row):
 
     return result
 
-def extractCards(soup):
+def extractCards(soup, tableOverride=None):
     tableContainer = soup.find("div", {"title": re.compile(r"[\s]*(English|North American)[\s]*")}, class_="tabbertab")
 
     table = None
-    if tableContainer != None:
+    if tableOverride != None:
+        table = tableOverride
+    elif tableContainer != None:
         # tables under tabs
         table = tableContainer.find("table")
     else:
