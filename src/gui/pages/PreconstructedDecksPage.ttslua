@@ -7,6 +7,9 @@ local module = {}
 local page = nil
 
 local PAGE_ID = "preconstructed-decks"
+local SEARCH_INPUT = PAGE_ID .. ":search-field"
+
+local nameCodeMapping = {} -- Mapping from setName:lower to the setCode, used for filtering/searching
 
 local function spawnDeck(code)
     local pos = state.getSpawnPosition()
@@ -14,9 +17,37 @@ local function spawnDeck(code)
     preconstructedDecks.spawn(code, pos, rotation)
 end
 
+local function hide(filter)
+    filter = filter:lower()
+
+    for name,code in pairs(nameCodeMapping) do
+        if string.find(name, filter, 0, true) then
+            self.UI.show(code)
+        else
+            self.UI.hide(code)
+        end
+    end
+end
+
+local function showAll()
+    for _,code in pairs(nameCodeMapping) do
+        self.UI.show(code)
+    end
+end
+
+local function applyFilter(filter)
+    state.put(SEARCH_INPUT, filter)
+    if filter == nil or filter == "" then
+        showAll()
+    else
+        hide(filter)
+    end
+end
+
 local function createButton(deck)
     local id = PAGE_ID .. ":" .. deck.code
     module.eventHandlers[id] = || spawnDeck(deck.code)
+    nameCodeMapping[deck.name:lower()] = id
 
     return {
         tag = "Button",
@@ -122,6 +153,31 @@ local function createDeckSelection()
     }
 end
 
+local function createNavBar()
+    local title = "Spawn Starter and Structure Decks"
+
+    local searchLabel = {
+        tag = "Text",
+        attributes = {
+            class = "nav-bar search-label"
+        },
+        value = "Search: ",
+    }
+
+    local searchField = {
+        tag = "InputField",
+        attributes = {
+            id = SEARCH_INPUT,
+            class = "search-field",
+            onValueChanged = "handleEvent"
+        }
+    }
+
+    local additionalElements = {searchLabel, searchField}
+
+    return guiUtil.createNavBar(title, additionalElements)
+end
+
 local function createPage()
     return {
         tag = "VerticalLayout",
@@ -129,19 +185,23 @@ local function createPage()
             class = "page"
         },
         children = {
-            guiUtil.createNavBar("Spawn Starter and Structure Decks"),
+            createNavBar(),
             createDeckSelection()
         },
     }
 end
 
 function module.afterRender()
+    local filter = state.get(SEARCH_INPUT)
+    self.UI.setAttribute(SEARCH_INPUT, "text", filter)
+    applyFilter(filter)
 end
 
 function module.getPageObject()
     if page == nil then
         module.eventHandlers = {
             -- event handlers for buttons are added somewhere else
+            [SEARCH_INPUT] = applyFilter,
         }
         page = createPage()
     end
