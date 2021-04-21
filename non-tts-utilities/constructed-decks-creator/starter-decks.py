@@ -11,7 +11,9 @@ title = "Starter Deck: Yugi"
 counter = 1
 folder = "../../src/preconstructed-decks/starter-decks"
 
-interactive = True
+ydkOutputFolder = "../../../ygo-ydk-files/Starter Decks/"
+
+interactive = False
 
 albumHash = "xKSFdRb" # can be found in url
 imgur = imgur.Client(albumHash)
@@ -53,8 +55,6 @@ def handleDeck(title):
     else:
         try:
             nextRelease = wiki.extractNext(soup)
-            if not nextRelease.startswith("Starter Deck"):
-                nextRelease = "Starter Deck: " + nextRelease
             deck['next'] = nextRelease
         except Exception as e:
             print("WARNING: Extraction of next failed")
@@ -68,10 +68,16 @@ def handleDeck(title):
     deckutil.printDeck(deck)
 
 
-    # Write deck
+    # Write tts file
     content = deckutil.asTtsLuaFile(deck)
     filename = f"{counter:03d}-{deck['code']}.ttslua"
     files.write(folder, filename, content)
+
+    # Write ydk file
+    content = deck['ydk']
+    filename = deck['name'].replace(":", "")
+    filename = f"{counter:03d} - {filename}.ydk"
+    files.write(ydkOutputFolder, filename, content)
 
     return deck
 
@@ -83,7 +89,7 @@ while True:
         inp = input("Enter to continue, anything else to quit: ")
         if "next" not in deck or inp != "": break
     else:
-        time.sleep(1)
+        time.sleep(2)
 
     title = deck['next']
     counter += 1
