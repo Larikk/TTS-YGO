@@ -1,8 +1,8 @@
 return {
     code = "YSYR",
-    name = "Starter Deck: Yugi Reloaded",
+    name = "Starter Deck Yugi Reloaded",
     releaseDate = "2013-12-06",
-    image = "https://i.imgur.com/M7dlBEP.png",
+    image = "https://i.imgur.com/JG6vUqs.png",
     cards = [[
 #created by ...
 #main
