@@ -13,7 +13,9 @@ title = "Structure Deck: Dragon's Roar"
 counter = 1
 folder = "../../src/preconstructed-decks/structure-decks"
 
-interactive = True
+ydkOutputFolder = "../../../ygo-ydk-files/Structure Decks/"
+
+interactive = False
 
 albumHash = "dhSibop" # can be found in url
 imgur = imgur.Client(albumHash)
@@ -93,10 +95,16 @@ def handleDeck(title):
     deckutil.printDeck(deck)
 
 
-    # Write deck
+    # Write tts file
     content = deckutil.asTtsLuaFile(deck)
     filename = f"{counter:03d}-{deck['code']}.ttslua"
     files.write(folder, filename, content)
+
+    # Write ydk file
+    content = deck['ydk']
+    filename = deck['name'].replace(":", "")
+    filename = f"{counter:03d} - Structure Deck {filename}.ydk"
+    files.write(ydkOutputFolder, filename, content)
 
     return deck
 
@@ -109,7 +117,7 @@ while True:
         inp = input("Enter to continue, anything else to quit: ")
         if inp != "": break
     else:
-        time.sleep(1)
+        time.sleep(2)
 
     title = deck['next']
     counter += 1
