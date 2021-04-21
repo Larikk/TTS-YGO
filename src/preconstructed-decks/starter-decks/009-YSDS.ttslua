@@ -1,8 +1,8 @@
 return {
     code = "YSDS",
-    name = "Starter Deck: Syrus Truesdale",
+    name = "Starter Deck - Syrus Truesdale",
     releaseDate = "2007-07-25",
-    image = "https://i.imgur.com/PHIzVQC.png",
+    image = "https://i.imgur.com/duWkuDq.png",
     cards = [[
 #created by ...
 #main

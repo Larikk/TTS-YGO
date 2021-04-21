@@ -1,8 +1,8 @@
 return {
     code = "YSKR",
-    name = "Starter Deck: Kaiba Reloaded",
+    name = "Starter Deck Kaiba Reloaded",
     releaseDate = "2013-12-06",
-    image = "https://i.imgur.com/aBvKCvM.png",
+    image = "https://i.imgur.com/X6suShW.png",
     cards = [[
 #created by ...
 #main
