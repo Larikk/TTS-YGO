@@ -22,33 +22,34 @@ imgur = imgur.Client(albumHash)
 atexit.register(files.compileDeckList, folder, "src/preconstructed-decks/structure-decks")
 
 nextReleaseOutliers = {
-    "Structure Deck: Machine Re-Volt": "Structure Deck: Rise of the Dragon Lords",
-    "Structure Deck: Seto Kaiba": "Structure Deck: Pendulum Domination",
-    "Structure Deck: Machina Mayhem": "Structure Deck: Marik (TCG)",
-    "Structure Deck: Dragunity Legion": "Structure Deck: Lost Sanctuary (TCG)"
+    "Machine Re-Volt": "Structure Deck: Rise of the Dragon Lords",
+    "Seto Kaiba": "Structure Deck: Pendulum Domination",
+    "Machina Mayhem": "Structure Deck: Marik (TCG)",
+    "Dragunity Legion": "Structure Deck: Lost Sanctuary (TCG)",
+    "Realm of the Sea Emperor": "Structure Deck: Onslaught of the Fire Kings (TCG)",
 }
 
 # this structure dont have the card list on their page bc something is broken on the wiki
 # the list exeists on a separate site though; the linking just fails
 # TODO: check in the future if its still broken
 missingCardList = {
-    "Structure Deck: Spellcaster's Judgment",
-    "Structure Deck: Invincible Fortress",
-    "Structure Deck: Lord of the Storm",
+    "Spellcaster's Judgment",
+    "Invincible Fortress",
+    "Lord of the Storm",
 }
 
 def handleDeck(title):
     deck = {}
 
     soup = wiki.getSoup(title)
-    name = re.sub(r"[\s]*\(TCG\)[\s]*", "", title)
+    name = re.sub(r"[\s]*(\(TCG\)|Structure Deck)[:]*[\s]*[-]*[\s]*", "", title)
     deck['name'] = name
     deck['code'] = wiki.extractCode(soup)
     deck['image'] = wiki.extractImage(soup, name)
     deck['release-date'] = wiki.extractReleaseDate(soup)
 
     if name in missingCardList:
-        cardListTitle = f"Set Card Lists:{name} (TCG-EN)"
+        cardListTitle = f"Set Card Lists:Structure Deck: {name} (TCG-EN)"
         cardListSoup = wiki.getSoup(cardListTitle)
         deck['cards'] = wiki.extractCards(cardListSoup)
     else:
@@ -59,8 +60,6 @@ def handleDeck(title):
     else:
         try:
             nextRelease = wiki.extractNext(soup)
-            if not nextRelease.startswith("Structure Deck"):
-                nextRelease = "Structure Deck: " + nextRelease
             deck['next'] = nextRelease
         except Exception as e:
             print("WARNING: Extraction of next failed")
