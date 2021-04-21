@@ -1,4 +1,5 @@
 import requests
+import json
 
 class Client:
     def __init__(self, albumHash):
@@ -15,6 +16,9 @@ class Client:
         }
 
         response = requests.request("GET", url, headers=headers)
+
+        #pretty_json = json.loads(response.text)
+        #print(json.dumps(pretty_json, indent=4))
 
         album = response.json()
         return album
@@ -49,3 +53,25 @@ class Client:
         response = requests.request("POST", url, headers=headers, data=payload)
 
         return response.json()['data']['link']
+
+    def updateAllDescriptions(self, descriptionProducer):
+        images = self.album['data']['images']
+        for image in images:
+            description = descriptionProducer(image)
+
+            url = f"https://api.imgur.com/3/image/{image['id']}"
+
+            payload={
+                'description': description
+            }
+
+            headers = {
+                'Authorization': f'Bearer {self.access_token}'
+            }
+
+            response = requests.request("POST", url, headers=headers, data=payload)
+
+            if not response.ok:
+                print("Description Update failed")
+                print(response.text)
+                exit(1)
