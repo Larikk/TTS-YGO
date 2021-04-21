@@ -82,7 +82,7 @@ def extractNext(soup):
     infobox = soup.body.div.p.aside
     nextRelease = infobox.find_all("td", {"data-source" : "next"})
     nextRelease = ensureSingleSearchResult(nextRelease, "Next")
-    nextRelease = nextRelease.find("a").text.strip()
+    nextRelease = nextRelease.find("a")['title'].strip()
     return nextRelease
 
 def getTableHeaders(row):
