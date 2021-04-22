@@ -1,0 +1,20 @@
+local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicB")
+
+local PackGenerator = ParentGenerator:new()
+
+function PackGenerator:new()
+    o = ParentGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = "Rise of Destiny"
+    o.setCodePrefix = "RDS-EN"
+    o.setNameUrl = "Rise of Destiny"
+    o.releaseDate = "2004-12-01"
+    o.packTextures = "https://i.imgur.com/DzBKgcu.jpg"
+    o.boxTexture = "https://i.imgur.com/BuHFEMp.png"
+
+    return o
+end
+
+return PackGenerator
