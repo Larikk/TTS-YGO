@@ -1,0 +1,20 @@
+local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicB")
+
+local PackGenerator = ParentGenerator:new()
+
+function PackGenerator:new()
+    o = ParentGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = "The Lost Millennium"
+    o.setCodePrefix = "TLM-EN"
+    o.setNameUrl = "The Lost Millennium"
+    o.releaseDate = "2005-06-01"
+    o.packTextures = "https://i.imgur.com/gvCarSR.png"
+    o.boxTexture = "https://i.imgur.com/5VyfFmc.png"
+
+    return o
+end
+
+return PackGenerator

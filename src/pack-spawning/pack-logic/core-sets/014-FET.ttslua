@@ -1,0 +1,20 @@
+local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicB")
+
+local PackGenerator = ParentGenerator:new()
+
+function PackGenerator:new()
+    o = ParentGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = "Flaming Eternity"
+    o.setCodePrefix = "FET-EN"
+    o.setNameUrl = "Flaming Eternity"
+    o.releaseDate = "2005-03-01"
+    o.packTextures = "https://i.imgur.com/8Q6lAqS.jpg"
+    o.boxTexture = "https://i.imgur.com/RlWeTGS.png"
+
+    return o
+end
+
+return PackGenerator

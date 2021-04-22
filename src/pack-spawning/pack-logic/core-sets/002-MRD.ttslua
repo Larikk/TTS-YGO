@@ -1,15 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicA")
 
-local SET_NAME = "Metal Raiders"
-
-local SET_CODE_PREFIX = "MRD-"
-
-local SET_NAME_URL = SET_NAME
-
-local PACK_TEXTURES = "https://i.imgur.com/0q3qAxc.png"
-
-local BOX_TEXTURE = "https://i.imgur.com/SdBwHUA.png"
-
 local PackGenerator = ParentGenerator:new()
 
 function PackGenerator:new()
@@ -17,11 +7,12 @@ function PackGenerator:new()
     setmetatable(o, self)
     self.__index = self
 
-    o.setName = SET_NAME
-    o.setCodePrefix = SET_CODE_PREFIX
-    o.setNameUrl = SET_NAME_URL
-    o.packTextures = PACK_TEXTURES
-    o.boxTexture = BOX_TEXTURE
+    o.setName = "Metal Raiders"
+    o.setCodePrefix = "MRD-EN"
+    o.setNameUrl = "Metal Raiders"
+    o.releaseDate = "2002-06-26"
+    o.packTextures = "https://i.imgur.com/0q3qAxc.png"
+    o.boxTexture = "https://i.imgur.com/SdBwHUA.png"
 
     return o
 end

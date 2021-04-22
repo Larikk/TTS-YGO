@@ -7,12 +7,12 @@ function PackGenerator:new()
     setmetatable(o, self)
     self.__index = self
 
-    o.setName = "Legend of Blue Eyes White Dragon"
-    o.setCodePrefix = "LOB-EN"
-    o.setNameUrl = "Legend of Blue Eyes White Dragon"
-    o.releaseDate = "2002-03-08"
-    o.packTextures = "https://i.imgur.com/uytVF0z.png"
-    o.boxTexture = "https://i.imgur.com/V50GxkH.png"
+    o.setName = "Dark Crisis"
+    o.setCodePrefix = "DCR-EN"
+    o.setNameUrl = "Dark Crisis"
+    o.releaseDate = "2003-12-01"
+    o.packTextures = "https://i.imgur.com/Rgrf0lH.png"
+    o.boxTexture = "https://i.imgur.com/A9QkU1K.png"
 
     return o
 end
