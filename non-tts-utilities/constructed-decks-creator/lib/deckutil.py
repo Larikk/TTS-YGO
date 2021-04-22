@@ -49,7 +49,7 @@ def sortCards(deck):
     return sorted(cards, key=cmp_to_key(compareCards))
 
 def isExtraDeckCard(cardType):
-    types = ["Fusion", "Synchro", "Xyz", "Link"]
+    types = ["Fusion", "Synchro", "XYZ", "Link"]
 
     isExtra = False
     for type_ in types:
