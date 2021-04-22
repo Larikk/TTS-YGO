@@ -32,6 +32,9 @@ class Client:
             print("Image is on imgur, skipping.")
             return imageOnImgur['link']
 
+    def hasImage(self, name):
+        return self.__searchImageOnImgur(name) != None
+
     def __searchImageOnImgur(self, description):
         images = self.album['data']['images']
 
