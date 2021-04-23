@@ -1,6 +1,7 @@
 local AbstractPackGenerator = require("TTS-YGO/src/pack-spawning/common/AbstractPackGenerator")
 
--- Pack logic for sets between "Soul of the Duelist" and "Cyberdark Impact"
+-- Pack logic for sets between Strike of Neos and Force of the Breaker
+-- Difference to previous: Secret Rares can appear
 
 
 local CARDS_IN_PACKS = 9
