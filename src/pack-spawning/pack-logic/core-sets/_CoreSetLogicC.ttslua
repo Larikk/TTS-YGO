@@ -14,15 +14,17 @@ local RARE = "Rare"
 local SUPER_RARE = "Super Rare"
 local ULTRA_RARE = "Ultra Rare"
 local ULTIMATE_RARE = "Ultimate Rare"
+local SECRET_RARE = "Secret Rare"
 
 -- Ratios for last/foil card, must add up to 1.0
 -- According to https://yugioh.fandom.com/wiki/Forum:Pull_ratios these numbers should be okay for most sets
 -- Ratios for Ultras and Ultimates taken from https://www.pojo.biz/board/showthread.php?t=621221
 local RATIOS = {}
-RATIOS[COMMON] = 0.71
+RATIOS[COMMON] = 0.67
 RATIOS[SUPER_RARE] = 0.17
 RATIOS[ULTRA_RARE] = 0.04
 RATIOS[ULTIMATE_RARE] = 0.08
+RATIOS[SECRET_RARE] = 0.04
 
 -- We want to map some rarities to other rarities (eg. when we want to treat a shortprint as a common)
 local RARITY_REPLACEMENTS = {}
