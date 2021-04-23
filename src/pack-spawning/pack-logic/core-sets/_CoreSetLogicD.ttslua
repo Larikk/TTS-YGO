@@ -14,6 +14,7 @@ local RARE = "Rare"
 local SUPER_RARE = "Super Rare"
 local ULTRA_RARE = "Ultra Rare"
 local ULTIMATE_RARE = "Ultimate Rare"
+local SECRET_RARE = "Secret Rare"
 local GHOST_RARE = "Ghost Rare"
 
 -- Ratios for last/foil card, must add up to 1.0
