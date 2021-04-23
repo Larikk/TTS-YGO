@@ -7,8 +7,8 @@ import traceback
 import atexit
 import time
 
-title = "Legend of Blue Eyes White Dragon"
-counter = 1
+title = "The Lost Millennium"
+counter = 15
 folder = "../../src/pack-spawning/pack-logic/core-sets"
 
 interactive = True
@@ -32,8 +32,12 @@ shortSetCode = {
 def parentLogic(counter):
     if 1 <= counter <= 11:
         return "A"
-    elif 12 <= counter:
+    elif 12 <= counter <= 21:
         return "B"
+    elif 22 <= counter <= 23:
+        return "C"
+    elif 24 <= counter:
+        return "D"
 
 def handleBooster(title):
     booster = {}
