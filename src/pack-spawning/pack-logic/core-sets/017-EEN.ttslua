@@ -1,0 +1,20 @@
+local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicB")
+
+local PackGenerator = ParentGenerator:new()
+
+function PackGenerator:new()
+    o = ParentGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = "Elemental Energy"
+    o.setCodePrefix = "EEN-EN"
+    o.setNameUrl = "Elemental Energy"
+    o.releaseDate = "2005-11-16"
+    o.packTextures = "https://i.imgur.com/Ug604vI.png"
+    o.boxTexture = "https://i.imgur.com/slPZRYi.png"
+
+    return o
+end
+
+return PackGenerator

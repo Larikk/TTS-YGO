@@ -1,0 +1,20 @@
+local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicD")
+
+local PackGenerator = ParentGenerator:new()
+
+function PackGenerator:new()
+    o = ParentGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = "Tactical Evolution"
+    o.setCodePrefix = "TAEV-EN"
+    o.setNameUrl = "Tactical Evolution"
+    o.releaseDate = "2007-08-15"
+    o.packTextures = "https://i.imgur.com/5iGZv95.png"
+    o.boxTexture = "https://i.imgur.com/SfoLSf0.png"
+
+    return o
+end
+
+return PackGenerator

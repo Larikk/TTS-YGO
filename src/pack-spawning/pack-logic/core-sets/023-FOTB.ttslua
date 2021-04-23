@@ -1,0 +1,20 @@
+local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicC")
+
+local PackGenerator = ParentGenerator:new()
+
+function PackGenerator:new()
+    o = ParentGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = "Force of the Breaker"
+    o.setCodePrefix = "FOTB-EN"
+    o.setNameUrl = "Force of the Breaker"
+    o.releaseDate = "2007-05-16"
+    o.packTextures = "https://i.imgur.com/mnB6rDA.jpg"
+    o.boxTexture = "https://i.imgur.com/0sQlEpC.png"
+
+    return o
+end
+
+return PackGenerator
