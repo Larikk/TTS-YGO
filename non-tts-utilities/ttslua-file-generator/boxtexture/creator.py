@@ -1,6 +1,7 @@
 from PIL import Image, ImageDraw
 import sys
 import requests
+import os
 
 def scaleTuple(tuple, scale):
     return (int(tuple[0]*scale), int(tuple[1]*scale))
@@ -101,27 +102,28 @@ def addBack(img):
     img.paste(back, (727, 215))
 
 
+def create(path):
+    logo = os.path.join(os.path.dirname(__file__), 'logo.png')
+    logo = Image.open(logo)
+    img = Image.new("RGBA", (1024, 768), None)
 
-logo = Image.open("logo.png")
-img = Image.new("RGBA", (1024, 768), None)
-
-front = None
-if len(sys.argv) < 2:
-    print("No front image specified, creating placeholder")
-    front = createPlaceholderFront(logo)
-else:
-    cover = sys.argv[1]
-    # if true -> url, otherwise local file
-    if cover.startswith("http"):
-        cover = requests.get(cover, stream=True).raw
-    cover = Image.open(cover)
-    front = createFront(cover)
+    front = None
+    if path == None:
+        print("No front image specified, creating placeholder")
+        front = createPlaceholderFront(logo)
+    else:
+        cover = path
+        # if true -> url, otherwise local file
+        if cover.startswith("http"):
+            cover = requests.get(cover, stream=True).raw
+        cover = Image.open(cover)
+        front = createFront(cover)
 
 
-addTop(img)
-addBottom(img)
-addLeft(img, logo)
-addRight(img, logo)
-addFront(img, front)
-addBack(img)
-img.save("out.png", "PNG")
+    addTop(img)
+    addBottom(img)
+    addLeft(img, logo)
+    addRight(img, logo)
+    addFront(img, front)
+    addBack(img)
+    img.save("box.png", "PNG")

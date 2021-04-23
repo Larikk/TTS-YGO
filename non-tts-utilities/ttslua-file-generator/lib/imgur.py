@@ -1,5 +1,6 @@
 import requests
 import json
+import base64
 
 class Client:
     def __init__(self, albumHash):
@@ -78,3 +79,24 @@ class Client:
                 print("Description Update failed")
                 print(response.text)
                 exit(1)
+
+    def uploadLocalImage(self, name, path):
+        with open(path, "rb") as f:
+            image = base64.b64encode(f.read())
+        
+        url = "https://api.imgur.com/3/image"
+
+        payload={
+            'image': image,
+            'album': self.albumHash,
+            'type': 'base64',
+            'description': name
+        }
+        headers = {
+            'Authorization': f'Bearer {self.access_token}'
+        }
+
+        response = requests.request("POST", url, headers=headers, data=payload)
+        jsonData = response.json()
+        print(jsonData['data'])
+        return jsonData['data']['link']
