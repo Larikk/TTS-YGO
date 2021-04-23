@@ -1,0 +1,20 @@
+local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicD")
+
+local PackGenerator = ParentGenerator:new()
+
+function PackGenerator:new()
+    o = ParentGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = "Light of Destruction"
+    o.setCodePrefix = "LODT-EN"
+    o.setNameUrl = "Light of Destruction"
+    o.releaseDate = "2008-05-13"
+    o.packTextures = "https://i.imgur.com/z5fSJ4t.jpg"
+    o.boxTexture = "https://i.imgur.com/4CKQJaK.png"
+
+    return o
+end
+
+return PackGenerator

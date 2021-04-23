@@ -1,0 +1,20 @@
+local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicB")
+
+local PackGenerator = ParentGenerator:new()
+
+function PackGenerator:new()
+    o = ParentGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = "Shadow of Infinity"
+    o.setCodePrefix = "SOI-EN"
+    o.setNameUrl = "Shadow of Infinity"
+    o.releaseDate = "2006-02-18"
+    o.packTextures = "https://i.imgur.com/fNVPCxv.png"
+    o.boxTexture = "https://i.imgur.com/f976cJi.png"
+
+    return o
+end
+
+return PackGenerator

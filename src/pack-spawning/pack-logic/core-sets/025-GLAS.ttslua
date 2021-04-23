@@ -1,0 +1,20 @@
+local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicD")
+
+local PackGenerator = ParentGenerator:new()
+
+function PackGenerator:new()
+    o = ParentGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = "Gladiator's Assault"
+    o.setCodePrefix = "GLAS-EN"
+    o.setNameUrl = "Gladiator's Assault"
+    o.releaseDate = "2007-11-14"
+    o.packTextures = "https://i.imgur.com/Rbg1yjl.png"
+    o.boxTexture = "https://i.imgur.com/rDqJ3w4.png"
+
+    return o
+end
+
+return PackGenerator
