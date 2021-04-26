@@ -7,8 +7,8 @@ import traceback
 import atexit
 import time
 
-title = "The Lost Millennium"
-counter = 15
+title = "Extreme Victory"
+counter = 39
 folder = "../../src/pack-spawning/pack-logic/core-sets"
 
 interactive = True

@@ -1,0 +1,20 @@
+local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicD")
+
+local PackGenerator = ParentGenerator:new()
+
+function PackGenerator:new()
+    o = ParentGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = "Stardust Overdrive"
+    o.setCodePrefix = "SOVR-EN"
+    o.setNameUrl = "Stardust Overdrive"
+    o.releaseDate = "2009-11-17"
+    o.packTextures = "https://i.imgur.com/gTp4FBm.jpg"
+    o.boxTexture = "https://i.imgur.com/PB1x5tR.png"
+
+    return o
+end
+
+return PackGenerator

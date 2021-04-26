@@ -1,0 +1,20 @@
+local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicD")
+
+local PackGenerator = ParentGenerator:new()
+
+function PackGenerator:new()
+    o = ParentGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = "Extreme Victory"
+    o.setCodePrefix = "EXVC-EN"
+    o.setNameUrl = "Extreme Victory"
+    o.releaseDate = "2011-05-10"
+    o.packTextures = "https://i.imgur.com/OP5EzfR.png"
+    o.boxTexture = "https://i.imgur.com/rdJQJof.png"
+
+    return o
+end
+
+return PackGenerator

@@ -1,0 +1,20 @@
+local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicD")
+
+local PackGenerator = ParentGenerator:new()
+
+function PackGenerator:new()
+    o = ParentGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = "Storm of Ragnarok"
+    o.setCodePrefix = "STOR-EN"
+    o.setNameUrl = "Storm of Ragnarok"
+    o.releaseDate = "2011-02-08"
+    o.packTextures = "https://i.imgur.com/N2XheGt.png"
+    o.boxTexture = "https://i.imgur.com/iTOREsw.png"
+
+    return o
+end
+
+return PackGenerator

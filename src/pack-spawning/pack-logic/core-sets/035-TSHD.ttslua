@@ -1,0 +1,20 @@
+local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicD")
+
+local PackGenerator = ParentGenerator:new()
+
+function PackGenerator:new()
+    o = ParentGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = "The Shining Darkness"
+    o.setCodePrefix = "TSHD-EN"
+    o.setNameUrl = "The Shining Darkness"
+    o.releaseDate = "2010-05-11"
+    o.packTextures = "https://i.imgur.com/08EIRCe.png"
+    o.boxTexture = "https://i.imgur.com/1SApTLq.png"
+
+    return o
+end
+
+return PackGenerator
