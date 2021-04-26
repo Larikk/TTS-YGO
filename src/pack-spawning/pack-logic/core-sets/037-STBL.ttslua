@@ -1,0 +1,20 @@
+local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicD")
+
+local PackGenerator = ParentGenerator:new()
+
+function PackGenerator:new()
+    o = ParentGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = "Starstrike Blast"
+    o.setCodePrefix = "STBL-EN"
+    o.setNameUrl = "Starstrike Blast"
+    o.releaseDate = "2010-11-16"
+    o.packTextures = "https://i.imgur.com/PHZ3Q3N.jpg"
+    o.boxTexture = "https://i.imgur.com/CyrOcrv.png"
+
+    return o
+end
+
+return PackGenerator

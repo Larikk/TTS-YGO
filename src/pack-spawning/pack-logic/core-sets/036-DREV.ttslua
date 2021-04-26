@@ -1,0 +1,20 @@
+local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicD")
+
+local PackGenerator = ParentGenerator:new()
+
+function PackGenerator:new()
+    o = ParentGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = "Duelist Revolution"
+    o.setCodePrefix = "DREV-EN"
+    o.setNameUrl = "Duelist Revolution"
+    o.releaseDate = "2010-08-17"
+    o.packTextures = "https://i.imgur.com/hiQO8bu.jpg"
+    o.boxTexture = "https://i.imgur.com/77qewqj.png"
+
+    return o
+end
+
+return PackGenerator

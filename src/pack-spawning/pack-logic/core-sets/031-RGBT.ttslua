@@ -1,0 +1,20 @@
+local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicD")
+
+local PackGenerator = ParentGenerator:new()
+
+function PackGenerator:new()
+    o = ParentGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = "Raging Battle"
+    o.setCodePrefix = "RGBT-EN"
+    o.setNameUrl = "Raging Battle"
+    o.releaseDate = "2009-05-12"
+    o.packTextures = "https://i.imgur.com/YTxc4zn.png"
+    o.boxTexture = "https://i.imgur.com/oKLAxmq.png"
+
+    return o
+end
+
+return PackGenerator

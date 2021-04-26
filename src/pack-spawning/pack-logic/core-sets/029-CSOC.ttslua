@@ -1,0 +1,20 @@
+local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicD")
+
+local PackGenerator = ParentGenerator:new()
+
+function PackGenerator:new()
+    o = ParentGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = "Crossroads of Chaos"
+    o.setCodePrefix = "CSOC-EN"
+    o.setNameUrl = "Crossroads of Chaos"
+    o.releaseDate = "2008-11-18"
+    o.packTextures = "https://i.imgur.com/DPzCqy1.jpg"
+    o.boxTexture = "https://i.imgur.com/sALrX8y.png"
+
+    return o
+end
+
+return PackGenerator

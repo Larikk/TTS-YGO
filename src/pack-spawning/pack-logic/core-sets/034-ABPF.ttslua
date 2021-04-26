@@ -1,0 +1,20 @@
+local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicD")
+
+local PackGenerator = ParentGenerator:new()
+
+function PackGenerator:new()
+    o = ParentGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = "Absolute Powerforce"
+    o.setCodePrefix = "ABPF-EN"
+    o.setNameUrl = "Absolute Powerforce"
+    o.releaseDate = "2010-02-16"
+    o.packTextures = "https://i.imgur.com/KHXw5pX.png"
+    o.boxTexture = "https://i.imgur.com/F8ApANJ.png"
+
+    return o
+end
+
+return PackGenerator
