@@ -81,7 +81,7 @@ local function getNonPresentIds(cardIds)
     return nonPresentCardIds
 end
 
--- downloand the cardsIds if necessary and executes the callback
+-- downloads the cardIds if necessary and executes the callback
 function module.ensureCardsArePresent(cardIds, cb, cbParams)
     local nonPresentCardIds = getNonPresentIds(cardIds)
 
