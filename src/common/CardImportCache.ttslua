@@ -2,6 +2,7 @@ local apiUtil = require("TTS-YGO/src/common/ApiUtil")
 local cardParser = require("TTS-YGO/src/common/CardParser")
 local io = require("TTS-YGO/src/common/IO")
 local tableUtil = require("TTS-YGO/src/common/TableUtil")
+local stringUtil = require("TTS-YGO/src/common/StringUtil")
 
 local module = {}
 
@@ -81,8 +82,19 @@ local function getNonPresentIds(cardIds)
     return nonPresentCardIds
 end
 
+local function stripLeadingZeros(cardIds)
+    local result = {}
+
+    for i, id in ipairs(cardIds) do
+        result[i] = stringUtil.stripLeadingCharacter(id, "0")
+    end
+
+    return result
+end
+
 -- downloads the cardIds if necessary and executes the callback
 function module.ensureCardsArePresent(cardIds, cb, cbParams)
+    cardIds = stripLeadingZeros(cardIds)
     local nonPresentCardIds = getNonPresentIds(cardIds)
 
     if #nonPresentCardIds == 0 then
@@ -114,7 +126,7 @@ function module.ensureCardIsPresentByName(name, cb, cbParams)
 end
 
 function module.getCard(id)
-    id = id
+    id = stringUtil.stripLeadingCharacter(id, "0")
     local card = cache[id]
 
     if card == INVALID_ID then

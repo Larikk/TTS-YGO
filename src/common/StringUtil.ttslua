@@ -32,5 +32,9 @@ function module.isNumeric(str)
     return str ~= nil and str ~= "" and str:find("%D") == nil
 end
 
+function module.stripLeadingCharacter(str, c)
+    local pattern = c .. "*(%d+)"
+    return str:match(pattern)
+end
 
 return module
