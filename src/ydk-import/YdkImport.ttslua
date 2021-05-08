@@ -32,10 +32,6 @@ local function trimAndRemoveEmpty(lines)
     return result
 end
 
-local function stripLeadingZeros(line)
-    return line:match("0*(%d+)")
-end
-
 local function isSection(str)
     return stringUtil.startsWith(str, "#") or stringUtil.startsWith(str, "!")
 end
@@ -74,7 +70,6 @@ local function parse(ydkFileContent)
         else
             -- card id found
             if currentSection ~= nil then
-                line = stripLeadingZeros(line)
                 table.insert(result[currentSection], line)
             else
                 error("No section was defined before card " .. line)
