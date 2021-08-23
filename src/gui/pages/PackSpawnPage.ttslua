@@ -44,6 +44,11 @@ local function spawnPack(generator)
     local pos = state.getSpawnPosition()
     local rotation = state.getSpawnRotation()
     generator:generateBoosterBox(pos, rotation)
+
+    local debug = false
+    if debug then
+        generator:generateCardListDebug(pos + Vector(0, 0, -5), rotation)
+    end
 end
 
 local function createButton(gen)
