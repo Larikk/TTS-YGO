@@ -14,4 +14,12 @@ function module.distinct(input)
     return output
 end
 
+function module.toSet(table)
+    local set = {}
+    for _, v in ipairs(table) do
+        set[v] = true
+    end
+    return set
+end
+
 return module
