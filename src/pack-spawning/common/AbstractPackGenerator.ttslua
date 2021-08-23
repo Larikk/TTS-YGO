@@ -151,8 +151,15 @@ function AbstractPackGenerator:assembleBox()
 end
 
 function AbstractPackGenerator:generate(f)
-    if self.cardsMap == nil then
-        self:initCardsMap(|| f())
+    if self.cardsMap == nil and not self.downloadLock then
+        self.downloadLock = true
+        local f2 = function()
+            self.downloadLock = false
+            f()
+        end
+        self:initCardsMap(f2)
+    elseif self.cardsMap == nil and self.downloadLock then
+        Wait.condition(f, || not self.downloadLock, 60)
     else
         f()
     end
