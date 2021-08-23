@@ -1,0 +1,20 @@
+local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicD")
+
+local PackGenerator = ParentGenerator:new()
+
+function PackGenerator:new()
+    o = ParentGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = "Judgment of the Light"
+    o.setCodePrefix = "JOTL-EN"
+    o.setNameUrl = "Judgment of the Light"
+    o.releaseDate = "2013-08-09"
+    o.packTextures = "https://i.imgur.com/XudZXZb.png"
+    o.boxTexture = "https://i.imgur.com/w2TrbhK.png"
+
+    return o
+end
+
+return PackGenerator

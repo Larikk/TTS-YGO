@@ -1,0 +1,20 @@
+local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicD")
+
+local PackGenerator = ParentGenerator:new()
+
+function PackGenerator:new()
+    o = ParentGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = "Lord of the Tachyon Galaxy"
+    o.setCodePrefix = "LTGY-EN"
+    o.setNameUrl = "Lord of the Tachyon Galaxy"
+    o.releaseDate = "2013-05-17"
+    o.packTextures = "https://i.imgur.com/LXWmdCV.png"
+    o.boxTexture = "https://i.imgur.com/UUlkKcl.png"
+
+    return o
+end
+
+return PackGenerator

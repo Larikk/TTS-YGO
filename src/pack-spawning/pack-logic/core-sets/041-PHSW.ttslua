@@ -1,0 +1,20 @@
+local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicD")
+
+local PackGenerator = ParentGenerator:new()
+
+function PackGenerator:new()
+    o = ParentGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = "Photon Shockwave"
+    o.setCodePrefix = "PHSW-EN"
+    o.setNameUrl = "Photon Shockwave"
+    o.releaseDate = "2011-11-15"
+    o.packTextures = "https://i.imgur.com/Vm3RsjS.png"
+    o.boxTexture = "https://i.imgur.com/neyYVFe.png"
+
+    return o
+end
+
+return PackGenerator

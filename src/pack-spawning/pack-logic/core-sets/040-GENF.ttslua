@@ -1,0 +1,20 @@
+local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicD")
+
+local PackGenerator = ParentGenerator:new()
+
+function PackGenerator:new()
+    o = ParentGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = "Generation Force"
+    o.setCodePrefix = "GENF-EN"
+    o.setNameUrl = "Generation Force"
+    o.releaseDate = "2011-08-16"
+    o.packTextures = "https://i.imgur.com/eJjMf8Y.png"
+    o.boxTexture = "https://i.imgur.com/424sbtF.png"
+
+    return o
+end
+
+return PackGenerator
