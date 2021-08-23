@@ -1,0 +1,20 @@
+local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicD")
+
+local PackGenerator = ParentGenerator:new()
+
+function PackGenerator:new()
+    o = ParentGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = "Cosmo Blazer"
+    o.setCodePrefix = "CBLZ-EN"
+    o.setNameUrl = "Cosmo Blazer"
+    o.releaseDate = "2013-01-25"
+    o.packTextures = "https://i.imgur.com/o2RV9RV.png"
+    o.boxTexture = "https://i.imgur.com/65rQvks.png"
+
+    return o
+end
+
+return PackGenerator

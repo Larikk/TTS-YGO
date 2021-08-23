@@ -1,0 +1,20 @@
+local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicD")
+
+local PackGenerator = ParentGenerator:new()
+
+function PackGenerator:new()
+    o = ParentGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = "Abyss Rising"
+    o.setCodePrefix = "ABYR-EN"
+    o.setNameUrl = "Abyss Rising"
+    o.releaseDate = "2012-11-09"
+    o.packTextures = "https://i.imgur.com/PPFTQPA.png"
+    o.boxTexture = "https://i.imgur.com/teS5a5I.png"
+
+    return o
+end
+
+return PackGenerator

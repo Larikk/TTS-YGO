@@ -1,0 +1,20 @@
+local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicD")
+
+local PackGenerator = ParentGenerator:new()
+
+function PackGenerator:new()
+    o = ParentGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = "Primal Origin"
+    o.setCodePrefix = "PRIO-EN"
+    o.setNameUrl = "Primal Origin"
+    o.releaseDate = "2014-05-16"
+    o.packTextures = "https://i.imgur.com/xnNKE4y.png"
+    o.boxTexture = "https://i.imgur.com/a4adxKx.png"
+
+    return o
+end
+
+return PackGenerator

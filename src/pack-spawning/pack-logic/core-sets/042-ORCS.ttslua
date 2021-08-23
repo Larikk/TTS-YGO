@@ -1,0 +1,20 @@
+local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicD")
+
+local PackGenerator = ParentGenerator:new()
+
+function PackGenerator:new()
+    o = ParentGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = "Order of Chaos"
+    o.setCodePrefix = "ORCS-EN"
+    o.setNameUrl = "Order of Chaos"
+    o.releaseDate = "2012-01-24"
+    o.packTextures = "https://i.imgur.com/FMnoFXg.png"
+    o.boxTexture = "https://i.imgur.com/looah7S.png"
+
+    return o
+end
+
+return PackGenerator
