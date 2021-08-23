@@ -5,6 +5,7 @@ local io = require("TTS-YGO/src/common/IO")
 local TtsSpawner = require("TTS-YGO/src/common/TtsSpawner")
 local resources = require("TTS-YGO/src/common/Resources")
 local apiUtil = require("TTS-YGO/src/common/ApiUtil")
+local tableUtil = require("TTS-YGO/src/common/TableUtil")
 
 -- We are using a third party JSON library because the native JSON deserialization of TTS is very slow
 -- Benchmark of 10 decode calls for one booster set: library = ~15sec, native = ~300s
@@ -217,11 +218,46 @@ function AbstractPackGenerator:generateCardListDebug(pos, rotation)
     local f = function()
         local spawner = TtsSpawner:new()
         print(self.setName)
-        for rarity,cards in pairs(self.cardsMap) do
+
+        -- most often encountered rarities
+        local regularRarityOrder = {
+            "Ghost Rare",
+            "Secret Rare",
+            "Ultimate Rare",
+            "Ultra Rare",
+            "Super Rare",
+            "Rare",
+            "Common",
+        }
+
+        -- same as above just as set
+        local regularRarities = tableUtil.toSet(regularRarityOrder)
+
+        -- rarities of this release
+        -- first come the rarities not listed above
+        -- afterwards the ones listed above sorted descending
+        local raritiesOfRelease = {}
+        for rarity, _ in pairs(self.cardsMap) do
+            if not regularRarities[rarity] then
+                table.insert(raritiesOfRelease, rarity)
+            end
+        end
+
+        for _, rarity in ipairs(regularRarityOrder) do
+            if self.cardsMap[rarity] then
+                table.insert(raritiesOfRelease, rarity)
+            end
+        end
+
+        local spacing = 5
+        pos = pos + Vector(-spacing * (#raritiesOfRelease-1) / 2, 0, 0)
+
+        for _,rarity in ipairs(raritiesOfRelease) do
+            local cards = self.cardsMap[rarity]
             print(rarity .. ": " .. #cards)
             table.sort(cards, function(a, b) return a.setCode < b.setCode end)
             spawner:spawnDeck(cards, pos, rotation)
-            pos = pos + Vector(-5, 0, 0)
+            pos = pos + Vector(spacing, 0, 0)
         end
         print("#######")
     end
