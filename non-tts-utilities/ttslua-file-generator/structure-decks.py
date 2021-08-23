@@ -33,7 +33,9 @@ nextReleaseOutliers = {
     "Cyberse Link": "Structure Deck: Wave of Light",
     "Powercode Link": "Structure Deck: Zombie Horde",
     "Soulburner": "Structure Deck: Order of the Spellcasters",
-    "Freezing Chains": None,
+    "Freezing Chains": "Egyptian God Deck: Slifer the Sky Dragon",
+    "Egyptian God Deck: Slifer the Sky Dragon": "Egyptian God Deck: Obelisk the Tormentor",
+    "Egyptian God Deck: Obelisk the Tormentor": None,
 }
 
 # this structure dont have the card list on their page bc something is broken on the wiki
