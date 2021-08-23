@@ -102,7 +102,8 @@ def getTableHeaders(row):
     return result
 
 def extractCards(soup, tableOverride=None):
-    tableContainer = soup.find("div", {"title": re.compile(r"[\s]*(English|North American)[\s]*")}, class_="tabbertab")
+    #tableContainer = soup.find("div", {"title": re.compile(r"[\s]*(English|North American)[\s]*")}, class_="tabbertab")
+    tableContainer = soup.find("div", class_="wds-tab__content wds-is-current")
 
     table = None
     if tableOverride != None:
@@ -123,7 +124,7 @@ def extractCards(soup, tableOverride=None):
     linkExtractor = lambda e: e.a.text.strip()
     directExtractor = lambda e: e.text.strip()
     extractors = [
-        linkExtractor,
+        directExtractor,
         linkExtractor,
         linkExtractor,
         linkExtractor,
