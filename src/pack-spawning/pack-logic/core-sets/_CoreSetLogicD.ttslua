@@ -1,6 +1,6 @@
 local AbstractPackGenerator = require("TTS-YGO/src/pack-spawning/common/AbstractPackGenerator")
 
--- Pack logic for sets between Tactical Evolution and TODO
+-- Pack logic for sets between Tactical Evolution and Dimension of Chaos
 -- Difference to previous: Ghost rares and switched odds of ultra and ultimate rares
 
 

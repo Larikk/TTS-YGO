@@ -1,0 +1,20 @@
+local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicD")
+
+local PackGenerator = ParentGenerator:new()
+
+function PackGenerator:new()
+    o = ParentGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = "The New Challengers"
+    o.setCodePrefix = "NECH-EN"
+    o.setNameUrl = "The New Challengers"
+    o.releaseDate = "2014-11-07"
+    o.packTextures = "https://i.imgur.com/u9iXw4P.png"
+    o.boxTexture = "https://i.imgur.com/KwOkaDe.png"
+
+    return o
+end
+
+return PackGenerator

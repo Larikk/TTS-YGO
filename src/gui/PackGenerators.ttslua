@@ -264,6 +264,36 @@ gen = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/051-PRIO"):new()
 packGenerators['PRIO'] = gen
 gen.assetCode = 'PRIO'
 table.insert(sections['Core Sets'], gen)
+
+gen = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/052-DUEA"):new()
+packGenerators['DUEA'] = gen
+gen.assetCode = 'DUEA'
+table.insert(sections['Core Sets'], gen)
+
+gen = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/053-NECH"):new()
+packGenerators['NECH'] = gen
+gen.assetCode = 'NECH'
+table.insert(sections['Core Sets'], gen)
+
+gen = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/054-SECE"):new()
+packGenerators['SECE'] = gen
+gen.assetCode = 'SECE'
+table.insert(sections['Core Sets'], gen)
+
+gen = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/055-CROS"):new()
+packGenerators['CROS'] = gen
+gen.assetCode = 'CROS'
+table.insert(sections['Core Sets'], gen)
+
+gen = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/056-CORE"):new()
+packGenerators['CORE'] = gen
+gen.assetCode = 'CORE'
+table.insert(sections['Core Sets'], gen)
+
+gen = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/057-DOCS"):new()
+packGenerators['DOCS'] = gen
+gen.assetCode = 'DOCS'
+table.insert(sections['Core Sets'], gen)
 --##################
 
 
