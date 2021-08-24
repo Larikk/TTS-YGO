@@ -9,7 +9,9 @@ import time
 
 title = "Dimension of Chaos"
 counter = 57
-folder = "../../src/pack-spawning/pack-logic/core-sets"
+folder = "core-sets"
+
+path = "../../src/pack-spawning/pack-logic/" + folder
 
 interactive = True
 
@@ -78,9 +80,9 @@ def handleBooster(title):
     boosterutil.printBooster(booster)
 
     # Write tts file
-    content = boosterutil.asTtsLuaFile(booster, parentLogic(counter))
+    content = boosterutil.asTtsLuaFile(booster, folder, "_CoreSetLogic" + parentLogic(counter))
     filename = f"{counter:03d}-{booster['code']}.ttslua"
-    files.write(folder, filename, content)
+    files.write(path, filename, content)
 
     return booster
 
