@@ -7,11 +7,11 @@ function PackGenerator:new()
     setmetatable(o, self)
     self.__index = self
 
-    o.setName = "Tournament Pack: 1st Season"
-    o.setCodePrefix = "TP1-"
-    o.setNameUrl = "Tournament Pack: 1st Season"
-    o.releaseDate = "2002-09-01"
-    o.packTextures = "https://i.imgur.com/XGTLWF4.png"
+    o.setName = "Tournament Pack 8"
+    o.setCodePrefix = "TP8-EN"
+    o.setNameUrl = "Tournament Pack 8"
+    o.releaseDate = "2006-04-28"
+    o.packTextures = "https://i.imgur.com/8YT9vIf.png"
     o.boxTexture = nil
 
     return o
