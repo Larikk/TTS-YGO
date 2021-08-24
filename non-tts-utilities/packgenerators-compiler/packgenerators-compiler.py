@@ -6,6 +6,7 @@ sections = [
     "core-sets",
     "battle-packs",
     "tournament-packs",
+    "champion-packs",
 ]
 
 logic_dir = "../../src/pack-spawning/pack-logic/"

@@ -1,0 +1,20 @@
+local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/champion-packs/_Logic")
+
+local PackGenerator = ParentGenerator:new()
+
+function PackGenerator:new()
+    o = ParentGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = "Champion Pack: Game Five"
+    o.setCodePrefix = "CP05-EN"
+    o.setNameUrl = "Champion Pack: Game Five"
+    o.releaseDate = "2008-01-08"
+    o.packTextures = "https://i.imgur.com/snSfr8R.png"
+    o.boxTexture = nil
+
+    return o
+end
+
+return PackGenerator
