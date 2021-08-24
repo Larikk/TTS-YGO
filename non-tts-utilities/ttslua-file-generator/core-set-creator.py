@@ -7,8 +7,8 @@ import traceback
 import atexit
 import time
 
-title = "Extreme Victory"
-counter = 39
+title = "Dimension of Chaos"
+counter = 57
 folder = "../../src/pack-spawning/pack-logic/core-sets"
 
 interactive = True
