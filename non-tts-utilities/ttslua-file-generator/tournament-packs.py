@@ -27,7 +27,7 @@ def handleBooster(title):
     booster['name'] = name
     booster['name-url'] = name
     booster['code'] = wiki.extractCode(soup)
-    if counter <= 4:
+    if counter <= 4 and title.startswith("Tournament Pack"):
         booster['code-long'] = booster['code'] + "-"
     else:
         booster['code-long'] = booster['code'] + "-EN"
