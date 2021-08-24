@@ -1,0 +1,20 @@
+local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicD")
+
+local PackGenerator = ParentGenerator:new()
+
+function PackGenerator:new()
+    o = ParentGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = "Duelist Alliance"
+    o.setCodePrefix = "DUEA-EN"
+    o.setNameUrl = "Duelist Alliance"
+    o.releaseDate = "2014-08-15"
+    o.packTextures = "https://i.imgur.com/YTi3hdu.png"
+    o.boxTexture = "https://i.imgur.com/4eupRPC.png"
+
+    return o
+end
+
+return PackGenerator
