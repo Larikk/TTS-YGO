@@ -113,6 +113,10 @@ function AbstractPackGenerator:parseCardList(cardList)
     return cardsMap
 end
 
+-- Just so it can be modified after parsing by certain releases if necessary
+function AbstractPackGenerator:postParseCardList(cardsMap)
+    return cardsMap
+end
 
 -- downloads the card list and initializes cardsMap
 -- callBack should be the action that should have been executed if cardsMap were initialized
@@ -120,7 +124,9 @@ function AbstractPackGenerator:initCardsMap(callback)
     local query = "cardset=" .. self.setNameUrl
 
     apiUtil.cardinfo(query, function(cardData)
-        self.cardsMap = self:parseCardList(cardData)
+        local cardsMap = self:parseCardList(cardData)
+        cardsMap = self:postParseCardList(cardsMap)
+        self.cardsMap = cardsMap
         if type(callback) == "function" then callback() end
     end)
 end
