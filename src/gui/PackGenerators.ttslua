@@ -325,6 +325,41 @@ gen = require("TTS-YGO/src/pack-spawning/pack-logic/tournament-packs/001-TP1"):n
 packGenerators['TP1'] = gen
 gen.assetCode = 'TP1'
 table.insert(sections['Tournament Packs'], gen)
+
+gen = require("TTS-YGO/src/pack-spawning/pack-logic/tournament-packs/002-TP2"):new()
+packGenerators['TP2'] = gen
+gen.assetCode = 'TP2'
+table.insert(sections['Tournament Packs'], gen)
+
+gen = require("TTS-YGO/src/pack-spawning/pack-logic/tournament-packs/003-TP3"):new()
+packGenerators['TP3'] = gen
+gen.assetCode = 'TP3'
+table.insert(sections['Tournament Packs'], gen)
+
+gen = require("TTS-YGO/src/pack-spawning/pack-logic/tournament-packs/004-TP4"):new()
+packGenerators['TP4'] = gen
+gen.assetCode = 'TP4'
+table.insert(sections['Tournament Packs'], gen)
+
+gen = require("TTS-YGO/src/pack-spawning/pack-logic/tournament-packs/005-TP5"):new()
+packGenerators['TP5'] = gen
+gen.assetCode = 'TP5'
+table.insert(sections['Tournament Packs'], gen)
+
+gen = require("TTS-YGO/src/pack-spawning/pack-logic/tournament-packs/006-TP6"):new()
+packGenerators['TP6'] = gen
+gen.assetCode = 'TP6'
+table.insert(sections['Tournament Packs'], gen)
+
+gen = require("TTS-YGO/src/pack-spawning/pack-logic/tournament-packs/007-TP7"):new()
+packGenerators['TP7'] = gen
+gen.assetCode = 'TP7'
+table.insert(sections['Tournament Packs'], gen)
+
+gen = require("TTS-YGO/src/pack-spawning/pack-logic/tournament-packs/008-TP8"):new()
+packGenerators['TP8'] = gen
+gen.assetCode = 'TP8'
+table.insert(sections['Tournament Packs'], gen)
 --##################
 
 
