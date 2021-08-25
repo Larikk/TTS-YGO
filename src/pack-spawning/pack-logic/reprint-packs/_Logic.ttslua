@@ -1,0 +1,176 @@
+local AbstractPackGenerator = require("TTS-YGO/src/pack-spawning/common/AbstractPackGenerator")
+local stringUtil = require("TTS-YGO/src/common/StringUtil")
+local mathUtil = require("TTS-YGO/src/common/Math")
+
+
+-- Rarities
+local COMMON = "Common"
+local RARE = "Rare"
+local SUPER_RARE = "Super Rare"
+local ULTRA_RARE = "Ultra Rare"
+local SECRET_RARE = "Secret Rare" -- only used in DR4
+
+-- Types
+local MONSTER = "Monster"
+local SPELL = "Spell"
+local TRAP = "Trap"
+local CARD_TYPES = {MONSTER, SPELL, TRAP}
+
+local INDEX_FOR_HOLOS = {
+    [MONSTER] = 1,
+    [SPELL] = 7,
+    [TRAP] = 10,
+}
+
+-- Ratios for holo card, must add up to 1.0
+local RATIOS = {
+    [RARE] = 0.75,
+    [SUPER_RARE] = 0.167,
+    [ULTRA_RARE] = 0.083,
+}
+
+-- Some card types dont have higher rarities
+-- For example many dont have ultra rare traps and DR4 has only secret rare monsters
+-- If an attempt is made to pull a card like that, the rarity gets downgraded
+local RARITY_DOWNGRADES = {
+    [SECRET_RARE] = ULTRA_RARE,
+    [ULTRA_RARE] = SUPER_RARE,
+    [SUPER_RARE] = RARE,
+    [RARE] = COMMON,
+}
+
+local PackGenerator = AbstractPackGenerator:new()
+
+function PackGenerator:pickSpecificCard(type, rarity, index)
+    return self:copyCard(self.cardsMapPartitioned[type][rarity][index])
+end
+
+function PackGenerator:pullCard(type, rarity)
+    return self:pullCards(type, rarity, 1)[1]
+end
+
+function PackGenerator:pullCards(type, rarity, n)
+
+    while #self.cardsMapPartitioned[type][rarity] == 0 do
+        if rarity == COMMON then
+            error("Failed to pull a common card of type" .. type)
+        end
+        rarity = RARITY_DOWNGRADES[rarity]
+    end
+
+    local cards = {}
+    local sequence = mathUtil.randomSequence(n, #self.cardsMapPartitioned[type][rarity])
+
+    for i, v in ipairs(sequence) do
+        cards[i] = self:pickSpecificCard(type, rarity, v)
+    end
+
+    return cards
+end
+
+function PackGenerator:createHoloCard(type)
+    local rarity = self:pickRarity(RATIOS)
+    return self:pullCard(type, rarity)
+end
+
+function PackGenerator:assemblePack()
+    local pack = {}
+    local cardsMap = self.cardsMap
+
+    -- Fill with 12 commons
+    -- Holos will be substituted later
+    local monsters = self:pullCards(MONSTER, COMMON, 6)
+    local spells = self:pullCards(SPELL, COMMON, 3)
+    local traps = self:pullCards(TRAP, COMMON, 3)
+    local commons = {monsters, spells, traps}
+
+    for _, cards in ipairs(commons) do
+        for _, card in ipairs(cards) do
+            table.insert(pack, card)
+        end
+    end
+
+    local hasTwoHolos = mathUtil.randomFloat() < 0.2
+
+    local firstHoloTypeIndex = mathUtil.randomInt(3)
+    local firstHoloType = CARD_TYPES[firstHoloTypeIndex]
+    pack[INDEX_FOR_HOLOS[firstHoloType]] = self:createHoloCard(firstHoloType)
+
+    if hasTwoHolos then
+        local secondHoloTypeIndex = firstHoloTypeIndex % 3 + 1
+        local secondHoloType = CARD_TYPES[secondHoloTypeIndex]
+        pack[INDEX_FOR_HOLOS[secondHoloType]] = self:createHoloCard(secondHoloType)
+    end
+
+    return pack
+end
+
+local function determineCardType(card)
+    -- Equality check does not work, type can be "Effect Monster" or "Equip Spell Card"
+    for _, type in ipairs(CARD_TYPES) do
+        if stringUtil.contains(card.type, type) then
+            return type
+        end
+    end
+
+    error(card.name .. " has no valid type: " .. card.type)
+end
+
+function PackGenerator:postParseCardList(cardsMap)
+    local cardsMapPartitioned = {}
+    local rarities = {COMMON, RARE, SUPER_RARE, ULTRA_RARE}
+
+    -- I'm too lazy handle to DR4 in a clean way
+    -- The logic is the same, it just has Secret Rares and slightly different ratios
+    if self.setName == "Dark Revelation Volume 4" then
+        table.insert(rarities, SECRET_RARE)
+        RATIOS = {
+            [RARE] = 0.585,
+            [SUPER_RARE] = 0.25,
+            [ULTRA_RARE] = 0.125,
+            [SECRET_RARE] = 0.04,
+        }
+    end
+
+    for _, type in ipairs(CARD_TYPES) do
+        cardsMapPartitioned[type] = {}
+        for _, rarity in ipairs(rarities) do
+            cardsMapPartitioned[type][rarity] = {}
+        end
+    end
+
+    for rarity, cards in pairs(cardsMap) do
+        for _, card in ipairs(cards) do
+            local type = determineCardType(card)
+            table.insert(cardsMapPartitioned[type][rarity], card)
+        end
+    end
+
+    self.cardsMapPartitioned = cardsMapPartitioned
+
+    for _, type in ipairs(CARD_TYPES) do
+        for _, rarity in ipairs(rarities) do
+            print(type, " ", rarity, " ", #cardsMapPartitioned[type][rarity])
+        end
+    end
+
+    return cardsMap
+end
+
+function PackGenerator:new()
+    o = AbstractPackGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = nil
+    o.setCodePrefix = nil
+    o.setNameUrl = nil
+    o.cardsInPacks = 12
+    o.packsInBox = 1
+    o.packTextures = nil
+    o.boxTexture = nil
+
+    return o
+end
+
+return PackGenerator
