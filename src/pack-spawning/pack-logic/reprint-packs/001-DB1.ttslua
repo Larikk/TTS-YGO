@@ -1,0 +1,20 @@
+local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/reprint-packs/_Logic")
+
+local PackGenerator = ParentGenerator:new()
+
+function PackGenerator:new()
+    o = ParentGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = "Dark Beginning 1"
+    o.setCodePrefix = "DB1-EN"
+    o.setNameUrl = "Dark Beginning 1"
+    o.releaseDate = "2004-10-12"
+    o.packTextures = "https://i.imgur.com/dWT9LR3.png"
+    o.boxTexture = nil
+
+    return o
+end
+
+return PackGenerator

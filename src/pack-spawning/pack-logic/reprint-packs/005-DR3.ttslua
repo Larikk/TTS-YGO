@@ -1,0 +1,20 @@
+local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/reprint-packs/_Logic")
+
+local PackGenerator = ParentGenerator:new()
+
+function PackGenerator:new()
+    o = ParentGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = "Dark Revelation Volume 3"
+    o.setCodePrefix = "DR3-EN"
+    o.setNameUrl = "Dark Revelation Volume 3"
+    o.releaseDate = "2006-11-25"
+    o.packTextures = "https://i.imgur.com/aDUZuVJ.png"
+    o.boxTexture = nil
+
+    return o
+end
+
+return PackGenerator
