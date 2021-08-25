@@ -59,7 +59,15 @@ function PackGenerator:pullCards(type, rarity, n)
     end
 
     local cards = {}
-    local sequence = mathUtil.randomSequence(n, #self.cardsMapPartitioned[type][rarity])
+    local max = #self.cardsMapPartitioned[type][rarity]
+    local status, sequence = pcall(mathUtil.randomSequence, n, max)
+    if not status then
+        -- Just to make sure because that threw an error one single time during development
+        error(
+            "Failed to pull cards of type " .. type .. " and rarity " .. rarity ..
+            ". Contact the developer with this information."
+        )
+    end
 
     for i, v in ipairs(sequence) do
         cards[i] = self:pickSpecificCard(type, rarity, v)
