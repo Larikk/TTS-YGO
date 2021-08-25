@@ -5,6 +5,7 @@ import re
 sections = [
     "core-sets",
     "battle-packs",
+    "reprint-packs",
     "tournament-packs",
     "champion-packs",
 ]
