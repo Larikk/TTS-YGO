@@ -57,7 +57,7 @@ function PackGenerator:assemblePack()
 end
 
 function PackGenerator:new()
-    o = AbstractPackGenerator:new()
+    local o = AbstractPackGenerator:new()
     setmetatable(o, self)
     self.__index = self
 
