@@ -13,7 +13,7 @@ local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/{folder}/{
 local PackGenerator = ParentGenerator:new()
 
 function PackGenerator:new()
-    o = ParentGenerator:new()
+    local o = ParentGenerator:new()
     setmetatable(o, self)
     self.__index = self
 
