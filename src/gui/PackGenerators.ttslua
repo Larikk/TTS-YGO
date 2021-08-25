@@ -350,6 +350,11 @@ gen = require("TTS-YGO/src/pack-spawning/pack-logic/reprint-packs/006-DR04"):new
 packGenerators['DR04'] = gen
 gen.assetCode = 'DR04'
 table.insert(sections['Reprint Packs'], gen)
+
+gen = require("TTS-YGO/src/pack-spawning/pack-logic/reprint-packs/007-DLG1"):new()
+packGenerators['DLG1'] = gen
+gen.assetCode = 'DLG1'
+table.insert(sections['Reprint Packs'], gen)
 --##################
 
 

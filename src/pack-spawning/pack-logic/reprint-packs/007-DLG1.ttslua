@@ -1,0 +1,58 @@
+local AbstractPackGenerator = require("TTS-YGO/src/pack-spawning/common/AbstractPackGenerator")
+
+-- Rarities
+local COMMON = "Common"
+local RARE = "Rare"
+local SUPER_RARE = "Super Rare"
+local ULTRA_RARE = "Ultra Rare"
+local SECRET_RARE = "Secret Rare"
+
+-- Ratios for last card, must add up to 1.0
+local RATIOS = {
+    [COMMON] = 0.627,
+    [SUPER_RARE] = 0.25,
+    [ULTRA_RARE] = 0.083,
+    [SECRET_RARE] = 0.04,
+}
+
+local PackGenerator = AbstractPackGenerator:new()
+
+function PackGenerator:assemblePack()
+    local pack = {}
+
+    -- 10 or 11 commons
+    local commons = self:pullCards(COMMON, 11)
+    for i = 1, 11 do
+        pack[i] = commons[i]
+    end
+
+    -- one potential holo that replaces the common
+    local holoRarity = self:pickRarity(RATIOS)
+    if holoRarity ~= COMMON then
+        pack[11] = self:pullCard(holoRarity)
+    end
+
+    -- one rare
+    pack[12] = self:pullCard(RARE)
+
+    return pack
+end
+
+function PackGenerator:new()
+    o = AbstractPackGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = "Dark Legends"
+    o.setCodePrefix = "DLG1-EN"
+    o.setNameUrl = "Dark Legends"
+    o.releaseDate = "2008-11-21"
+    o.packTextures = "https://i.imgur.com/SDd6lKd.png"
+    o.boxTexture = nil
+    o.cardsInPacks = 12
+    o.packsInBox = 1
+
+    return o
+end
+
+return PackGenerator
