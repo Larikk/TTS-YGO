@@ -1,0 +1,236 @@
+local matCreator = require("TTS-YGO/dev/room-creation/play-table/MatCreator")
+local calculatorJson = require("TTS-YGO/dev/room-creation/play-table/CalculatorJson")
+local cardGridJson = require("TTS-YGO/dev/room-creation/draft-table/CardGrid")
+local util = require("TTS-YGO/dev/room-creation/Util")
+
+
+local module = {}
+
+local v = Vector
+
+local tableScale = v(3, 1, 1)
+local plateScale = v(0.725, 0.20, 0.225)
+
+local function createCoin(pos, rotation)
+    spawnParams = {
+        type = "Quarter",
+        position = pos + v(0, 5, 0),
+        rotation = rotation,
+        sound = false,
+        snap_to_grid = true,
+    }
+    spawnObject(spawnParams)
+end
+
+local function createInfiniteBag(pos, rotation, content)
+    spawnParams = {
+        type = "Infinite_Bag",
+        position = pos + v(0, 5, 0),
+        rotation = rotation,
+        sound = false,
+        snap_to_grid = true,
+        callback_function = function(bag)
+            spawnParams = {
+                type = content,
+                position = pos + v(0, 10, 0),
+                rotation = rotation,
+                sound = false,
+                snap_to_grid = true,
+            }
+            spawnObject(spawnParams)
+        end
+    }
+    spawnObject(spawnParams)
+end
+
+local function createCalculator(pos, rotation)
+    spawnParams = {
+        json              = calculatorJson,
+        position          = pos + v(0, 5, 0),
+        rotation          = rotation,
+        scale             = cardGridScale,
+        sound             = false,
+        snap_to_grid      = true,
+        callback_function = function(calculator)
+            local f = function()
+                calculator.setLock(true)
+            end
+            Wait.time(f, 5)
+        end
+    }
+    spawnObjectJSON(spawnParams)
+end
+
+local function createHand(pos, rotation, color)
+    spawnParams = {
+        type = "HandTrigger",
+        position = pos + v(0, 5, 0),
+        rotation = rotation,
+        scale = v(15, 7.5, 5),
+        sound = false,
+        snap_to_grid = true,
+        callback_function = function(zone)
+            zone.setValue(color)
+         end
+    }
+    spawnObject(spawnParams)
+end
+
+local function createCardGrid(zone)
+    local size = zone.getScale()
+    local pos = util.relativeLocalToWorldPosition2D(zone, size, -1, -1)
+    local rotation = zone.getRotation()
+
+    spawnParams = {
+        json              = cardGridJson,
+        position          = pos,
+        rotation          = rotation,
+        scale             = cardGridScale,
+        sound             = false,
+        snap_to_grid      = true,
+        callback_function = function(grid)
+            local f = function()
+                local size = v(grid.getBoundsNormalized().size)
+                util.moveForwards(grid, size.z/2)
+                util.moveRight(grid, size.x/2)
+                Wait.time(||grid.setLock(true), 5)
+            end
+            Wait.time(f, 2)
+        end
+    }
+    spawnObjectJSON(spawnParams)
+end
+
+local function createHiddenZone(pos, rotation, color)
+    spawnParams = {
+        type = "FogOfWarTrigger",
+        position = pos,
+        rotation = rotation,
+        scale = v(60, 10, 30),
+        sound = false,
+        snap_to_grid = true,
+        callback_function = function(zone)
+            zone.setValue(color)
+            util.moveForwards(zone, zone.getScale().z/1.75)
+            util.moveUp(zone, zone.getScale().y/1.8)
+
+            Wait.frames(||createCardGrid(zone), 2)
+         end
+    }
+    spawnObject(spawnParams)
+end
+
+local function createPlayArea(pos, rotation)
+    matCreator.create(pos, rotation)
+
+    createCalculator(pos + v(-20, 0, 5), rotation)
+    createCalculator(pos + v(20, 0, -5), rotation + v(0, 180, 0))
+    createCoin(pos, rotation)
+    createInfiniteBag(pos + v(22.5, 0, 7.5), rotation, "Quarter")
+    createInfiniteBag(pos + v(22.5, 0, 10), rotation, "Die_6")
+    createHand(pos + v(0, 0, -20), rotation, "Blue")
+    createHand(pos + v(0, 0, 20), rotation, "Red")
+end
+
+local function createDraftArea(pos, rotation)
+    createHiddenZone(pos, rotation, "Red")
+    createHiddenZone(pos, rotation + v(0, 180, 0), "Blue")
+end
+
+local function createTablet(pos, rotation)
+    spawnParams = {
+        type = "Custom_Model",
+        position = pos + v(0, 5, 0),
+        rotation = rotation,
+        scale = v(1, 1, 1),
+        sound = false,
+        snap_to_grid = true,
+    }
+    local tablet = spawnObject(spawnParams)
+    tablet.setCustomObject({
+        mesh = "http://cloud-3.steamusercontent.com/ugc/1804229846313094263/6C41D40E9318D40586B21366DCE99988AA0D2400/",
+        diffuse = "https://i.imgur.com/niAZIBT.png",
+        material = 2,
+        specular_intensity = 0,
+        specular_sharpness = 2,
+        freshnel_strength = 0,
+        cast_shadows = true
+    })
+    tablet = tablet.reload()
+
+    local f = function()
+        tablet.setLock(true)
+        tablet.setName("Yu-Gi-Oh! TTS Edition")
+        tablet.setLuaScript(util.getTabletLuaScript())
+        tablet.call("handleEvent", {
+            nil,
+            "180",
+            "settings:spawn-rotation"
+        })
+        print("Set XML of tablet to:\n" .. util.getTabletXml())
+    end
+
+    Wait.time(f, 5)
+end
+
+local function createPlate(table)
+    spawnParams = {
+        type = "Custom_Model",
+        position = table.getPosition() + v(0, 0.1, 0),
+        rotation = table.getRotation(),
+        scale = plateScale,
+        sound = false,
+        snap_to_grid = true,
+    }
+    local plate = spawnObject(spawnParams)
+    plate.setCustomObject({
+        mesh = "http://cloud-3.steamusercontent.com/ugc/783002817662121296/661D8FFE6699A4D022FB10D87979B2028D8D1806/",
+        diffuse = "http://cloud-3.steamusercontent.com/ugc/783002817662118580/EEF2FF28224A83EB29EC7D5B3CA728782F1554FC/",
+        collider = "http://cloud-3.steamusercontent.com/ugc/783002817662121296/661D8FFE6699A4D022FB10D87979B2028D8D1806/",
+        type = 4,
+        material = 1,
+        specular_intensity = 0,
+        specular_sharpness = 3,
+
+    })
+
+    local f = function()
+        plate.locked = true
+        local pos = plate.getPosition()
+        local rotation = plate.getRotation()
+        createPlayArea(pos + v(-77.5, 0, 0), rotation)
+        createDraftArea(pos + v(72.5, 0, 0), rotation)
+        createTablet(pos + v(0, 0, -10), rotation)
+
+        plate.setLuaScript(util.getNonInteractableLuaScript())
+    end
+
+    -- Wait insteal of callback because the plate needs to fall down on the table
+    Wait.time(f, 2)
+end
+
+local function createTable(pos, rotation)
+    spawnParams = {
+        type = "Custom_Assetbundle",
+        position = pos,
+        rotation = rotation,
+        scale = tableScale,
+        sound = false,
+        snap_to_grid = true,
+        callback_function = |table| createPlate(table)
+    }
+    local table = spawnObject(spawnParams)
+    table.locked = true
+    table.setCustomObject({
+        assetbundle = "http://cloud-3.steamusercontent.com/ugc/1011563587901306704/1ED59A7E6C52632AF229D6017BB616F051EAE049/",
+        type = 4,
+        material = 1,
+    })
+    table.setLuaScript(util.getNonInteractableLuaScript())
+end
+
+function module.create()
+    createTable(v(0, 0, -20), v(0, 0, 0))
+end
+
+return module
