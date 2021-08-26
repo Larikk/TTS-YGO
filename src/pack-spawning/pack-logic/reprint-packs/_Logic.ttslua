@@ -156,12 +156,6 @@ function PackGenerator:postParseCardList(cardsMap)
 
     self.cardsMapPartitioned = cardsMapPartitioned
 
-    for _, type in ipairs(CARD_TYPES) do
-        for _, rarity in ipairs(rarities) do
-            print(type, " ", rarity, " ", #cardsMapPartitioned[type][rarity])
-        end
-    end
-
     return cardsMap
 end
 
