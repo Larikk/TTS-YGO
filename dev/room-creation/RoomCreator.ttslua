@@ -1,7 +1,9 @@
--- require("TTS-YGO/dev/room-creation/RoomCreator").create()
+-- require("TTS-YGO/dev/room-creation/RoomCreator").create8p()
+-- require("TTS-YGO/dev/room-creation/RoomCreator").create2p()
 
 local draftTable = require("TTS-YGO/dev/room-creation/draft-table/DraftTableCreator")
 local playTable = require("TTS-YGO/dev/room-creation/play-table/PlayTableCreator")
+local playTable2p = require("TTS-YGO/dev/room-creation/play-table/PlayTableCreator2Player")
 local util = require("TTS-YGO/dev/room-creation/Util")
 
 local POS = Vector(13.5, 2, 0)
@@ -9,7 +11,7 @@ local ROTATION = Vector(0, 90, 0)
 
 local module = {}
 
-local function spawnStuff()
+local function spawnStuff8p()
     local pos = POS + Vector(0, 0, -100)
     local rotation = ROTATION
     draftTable.create(pos, rotation)
@@ -26,17 +28,44 @@ local function spawnStuff()
 
 end
 
-function module.create()
+local function spawnStuff2p()
+    local pos = Vector(0, 0, 0)
+    local rotation = Vector(0, 0, 0)
+    local colors = {"Blue", "Red"}
+
+    playTable2p.create(pos, rotation, "Blue", "Red")
+end
+
+local function common()
     -- Info section
     Info.name = "Yu-Gi-Oh! TTS Edition"
     Info.type = "Game"
     Info.complexity = "Medium Complexity"
-    Info.number_of_players = {2, 8}
-    Info.tags = {"Card Games", "Cards", "Scripting", "User Interfaces", "Yu-Gi-Oh", "Yu-Gi-Oh!", "YuGiOh", "YuGiOh!", "deck", "build", "Progressive", "sealed", "draft", "import"}
+    Info.tags = {
+        "Cards",
+        "Scripting",
+        "User Interfaces",
+        "Yu-Gi-Oh",
+        "Yu-Gi-Oh!",
+        "YuGiOh",
+        "YuGiOh!",
+        "deck",
+        "build",
+        "progressive",
+        "sealed",
+        "draft",
+        "importer",
+        "ydk",
+        "starter",
+        "structure",
+    }
 
-    Physics.play_area = 1
     Tables.setTable("None")
-    Backgrounds.setCustomURL("http://cloud-3.steamusercontent.com/ugc/1804229846320834487/463F17DD295878A1FA27B4825CC3496905BC5E13/")
+    Backgrounds.setBackground("Museum")
+    Wait.time(
+        ||Backgrounds.setCustomURL("http://cloud-3.steamusercontent.com/ugc/1804229846320834487/463F17DD295878A1FA27B4825CC3496905BC5E13/"),
+        2
+    )
 
     Lighting.light_intensity = 0.7
     Lighting.ambient_type = 2
@@ -48,10 +77,22 @@ function module.create()
         for _,hand in ipairs(Hands.getHands()) do
             hand.destruct()
         end
-        spawnStuff()
     end
 
     Wait.frames(f, 2)
+end
+
+function module.create8p()
+    common()
+    Info.number_of_players = {2, 8}
+    Physics.play_area = 1
+    Wait.frames(spawnStuff8p, 5)
+end
+
+function module.create2p()
+    common()
+    Info.number_of_players = {2, 2}
+    Wait.frames(spawnStuff2p, 5)
 end
 
 return module
