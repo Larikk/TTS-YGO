@@ -13,6 +13,7 @@ local IMPORT_BY_ID_BUTTON = PAGE_ID .. ":import-by-id-button"
 local IMPORT_BY_NAME_INPUT = PAGE_ID .. ":import-by-name-input"
 local IMPORT_BY_NAME_BUTTON = PAGE_ID .. ":import-by-name-button"
 local IMPORT_BY_NAME_ARTWORK_TOGGLE = PAGE_ID .. ":import-by-name-artwork-toogle"
+local IMPORT_BY_NAME_FUZZY_TOGGLE = PAGE_ID .. ":import-by-name-fuzzy-toogle"
 
 
 
@@ -48,11 +49,23 @@ local function createImportByName()
         }
     }
 
-    local toggle = {
+    local artworkToggle = {
         tag = "Toggle",
         value = "Include alternative Artworks",
         attributes = {
             id = IMPORT_BY_NAME_ARTWORK_TOGGLE,
+            onValueChanged = "handleInputChange",
+            class = "toggle",
+            isOn = "false",
+            flexibleWidth = "1",
+        },
+    }
+
+    local fuzzyToggle = {
+        tag = "Toggle",
+        value = "Fuzzy search instead of exact name",
+        attributes = {
+            id = IMPORT_BY_NAME_FUZZY_TOGGLE,
             onValueChanged = "handleInputChange",
             class = "toggle",
             isOn = "false",
@@ -67,7 +80,7 @@ local function createImportByName()
         attributes = {
             spacing = "50"
         },
-        children = {inputField, toggle, button}
+        children = {inputField, fuzzyToggle, artworkToggle, button}
     }
 
     return guiUtil.createBox("Spawn by Name", "", content)
@@ -88,6 +101,7 @@ end
 
 local function createPage()
     state.put(IMPORT_BY_NAME_ARTWORK_TOGGLE, "false")
+    state.put(IMPORT_BY_NAME_FUZZY_TOGGLE, "false")
 
     return {
         tag = "VerticalLayout",
@@ -122,8 +136,14 @@ local function importByName()
     local pos = state.getSpawnPosition()
     local rotation = state.getSpawnRotation()
     local name = state.get(IMPORT_BY_NAME_INPUT)
+    local fuzzy = state.get(IMPORT_BY_NAME_FUZZY_TOGGLE):lower() == "true"
     local allArtworks = state.get(IMPORT_BY_NAME_ARTWORK_TOGGLE):lower() == "true"
-    cardImport.spawnByName(name, allArtworks, pos, rotation)
+
+    if fuzzy then
+        cardImport.spawnByFname(name, allArtworks, pos, rotation)
+    else
+        cardImport.spawnByName(name, allArtworks, pos, rotation)
+    end
 end
 
 function module.getPageObject()

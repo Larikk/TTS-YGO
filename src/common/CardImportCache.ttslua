@@ -19,6 +19,12 @@ local cache = {}
 -- cache should be used to get the card data
 local nameCache = {}
 
+-- Used to cache requests done by fname
+-- fname == fuzzy search for card names, returns all cards whose name has the search param
+-- Mapping from fname to list of card_ids
+-- cache should be used to get card data
+local fnameCache = {}
+
 -- Value for an id that was not recognized by the API in a bulk request
 -- These are marked so that they wont be "redownloaded" later on
 local INVALID_ID = "INVALID_ID"
@@ -69,6 +75,26 @@ local function processResponseByName(data, name, cb, cbParams)
 
     if type(cb) == "function" then cb(cbParams) end
 end
+
+local function processResponseByFname(data, fname, cb, cbParams)
+    local ids = {}
+    for _, singleCardData in ipairs(data) do
+        local cards = cardParser.parseCardWithAllArtworks(singleCardData)
+        for _, card in ipairs(cards) do
+            insertIntoCache(card)
+        end
+
+        local cardWithMainArtwork = cards[1]
+        local id = cardWithMainArtwork.id
+        local name = cardWithMainArtwork.name
+        nameCache[name:lower()] = id
+        table.insert(ids, id)
+    end
+
+    fnameCache[fname:lower()] = ids
+    if type(cb) == "function" then cb(cbParams) end
+end
+
 
 local function getNonPresentIds(cardIds)
     local nonPresentCardIds = {}
@@ -125,6 +151,17 @@ function module.ensureCardIsPresentByName(name, cb, cbParams)
     apiUtil.cardinfo(query, handler)
 end
 
+function module.ensureCardIsPresentByFname(fname, cb, cbParams)
+    if fnameCache[fname:lower()] then
+        cb(cbParams)
+        return
+    end
+
+    local query = "fname=" .. fname
+    local handler = function(data) processResponseByFname(data, fname, cb, cbParams) end
+    apiUtil.cardinfo(query, handler)
+end
+
 function module.getCard(id)
     id = stringUtil.stripLeadingCharacter(id, "0")
     local card = cache[id]
@@ -151,6 +188,23 @@ function module.getCardByName(name)
     end
 
     return card
+end
+
+function module.getCardsByFname(fname)
+    local ids = fnameCache[fname:lower()]
+
+    if ids == nil then
+        error("No cards found for search '" .. fname .. "'")
+    end
+
+    local cards = {}
+
+    for _, id in ipairs(ids) do
+        local card = cache[id]
+        table.insert(cards, card)
+    end
+
+    return cards
 end
 
 return module
