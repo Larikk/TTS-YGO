@@ -1,6 +1,7 @@
 local resources = require("TTS-YGO/src/common/Resources")
 local cardHoverText = require("TTS-YGO/src/common/CardHoverText")
 local mathutil = require("TTS-YGO/src/common/Math")
+local io = require("TTS-YGO/src/common/IO")
 
 local module = {}
 
@@ -46,9 +47,20 @@ local function pickPackTexture(textures)
 end
 
 function module.card(card)
+    local ok, hovertext = pcall(cardHoverText.create, card)
+
+    if not ok then
+        io.warning(
+            "Failed to create a proper description for " ..
+            card.name .. " (" .. card.id .. "). " ..
+            "Leave a comment on the mod page for the developer so that he can fix that."
+        )
+        hovertext = card.name
+    end
+
     return {
         Name = "Card",
-        Nickname = cardHoverText.create(card),
+        Nickname = hovertext,
         Transform = TRANSFORM_ATTRIBUTE_DUMMY,
         CardID = CARD_ID_DUMMY * 100,
         CustomDeck = {
