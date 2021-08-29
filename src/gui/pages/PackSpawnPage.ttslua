@@ -43,11 +43,23 @@ end
 local function spawnPack(generator)
     local pos = state.getSpawnPosition()
     local rotation = state.getSpawnRotation()
-    generator:generateBoosterBox(pos, rotation)
 
     local debug = false
     if debug then
-        generator:generateCardListDebug(pos + Vector(0, 0, -5), rotation)
+        generator:generateBoosterBox(pos, rotation)
+        generator:generateCardListPartitioned(pos + Vector(0, 0, -5), rotation)
+        generator:printDebugInformation()
+        return
+    end
+
+    local mode = state.get("pack:mode")
+
+    if mode == "cardlist" then
+        generator:generateCardList(pos, rotation)
+    elseif mode == "cardlist-partitioned" then
+        generator:generateCardListPartitioned(pos, rotation)
+    else
+        generator:generateBoosterBox(pos, rotation)
     end
 end
 

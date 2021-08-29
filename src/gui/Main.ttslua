@@ -2,6 +2,7 @@ local guiUtil = require("TTS-YGO/src/gui/GUIUtil")
 local stringUtil = require("TTS-YGO/src/common/StringUtil")
 local state = require("TTS-YGO/src/gui/State")
 local assets = require("TTS-YGO/src/gui/Assets")
+local chatCommandHandler = require("TTS-YGO/src/gui/ChatCommandHandler")
 
 local packSpawnPage = require("TTS-YGO/src/gui/pages/PackSpawnPage")
 local preconstructedDecksPage = require("TTS-YGO/src/gui/pages/PreconstructedDecksPage")
@@ -60,6 +61,10 @@ function handleEvent(player, value, id)
     local handler = page.eventHandlers[id]
     if not handler then error("Handler for " .. id .. " does not exist") end
     handler(value, player)
+end
+
+function onChat(msg, sender)
+    chatCommandHandler.handle(msg, sender)
 end
 
 local save = state.save

@@ -6,6 +6,7 @@ local TtsSpawner = require("TTS-YGO/src/common/TtsSpawner")
 local resources = require("TTS-YGO/src/common/Resources")
 local apiUtil = require("TTS-YGO/src/common/ApiUtil")
 local tableUtil = require("TTS-YGO/src/common/TableUtil")
+local sorting = require("TTS-YGO/src/pack-spawning/common/Sorting")
 
 -- We are using a third party JSON library because the native JSON deserialization of TTS is very slow
 -- Benchmark of 10 decode calls for one booster set: library = ~15sec, native = ~300s
@@ -226,51 +227,44 @@ function AbstractPackGenerator:generateBoosterBox(pos, rotation)
     self:generate(f)
 end
 
--- Only for development purposes
-function AbstractPackGenerator:generateCardListDebug(pos, rotation)
+function AbstractPackGenerator:generateCardList(pos, rotation)
+    local f = function()
+        local cards = tableUtil.flatten(self.cardsMap)
+        table.sort(cards, sorting.cardComparator)
+        local spawner = TtsSpawner:new()
+        spawner:spawnDeck(cards)
+    end
+
+    self:generate(f)
+end
+
+function AbstractPackGenerator:generateCardListPartitioned(pos, rotation)
     local f = function()
         local spawner = TtsSpawner:new()
-        print(self.setName)
 
-        -- most often encountered rarities
-        local regularRarityOrder = {
-            "Ghost Rare",
-            "Secret Rare",
-            "Ultimate Rare",
-            "Ultra Rare",
-            "Super Rare",
-            "Rare",
-            "Common",
-        }
+        local rarities = tableUtil.keys(self.cardsMap)
+        rarities = sorting.sortRarities(rarities)
 
-        -- same as above just as set
-        local regularRarities = tableUtil.toSet(regularRarityOrder)
-
-        -- rarities of this release
-        -- first come the rarities not listed above
-        -- afterwards the ones listed above sorted descending
-        local raritiesOfRelease = {}
-        for rarity, _ in pairs(self.cardsMap) do
-            if not regularRarities[rarity] then
-                table.insert(raritiesOfRelease, rarity)
-            end
-        end
-
-        for _, rarity in ipairs(regularRarityOrder) do
-            if self.cardsMap[rarity] then
-                table.insert(raritiesOfRelease, rarity)
-            end
-        end
 
         local spacing = 5
-        pos = pos + Vector(-spacing * (#raritiesOfRelease-1) / 2, 0, 0)
+        pos = pos + Vector(-spacing * (#rarities-1) / 2, 0, 0)
 
-        for _,rarity in ipairs(raritiesOfRelease) do
-            local cards = self.cardsMap[rarity]
-            print(rarity .. ": " .. #cards)
-            table.sort(cards, function(a, b) return a.setCode < b.setCode end)
+        for _,rarity in ipairs(rarities) do
+            local cards = tableUtil.copy(self.cardsMap[rarity])
+            table.sort(cards, sorting.cardComparator)
             spawner:spawnDeck(cards, pos, rotation)
             pos = pos + Vector(spacing, 0, 0)
+        end
+    end
+
+    self:generate(f)
+end
+
+function AbstractPackGenerator:printDebugInformation()
+    local f = function()
+        print(self.setName)
+        for rarity, cards in pairs(self.cardsMap) do
+            print(rarity .. ": " .. #cards)
         end
         print("#######")
     end

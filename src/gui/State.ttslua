@@ -1,6 +1,11 @@
 local module = {}
 
 -- persistent settings constants
+
+-- Used in ChatCommandHandler and PackSpawnPage
+-- Values: box, cardlist, cardlist-partitioned
+local PACK_MODE = "pack:mode"
+
 -- same as in SettingsPage.ttslua
 local SPAWN_X = "settings:spawn-x"
 local SPAWN_Y = "settings:spawn-y"
@@ -8,12 +13,13 @@ local SPAWN_Z = "settings:spawn-z"
 local SPAWN_ROTATION = "settings:spawn-rotation"
 
 local persistentValues = {
-     SPAWN_X, SPAWN_Y, SPAWN_Z, SPAWN_ROTATION
+     PACK_MODE, SPAWN_X, SPAWN_Y, SPAWN_Z, SPAWN_ROTATION
 }
 
 -- default values
 local defaults = {
     -- persistent values, get saved and loaded with the room
+    [PACK_MODE] = "box",
     [SPAWN_X] = "0",
     [SPAWN_Y] = "10",
     [SPAWN_Z] = "0",
