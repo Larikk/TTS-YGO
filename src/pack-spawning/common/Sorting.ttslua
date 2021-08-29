@@ -22,7 +22,7 @@ function module.sortRarities(rarities)
     -- afterwards the ones listed above sorted descending
     local sortedRarities = {}
 
-    for _, rarity in pairs(rarities) do
+    for rarity, _ in pairs(rarities) do
         if not COMMON_RARITIES_SET[rarity] then
             table.insert(sortedRarities, rarity)
         end
