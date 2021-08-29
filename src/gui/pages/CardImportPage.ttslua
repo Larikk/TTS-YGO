@@ -63,13 +63,14 @@ local function createImportByName()
 
     local fuzzyToggle = {
         tag = "Toggle",
-        value = "Fuzzy search instead of exact name",
+        value = "Fuzzy search instead of exact name (May freeze the game temporarily)",
         attributes = {
             id = IMPORT_BY_NAME_FUZZY_TOGGLE,
             onValueChanged = "handleInputChange",
             class = "toggle",
             isOn = "false",
             flexibleWidth = "1",
+            minHeight = "250",
         },
     }
 
