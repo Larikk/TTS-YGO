@@ -22,9 +22,9 @@ function module.toSet(table)
     return set
 end
 
-function module.flatten(table)
+function module.flatten(tbl)
     local list = {}
-    for _, section in pairs(table) do
+    for _, section in pairs(tbl) do
         for _, element in pairs(section) do
             table.insert(list, element)
         end
@@ -32,17 +32,17 @@ function module.flatten(table)
     return list
 end
 
-function module.keys(table)
+function module.keys(tbl)
     local keys = {}
-    for k, _ in pairs(table) do
+    for k, _ in pairs(tbl) do
         table.insert(keys, k)
     end
     return keys
 end
 
-function module.copy(table)
+function module.copy(tbl)
     local copy = {}
-    for k, v in pairs(table) do
+    for k, v in pairs(tbl) do
         copy[k] = v
     end
     return copy
