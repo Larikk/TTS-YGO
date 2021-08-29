@@ -6,7 +6,7 @@ local module = {}
 
 local PREFIX = "!ygo-tts" .. " "
 
-local PACK_MODE = "pack-mode"
+local PACK_MODE = "pack:mode"
 
 local function info(msg)
     io.success("YGO TTS: " .. msg)
@@ -32,7 +32,7 @@ local function setPackSpawnMode(args)
 end
 
 local handlers = {
-    [PACK_MODE] = setPackSpawnMode
+    ["pack-mode"] = setPackSpawnMode
 }
 
 function module.handle(msg, sender)
@@ -48,14 +48,14 @@ function module.handle(msg, sender)
     end
 
     local command = msgParts[1]
-    local arguments = table.remove(msgParts, 1)
+    table.remove(msgParts, 1)
     local handler = handlers[command]
 
     if not handler then
         err("Unrecognized command: " .. command)
     end
 
-    handler(arguments)
+    handler(msgParts)
 end
 
 return module

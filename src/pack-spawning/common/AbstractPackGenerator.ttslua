@@ -232,7 +232,7 @@ function AbstractPackGenerator:generateCardList(pos, rotation)
         local cards = tableUtil.flatten(self.cardsMap)
         table.sort(cards, sorting.cardComparator)
         local spawner = TtsSpawner:new()
-        spawner:spawnDeck(cards)
+        spawner:spawnDeck(cards, pos, rotation)
     end
 
     self:generate(f)
