@@ -6,6 +6,7 @@ local TtsSpawner = require("TTS-YGO/src/common/TtsSpawner")
 local resources = require("TTS-YGO/src/common/Resources")
 local apiUtil = require("TTS-YGO/src/common/ApiUtil")
 local tableUtil = require("TTS-YGO/src/common/TableUtil")
+local geometry = require("TTS-YGO/src/common/Geometry")
 local sorting = require("TTS-YGO/src/pack-spawning/common/Sorting")
 
 -- We are using a third party JSON library because the native JSON deserialization of TTS is very slow
@@ -245,15 +246,19 @@ function AbstractPackGenerator:generateCardListPartitioned(pos, rotation)
         local rarities = tableUtil.keys(self.cardsMap)
         rarities = sorting.sortRarities(rarities)
 
+        local positions = geometry.arrangePositionsForSpawning({
+                n = #rarities,
+                center = pos,
+                yRotation = rotation.y,
+                hDelta = 3,
+                vDelta = 5,
+                itemsPerRow = 4,
+        })
 
-        local spacing = 5
-        pos = pos + Vector(-spacing * (#rarities-1) / 2, 0, 0)
-
-        for _,rarity in ipairs(rarities) do
+        for i, rarity in ipairs(rarities) do
             local cards = tableUtil.copy(self.cardsMap[rarity])
             table.sort(cards, sorting.cardComparator)
-            spawner:spawnDeck(cards, pos, rotation)
-            pos = pos + Vector(spacing, 0, 0)
+            spawner:spawnDeck(cards, positions[i], rotation)
         end
     end
 
