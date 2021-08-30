@@ -51,7 +51,7 @@ end
 function cardHoverText.create(card)
     local result = card.name .. "\n"
 
-    if card.type == "Trap Card" or card.type == "Spell Card" then
+    if card.type == "Trap Card" or card.type == "Spell Card" or card.type == "Skill Card" then
         result = result .. spellTrapText(card)
     else
         result = result .. monsterText(card)
