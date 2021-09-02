@@ -12,7 +12,7 @@
     <VerticalScrollView scrollbarBackgroundColor="#2c3e50"/>
     <GridLayout class="invisible" color="rgba(1,1,1,0)"/>
     <VerticalLayout class="invisible" color="rgba(1,1,1,0)"/>
-    <VerticalScrollView class="invisible" color="rgba(1,1,1,0)" scrollSensitivity="0"/>
+    <VerticalScrollView class="invisible" color="rgba(1,1,1,0)" verticalScrollbarWidth="80" scrollSensitivity="0"/>
 
     <HorizontalLayout class="button-bar" padding="80" spacing="40" color="#2c3e50" flexibleWidth="1"/>
     <Button class="button-bar" minHeight="200" fontSize="65" fontStyle="bold" colors="#7f8c8d|#95a5a6|#95a5a6|#c0392b" textColor="#ecf0f1" flexibleWidth="1"/>
