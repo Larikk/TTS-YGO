@@ -14,9 +14,10 @@ local SPAWN_ROTATION = "settings:spawn-rotation"
 
 -- stats
 local SAVE_ID = "stats:save-id"
+local SAVE_ID_CREATION = "stats:save-id-creation"
 
 local persistentValues = {
-     PACK_MODE, SPAWN_X, SPAWN_Y, SPAWN_Z, SPAWN_ROTATION, SAVE_ID
+     PACK_MODE, SPAWN_X, SPAWN_Y, SPAWN_Z, SPAWN_ROTATION, SAVE_ID, SAVE_ID_CREATION
 }
 
 -- default values
@@ -28,6 +29,7 @@ local defaults = {
     [SPAWN_Z] = "0",
     [SPAWN_ROTATION] = "0",
     [SAVE_ID] = nil,
+    [SAVE_ID_CREATION] = nil,
 }
 
 -- gets set to defaults on load

@@ -8,7 +8,9 @@ local STAT_URL = "https://script.google.com/macros/s/AKfycbw-noLG3J8ZeQ-SxbCyLyI
 local DEBUG = true
 
 local STATE_KEY = "stats:save-id"
+local STATE_KEY_CREATION = "stats:save-id-creation"
 
+local ID_RESET_DELTA = 60 * 60 * 24
 
 local function l(s)
     if DEBUG then log(s) end
@@ -16,7 +18,12 @@ end
 
 local function ping()
     l("Pinging stats.")
-    WebRequest.post(STAT_URL, {moment="ping", id=state.get(STATE_KEY), num_players=#getSeatedPlayers()}, |ret|l(ret.text))
+    local form = {
+        moment = "ping",
+        id = state.get(STATE_KEY),
+        num_players = #getSeatedPlayers()
+    }
+    WebRequest.post(STAT_URL, form, |ret|l(ret.text))
 end
 
 local function save_id(w)
@@ -25,6 +32,7 @@ local function save_id(w)
 
     local id = JSON.decode(w.text).id
     state.put(STATE_KEY, id)
+    state.put(STATE_KEY_CREATION, math.floor(os.time()))
 end
 
 function module.load(initial_wait, interval)
@@ -33,6 +41,18 @@ function module.load(initial_wait, interval)
 
     local id = state.get(STATE_KEY)
     l("Stats id: " .. (id or "nil"))
+
+    -- Check how old the session is
+    if id then
+        local id_creation = state.get(STATE_KEY_CREATION)
+        local now = math.floor(os.time())
+        if now - id_creation > ID_RESET_DELTA then
+            l("ID was created more then 24 hours ago, requesting new one.")
+            id = nil
+            state.put(STATE_KEY, nil)
+            state.put(STATE_KEY_CREATION, nil)
+        end
+    end
 
     if not id then
         l("No ID so setting timer to request new one.")
