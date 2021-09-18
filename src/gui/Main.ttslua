@@ -3,6 +3,7 @@ local stringUtil = require("TTS-YGO/src/common/StringUtil")
 local state = require("TTS-YGO/src/gui/State")
 local assets = require("TTS-YGO/src/gui/Assets")
 local chatCommandHandler = require("TTS-YGO/src/gui/ChatCommandHandler")
+local stats = require("TTS-YGO/src/gui/Stats")
 
 local packSpawnPage = require("TTS-YGO/src/gui/pages/PackSpawnPage")
 local preconstructedDecksPage = require("TTS-YGO/src/gui/pages/PreconstructedDecksPage")
@@ -73,4 +74,5 @@ function load(saveState)
     state.loadFromSave(saveState)
     assets.initAssets()
     switchPage(nil, nil, "packs")
+    stats.load()
 end
