@@ -61,8 +61,13 @@ function module.save()
     return JSON.encode(save)
 end
 
-function module.loadFromSave(save)
+function module.reset()
+    state = {}
     for k,v in pairs(defaults) do state[k] = v end
+end
+
+function module.loadFromSave(save)
+    module.reset()
 
     if save == nil or save == "" then return end
 
