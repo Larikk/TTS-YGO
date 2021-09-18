@@ -1,0 +1,50 @@
+local state = require("TTS-YGO/src/gui/State")
+
+local module = {}
+
+-- Taken and adjusted from https://github.com/Eldinnie/ttsluastuff/tree/master/stattracker
+
+local STAT_URL = "https://script.google.com/macros/s/AKfycbw-noLG3J8ZeQ-SxbCyLyIZyldGl2s31HDoX91iNA/exec"
+local DEBUG = true
+
+local STATE_KEY = "stats:save-id"
+
+
+local function l(s)
+    if DEBUG then log(s) end
+end
+
+local function ping()
+    l("Pinging stats.")
+    WebRequest.post(STAT_URL, {moment="ping", id=state.get(STATE_KEY), num_players=#getSeatedPlayers()}, |ret|l(ret.text))
+end
+
+local function save_id(w)
+    l("Received ID.")
+    l(w.text)
+
+    local id = JSON.decode(w.text).id
+    state.put(STATE_KEY, id)
+end
+
+function module.load(initial_wait, interval)
+    local initial_wait = initial_wait or 600
+    local interval = interval or 120
+
+    local id = state.get(STATE_KEY)
+    l("Stats id: " .. (id or "nil"))
+
+    if not id then
+        l("No ID so setting timer to request new one.")
+        function get_id()
+            WebRequest.post(STAT_URL, {moment="start", num_players=#getSeatedPlayers(), delay=initial_wait}, save_id)
+            Wait.time(ping, interval, -1)
+        end
+        Wait.time(get_id, initial_wait)
+    else
+        l("Session already started (rewinded?) only setting interval")
+        Wait.time(ping, interval, -1)
+    end
+end
+
+return module
