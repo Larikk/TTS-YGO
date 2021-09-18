@@ -60,12 +60,12 @@ function module.load(initial_wait, interval)
     end
 
     if not id then
-        l("Starting new session")
         function get_id()
             if onlyDeveloperPresent() then
                 l("Only developer present, skipping session creation.")
                 return
             end
+            l("Starting new session")
             WebRequest.post(STAT_URL, {moment="start", num_players = #Player.getPlayers(), delay=initial_wait}, save_id)
             Wait.time(ping, interval, -1)
         end
