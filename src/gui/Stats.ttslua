@@ -41,7 +41,7 @@ local function onlyDeveloperPresent()
 end
 
 function module.load(initial_wait, interval)
-    local initial_wait = initial_wait or 600
+    local initial_wait = initial_wait or 60
     local interval = interval or 120
 
     local id = state.get(STATE_KEY)
