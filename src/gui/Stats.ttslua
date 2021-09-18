@@ -36,16 +36,7 @@ local function save_id(w)
 end
 
 local function onlyDeveloperPresent()
-    local people = {}
-
-    for _, player in ipairs(Player.getPlayers()) do
-        table.insert(people, player)
-    end
-
-    for _, spectator in ipairs(Player.getSpectators()) do
-        table.insert(people, spectator)
-    end
-
+    local people = Player.getPlayers()
     return #people == 1 and people[1].steam_id == "76561198072704704"
 end
 
