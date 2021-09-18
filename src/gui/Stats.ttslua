@@ -21,7 +21,7 @@ local function ping()
     local form = {
         moment = "ping",
         id = state.get(STATE_KEY),
-        num_players = #getSeatedPlayers()
+        num_players = #Player.getPlayers(),
     }
     WebRequest.post(STAT_URL, form, |ret|l(ret.text))
 end
@@ -75,7 +75,7 @@ function module.load(initial_wait, interval)
                 l("Only developer present, skipping session creation.")
                 return
             end
-            WebRequest.post(STAT_URL, {moment="start", num_players=#getSeatedPlayers(), delay=initial_wait}, save_id)
+            WebRequest.post(STAT_URL, {moment="start", num_players = #Player.getPlayers(), delay=initial_wait}, save_id)
             Wait.time(ping, interval, -1)
         end
         Wait.time(get_id, initial_wait)
