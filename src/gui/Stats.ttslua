@@ -61,7 +61,7 @@ function module.load(initial_wait, interval)
         local id_creation = state.get(STATE_KEY_CREATION)
         local now = math.floor(os.time())
         if now - id_creation > ID_RESET_DELTA then
-            l("ID was created more then 24 hours ago, requesting new one.")
+            l("Session was created more than 24 hours ago, requesting new one.")
             id = nil
             state.put(STATE_KEY, nil)
             state.put(STATE_KEY_CREATION, nil)
