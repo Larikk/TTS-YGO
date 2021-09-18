@@ -72,6 +72,7 @@ end
 function spawnDeck()
     local pos = state.getSpawnPosition()
     local rotation = state.getSpawnRotation()
+    rotation = rotation + Vector(0, 0, 180)
     local deck = state.get(DECK_INPUT)
     ydkImport.spawn(deck, pos, rotation)
 end
