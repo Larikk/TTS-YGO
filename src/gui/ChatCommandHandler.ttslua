@@ -31,6 +31,11 @@ local function setPackSpawnMode(args)
     end
 end
 
+local function resetSettings()
+    state.reset()
+    info("Settings were resetted")
+end
+
 local function help()
     local f = function(msg)
         printToAll(msg, Color.Teal)
@@ -39,11 +44,13 @@ local function help()
     f("Available commands for Yu-Gi-Oh! TTS Edition:")
     f("!ygo-tts help: Print this message")
     f("!ygo-tts pack-mode [box|cardlist|cardlist-partitioned]: Spawn a copy of each card instead of packs/box. Default: box")
+    f("!ygo-tts reset: Reset the settings")
 end
 
 local handlers = {
     ["help"] = help,
     ["pack-mode"] = setPackSpawnMode,
+    ["reset"] = resetSettings,
 }
 
 function module.handle(msg, sender)
