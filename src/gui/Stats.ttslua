@@ -48,7 +48,7 @@ function module.load(initial_wait, interval)
     l("Stats id: " .. (id or "nil"))
 
     -- Check how old the session is
-    if id then
+    if id and id ~= "" then
         local id_creation = state.get(STATE_KEY_CREATION)
         local now = math.floor(os.time())
         if now - id_creation > ID_RESET_DELTA then
@@ -59,7 +59,7 @@ function module.load(initial_wait, interval)
         end
     end
 
-    if not id then
+     if id == nil or id == "" then
         function get_id()
             if onlyDeveloperPresent() then
                 l("Only developer present, skipping session creation.")
