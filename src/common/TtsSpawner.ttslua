@@ -11,7 +11,7 @@ local function spawn(data, pos, rotation, callback)
     rotation = Vector(rotation) or Vector(DEFAULT_SPAWN_ROTATION)
 
     spawnParams = {
-        json = JSON.encode(data),
+        data = data,
         position = pos,
         rotation = rotation,
         scale = {x = 1, y = 1, z = 1},
@@ -19,7 +19,7 @@ local function spawn(data, pos, rotation, callback)
         snap_to_grid = true,
         callback_function = callback
     }
-    spawnObjectJSON(spawnParams)
+    spawnObjectData(spawnParams)
 end
 
 function TtsSpawner:spawnCard(card, pos, rotation, callback)
