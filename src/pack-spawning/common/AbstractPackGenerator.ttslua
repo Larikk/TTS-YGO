@@ -9,14 +9,6 @@ local tableUtil = require("TTS-YGO/src/common/TableUtil")
 local geometry = require("TTS-YGO/src/common/Geometry")
 local sorting = require("TTS-YGO/src/pack-spawning/common/Sorting")
 
--- We are using a third party JSON library because the native JSON deserialization of TTS is very slow
--- Benchmark of 10 decode calls for one booster set: library = ~15sec, native = ~300s
---
--- Code is taken from https://github.com/rxi/json.lua
--- Some changes were made to make it work with TTS
-local json = require("TTS-YGO/src/common/Json")
-
-
 -- Abstract class which has common logic
 -- Pack-specific behavior is implemented is subclasses
 AbstractPackGenerator = {}
