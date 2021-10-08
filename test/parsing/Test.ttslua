@@ -1,0 +1,82 @@
+local json = require("TTS-YGO/src/common/Json")
+local apiUtil = require("TTS-YGO/src/common/ApiUtil")
+local cardParser = require("TTS-YGO/src/common/CardParser")
+local cardHoverText = require("TTS-YGO/src/common/CardHoverText")
+local dataMapper = require("TTS-YGO/src/common/TtsDataMapper")
+
+function testUnicodeEscaping()
+    local f = function(case, expected) return {case = case, expected = expected} end
+    local testCases = {
+        f([[\u25cf]], [[\u{25cf}]]),
+        f([[\u25cf\u25cf\u25cf]], [[\u{25cf}\u{25cf}\u{25cf}]]),
+        f([[\u25cf Another Word]], [[\u{25cf} Another Word]]),
+        f([[\u25cfAnother Word]], [[\u{25cf}Another Word]]),
+        f([[\u41Another Word]], [[\u{41}Another Word]]), -- Probably not possible
+    }
+
+    for _, t in ipairs(testCases) do
+        local actual = json.convertUnicodeSequences(t.case)
+        local matches = t.expected == actual
+
+        if matches then
+            print(t.case .. " OKAY")
+        else
+            print(t.case .. " FAILED. Expected: " .. t.expected .. " Actual: " .. actual)
+        end
+    end
+end
+
+function testSingleCard(id)
+    local f = function(cards)
+        local card = cards[1]
+
+        if not card then
+            error("No card found")
+        end
+
+        card = cardParser.parseCard(card)
+        print(card.name)
+        local hoverText = cardHoverText.create(card)
+        print(hoverText)
+    end
+
+    local s = "id=" .. id
+    apiUtil.cardinfo(s, f)
+end
+
+function parseCard(card)
+    card = cardParser.parseCard(card)
+    return cardHoverText.create(card)
+end
+
+function testAllCards()
+    local f = function(cards)
+        local successCount = 0
+        local failedCount = 0
+        local failed = {}
+
+        for _, card in ipairs(cards) do
+            local ok, retval = pcall(parseCard, card)
+            if ok then
+                successCount = successCount + 1
+            else
+                failedCount = failedCount + 1
+                failed[failedCount] = card.name
+            end
+        end
+
+        print("Successful: " .. successCount)
+        print("Failed: " .. failedCount)
+
+        for _, name in ipairs(failed) do
+            print(name)
+        end
+    end
+
+    apiUtil.cardinfo("", f)
+end
+
+function onChat()
+    --testAllCards()
+    --testUnicodeEscaping()
+end
