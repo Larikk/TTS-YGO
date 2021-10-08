@@ -11,7 +11,9 @@ A Steam Workshop for Yu-Gi-Oh! inside of Tabletop Simulator.
 * Play mat and hidden zones for drafting included
 
 Steam links:
+
 2-player version: https://steamcommunity.com/sharedfiles/filedetails/?id=2586256855
+
 8-player version: https://steamcommunity.com/sharedfiles/filedetails/?id=2205827151
 
 Card lists are downloaded from [YGOPRODECK](https://db.ygoprodeck.com/api-guide/).
