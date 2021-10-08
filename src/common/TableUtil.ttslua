@@ -48,4 +48,41 @@ function module.copy(tbl)
     return copy
 end
 
+-- source: https://stackoverflow.com/a/6081639
+-- Added brackets around numerical keys
+function module.serializeTable(val, name, skipnewlines, depth)
+    local skipnewlines = skipnewlines or false
+    local depth = depth or 0
+
+    local tmp = string.rep(" ", depth)
+
+    if name then
+        local key = name
+        if type(name) == "number" then
+            key = "[" .. name .. "]"
+        end
+        tmp = tmp .. key .. " = "
+    end
+
+    if type(val) == "table" then
+        tmp = tmp .. "{" .. (not skipnewlines and "\n" or "")
+
+        for k, v in pairs(val) do
+            tmp = tmp .. module.serializeTable(v, k, skipnewlines, depth + 1) .. "," .. (not skipnewlines and "\n" or "")
+        end
+
+        tmp = tmp .. string.rep(" ", depth) .. "}"
+    elseif type(val) == "number" then
+        tmp = tmp .. tostring(val)
+    elseif type(val) == "string" then
+        tmp = tmp .. string.format("%q", val)
+    elseif type(val) == "boolean" then
+        tmp = tmp .. (val and "true" or "false")
+    else
+        tmp = tmp .. "\"[inserializeable datatype:" .. type(val) .. "]\""
+    end
+
+    return tmp
+end
+
 return module
