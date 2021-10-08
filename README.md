@@ -1,7 +1,18 @@
-# Yu-Gi-Oh Sealed Draft Simulator for Tabletop Simulator
+# Yu-Gi-Oh TTS Edition
 
-This Tabletop Simulator (TTS) mod creates randomized Yu-Gi-Oh Booster and Booster Boxes for sealed draft play.
-It is still an early prototype so don't expect it to be in any way perfect or complete.
+A Steam Workshop for Yu-Gi-Oh! inside of Tabletop Simulator.
+
+## Main Features
+
+* Spawn Booster Packs
+* Spawn Starter and Structure Decks
+* Import Cards via their ID or name
+* Import Decks via YDK file
+* Play mat and hidden zones for drafting included
+
+Steam links:
+2-player version: https://steamcommunity.com/sharedfiles/filedetails/?id=2586256855
+8-player version: https://steamcommunity.com/sharedfiles/filedetails/?id=2205827151
 
 Card lists are downloaded from [YGOPRODECK](https://db.ygoprodeck.com/api-guide/).
 
@@ -18,4 +29,3 @@ Open a game in TTS with button-like elements and connect Atom with it with "Get 
 Many thanks go to
 
 * YGOPRODECK for their API
-* [rxi](https://github.com/rxi) for providing a great [JSON library for Lua](https://github.com/rxi/json.lua) (which outperforms the native JSON decoding of TTS by a factor of 20)
