@@ -2,7 +2,7 @@ return {
     code = "5DS1",
     name = "Starter Deck: Yu-Gi-Oh! 5D's",
     releaseDate = "2008-08-05",
-    image = "https://i.imgur.com/Ka7Vlo0.png",
+    image = "http://cloud-3.steamusercontent.com/ugc/1778352920516508193/033858123BC99E5BEE23B74B6F26A78A4D8214F9/",
     cards = [[
 #created by ...
 #main

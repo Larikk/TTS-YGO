@@ -1,8 +1,6 @@
 import lib.wiki as wiki
-import lib.imgur as imgur
 import lib.deckutil as deckutil
 import lib.files as files
-import os
 import traceback
 import atexit
 import time
@@ -15,8 +13,7 @@ ydkOutputFolder = "../../../ygo-ydk-files/Starter Decks/"
 
 interactive = False
 
-albumHash = "xKSFdRb" # can be found in url
-imgur = imgur.Client(albumHash)
+imageMappings = files.getImageMappings("starter-decks.csv")
 
 # Run even if programm terminates unsuccessfully
 atexit.register(files.compileDeckList, folder, "src/preconstructed-decks/starter-decks")
@@ -62,7 +59,7 @@ def handleDeck(title):
             print(traceback.format_exc())
 
     
-    deck['imgur'] = imgur.getUrl(name, deck['image'])
+    deck['image'] = imageMappings[deck['code']]
     deck['cards'] = deckutil.sortCards(deck)
     deck['ydk'] = deckutil.asYdkFile(deck)
     deckutil.printDeck(deck)
