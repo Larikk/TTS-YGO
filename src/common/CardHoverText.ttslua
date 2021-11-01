@@ -48,8 +48,23 @@ local function spellTrapText(card)
     return str
 end
 
+-- When using the search window for a deck the tooltip with the TTS name (which includes card name and effect here)
+-- is only displayed if the first line of the TTS name does not fit into the UI.
+-- This function pads the first line with spaces to force the tooltip to display.
+local function padName(name)
+    local targetLength = 20
+    local nameLength = string.len(name)
+    local delta = targetLength - nameLength
+
+    if delta > 0 then
+        name = name .. string.rep(" ", delta)
+    end
+
+    return name
+end
+
 function cardHoverText.create(card)
-    local result = card.name .. "\n"
+    local result = padName(card.name) .. "\n"
 
     if card.type == "Trap Card" or card.type == "Spell Card" or card.type == "Skill Card" then
         result = result .. spellTrapText(card)
