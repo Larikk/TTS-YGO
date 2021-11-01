@@ -8,7 +8,7 @@ def write(folder, name, content):
     with open(path, "w") as f: f.write(content)
 
 def compileDeckList(folder, prefix):
-    files = os.listdir(folder)
+    files = sorted(os.listdir(folder))
     files = filter(lambda f: re.match(r"^[0-9]{3}-.+\.ttslua$", f), files)
     files = map(lambda f: f.split(".")[0], files)
     files = map(lambda f: f'require("TTS-YGO/{prefix}/{f}"),', files)
