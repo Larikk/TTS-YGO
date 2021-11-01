@@ -2,6 +2,8 @@ import os
 import re
 import inspect
 
+imageMappingsFolder = "../../../ygo-assets/mappings/"
+
 def write(folder, name, content):
     if folder[-1] != "/": folder += "/"
     path = folder + name
@@ -21,3 +23,17 @@ return {{
 }}
 """
     write(folder, "_all.ttslua", content)
+
+def getImageMappings(file):
+    lines = []
+    with open(imageMappingsFolder + file, "r") as f:
+        lines = [l.rstrip() for l in f.readlines()]
+
+    mappings = dict()
+    for l in lines:
+        vs = l.split(",")
+        code = vs[0].split("-")[1]
+        image = vs[1]
+        mappings[code] = image
+
+    return mappings

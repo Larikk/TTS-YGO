@@ -126,7 +126,7 @@ return {{
     code = "{deck['code']}",
     name = "{deck['name']}",
     releaseDate = "{deck['release-date']}",
-    image = "{deck['imgur']}",
+    image = "{deck['image']}",
     cards = [[
 {deck['ydk']}
 ]]
