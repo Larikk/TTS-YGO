@@ -1,8 +1,6 @@
 import lib.wiki as wiki
-import lib.imgur as imgur
 import lib.deckutil as deckutil
 import lib.files as files
-import os
 import atexit
 import traceback
 import time
@@ -17,8 +15,7 @@ ydkOutputFolder = "../../../ygo-ydk-files/Structure Decks/"
 
 interactive = False
 
-albumHash = "dhSibop" # can be found in url
-imgur = imgur.Client(albumHash)
+imageMappings = files.getImageMappings("structure-decks.csv")
 
 # Run even if programm terminates unsuccessfully
 atexit.register(files.compileDeckList, folder, "src/preconstructed-decks/structure-decks")
@@ -91,7 +88,7 @@ def handleDeck(title):
             print(traceback.format_exc())
 
     
-    deck['imgur'] = imgur.getUrl(name, deck['image'])
+    deck['image'] = imageMappings[deck['code']]
     deck['cards'] = deckutil.sortCards(deck)
     deck['ydk'] = deckutil.asYdkFile(deck)
     deckutil.printDeck(deck)
