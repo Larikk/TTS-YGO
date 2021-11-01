@@ -11,7 +11,7 @@ function PackGenerator:new()
     o.setCodePrefix = "TP3-"
     o.setNameUrl = "Tournament Pack: 3rd Season"
     o.releaseDate = "2003-03-01"
-    o.packTextures = "https://i.imgur.com/dKAocck.png"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778352920516694193/A6CD9481E12514912C009CB725BD6631FF98D72E/"
     o.boxTexture = nil
 
     return o

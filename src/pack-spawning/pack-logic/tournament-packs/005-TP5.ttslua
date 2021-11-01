@@ -11,7 +11,7 @@ function PackGenerator:new()
     o.setCodePrefix = "TP5-EN"
     o.setNameUrl = "Tournament Pack 5"
     o.releaseDate = "2004-11-01"
-    o.packTextures = "https://i.imgur.com/j9k5ObK.png"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778352920516694001/F46324E4601B30CBF52B235B6F014F88579D484D/"
     o.boxTexture = nil
 
     return o
