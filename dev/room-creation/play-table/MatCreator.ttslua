@@ -5,7 +5,7 @@
 
 local util = require("TTS-YGO/dev/room-creation/Util")
 
-local image = "https://i.imgur.com/goaxq7R.png"
+local image = "http://cloud-3.steamusercontent.com/ugc/1778353420788097204/A51667A76D01F8D6EF1691B2A168E1404479BCBE/"
 
 local module = {}
 

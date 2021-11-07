@@ -86,9 +86,9 @@ local function createPlate(table, color1, color2)
     }
     local plate = spawnObject(spawnParams)
     plate.setCustomObject({
-        mesh = "http://cloud-3.steamusercontent.com/ugc/783002817662121296/661D8FFE6699A4D022FB10D87979B2028D8D1806/",
-        diffuse = "http://cloud-3.steamusercontent.com/ugc/783002817662118580/EEF2FF28224A83EB29EC7D5B3CA728782F1554FC/",
-        collider = "http://cloud-3.steamusercontent.com/ugc/783002817662121296/661D8FFE6699A4D022FB10D87979B2028D8D1806/",
+        mesh = "http://cloud-3.steamusercontent.com/ugc/1778353420788097296/661D8FFE6699A4D022FB10D87979B2028D8D1806/",
+        diffuse = "http://cloud-3.steamusercontent.com/ugc/1778353420788097351/EEF2FF28224A83EB29EC7D5B3CA728782F1554FC/",
+        collider = "http://cloud-3.steamusercontent.com/ugc/1778353420788097412/661D8FFE6699A4D022FB10D87979B2028D8D1806/",
         type = 4,
         material = 1,
         specular_intensity = 0,
@@ -144,7 +144,7 @@ local function createTable(pos, rotation, color1, color2)
     local table = spawnObject(spawnParams)
     table.locked = true
     table.setCustomObject({
-        assetbundle = "http://cloud-3.steamusercontent.com/ugc/1011563587901306704/1ED59A7E6C52632AF229D6017BB616F051EAE049/",
+        assetbundle = "http://cloud-3.steamusercontent.com/ugc/1778353420788097497/1ED59A7E6C52632AF229D6017BB616F051EAE049/",
         type = 4,
         material = 1,
     })

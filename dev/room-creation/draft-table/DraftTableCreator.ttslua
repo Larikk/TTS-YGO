@@ -119,7 +119,7 @@ local function createTablet(plate)
     local tablet = spawnObject(spawnParams)
     tablet.setCustomObject({
         mesh = "http://cloud-3.steamusercontent.com/ugc/1804229846313094263/6C41D40E9318D40586B21366DCE99988AA0D2400/",
-        diffuse = "https://i.imgur.com/niAZIBT.png",
+        diffuse = "http://cloud-3.steamusercontent.com/ugc/1778353420788098738/AE7C918904D058E2358FEEE7B1B277ED3F9CD959/",
         material = 2,
         specular_intensity = 0,
         specular_sharpness = 2,
@@ -148,9 +148,9 @@ local function createPlate(table)
     }
     local plate = spawnObject(spawnParams)
     plate.setCustomObject({
-        mesh = "http://cloud-3.steamusercontent.com/ugc/783002817662121296/661D8FFE6699A4D022FB10D87979B2028D8D1806/",
-        diffuse = "http://cloud-3.steamusercontent.com/ugc/783002817662118580/EEF2FF28224A83EB29EC7D5B3CA728782F1554FC/",
-        collider = "http://cloud-3.steamusercontent.com/ugc/783002817662121296/661D8FFE6699A4D022FB10D87979B2028D8D1806/",
+        mesh = "http://cloud-3.steamusercontent.com/ugc/1778353420788097296/661D8FFE6699A4D022FB10D87979B2028D8D1806/",
+        diffuse = "http://cloud-3.steamusercontent.com/ugc/1778353420788097351/EEF2FF28224A83EB29EC7D5B3CA728782F1554FC/",
+        collider = "http://cloud-3.steamusercontent.com/ugc/1778353420788097412/661D8FFE6699A4D022FB10D87979B2028D8D1806/",
         type = 4,
         material = 1,
         specular_intensity = 0,
@@ -183,7 +183,7 @@ local function createTable(pos, rotation)
     local table = spawnObject(spawnParams)
     table.locked = true
     table.setCustomObject({
-        assetbundle = "http://cloud-3.steamusercontent.com/ugc/1011563587901306704/1ED59A7E6C52632AF229D6017BB616F051EAE049/",
+        assetbundle = "http://cloud-3.steamusercontent.com/ugc/1778353420788097497/1ED59A7E6C52632AF229D6017BB616F051EAE049/",
         type = 4,
         material = 1,
     })
