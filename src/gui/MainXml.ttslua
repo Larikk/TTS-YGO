@@ -1,3 +1,4 @@
+return [[
 <Defaults>
     <!-- Color scheme: https://flatuicolors.com/palette/defo-->
     <!-- General stuff -->
@@ -63,3 +64,4 @@
         </HorizontalLayout>
     </VerticalLayout>
 </Panel>
+]]

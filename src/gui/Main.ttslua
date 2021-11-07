@@ -1,3 +1,4 @@
+local mainXml = require("TTS-YGO/src/gui/MainXml")
 local guiUtil = require("TTS-YGO/src/gui/GUIUtil")
 local stringUtil = require("TTS-YGO/src/common/StringUtil")
 local state = require("TTS-YGO/src/gui/State")
@@ -68,7 +69,6 @@ function onChat(msg, sender)
     chatCommandHandler.handle(msg, sender)
 end
 
-local save = state.save
 function onSave()
     return state.save()
 end
@@ -76,6 +76,7 @@ end
 function onLoad(saveState)
     state.loadFromSave(saveState)
     assets.initAssets()
-    switchPage(nil, nil, "packs")
+    self.UI.setXml(mainXml)
+    Wait.frames(|| switchPage(nil, nil, "packs"), 60)
     stats.load()
 end

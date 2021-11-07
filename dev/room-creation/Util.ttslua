@@ -109,8 +109,4 @@ function module.getTabletLuaScript()
     return [[require("TTS-YGO/src/gui/Main")]]
 end
 
-function module.getTabletXml()
-    return [[<Include src="TTS-YGO/src/gui/Main.xml"/>]]
-end
-
 return module

@@ -132,7 +132,6 @@ local function createTablet(plate)
         tablet.setLock(true)
         tablet.setName("Yu-Gi-Oh! TTS Edition")
         tablet.setLuaScript(util.getTabletLuaScript())
-        print("Set XML of tablet to:\n" .. util.getTabletXml())
     end
 
     Wait.time(f, 1)
