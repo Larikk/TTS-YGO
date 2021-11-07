@@ -106,17 +106,7 @@ function module.getNonInteractableLuaScript()
 end
 
 function module.getTabletLuaScript()
-    return [[
-#include TTS-YGO/src/gui/Main
-
-function onLoad(save_state)
-    load(save_state)
-end
-
-function onSave()
-    return save()
-end
-]]
+    return [[require("TTS-YGO/src/gui/Main")]]
 end
 
 function module.getTabletXml()

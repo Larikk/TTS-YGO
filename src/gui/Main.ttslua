@@ -69,8 +69,11 @@ function onChat(msg, sender)
 end
 
 local save = state.save
+function onSave()
+    return state.save()
+end
 
-function load(saveState)
+function onLoad(saveState)
     state.loadFromSave(saveState)
     assets.initAssets()
     switchPage(nil, nil, "packs")
