@@ -34,7 +34,7 @@ local json = [[
   "HideWhenFaceDown": false,
   "Hands": false,
   "CustomImage": {
-    "ImageURL": "http://cloud-3.steamusercontent.com/ugc/1327949551206203002/9B8D5053643120A745FAE737C04B897000064726/",
+    "ImageURL": "http://cloud-3.steamusercontent.com/ugc/1778353420788098276/3D641D253C01304118295CE1A7E0F3C56062FAEE/",
     "ImageSecondaryURL": "",
     "ImageScalar": 1.0,
     "WidthScale": 0.0,
