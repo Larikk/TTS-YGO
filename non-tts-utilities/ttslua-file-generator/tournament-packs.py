@@ -5,16 +5,15 @@ import lib.files as files
 import traceback
 import time
 
-title = "Tournament Pack: 1st Season"
+title = "Champion Pack: Game One"
 counter = 1
-folder = "tournament-packs"
+folder = "champion-packs"
 
 path = "../../src/pack-spawning/pack-logic/" + folder
 
-interactive = True
+interactive = False
 
-packAlbumHash = "1UnBy9J" # can be found in url
-packsImgur = imgur.Client(packAlbumHash)
+packImageMappings = files.getImageMappings("champion-packs-packs.csv")
 
 nextReleaseOutliers = {
 }
@@ -47,7 +46,7 @@ def handleBooster(title):
             print(traceback.format_exc())
 
     
-    booster['pack-texture'] = packsImgur.getUrl(name, booster['image'])
+    booster['pack-texture'] = packImageMappings[booster['code']]
     booster['box-texture'] = "nil"
 
     boosterutil.printBooster(booster)
