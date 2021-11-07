@@ -11,8 +11,8 @@ function PackGenerator:new()
     o.setCodePrefix = "DREV-EN"
     o.setNameUrl = "Duelist Revolution"
     o.releaseDate = "2010-08-17"
-    o.packTextures = "https://i.imgur.com/hiQO8bu.jpg"
-    o.boxTexture = "https://i.imgur.com/77qewqj.png"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962155784/56D49548663B9FD6F47740822393FFE8115973B8/"
+    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962338753/99E07502C1EB7DCF89316559D65056EC54596BC4/"
 
     return o
 end

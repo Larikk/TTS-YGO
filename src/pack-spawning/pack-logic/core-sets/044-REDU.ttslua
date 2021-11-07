@@ -11,8 +11,8 @@ function PackGenerator:new()
     o.setCodePrefix = "REDU-EN"
     o.setNameUrl = "Return of the Duelist"
     o.releaseDate = "2012-08-28"
-    o.packTextures = "https://i.imgur.com/NQmCQLl.png"
-    o.boxTexture = "https://i.imgur.com/Gg4DqC8.png"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962153888/EF339D81504A955AA69E3EF5613ACEAED07B45A4/"
+    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962337455/0B9F2AD55278B1B87281F4912190DD48954D1101/"
 
     return o
 end

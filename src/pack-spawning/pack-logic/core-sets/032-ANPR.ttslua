@@ -11,8 +11,8 @@ function PackGenerator:new()
     o.setCodePrefix = "ANPR-EN"
     o.setNameUrl = "Ancient Prophecy"
     o.releaseDate = "2009-09-01"
-    o.packTextures = "https://i.imgur.com/3T6pi1y.jpg"
-    o.boxTexture = "https://i.imgur.com/JSy1Yda.png"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962156426/CC155D8ABFDDA103E9D8145E98947E01597AFF75/"
+    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962339302/6600684615EF1FB4FEB64C01730AEA88ACC5C08E/"
 
     return o
 end

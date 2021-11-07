@@ -11,8 +11,8 @@ function PackGenerator:new()
     o.setCodePrefix = "SOI-EN"
     o.setNameUrl = "Shadow of Infinity"
     o.releaseDate = "2006-02-18"
-    o.packTextures = "https://i.imgur.com/fNVPCxv.png"
-    o.boxTexture = "https://i.imgur.com/f976cJi.png"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962157745/C6CE1ED694B3E0DB7861B5AB14F3A4F5B559C0EE/"
+    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962341130/398D56156F0C1940EC1DAB52133E0C1BA00CF5D5/"
 
     return o
 end

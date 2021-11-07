@@ -11,8 +11,8 @@ function PackGenerator:new()
     o.setCodePrefix = "CRMS-EN"
     o.setNameUrl = "Crimson Crisis"
     o.releaseDate = "2009-03-03"
-    o.packTextures = "https://i.imgur.com/awRVSpm.jpg"
-    o.boxTexture = "https://i.imgur.com/UEXNBWr.png"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962156637/DCC1ACC691A47484E60369E57428BF4B4C502C41/"
+    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962339510/1978D4FA1FAC05AB3470E2F8338D3CCAED05DF9C/"
 
     return o
 end

@@ -11,8 +11,8 @@ function PackGenerator:new()
     o.setCodePrefix = "CRV-EN"
     o.setNameUrl = "Cybernetic Revolution"
     o.releaseDate = "2005-08-06"
-    o.packTextures = "https://i.imgur.com/V8bTFzt.jpg"
-    o.boxTexture = "https://i.imgur.com/WrSYGSa.png"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962157964/2E3DC9C3B8715E6C4143015C5A08DEDEAA6C0998/"
+    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962341329/381F48125CCAC0A1B7721BB2BA290D33396A3169/"
 
     return o
 end

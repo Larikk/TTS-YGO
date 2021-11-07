@@ -11,8 +11,8 @@ function PackGenerator:new()
     o.setCodePrefix = "LTGY-EN"
     o.setNameUrl = "Lord of the Tachyon Galaxy"
     o.releaseDate = "2013-05-17"
-    o.packTextures = "https://i.imgur.com/LXWmdCV.png"
-    o.boxTexture = "https://i.imgur.com/UUlkKcl.png"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962153515/EDF93610FEF9B2C647509A7C01AC2B40DDF4FD23/"
+    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962337146/CA1919BB80AEBDD73574D47904D781E817F6A60E/"
 
     return o
 end

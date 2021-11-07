@@ -11,8 +11,8 @@ function PackGenerator:new()
     o.setCodePrefix = "STBL-EN"
     o.setNameUrl = "Starstrike Blast"
     o.releaseDate = "2010-11-16"
-    o.packTextures = "https://i.imgur.com/PHZ3Q3N.jpg"
-    o.boxTexture = "https://i.imgur.com/CyrOcrv.png"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962155708/68CF01047E46EEA4D88B1BFD96D71EB9A180DFD7/"
+    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962338642/F2AC90B0617423A0F2B9F3A9CFCFF9CDFC3A2AF0/"
 
     return o
 end

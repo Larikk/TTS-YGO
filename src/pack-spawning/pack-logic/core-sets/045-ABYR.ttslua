@@ -11,8 +11,8 @@ function PackGenerator:new()
     o.setCodePrefix = "ABYR-EN"
     o.setNameUrl = "Abyss Rising"
     o.releaseDate = "2012-11-09"
-    o.packTextures = "https://i.imgur.com/PPFTQPA.png"
-    o.boxTexture = "https://i.imgur.com/teS5a5I.png"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962153762/0975E1C75DBBE34F14A243D33F9C30512CD840C8/"
+    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962337347/C35BD56FB88C08C6901BE096ADF7ECA9BE0075D5/"
 
     return o
 end

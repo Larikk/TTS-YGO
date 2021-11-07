@@ -11,8 +11,8 @@ function PackGenerator:new()
     o.setCodePrefix = "RGBT-EN"
     o.setNameUrl = "Raging Battle"
     o.releaseDate = "2009-05-12"
-    o.packTextures = "https://i.imgur.com/YTxc4zn.png"
-    o.boxTexture = "https://i.imgur.com/oKLAxmq.png"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962156539/553A8A549076803D1AB34C6D2AE5BFB0C2AD4379/"
+    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962339396/D8DD6998E8E7E675D9BC66A174E8BC3AFB709B96/"
 
     return o
 end

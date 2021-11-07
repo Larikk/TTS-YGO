@@ -11,8 +11,8 @@ function PackGenerator:new()
     o.setCodePrefix = "STON-EN"
     o.setNameUrl = "Strike of Neos"
     o.releaseDate = "2007-02-28"
-    o.packTextures = "https://i.imgur.com/SmhR9an.png"
-    o.boxTexture = "https://i.imgur.com/CQ6mbAu.png"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962157379/B8C67643200EDD249790EA30B738DA4F7F0EFA74/"
+    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962340625/7045A439D7216DD34215ED018B38F88C505A7D92/"
 
     return o
 end

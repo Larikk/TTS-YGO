@@ -1,25 +1,19 @@
 import lib.wiki as wiki
-import lib.imgur as imgur
 import lib.boosterutil as boosterutil
 import lib.files as files
-import os
 import traceback
-import atexit
 import time
 
-title = "Dimension of Chaos"
-counter = 57
+title = "Legend of Blue Eyes White Dragon"
+counter = 1
 folder = "core-sets"
 
 path = "../../src/pack-spawning/pack-logic/" + folder
 
-interactive = True
+interactive = False
 
-packAlbumHash = "e3Q9Z01" # can be found in url
-packsImgur = imgur.Client(packAlbumHash)
-
-boxAlbumHash = "JuyjXZW" # can be found in url
-boxImgur = imgur.Client(boxAlbumHash)
+packImageMappings = files.getImageMappings("core-sets-packs.csv")
+boxImageMappings = files.getImageMappings("core-sets-boxes.csv")
 
 nextReleaseOutliers = {
 }
@@ -69,11 +63,11 @@ def handleBooster(title):
             print(e)
             print(traceback.format_exc())
 
+        
+    booster['pack-texture'] = packImageMappings[booster['code']]
     
-    booster['pack-texture'] = packsImgur.getUrl(name, booster['image'])
-    
-    if boxImgur.hasImage(name):
-        booster['box-texture'] = boxImgur.getUrl(name, None)
+    if booster['code'] in boxImageMappings:
+        booster['box-texture'] = boxImageMappings[booster['code']]
     else:
         booster['box-texture'] = "nil"
 

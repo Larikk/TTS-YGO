@@ -11,8 +11,8 @@ function PackGenerator:new()
     o.setCodePrefix = "SOD-EN"
     o.setNameUrl = "Soul of the Duelist"
     o.releaseDate = "2004-10-01"
-    o.packTextures = "https://i.imgur.com/HQLT5JQ.png"
-    o.boxTexture = "https://i.imgur.com/F1kkhJM.png"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962158233/DA918C017722A742CA55B8B047DC4856E1BC5AC2/"
+    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962341691/0E1AAC5693B6C31F8633913BBFF345C25A9663F0/"
 
     return o
 end

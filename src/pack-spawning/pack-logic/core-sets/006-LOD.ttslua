@@ -11,8 +11,8 @@ function PackGenerator:new()
     o.setCodePrefix = "LOD-EN"
     o.setNameUrl = "Legacy of Darkness"
     o.releaseDate = "2003-06-06"
-    o.packTextures = "https://i.imgur.com/4nnn0FP.png"
-    o.boxTexture = "https://i.imgur.com/sWP9WgM.png"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962159041/A1F70168A3DD7F788C5DA321BA96ED907EF8646B/"
+    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962342271/76C9C0910B0D3FDA73A9AA9A81EB1B94C9A7B4DC/"
 
     return o
 end

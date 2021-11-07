@@ -11,8 +11,8 @@ function PackGenerator:new()
     o.setCodePrefix = "CORE-EN"
     o.setNameUrl = "Clash of Rebellions"
     o.releaseDate = "2015-08-07"
-    o.packTextures = "https://i.imgur.com/XaVwrOP.png"
-    o.boxTexture = "https://i.imgur.com/38XPbZk.png"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962152380/DE96C4CE55FD6D0349FD3D4D60214166B0ADFC51/"
+    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962336078/3B5E32C96C0E069212099614830E7445E31F144C/"
 
     return o
 end

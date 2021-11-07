@@ -11,8 +11,8 @@ function PackGenerator:new()
     o.setCodePrefix = "CROS-EN"
     o.setNameUrl = "Crossed Souls"
     o.releaseDate = "2015-05-15"
-    o.packTextures = "https://i.imgur.com/4QZlbQo.png"
-    o.boxTexture = "https://i.imgur.com/JH6Uqn9.png"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962152461/B7E85CF1EFA88FAD587EA3EB4BACD760E85702E2/"
+    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962336196/31B35F5C335F35ECA463CD1B1BE3FDC8766BB9EE/"
 
     return o
 end

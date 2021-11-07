@@ -11,8 +11,8 @@ function PackGenerator:new()
     o.setCodePrefix = "PSV-EN"
     o.setNameUrl = "Pharaoh's Servant"
     o.releaseDate = "2002-10-20"
-    o.packTextures = "https://i.imgur.com/lgqRURX.jpg"
-    o.boxTexture = "https://i.imgur.com/Sm5yaj9.png"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962159613/CA6CC0D9D4A70464D694B0267432120A6372FA90/"
+    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962342486/F4D15629A7A9EF8F7740B6E84022F8C720C50376/"
 
     return o
 end

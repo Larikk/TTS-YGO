@@ -11,8 +11,8 @@ function PackGenerator:new()
     o.setCodePrefix = "FET-EN"
     o.setNameUrl = "Flaming Eternity"
     o.releaseDate = "2005-03-01"
-    o.packTextures = "https://i.imgur.com/8Q6lAqS.jpg"
-    o.boxTexture = "https://i.imgur.com/RlWeTGS.png"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962158109/E1D25F3D06BEE98C0F313BDE87FAFC9580E0A67A/"
+    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962341514/8021B09E7C9CAED9E27118ECC7CF80FDF54A9052/"
 
     return o
 end

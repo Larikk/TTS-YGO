@@ -11,8 +11,8 @@ function PackGenerator:new()
     o.setCodePrefix = "FOTB-EN"
     o.setNameUrl = "Force of the Breaker"
     o.releaseDate = "2007-05-16"
-    o.packTextures = "https://i.imgur.com/mnB6rDA.jpg"
-    o.boxTexture = "https://i.imgur.com/0sQlEpC.png"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962157320/93BF7766578B0A181591DBE1357723E47ABA8910/"
+    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962340535/2C00FFD0AE56DE20B7E1FE034068FF5B31FFC9D0/"
 
     return o
 end

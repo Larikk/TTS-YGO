@@ -11,8 +11,8 @@ function PackGenerator:new()
     o.setCodePrefix = "IOC-EN"
     o.setNameUrl = "Invasion of Chaos"
     o.releaseDate = "2004-03-01"
-    o.packTextures = "https://i.imgur.com/KjH2fqs.png"
-    o.boxTexture = "https://i.imgur.com/cvyXhQf.png"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962158430/984914F913CBF86126A965E76DA3F2A7D38DD87D/"
+    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962341892/9955C942ECCB067390A46E183E08E521A3CC637C/"
 
     return o
 end
