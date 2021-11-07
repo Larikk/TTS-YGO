@@ -1,13 +1,13 @@
 local resources = {}
 
-resources.CARD_BACK = "https://i.imgur.com/UjbK2Wb.png"
+resources.CARD_BACK = "http://cloud-3.steamusercontent.com/ugc/1778353420788008710/1CE0C26D55A265AC62288B21E75CDA15D894CE63/"
 
-resources.DEFAULT_PACK_TEXTURE = "https://i.imgur.com/XlF4YQW.png"
-resources.DEFAULT_BOX_TEXTURE = "https://i.imgur.com/hDtFLea.png"
+resources.DEFAULT_PACK_TEXTURE = "http://cloud-3.steamusercontent.com/ugc/1778353420788008578/854E5A0E43443DB972E0D63C003C7C3ECBFB6D8E/"
+resources.DEFAULT_BOX_TEXTURE = "http://cloud-3.steamusercontent.com/ugc/1778353420788008371/E26EDD3BA8CD8CFE6B7B578545B589319FC9E5E2/"
 
-resources.PACK_MESH = "http://pastebin.com/raw/xdTHXJJX"
-resources.BOX_MESH = "https://pastebin.com/raw/8heJnvWg"
+resources.PACK_MESH = "http://cloud-3.steamusercontent.com/ugc/1778353420788008479/E9A65CD25256BFDB28AE4140FCB1D27BC71A5A8D/"
+resources.BOX_MESH = "http://cloud-3.steamusercontent.com/ugc/1778353420788008312/C8F3D7155C72C451598BF2C83CF9478217AAD352/"
 
-resources.PACK_NORMAL = "http://i.imgur.com/9FUxR04.png"
+resources.PACK_NORMAL = "http://cloud-3.steamusercontent.com/ugc/1778353420788008646/D75480247FA058266F0D423501D867407458666D/"
 
 return resources
