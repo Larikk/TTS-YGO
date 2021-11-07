@@ -11,8 +11,8 @@ function PackGenerator:new()
     o.setCodePrefix = "SOVR-EN"
     o.setNameUrl = "Stardust Overdrive"
     o.releaseDate = "2009-11-17"
-    o.packTextures = "https://i.imgur.com/gTp4FBm.jpg"
-    o.boxTexture = "https://i.imgur.com/PB1x5tR.png"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962156344/6C073A3E4115D5D3237AF55E2782173E3E2144ED/"
+    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962339216/117E5B42A62D1819D30CB05F64C0103495358E6B/"
 
     return o
 end

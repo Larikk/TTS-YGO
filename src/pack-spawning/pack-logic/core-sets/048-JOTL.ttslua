@@ -11,8 +11,8 @@ function PackGenerator:new()
     o.setCodePrefix = "JOTL-EN"
     o.setNameUrl = "Judgment of the Light"
     o.releaseDate = "2013-08-09"
-    o.packTextures = "https://i.imgur.com/XudZXZb.png"
-    o.boxTexture = "https://i.imgur.com/w2TrbhK.png"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962153422/93F615D969CEF4E20F445CB85012FD06EF4F0BDB/"
+    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962337026/3F08A9D7067BAA009ADC3C65007C678D86922A16/"
 
     return o
 end

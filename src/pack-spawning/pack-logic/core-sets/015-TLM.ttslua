@@ -11,8 +11,8 @@ function PackGenerator:new()
     o.setCodePrefix = "TLM-EN"
     o.setNameUrl = "The Lost Millennium"
     o.releaseDate = "2005-06-01"
-    o.packTextures = "https://i.imgur.com/gvCarSR.png"
-    o.boxTexture = "https://i.imgur.com/5VyfFmc.png"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962158021/FD9BF2DA753F407E527B4A33ED0732FF603DE01D/"
+    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962341417/9EF1A59042BAD1F46FF820411C75533F0CC278B7/"
 
     return o
 end

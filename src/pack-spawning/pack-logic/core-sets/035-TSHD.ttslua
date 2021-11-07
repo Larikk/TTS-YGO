@@ -11,8 +11,8 @@ function PackGenerator:new()
     o.setCodePrefix = "TSHD-EN"
     o.setNameUrl = "The Shining Darkness"
     o.releaseDate = "2010-05-11"
-    o.packTextures = "https://i.imgur.com/08EIRCe.png"
-    o.boxTexture = "https://i.imgur.com/1SApTLq.png"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962155904/44E4A46FC67FF081021BC267D69F760BE7101C16/"
+    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962338882/DC0DF66DEF158828B47EE44FAD2D49C454E7BFE6/"
 
     return o
 end

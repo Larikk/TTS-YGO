@@ -11,8 +11,8 @@ function PackGenerator:new()
     o.setCodePrefix = "TDGS-EN"
     o.setNameUrl = "The Duelist Genesis"
     o.releaseDate = "2008-09-02"
-    o.packTextures = "https://i.imgur.com/iHjJzYW.jpg"
-    o.boxTexture = "https://i.imgur.com/wP2UOqx.png"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962156829/B0A19A3CEB7A0831CE9FDA16A755D8609CFC4856/"
+    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962339721/CB9F92D12C0F28C609E9426B8C8E08894CCD35FC/"
 
     return o
 end

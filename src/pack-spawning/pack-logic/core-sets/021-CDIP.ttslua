@@ -11,8 +11,8 @@ function PackGenerator:new()
     o.setCodePrefix = "CDIP-EN"
     o.setNameUrl = "Cyberdark Impact"
     o.releaseDate = "2006-11-15"
-    o.packTextures = "https://i.imgur.com/Nqw4Y7f.png"
-    o.boxTexture = "https://i.imgur.com/K2NskRY.png"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962157473/00CA817A2D4EAB0FB208BE1E12C6BDDF4932C94B/"
+    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962340716/F19F12B88AD84FE221355C766C5E6C3E2E6A08D3/"
 
     return o
 end

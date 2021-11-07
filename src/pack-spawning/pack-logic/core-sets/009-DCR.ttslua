@@ -11,8 +11,8 @@ function PackGenerator:new()
     o.setCodePrefix = "DCR-EN"
     o.setNameUrl = "Dark Crisis"
     o.releaseDate = "2003-12-01"
-    o.packTextures = "https://i.imgur.com/Rgrf0lH.png"
-    o.boxTexture = "https://i.imgur.com/A9QkU1K.png"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962158555/715FB0E2138CA2884D1F8AD977DED59CCAFFFFA3/"
+    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962341983/66FC2E8D04733E402FFCD245913D602C2C4D7515/"
 
     return o
 end

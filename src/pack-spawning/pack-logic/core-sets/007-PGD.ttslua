@@ -11,8 +11,8 @@ function PackGenerator:new()
     o.setCodePrefix = "PGD-"
     o.setNameUrl = "Pharaonic Guardian"
     o.releaseDate = "2003-07-18"
-    o.packTextures = "https://i.imgur.com/rSrvpl7.png"
-    o.boxTexture = "https://i.imgur.com/fR5F7um.png"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962158924/7491FF2DD926EF19ADBCAC03366E458E5732FA06/"
+    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962342174/883AA96BA4F7CD24614C2000671D6A90BFA132D4/"
 
     return o
 end

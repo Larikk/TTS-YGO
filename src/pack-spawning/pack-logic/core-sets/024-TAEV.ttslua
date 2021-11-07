@@ -11,8 +11,8 @@ function PackGenerator:new()
     o.setCodePrefix = "TAEV-EN"
     o.setNameUrl = "Tactical Evolution"
     o.releaseDate = "2007-08-15"
-    o.packTextures = "https://i.imgur.com/5iGZv95.png"
-    o.boxTexture = "https://i.imgur.com/SfoLSf0.png"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962157209/018AEE4ECADE9F36BD22FDB10F3A83ED65D92379/"
+    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962340341/945572D543B1FCD3E8BC4DD7CC9FF36572D84A5A/"
 
     return o
 end

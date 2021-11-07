@@ -11,8 +11,8 @@ function PackGenerator:new()
     o.setCodePrefix = "GENF-EN"
     o.setNameUrl = "Generation Force"
     o.releaseDate = "2011-08-16"
-    o.packTextures = "https://i.imgur.com/eJjMf8Y.png"
-    o.boxTexture = "https://i.imgur.com/424sbtF.png"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962155288/D9D9C97141C8FF24885C993C8EADA3CBEBD25B27/"
+    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962338157/071FC12051F73AC68D26F17C13235D2543FF03AE/"
 
     return o
 end

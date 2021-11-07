@@ -11,8 +11,8 @@ function PackGenerator:new()
     o.setCodePrefix = "MFC-"
     o.setNameUrl = "Magician's Force"
     o.releaseDate = "2003-10-10"
-    o.packTextures = "https://i.imgur.com/uVI9QKa.png"
-    o.boxTexture = "https://i.imgur.com/hHJ99VW.png"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962158835/E55B0EB90198E4361C94B04F7A0B32DC696D72D1/"
+    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962342081/C0721C5DFA0E78A2D20D78DA06F9F4BB0D87D7A4/"
 
     return o
 end

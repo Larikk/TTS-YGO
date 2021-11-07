@@ -11,8 +11,8 @@ function PackGenerator:new()
     o.setCodePrefix = "GLAS-EN"
     o.setNameUrl = "Gladiator's Assault"
     o.releaseDate = "2007-11-14"
-    o.packTextures = "https://i.imgur.com/Rbg1yjl.png"
-    o.boxTexture = "https://i.imgur.com/rDqJ3w4.png"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962157082/FDBA8D44BC626B39F1F6382AF606910816839F4C/"
+    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962340154/6FF51572BDD13356F36B8111553B2A691EB1D998/"
 
     return o
 end

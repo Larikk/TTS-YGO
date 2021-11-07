@@ -11,8 +11,8 @@ function PackGenerator:new()
     o.setCodePrefix = "EEN-EN"
     o.setNameUrl = "Elemental Energy"
     o.releaseDate = "2005-11-16"
-    o.packTextures = "https://i.imgur.com/Ug604vI.png"
-    o.boxTexture = "https://i.imgur.com/slPZRYi.png"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962157858/A5A27FF4CE41F4AA5FFF0B9CE954083D7909FBDD/"
+    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962341230/CAAB9A42419030C55C22EAA68AC6F7909C26F984/"
 
     return o
 end

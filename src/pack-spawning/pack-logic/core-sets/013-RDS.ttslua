@@ -11,8 +11,8 @@ function PackGenerator:new()
     o.setCodePrefix = "RDS-EN"
     o.setNameUrl = "Rise of Destiny"
     o.releaseDate = "2004-12-01"
-    o.packTextures = "https://i.imgur.com/DzBKgcu.jpg"
-    o.boxTexture = "https://i.imgur.com/BuHFEMp.png"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962158174/43EDAC7169149424821728C4B2B68389B7B52EE9/"
+    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962341597/F737522764B7B8E41651D07EFC0F2A50D8B1BA23/"
 
     return o
 end

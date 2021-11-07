@@ -11,8 +11,8 @@ function PackGenerator:new()
     o.setCodePrefix = "GAOV-EN"
     o.setNameUrl = "Galactic Overlord"
     o.releaseDate = "2012-05-08"
-    o.packTextures = "https://i.imgur.com/BzJoWzF.png"
-    o.boxTexture = "https://i.imgur.com/Dt9oQ3F.png"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962154009/BFEEBEE25AF70A05EEA529381E725D95F81DBC00/"
+    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962337672/5B428FDEC275E461D1ED6D0A5CBD1B425E57C58E/"
 
     return o
 end
