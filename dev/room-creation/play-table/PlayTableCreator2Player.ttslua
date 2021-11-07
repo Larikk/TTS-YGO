@@ -167,7 +167,6 @@ local function createTablet(pos, rotation)
             "180",
             "settings:spawn-rotation"
         })
-        print("Set XML of tablet to:\n" .. util.getTabletXml())
     end
 
     Wait.time(f, 5)
