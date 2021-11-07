@@ -11,7 +11,7 @@ function PackGenerator:new()
     o.setCodePrefix = "CP04-EN"
     o.setNameUrl = "Champion Pack: Game Four"
     o.releaseDate = "2007-09-06"
-    o.packTextures = "https://i.imgur.com/40kw9DT.png"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353420787283343/25D27230C1F30962EA4E8730B03ED5FDD200AC78/"
     o.boxTexture = nil
 
     return o
