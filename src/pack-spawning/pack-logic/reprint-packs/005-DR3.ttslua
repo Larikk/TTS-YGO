@@ -11,7 +11,7 @@ function PackGenerator:new()
     o.setCodePrefix = "DR3-EN"
     o.setNameUrl = "Dark Revelation Volume 3"
     o.releaseDate = "2006-11-25"
-    o.packTextures = "https://i.imgur.com/aDUZuVJ.png"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353420787261147/671BF943299B1EF27F7B4D537E8584E503E13ADE/"
     o.boxTexture = nil
 
     return o
