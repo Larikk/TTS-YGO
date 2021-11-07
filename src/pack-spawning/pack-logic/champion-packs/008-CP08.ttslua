@@ -11,7 +11,7 @@ function PackGenerator:new()
     o.setCodePrefix = "CP08-EN"
     o.setNameUrl = "Champion Pack: Game Eight"
     o.releaseDate = "2009-01-05"
-    o.packTextures = "https://i.imgur.com/NmH7Qto.png"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353420787282856/D9B81FDD43D4D8F6D5B92EC44FE8714A1C4A160E/"
     o.boxTexture = nil
 
     return o
