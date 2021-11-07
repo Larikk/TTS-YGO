@@ -6,7 +6,7 @@ local SET_CODE_PREFIX = "BPW2-EN"
 
 local SET_NAME_URL = SET_NAME
 
-local PACK_TEXTURES = "https://i.imgur.com/DF6s5Rb.jpg"
+local PACK_TEXTURES = "http://cloud-3.steamusercontent.com/ugc/1778353420787607777/04BDC13E2EC5F74BB1D87E791A6D2B935352E868/"
 
 local BOX_TEXTURE = nil
 

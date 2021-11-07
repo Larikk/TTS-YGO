@@ -7,9 +7,9 @@ local SET_CODE_PREFIX = "BP01-EN"
 
 local SET_NAME_URL = SET_NAME
 
-local PACK_TEXTURES = "https://i.imgur.com/sz85e3z.jpga"
+local PACK_TEXTURES = "http://cloud-3.steamusercontent.com/ugc/1778353420787606616/4552A33E3E243973E505629E40D10FAD675AE448/"
 
-local BOX_TEXTURE = "https://i.imgur.com/qP94DEb.png"
+local BOX_TEXTURE = "http://cloud-3.steamusercontent.com/ugc/1778353420787611235/82280987AB5CD182217C0FF782E4568FF6A45C2D/"
 
 local CARDS_IN_PACKS = 5
 
