@@ -47,7 +47,7 @@ function PackGenerator:new()
     o.setCodePrefix = "DLG1-EN"
     o.setNameUrl = "Dark Legends"
     o.releaseDate = "2008-11-21"
-    o.packTextures = "https://i.imgur.com/SDd6lKd.png"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353420787260786/9CAD592AD7E441DE837DFE1FAC0C86EA72A82E2F/"
     o.boxTexture = nil
     o.cardsInPacks = 12
     o.packsInBox = 1

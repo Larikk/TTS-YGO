@@ -11,7 +11,7 @@ function PackGenerator:new()
     o.setCodePrefix = "DR04-EN"
     o.setNameUrl = "Dark Revelation Volume 4"
     o.releaseDate = "2007-11-14"
-    o.packTextures = "https://i.imgur.com/pruGgLi.png"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353420787260963/E95C8A81659D510D2DA9AED149DDA8F7DEB675D5/"
     o.boxTexture = nil
 
     return o
