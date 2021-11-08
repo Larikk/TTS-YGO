@@ -1,0 +1,71 @@
+local AbstractPackGenerator = require("TTS-YGO/src/pack-spawning/common/AbstractPackGenerator")
+
+-- Pack logic for sets between Eternity Code and TBD
+-- Difference to previous: Removed Rares
+
+
+local CARDS_IN_PACKS = 9
+
+local PACKS_IN_BOX = 24
+
+-- Rarities
+local COMMON = "Common"
+local SUPER_RARE = "Super Rare"
+local ULTRA_RARE = "Ultra Rare"
+local SECRET_RARE = "Secret Rare"
+local STARLIGHT_RARE = "Starlight Rare"
+
+-- Ratios for foil card, must add up to 1.0
+-- Numbers were taken from https://yugiohblog.konami.com/articles/?p=7413
+local RATIOS = {
+    [SUPER_RARE] = 0.73826,
+    [ULTRA_RARE] = 0.17,
+    [SECRET_RARE] = 0.09,
+    [STARLIGHT_RARE] = 0.00174,
+}
+
+-- We want to map some rarities to other rarities (eg. when we want to treat a shortprint as a common)
+local RARITY_REPLACEMENTS = {}
+RARITY_REPLACEMENTS["Short Print"] = COMMON
+RARITY_REPLACEMENTS["Super Short Print"] = COMMON
+
+
+local PackGenerator = AbstractPackGenerator:new()
+
+function PackGenerator:assemblePack()
+    local pack = {}
+
+    local commons = self:pullCards(COMMON, 8)
+
+    -- 8 commons
+    for i = 1, 8 do
+        pack[i] = commons[i]
+    end
+
+    -- holo card
+    local rarityOfLast = self:pickRarity(RATIOS)
+    pack[9] = self:pullCard(rarityOfLast)
+
+    return pack
+end
+
+function PackGenerator:new()
+    local o = AbstractPackGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = SET_NAME
+    o.setCodePrefix = SET_CODE_PREFIX
+    o.setNameUrl = SET_NAME_URL
+    o.cardsInPacks = CARDS_IN_PACKS
+    o.packsInBox = PACKS_IN_BOX
+    o.packTextures = PACK_TEXTURES
+    o.boxTexture = BOX_TEXTURE
+
+    -- We search for all entries because of ultimate rares
+    o.setDataExtractor:replace(RARITY_REPLACEMENTS):findAll()
+
+    return o
+end
+
+return PackGenerator
