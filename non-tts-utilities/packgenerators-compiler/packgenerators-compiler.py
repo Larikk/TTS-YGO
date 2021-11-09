@@ -59,7 +59,7 @@ output = prefix
 for section in sections:
     path = logic_dir + section
     output += f"\n-- {section}"
-    for pack in os.listdir(path):
+    for pack in sorted(os.listdir(path)):
         if re.match(r"^[0-9]{3}-.+\.ttslua$", pack):
             output += createEntry(pack, section)
             processed_files.append(section + "/" + pack)
