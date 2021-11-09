@@ -11,7 +11,7 @@ function PackGenerator:new()
     o.setCodePrefix = "DUEA-EN"
     o.setNameUrl = "Duelist Alliance"
     o.releaseDate = "2014-08-15"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962152845/DF72B2CF8B2C6F35375B6281BDF26FCF6AA7C23F/"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353420792682163/9D5B5E9B784880FB4B7301F04B086BB9D238DC95/"
     o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962336541/43902BD1E4F6C255AB45130B1EF4B263CC3A52C9/"
 
     return o

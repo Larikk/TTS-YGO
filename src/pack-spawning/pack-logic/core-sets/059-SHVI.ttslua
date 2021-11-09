@@ -1,0 +1,20 @@
+local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicE")
+
+local PackGenerator = ParentGenerator:new()
+
+function PackGenerator:new()
+    local o = ParentGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = "Shining Victories"
+    o.setCodePrefix = "SHVI-EN"
+    o.setNameUrl = "Shining Victories"
+    o.releaseDate = "2016-05-06"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353420792684433/C272AFDD3BD812DAB93ACF8B4A0DD74ABCCF9F12/"
+    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353420792747207/642D0C3665BB9C6FA8C4007305EDD8A5D64B1749/"
+
+    return o
+end
+
+return PackGenerator

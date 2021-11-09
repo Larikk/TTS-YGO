@@ -11,7 +11,7 @@ function PackGenerator:new()
     o.setCodePrefix = "SECE-EN"
     o.setNameUrl = "Secrets of Eternity"
     o.releaseDate = "2015-01-16"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962152660/1FF4D348415E995B251CFC57D223C64209293D1C/"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353420792684925/24128AC30B40B4012F351562249C40995B55C033/"
     o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962336316/EFD5D55C89CCF2868B4107F5EA9B4B2794175F23/"
 
     return o

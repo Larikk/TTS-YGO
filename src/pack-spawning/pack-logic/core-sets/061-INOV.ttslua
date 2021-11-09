@@ -1,0 +1,20 @@
+local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicE")
+
+local PackGenerator = ParentGenerator:new()
+
+function PackGenerator:new()
+    local o = ParentGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = "Invasion: Vengeance"
+    o.setCodePrefix = "INOV-EN"
+    o.setNameUrl = "Invasion: Vengeance"
+    o.releaseDate = "2016-11-04"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353420792684240/A1AE6FD64603E3AC3BDC93939B83453EAE150E03/"
+    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353420792747019/27DF2963DF72F96B9EA2AAF8ACDCDAD44D468F48/"
+
+    return o
+end
+
+return PackGenerator
