@@ -47,7 +47,8 @@ local function spawnPack(generator)
     local debug = false
     if debug then
         generator:generateBoosterBox(pos, rotation)
-        generator:generateCardListPartitioned(pos + Vector(0, 0, -5), rotation)
+        generator:generateBoosterPack(pos + Vector(-15, 0, 0), rotation)
+        generator:generateCardListPartitioned(pos + Vector(15, 0, 0), rotation)
         generator:printDebugInformation()
         return
     end

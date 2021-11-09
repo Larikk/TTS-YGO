@@ -260,9 +260,17 @@ end
 function AbstractPackGenerator:printDebugInformation()
     local f = function()
         print(self.setName)
+
+        local rarities = {}
         for rarity, cards in pairs(self.cardsMap) do
-            print(rarity .. ": " .. #cards)
+            table.insert(rarities, rarity)
         end
+
+        rarities = sorting.sortRarities(rarities)
+        for _, rarity in ipairs(rarities) do
+            print(rarity .. ": " .. #self.cardsMap[rarity])
+        end
+
         print("#######")
     end
 
