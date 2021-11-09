@@ -2,7 +2,7 @@ import os
 import re
 import inspect
 
-imageMappingsFolder = "../../../ygo-assets/mappings/"
+imageMappingsFolder = "../../../ygo-assets/product-textures/mappings/"
 
 def write(folder, name, content):
     if folder[-1] != "/": folder += "/"

@@ -32,8 +32,14 @@ def parentLogic(counter):
         return "B"
     elif 22 <= counter <= 23:
         return "C"
-    elif 24 <= counter:
+    elif 24 <= counter <= 57:
         return "D"
+    elif 58 <= counter <= 71:
+        return "E"
+    elif 72 <= counter <= 74:
+        return "F"
+    elif 75 <= counter:
+        return "G"
 
 def handleBooster(title):
     booster = {}
@@ -63,8 +69,10 @@ def handleBooster(title):
             print(e)
             print(traceback.format_exc())
 
-        
-    booster['pack-texture'] = packImageMappings[booster['code']]
+    if booster['code'] in packImageMappings:
+        booster['pack-texture'] = packImageMappings[booster['code']]
+    else:
+        booster['pack-texture'] = "nil"
     
     if booster['code'] in boxImageMappings:
         booster['box-texture'] = boxImageMappings[booster['code']]
