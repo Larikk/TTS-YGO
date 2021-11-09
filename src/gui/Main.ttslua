@@ -77,6 +77,10 @@ function onLoad(saveState)
     state.loadFromSave(saveState)
     assets.initAssets()
     self.UI.setXml(mainXml)
-    Wait.frames(|| switchPage(nil, nil, "packs"), 60)
+
+    local cond = || not self.UI.loading
+    local func = || switchPage(nil, nil, "packs")
+    Wait.frames(|| Wait.condition(func, cond, 240), 5)
+
     stats.load()
 end
