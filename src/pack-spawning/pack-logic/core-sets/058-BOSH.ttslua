@@ -1,0 +1,20 @@
+local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicE")
+
+local PackGenerator = ParentGenerator:new()
+
+function PackGenerator:new()
+    local o = ParentGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = "Breakers of Shadow"
+    o.setCodePrefix = "BOSH-EN"
+    o.setNameUrl = "Breakers of Shadow"
+    o.releaseDate = "2016-01-15"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353420792684545/5EC1B6CA51DEB0A5F525120961EF9A31B8899060/"
+    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353420792744452/2F82C6D15EAE7D05A40905B9FE9A71D07276F74C/"
+
+    return o
+end
+
+return PackGenerator

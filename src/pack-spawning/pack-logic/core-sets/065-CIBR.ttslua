@@ -1,0 +1,20 @@
+local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicE")
+
+local PackGenerator = ParentGenerator:new()
+
+function PackGenerator:new()
+    local o = ParentGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = "Circuit Break"
+    o.setCodePrefix = "CIBR-EN"
+    o.setNameUrl = "Circuit Break"
+    o.releaseDate = "2017-10-20"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353420792683819/0CFB54E65412B31A7B6DDAB30604C115AF9E9AE5/"
+    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353420792746305/90FC184256F599D5A5B45F3FD8ECA77340E05369/"
+
+    return o
+end
+
+return PackGenerator

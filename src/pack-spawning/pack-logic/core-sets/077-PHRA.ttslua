@@ -1,0 +1,20 @@
+local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicG")
+
+local PackGenerator = ParentGenerator:new()
+
+function PackGenerator:new()
+    local o = ParentGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = "Phantom Rage"
+    o.setCodePrefix = "PHRA-EN"
+    o.setNameUrl = "Phantom Rage"
+    o.releaseDate = "2020-11-06"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353420792682563/55B2CD23BDD6465C0EE3E868C0EFE1DBEC6701A0/"
+    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353420792744987/5EF4D5A9412642602E6CFAE2CC60AF81C7BFE80A/"
+
+    return o
+end
+
+return PackGenerator

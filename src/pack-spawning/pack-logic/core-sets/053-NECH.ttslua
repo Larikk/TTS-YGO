@@ -11,7 +11,7 @@ function PackGenerator:new()
     o.setCodePrefix = "NECH-EN"
     o.setNameUrl = "The New Challengers"
     o.releaseDate = "2014-11-07"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962152759/8BED2F019C15EF625F222298A16405CFCDC61815/"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353420792685027/7DB482EB3FCBC81EBB01779C15AE5323B8279915/"
     o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962336424/39F956678965D252993799D33B3A20D2789BE40E/"
 
     return o

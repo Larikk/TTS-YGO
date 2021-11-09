@@ -1,0 +1,20 @@
+local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicE")
+
+local PackGenerator = ParentGenerator:new()
+
+function PackGenerator:new()
+    local o = ParentGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = "The Dark Illusion"
+    o.setCodePrefix = "TDIL-EN"
+    o.setNameUrl = "The Dark Illusion"
+    o.releaseDate = "2016-08-05"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353420792684351/C0B80404A501154667561CE92CA6FD382D7B1CF5/"
+    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353420792747105/B82D1C2839ED2525E0F75A2B9F9F24AFC65B5016/"
+
+    return o
+end
+
+return PackGenerator

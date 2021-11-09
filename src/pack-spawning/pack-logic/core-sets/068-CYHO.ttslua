@@ -1,0 +1,20 @@
+local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicE")
+
+local PackGenerator = ParentGenerator:new()
+
+function PackGenerator:new()
+    local o = ParentGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = "Cybernetic Horizon"
+    o.setCodePrefix = "CYHO-EN"
+    o.setNameUrl = "Cybernetic Horizon"
+    o.releaseDate = "2018-07-27"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353420792683533/1BBE8AAE63A517DA4D5E961005A7989A8A19D29C/"
+    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353420792745941/3FF149532F32EA9623B1A3B1387889EB41C6D98C/"
+
+    return o
+end
+
+return PackGenerator

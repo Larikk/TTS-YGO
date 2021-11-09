@@ -1,0 +1,20 @@
+local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicF")
+
+local PackGenerator = ParentGenerator:new()
+
+function PackGenerator:new()
+    local o = ParentGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = "Ignition Assault"
+    o.setCodePrefix = "IGAS-EN"
+    o.setNameUrl = "Ignition Assault"
+    o.releaseDate = "2020-01-31"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353420792682944/4E9839BA9C2E580072FB11782D15815C1C23F714/"
+    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353420792745295/D0F3A1133298D87365C6D990D13390BBA7E75712/"
+
+    return o
+end
+
+return PackGenerator

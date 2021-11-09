@@ -1,0 +1,20 @@
+local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicG")
+
+local PackGenerator = ParentGenerator:new()
+
+function PackGenerator:new()
+    local o = ParentGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = "Dawn of Majesty"
+    o.setCodePrefix = "DAMA-EN"
+    o.setNameUrl = "Dawn of Majesty"
+    o.releaseDate = "2021-08-13"
+    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353420792682310/DDDF45D9190D6AD82184F20B28DBC8C0B90E5130/"
+    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353420792744569/14B50BACE905B4547C25BA82425F6AB4C8D67E39/"
+
+    return o
+end
+
+return PackGenerator
