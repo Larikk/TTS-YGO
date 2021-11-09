@@ -399,21 +399,6 @@ gen = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/078-BLVO"):new()
 packGenerators['BLVO'] = gen
 gen.assetCode = 'BLVO'
 table.insert(sections['Core Sets'], gen)
-
-gen = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/079-LIOV"):new()
-packGenerators['LIOV'] = gen
-gen.assetCode = 'LIOV'
-table.insert(sections['Core Sets'], gen)
-
-gen = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/080-DAMA"):new()
-packGenerators['DAMA'] = gen
-gen.assetCode = 'DAMA'
-table.insert(sections['Core Sets'], gen)
-
-gen = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/081-BODE"):new()
-packGenerators['BODE'] = gen
-gen.assetCode = 'BODE'
-table.insert(sections['Core Sets'], gen)
 --##################
 
 
