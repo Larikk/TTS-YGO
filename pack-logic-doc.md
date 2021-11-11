@@ -72,8 +72,5 @@ Accepts a listener which can examine and modify the extracted releases before th
 
 See BP02 in pack-logic/battle-packs for an example which filters the Mosaic Rare rarity from cards that have another rarity besides this one.
 
-#### findAll()
-The extractor usually stops after the first hit. This setting makes him return all hits.
-
 #### build(spawner)
 Take the PackGenerator object as parameter. Sets some internal fields that are necessary for the extraction.

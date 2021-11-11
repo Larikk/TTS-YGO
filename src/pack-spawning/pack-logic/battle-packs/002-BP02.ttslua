@@ -94,7 +94,7 @@ function PackGenerator:new()
     o.packTextures = PACK_TEXTURES
     o.boxTexture = BOX_TEXTURE
 
-    o.setDataExtractor:findAll():addPostListener(postListener)
+    o.setDataExtractor:addPostListener(postListener)
 
     return o
 end

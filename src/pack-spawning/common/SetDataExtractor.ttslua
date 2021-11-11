@@ -18,7 +18,6 @@ function SetDataExtractor:extract(cardApiData, name, codePrefix)
                 entry.rarity = rarity
                 entry.setCode = set.set_code
                 table.insert(entries, entry)
-                if not self.findAllFlag then return entries end -- stop after first hit
             end
         end
     end
@@ -47,11 +46,6 @@ function SetDataExtractor:ignore(...)
     return self
 end
 
-function SetDataExtractor:findAll()
-    self.findAllFlag = true
-    return self
-end
-
 function SetDataExtractor:addPostListener(listener)
     if (type(listener) == "function") then
         table.insert(self.postListeners, listener)
@@ -73,7 +67,6 @@ function SetDataExtractor:new(o)
 
     o.replacements = {}
     o.ignoreList = {}
-    o.findAllFlag = false
 
     o.postListeners = {}
 
