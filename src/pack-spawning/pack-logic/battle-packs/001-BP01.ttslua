@@ -124,8 +124,6 @@ function PackGenerator:new()
     o.packTextures = PACK_TEXTURES
     o.boxTexture = BOX_TEXTURE
 
-    o.setDataExtractor:findAll()
-
     return o
 end
 

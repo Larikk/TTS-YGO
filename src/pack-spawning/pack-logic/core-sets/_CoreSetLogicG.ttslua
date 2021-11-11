@@ -63,7 +63,7 @@ function PackGenerator:new()
     o.boxTexture = BOX_TEXTURE
 
     -- We search for all entries because of ultimate rares
-    o.setDataExtractor:replace(RARITY_REPLACEMENTS):findAll()
+    o.setDataExtractor:replace(RARITY_REPLACEMENTS)
 
     return o
 end
