@@ -46,7 +46,7 @@ local function pickPackTexture(textures)
     return textures[n]
 end
 
-function module.card(card)
+function module.card(card, customDeckId)
     local ok, hovertext = pcall(cardHoverText.create, card)
 
     if not ok then
@@ -62,9 +62,9 @@ function module.card(card)
         Name = "Card",
         Nickname = hovertext,
         Transform = TRANSFORM_ATTRIBUTE_DUMMY,
-        CardID = CARD_ID_DUMMY * 100,
+        CardID = customDeckId * 100,
         CustomDeck = {
-            [CARD_ID_DUMMY] = {
+            [customDeckId] = {
                 FaceURL = card.image,
                 BackURL = resources.CARD_BACK,
                 NumWidth = 1,
@@ -77,7 +77,7 @@ function module.card(card)
     }
 end
 
-function module.deck(deck)
+function module.deck(deck, customDeckId)
     local data = {
         Name = "Deck",
         Transform = TRANSFORM_ATTRIBUTE_DUMMY,
@@ -96,30 +96,27 @@ function module.deck(deck)
     end
     deck = reversedDeck
 
-    local currentCardId = n * 200
+    --local currentCardId = n * 200
 
     for i = 1, n do
         local card = deck[i]
-        local cardData = module.card(card)
+        local cardData = module.card(card, customDeckId)
 
-        data.DeckIDs[i] = currentCardId
-        cardData.CardID = currentCardId
+        data.DeckIDs[i] = customDeckId * 100
+        cardData.CardID = customDeckId * 100
 
-        local customDeckIndex = currentCardId / 100
-        local customDeckEntry = cardData.CustomDeck[CARD_ID_DUMMY]
+        local customDeckEntry = cardData.CustomDeck[customDeckId]
 
-        data.CustomDeck[customDeckIndex] = customDeckEntry
+        data.CustomDeck[customDeckId] = customDeckEntry
         data.ContainedObjects[i] = cardData
         data.ContainedObjects[i].CustomDeck = {
-            [customDeckIndex] = customDeckEntry
+            [customDeckId] = customDeckEntry
         }
 
-        cardData.CustomDeck[CARD_ID_DUMMY] = nil
-
-        currentCardId = currentCardId - 200
+        customDeckId = customDeckId + 2
     end
 
-    return data
+    return data, customDeckId
 end
 
 function module.pack(pack, name, packTextures)

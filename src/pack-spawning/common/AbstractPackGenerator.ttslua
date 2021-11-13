@@ -247,11 +247,16 @@ function AbstractPackGenerator:generateCardListPartitioned(pos, rotation)
                 itemsPerRow = 4,
         })
 
+        local decks = {}
         for i, rarity in ipairs(rarities) do
             local cards = tableUtil.copy(self.cardsMap[rarity])
             table.sort(cards, sorting.cardComparator)
-            spawner:spawnDeck(cards, positions[i], rotation)
+            --spawner:spawnDeck(cards, positions[i], rotation)
+            --Wait.frames(||spawner:spawnDeck(cards, positions[i], rotation), i*5)
+            table.insert(decks, cards)
         end
+
+        spawner:spawnDecks(decks, positions, rotation)
     end
 
     self:generate(f)
