@@ -118,14 +118,11 @@ function module.deck(deck)
     end
     deck = reversedDeck
 
-    --local currentCardId = n * 200
-
     for i = 1, n do
         local card = deck[i]
         local cardData, customDeckId = module.card(card)
 
         data.DeckIDs[i] = customDeckId * 100
-        cardData.CardID = customDeckId * 100
 
         local customDeckEntry = cardData.CustomDeck[customDeckId]
 
