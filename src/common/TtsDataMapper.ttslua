@@ -76,8 +76,6 @@ function module.card(card)
         hovertext = card.name
     end
 
-    hovertext = card.name
-
     local customDeckId = getFreeCustomDeckId()
 
     local data = {
