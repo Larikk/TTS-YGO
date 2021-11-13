@@ -247,7 +247,6 @@ function AbstractPackGenerator:generateCardListPartitioned(pos, rotation)
                 itemsPerRow = 4,
         })
 
-        local decks = {}
         for i, rarity in ipairs(rarities) do
             local cards = tableUtil.copy(self.cardsMap[rarity])
             table.sort(cards, sorting.cardComparator)
