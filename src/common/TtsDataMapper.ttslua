@@ -2,6 +2,7 @@ local resources = require("TTS-YGO/src/common/Resources")
 local cardHoverText = require("TTS-YGO/src/common/CardHoverText")
 local mathutil = require("TTS-YGO/src/common/Math")
 local io = require("TTS-YGO/src/common/IO")
+local idFinder = require("TTS-YGO/src/common/TtsDataDeckIdFinder")
 
 local module = {}
 
@@ -42,53 +43,15 @@ end
 local highestDeckId = -1
 local isCustomDeckIdStale = true
 
-local function highestCustomDeckIdFromObject(o)
-    if o.type == "Card" or o.type == "CardCustom" then
-        local customDeck = o.getData().CustomDeck
-        if customDeck then
-            for id, _ in pairs(customDeck) do
-                return id
-            end
-        end
-    end
-
-    local max = -1
-    if o.type == "Deck" or o.type == "DeckCustom" then
-        local customDeck = o.getData().CustomDeck
-        if customDeck then
-            for id, _ in pairs(customDeck) do
-                max = math.max(max, id)
-            end
-        end
-    end
-    return max
-end
-
-local function determineFreeCustomDeckId()
-    print("Determine start")
-    local max = -1
-    for _, o in ipairs(getObjects()) do
-        local id = highestCustomDeckIdFromObject(o)
-        max = math.max(id, max)
-    end
-
-    if max < 0 then
-        max = 0
-    end
-
-    return max + 2
-end
-
 local function getCustomDeckId()
     if isCustomDeckIdStale then
-        highestDeckId = determineFreeCustomDeckId()
+        highestDeckId = math.max(idFinder.findHighestCustomDeckId(), highestDeckId)
         isCustomDeckIdStale = false
         Wait.frames(function() isCustomDeckIdStale = true end, 1)
     end
 
-    r = highestDeckId
-    highestDeckId = highestDeckId + 2
-    return r
+    highestDeckId = highestDeckId + 1
+    return highestDeckId
 end
 
 
@@ -172,8 +135,6 @@ function module.deck(deck)
         data.ContainedObjects[i].CustomDeck = {
             [customDeckId] = customDeckEntry
         }
-
-        customDeckId = customDeckId + 2
     end
 
     return data
