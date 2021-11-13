@@ -49,12 +49,6 @@ function TtsSpawner:spawnDeck(deck, pos, rotation, callback)
     spawn(data, pos, rotation, callback)
 end
 
-function TtsSpawner:spawnDecks(decks, pos, rotation, callback)
-    for i, deck in ipairs(decks) do
-        local data = ttsDataMapper.deck(deck)
-        spawn(data, pos[i], rotation, callback)
-    end
-end
 
 -- example argument:
 -- {

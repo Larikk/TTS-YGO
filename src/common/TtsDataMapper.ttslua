@@ -18,7 +18,6 @@ local TRANSFORM_ATTRIBUTE_DUMMY = {
     scaleZ = 1,
 }
 
-local CARD_ID_DUMMY = 1
 
 -- LUA Script for spawned containers
 local CONTAINER_LUA_SCRIPT = [[
@@ -40,18 +39,20 @@ end
 ]]
 
 
-local highestDeckId = -1
-local isCustomDeckIdStale = true
+local highestDeckId = {
+    value = -1,
+    isOutdated = true,
+}
 
-local function getCustomDeckId()
-    if isCustomDeckIdStale then
-        highestDeckId = math.max(idFinder.findHighestCustomDeckId(), highestDeckId)
-        isCustomDeckIdStale = false
-        Wait.frames(function() isCustomDeckIdStale = true end, 1)
+local function getFreeCustomDeckId()
+    if highestDeckId.isOutdated then
+        highestDeckId.value = math.max(idFinder.findHighestCustomDeckId(), highestDeckId.value)
+        highestDeckId.isOutdated = false
+        Wait.frames(function() highestDeckId.isOutdated = true end, 1)
     end
 
-    highestDeckId = highestDeckId + 1
-    return highestDeckId
+    highestDeckId.value = highestDeckId.value + 1
+    return highestDeckId.value
 end
 
 
@@ -77,7 +78,7 @@ function module.card(card)
 
     hovertext = card.name
 
-    local customDeckId = getCustomDeckId()
+    local customDeckId = getFreeCustomDeckId()
 
     local data = {
         Name = "Card",
