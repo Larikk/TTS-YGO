@@ -6,7 +6,6 @@ local DEFAULT_SPAWN_ROTATION = Vector(0, 0, 0)
 
 local TtsSpawner = {}
 
-
 local function spawn(data, pos, rotation, callback)
     pos = Vector(pos) or Vector(DEFAULT_SPAWN_POS)
     rotation = Vector(rotation) or Vector(DEFAULT_SPAWN_ROTATION)
@@ -48,7 +47,6 @@ function TtsSpawner:spawnDeck(deck, pos, rotation, callback)
     local data = ttsDataMapper.deck(deck)
     spawn(data, pos, rotation, callback)
 end
-
 
 -- example argument:
 -- {
