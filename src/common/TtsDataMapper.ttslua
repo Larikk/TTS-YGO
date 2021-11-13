@@ -38,6 +38,60 @@ function onObjectLeaveContainer(container, object)
 end
 ]]
 
+
+local highestDeckId = -1
+local isCustomDeckIdStale = true
+
+local function highestCustomDeckIdFromObject(o)
+    if o.type == "Card" or o.type == "CardCustom" then
+        local customDeck = o.getData().CustomDeck
+        if customDeck then
+            for id, _ in pairs(customDeck) do
+                return id
+            end
+        end
+    end
+
+    local max = -1
+    if o.type == "Deck" or o.type == "DeckCustom" then
+        local customDeck = o.getData().CustomDeck
+        if customDeck then
+            for id, _ in pairs(customDeck) do
+                max = math.max(max, id)
+            end
+        end
+    end
+    return max
+end
+
+local function determineFreeCustomDeckId()
+    print("Determine start")
+    local max = -1
+    for _, o in ipairs(getObjects()) do
+        local id = highestCustomDeckIdFromObject(o)
+        max = math.max(id, max)
+    end
+
+    if max < 0 then
+        max = 0
+    end
+
+    return max + 2
+end
+
+local function getCustomDeckId()
+    if isCustomDeckIdStale then
+        highestDeckId = determineFreeCustomDeckId()
+        isCustomDeckIdStale = false
+        Wait.frames(function() isCustomDeckIdStale = true end, 1)
+    end
+
+    r = highestDeckId
+    highestDeckId = highestDeckId + 2
+    return r
+end
+
+
 local function pickPackTexture(textures)
     if textures == nil then return resources.DEFAULT_PACK_TEXTURE end
     if type(textures) == "string" then return textures end
@@ -46,7 +100,7 @@ local function pickPackTexture(textures)
     return textures[n]
 end
 
-function module.card(card, customDeckIdSupplier)
+function module.card(card)
     local ok, hovertext = pcall(cardHoverText.create, card)
 
     if not ok then
@@ -60,7 +114,7 @@ function module.card(card, customDeckIdSupplier)
 
     hovertext = card.name
 
-    local customDeckId = customDeckIdSupplier.next()
+    local customDeckId = getCustomDeckId()
 
     local data = {
         Name = "Card",
@@ -83,7 +137,7 @@ function module.card(card, customDeckIdSupplier)
     return data, customDeckId
 end
 
-function module.deck(deck, customDeckIdSupplier)
+function module.deck(deck)
     local data = {
         Name = "Deck",
         Transform = TRANSFORM_ATTRIBUTE_DUMMY,
@@ -106,7 +160,7 @@ function module.deck(deck, customDeckIdSupplier)
 
     for i = 1, n do
         local card = deck[i]
-        local cardData, customDeckId = module.card(card, customDeckIdSupplier)
+        local cardData, customDeckId = module.card(card)
 
         data.DeckIDs[i] = customDeckId * 100
         cardData.CardID = customDeckId * 100

@@ -6,54 +6,6 @@ local DEFAULT_SPAWN_ROTATION = Vector(0, 0, 0)
 
 local TtsSpawner = {}
 
-local function highestCustomDeckIdFromObject(o)
-    if o.type == "Card" or o.type == "CardCustom" then
-        local customDeck = o.getData().CustomDeck
-        if customDeck then
-            for id, _ in pairs(customDeck) do
-                return id
-            end
-        end
-    end
-
-    local max = -1
-    if o.type == "Deck" or o.type == "DeckCustom" then
-        local customDeck = o.getData().CustomDeck
-        if customDeck then
-            for id, _ in pairs(customDeck) do
-                max = math.max(max, id)
-            end
-        end
-    end
-    return max
-end
-
-local function determineFreeCustomDeckId()
-    print("Determine start")
-    local max = -1
-    for _, o in ipairs(getObjects()) do
-        local id = highestCustomDeckIdFromObject(o)
-        max = math.max(id, max)
-    end
-
-    if max < 0 then
-        max = 0
-    end
-
-    return max + 2
-end
-
-local function createCustomDeckIdSupplier()
-    local supplier = {}
-    supplier.id = determineFreeCustomDeckId()
-    supplier.next = function()
-        local currentId = supplier.id
-        supplier.id = supplier.id + 2
-        return currentId
-    end
-
-    return supplier
-end
 
 local function spawn(data, pos, rotation, callback)
     pos = Vector(pos) or Vector(DEFAULT_SPAWN_POS)
@@ -72,7 +24,7 @@ local function spawn(data, pos, rotation, callback)
 end
 
 function TtsSpawner:spawnCard(card, pos, rotation, callback)
-    local data = ttsDataMapper.card(card, createCustomDeckIdSupplier())
+    local data = ttsDataMapper.card(card)
     spawn(data, pos, rotation, callback)
 end
 
@@ -93,16 +45,13 @@ function TtsSpawner:spawnDeck(deck, pos, rotation, callback)
         return
     end
 
-    local customDeckId = determineFreeCustomDeckId()
-    local data = ttsDataMapper.deck(deck, customDeckId)
+    local data = ttsDataMapper.deck(deck)
     spawn(data, pos, rotation, callback)
 end
 
 function TtsSpawner:spawnDecks(decks, pos, rotation, callback)
-    local customDeckIdSupplier = createCustomDeckIdSupplier()
-
     for i, deck in ipairs(decks) do
-        local data = ttsDataMapper.deck(deck, customDeckIdSupplier)
+        local data = ttsDataMapper.deck(deck)
         spawn(data, pos[i], rotation, callback)
     end
 end
