@@ -46,7 +46,7 @@ local function pickPackTexture(textures)
     return textures[n]
 end
 
-function module.card(card, customDeckId)
+function module.card(card, customDeckIdSupplier)
     local ok, hovertext = pcall(cardHoverText.create, card)
 
     if not ok then
@@ -58,7 +58,11 @@ function module.card(card, customDeckId)
         hovertext = card.name
     end
 
-    return {
+    hovertext = card.name
+
+    local customDeckId = customDeckIdSupplier.next()
+
+    local data = {
         Name = "Card",
         Nickname = hovertext,
         Transform = TRANSFORM_ATTRIBUTE_DUMMY,
@@ -75,9 +79,11 @@ function module.card(card, customDeckId)
             }
         }
     }
+
+    return data, customDeckId
 end
 
-function module.deck(deck, customDeckId)
+function module.deck(deck, customDeckIdSupplier)
     local data = {
         Name = "Deck",
         Transform = TRANSFORM_ATTRIBUTE_DUMMY,
@@ -100,7 +106,7 @@ function module.deck(deck, customDeckId)
 
     for i = 1, n do
         local card = deck[i]
-        local cardData = module.card(card, customDeckId)
+        local cardData, customDeckId = module.card(card, customDeckIdSupplier)
 
         data.DeckIDs[i] = customDeckId * 100
         cardData.CardID = customDeckId * 100
@@ -116,7 +122,7 @@ function module.deck(deck, customDeckId)
         customDeckId = customDeckId + 2
     end
 
-    return data, customDeckId
+    return data
 end
 
 function module.pack(pack, name, packTextures)

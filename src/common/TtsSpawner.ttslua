@@ -43,6 +43,17 @@ local function determineFreeCustomDeckId()
     return max + 2
 end
 
+local function createCustomDeckIdSupplier()
+    local supplier = {}
+    supplier.id = determineFreeCustomDeckId()
+    supplier.next = function()
+        local currentId = supplier.id
+        supplier.id = supplier.id + 2
+        return currentId
+    end
+
+    return supplier
+end
 
 local function spawn(data, pos, rotation, callback)
     pos = Vector(pos) or Vector(DEFAULT_SPAWN_POS)
@@ -61,8 +72,7 @@ local function spawn(data, pos, rotation, callback)
 end
 
 function TtsSpawner:spawnCard(card, pos, rotation, callback)
-    local customDeckId = determineFreeCustomDeckId()
-    local data = ttsDataMapper.card(card, customDeckId)
+    local data = ttsDataMapper.card(card, createCustomDeckIdSupplier())
     spawn(data, pos, rotation, callback)
 end
 
@@ -89,11 +99,10 @@ function TtsSpawner:spawnDeck(deck, pos, rotation, callback)
 end
 
 function TtsSpawner:spawnDecks(decks, pos, rotation, callback)
-    local customDeckId = determineFreeCustomDeckId()
-    local data
+    local customDeckIdSupplier = createCustomDeckIdSupplier()
 
     for i, deck in ipairs(decks) do
-        data, customDeckId = ttsDataMapper.deck(deck, customDeckId)
+        local data = ttsDataMapper.deck(deck, customDeckIdSupplier)
         spawn(data, pos[i], rotation, callback)
     end
 end
