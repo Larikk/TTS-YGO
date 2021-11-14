@@ -1,0 +1,85 @@
+local module = {}
+
+-- Initialized later
+local stachedItemHandler
+
+local function findInCardData(data)
+    local customDeck = data.CustomDeck
+    if customDeck then
+        for id, _ in pairs(customDeck) do
+            return id
+        end
+    end
+
+    return -1
+end
+
+local function findInDeckData(data)
+    local max = -1
+
+    local customDeck = data.CustomDeck
+    if customDeck then
+        for id, _ in pairs(customDeck) do
+            max = math.max(max, id)
+        end
+    end
+
+    return max
+end
+
+local function findInContainerData(data)
+    local max = -1
+
+    local items = data.ContainedObjects
+    if items then
+        for _, item in ipairs(items) do
+            local type = item.Name
+            if stachedItemHandler[type] then
+                local id = stachedItemHandler[type](item)
+                max = math.max(max, id)
+            end
+        end
+    end
+
+    return max
+end
+
+local function highestCustomDeckIdFromObject(o)
+    if o.type == "Card" or o.type == "CardCustom" then
+        return findInCardData(o.getData())
+    end
+
+    if o.type == "Deck" or o.type == "DeckCustom" then
+        return findInDeckData(o.getData())
+    end
+
+    if o.type == "Bag" or o.type == "Infinite" then
+        return findInContainerData(o.getData())
+    end
+
+    return -1
+end
+
+stachedItemHandler = {
+    Card = findInCardData,
+    CardCustom = findInCardData,
+    Deck = findInDeckData,
+    DeckCustom = findInDeckData,
+    Bag = findInContainerData,
+    Custom_Model_Bag = findInContainerData,
+    Infinite_Bag = findInContainerData,
+    Custom_Model_Infitine_Bag = findInContainerData,
+}
+
+function module.findHighestCustomDeckId()
+    local max = 0
+    for _, o in ipairs(getObjects()) do
+        local id = highestCustomDeckIdFromObject(o)
+        max = math.max(id, max)
+    end
+
+    return max
+end
+
+
+return module

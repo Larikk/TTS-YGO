@@ -2,6 +2,7 @@ local resources = require("TTS-YGO/src/common/Resources")
 local cardHoverText = require("TTS-YGO/src/common/CardHoverText")
 local mathutil = require("TTS-YGO/src/common/Math")
 local io = require("TTS-YGO/src/common/IO")
+local idFinder = require("TTS-YGO/src/common/TtsDataDeckIdFinder")
 
 local module = {}
 
@@ -17,7 +18,6 @@ local TRANSFORM_ATTRIBUTE_DUMMY = {
     scaleZ = 1,
 }
 
-local CARD_ID_DUMMY = 1
 
 -- LUA Script for spawned containers
 local CONTAINER_LUA_SCRIPT = [[
@@ -37,6 +37,24 @@ function onObjectLeaveContainer(container, object)
     end
 end
 ]]
+
+
+local highestDeckId = {
+    value = -1,
+    isOutdated = true,
+}
+
+local function getFreeCustomDeckId()
+    if highestDeckId.isOutdated then
+        highestDeckId.value = math.max(idFinder.findHighestCustomDeckId(), highestDeckId.value)
+        highestDeckId.isOutdated = false
+        Wait.frames(function() highestDeckId.isOutdated = true end, 1)
+    end
+
+    highestDeckId.value = highestDeckId.value + 1
+    return highestDeckId.value
+end
+
 
 local function pickPackTexture(textures)
     if textures == nil then return resources.DEFAULT_PACK_TEXTURE end
@@ -58,13 +76,15 @@ function module.card(card)
         hovertext = card.name
     end
 
-    return {
+    local customDeckId = getFreeCustomDeckId()
+
+    local data = {
         Name = "Card",
         Nickname = hovertext,
         Transform = TRANSFORM_ATTRIBUTE_DUMMY,
-        CardID = CARD_ID_DUMMY * 100,
+        CardID = customDeckId * 100,
         CustomDeck = {
-            [CARD_ID_DUMMY] = {
+            [customDeckId] = {
                 FaceURL = card.image,
                 BackURL = resources.CARD_BACK,
                 NumWidth = 1,
@@ -75,6 +95,8 @@ function module.card(card)
             }
         }
     }
+
+    return data, customDeckId
 end
 
 function module.deck(deck)
@@ -96,27 +118,19 @@ function module.deck(deck)
     end
     deck = reversedDeck
 
-    local currentCardId = n * 200
-
     for i = 1, n do
         local card = deck[i]
-        local cardData = module.card(card)
+        local cardData, customDeckId = module.card(card)
 
-        data.DeckIDs[i] = currentCardId
-        cardData.CardID = currentCardId
+        data.DeckIDs[i] = customDeckId * 100
 
-        local customDeckIndex = currentCardId / 100
-        local customDeckEntry = cardData.CustomDeck[CARD_ID_DUMMY]
+        local customDeckEntry = cardData.CustomDeck[customDeckId]
 
-        data.CustomDeck[customDeckIndex] = customDeckEntry
+        data.CustomDeck[customDeckId] = customDeckEntry
         data.ContainedObjects[i] = cardData
         data.ContainedObjects[i].CustomDeck = {
-            [customDeckIndex] = customDeckEntry
+            [customDeckId] = customDeckEntry
         }
-
-        cardData.CustomDeck[CARD_ID_DUMMY] = nil
-
-        currentCardId = currentCardId - 200
     end
 
     return data
