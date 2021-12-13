@@ -4,12 +4,13 @@ import lib.files as files
 import traceback
 import atexit
 import time
+import re
 
 title = "Starter Deck: Yugi"
 counter = 1
 folder = "../../src/preconstructed-decks/starter-decks"
 
-ydkOutputFolder = "../../../ygo-ydk-files/Starter Decks/"
+ydkOutputFolder = "../../../ygo-ydk-files/deck/"
 
 interactive = False
 
@@ -73,7 +74,8 @@ def handleDeck(title):
     # Write ydk file
     content = deck['ydk']
     filename = deck['name'].replace(":", "")
-    filename = f"{counter:03d} - {filename}.ydk"
+    filename = re.sub(r"^Starter Deck[^a-zA-Z0-9']*", "", filename)
+    filename = f"SA{counter:02d} {filename}.ydk"
     files.write(ydkOutputFolder, filename, content)
 
     return deck
@@ -86,7 +88,7 @@ while True:
         inp = input("Enter to continue, anything else to quit: ")
         if "next" not in deck or inp != "": break
     else:
-        time.sleep(2)
+        time.sleep(1)
 
     title = deck['next']
     counter += 1

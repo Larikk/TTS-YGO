@@ -58,6 +58,18 @@ def isExtraDeckCard(cardType):
             break
     return isExtra
 
+def extractCardId(card):
+    cardVariants = card['card_images']
+    ids = map(lambda e: e['id'], cardVariants)
+    id = min(ids)
+
+    # Need to make an exception for Dark Magician
+    # Polymerization alt artwork is fine because alt id is higher than main id
+    if id == 36996508:
+        id = 46986414
+    
+    return str(id)
+
 def attachAdditionalData(deck):
     cards = deck['cards']
 
@@ -82,7 +94,7 @@ def attachAdditionalData(deck):
     for card in cards:
         name = card['Name'].lower()
         data = nameToDataMapping[name]
-        card['id'] = str(data['id'])
+        card['id'] = extractCardId(data)
         card['isExtraDeckCard'] = isExtraDeckCard(data['type'])
     
 

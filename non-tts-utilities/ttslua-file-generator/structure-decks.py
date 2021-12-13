@@ -11,7 +11,7 @@ title = "Structure Deck: Dragon's Roar"
 counter = 1
 folder = "../../src/preconstructed-decks/structure-decks"
 
-ydkOutputFolder = "../../../ygo-ydk-files/Structure Decks/"
+ydkOutputFolder = "../../../ygo-ydk-files/deck/"
 
 interactive = False
 
@@ -102,7 +102,7 @@ def handleDeck(title):
     # Write ydk file
     content = deck['ydk']
     filename = deck['name'].replace(":", "")
-    filename = f"{counter:03d} - Structure Deck {filename}.ydk"
+    filename = f"SU{counter:02d} {filename}.ydk"
     files.write(ydkOutputFolder, filename, content)
 
     return deck
@@ -116,7 +116,7 @@ while True:
         inp = input("Enter to continue, anything else to quit: ")
         if inp != "": break
     else:
-        time.sleep(2)
+        time.sleep(1)
 
     title = deck['next']
     counter += 1
