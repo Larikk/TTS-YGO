@@ -26,7 +26,9 @@ nextReleaseOutliers = {
     "Starter Deck: Kaiba Reloaded": "Super Starter: Space-Time Showdown",
     "Super Starter: Space-Time Showdown": "Saber Force Starter Deck",
     "Saber Force Starter Deck": "Dark Legion Starter Deck",
-    "Starter Deck: Codebreaker": None, # Last starter deck
+    "Starter Deck: Codebreaker": "Egyptian God Deck: Slifer the Sky Dragon",
+    "Egyptian God Deck: Slifer the Sky Dragon": "Egyptian God Deck: Obelisk the Tormentor",
+    "Egyptian God Deck: Obelisk the Tormentor": None,
 }
 
 def handleDeck(title):

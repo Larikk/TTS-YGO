@@ -23,4 +23,6 @@ return {
     require("TTS-YGO/src/preconstructed-decks/starter-decks/021-YS16"),
     require("TTS-YGO/src/preconstructed-decks/starter-decks/022-YS17"),
     require("TTS-YGO/src/preconstructed-decks/starter-decks/023-YS18"),
+    require("TTS-YGO/src/preconstructed-decks/starter-decks/024-EGS1"),
+    require("TTS-YGO/src/preconstructed-decks/starter-decks/025-EGO1"),
 }
