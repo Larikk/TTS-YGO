@@ -30,7 +30,7 @@ nextReleaseOutliers = {
     "Cyberse Link": "Structure Deck: Wave of Light",
     "Powercode Link": "Structure Deck: Zombie Horde",
     "Soulburner": "Structure Deck: Order of the Spellcasters",
-    "Freezing Chains": None,
+    "Cyber Strike": None,
 }
 
 # this structure dont have the card list on their page bc something is broken on the wiki
