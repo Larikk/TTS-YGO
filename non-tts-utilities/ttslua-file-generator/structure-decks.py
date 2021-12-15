@@ -100,7 +100,7 @@ def handleDeck(title):
     # Write ydk file
     content = deck['ydk']
     filename = deck['name'].replace(":", "")
-    filename = f"SU{counter:02d} {filename}.ydk"
+    filename = f"STR{counter:02d} {filename}.ydk"
     files.write(ydkOutputFolder, filename, content)
 
     return deck

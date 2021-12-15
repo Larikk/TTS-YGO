@@ -77,7 +77,7 @@ def handleDeck(title):
     content = deck['ydk']
     filename = deck['name'].replace(":", "")
     filename = re.sub(r"^Starter Deck[^a-zA-Z0-9']*", "", filename)
-    filename = f"SA{counter:02d} {filename}.ydk"
+    filename = f"STA{counter:02d} {filename}.ydk"
     files.write(ydkOutputFolder, filename, content)
 
     return deck
