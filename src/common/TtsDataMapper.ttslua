@@ -3,6 +3,7 @@ local cardHoverText = require("TTS-YGO/src/common/CardHoverText")
 local mathutil = require("TTS-YGO/src/common/Math")
 local io = require("TTS-YGO/src/common/IO")
 local idFinder = require("TTS-YGO/src/common/TtsDataDeckIdFinder")
+local state = require("TTS-YGO/src/gui/State")
 
 local module = {}
 
@@ -64,6 +65,16 @@ local function pickPackTexture(textures)
     return textures[n]
 end
 
+local function getCardback()
+    local cardback = state.get("settings:cardback")
+
+    if cardback == nil or cardback == "" then
+        cardback = resources.CARD_BACK
+    end
+
+    return cardback
+end
+
 function module.card(card)
     local ok, hovertext = pcall(cardHoverText.create, card)
 
@@ -86,7 +97,7 @@ function module.card(card)
         CustomDeck = {
             [customDeckId] = {
                 FaceURL = card.image,
-                BackURL = resources.CARD_BACK,
+                BackURL = getCardback(),
                 NumWidth = 1,
                 NumHeight = 1,
                 BackIsHidden = true,

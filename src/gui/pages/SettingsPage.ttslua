@@ -11,9 +11,10 @@ local SPAWN_X_INPUT = PAGE_ID .. ":spawn-x"
 local SPAWN_Y_INPUT = PAGE_ID .. ":spawn-y"
 local SPAWN_Z_INPUT = PAGE_ID .. ":spawn-z"
 local SPAWN_ROTATION_INPUT = PAGE_ID .. ":spawn-rotation"
+local CARDBACK_INPUT = PAGE_ID .. ":cardback"
 
 local inputFields = {
-    SPAWN_X_INPUT, SPAWN_Y_INPUT, SPAWN_Z_INPUT, SPAWN_ROTATION_INPUT
+    SPAWN_X_INPUT, SPAWN_Y_INPUT, SPAWN_Z_INPUT, SPAWN_ROTATION_INPUT, CARDBACK_INPUT
 }
 
 local function createPositionSetting()
@@ -32,7 +33,7 @@ local function createPositionSetting()
             tag = "InputField",
             attributes = {
                 id = id,
-                class = "settings-textfield",
+                class = "settings-textfield numerical",
                 onValueChanged = "handleInputChange"
             },
             value = "0"
@@ -64,7 +65,7 @@ local function createRotationSetting()
         tag = "InputField",
         attributes = {
             id = SPAWN_ROTATION_INPUT,
-            class = "settings-textfield",
+            class = "settings-textfield numerical",
             onValueChanged = "handleInputChange"
         },
         value = "0"
@@ -73,6 +74,23 @@ local function createRotationSetting()
     local title = "Rotation"
     local description = "Determines the orientation the spawned objects are facing. Sensibles values are between 0 and 360."
     return guiUtil.createBox(title, description, spawnRotation)
+end
+
+local function createCardbackSetting()
+    local cardbackInputfield = {
+        tag = "InputField",
+        attributes = {
+            id = CARDBACK_INPUT,
+            class = "settings-textfield",
+            onValueChanged = "handleInputChange",
+            placeholder = "https://example.com/cardback.png",
+        },
+        value = "",
+    }
+
+    local title = "Custom Cardback"
+    local description = "Link to an image for a custom cardback. Leave empty for the default one. (Optional: Upload your image with the Cloud Manager for maximum availability.)"
+    return guiUtil.createBox(title, description, cardbackInputfield)
 end
 
 local function createAttribution()
@@ -96,6 +114,7 @@ local function createPageBody()
         children = {
             createPositionSetting(),
             createRotationSetting(),
+            createCardbackSetting(),
             createAttribution(),
         }
     }
