@@ -4,7 +4,7 @@ return {
     code = "SR04",
     name = "Dinosmasher's Fury",
     releaseDate = "2017-04-14",
-    image = imagehost .. "/textures/decks/structure/038-SR04.jpg",
+    image = imageHost .. "/textures/decks/structure/038-SR04.jpg",
     cards = [[
 #created by ...
 #main

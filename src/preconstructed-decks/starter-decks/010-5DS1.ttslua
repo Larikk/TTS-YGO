@@ -4,7 +4,7 @@ return {
     code = "5DS1",
     name = "Starter Deck: Yu-Gi-Oh! 5D's",
     releaseDate = "2008-08-05",
-    image = imagehost .. "/textures/decks/starter/010-5DS1.jpg",
+    image = imageHost .. "/textures/decks/starter/010-5DS1.jpg",
     cards = [[
 #created by ...
 #main

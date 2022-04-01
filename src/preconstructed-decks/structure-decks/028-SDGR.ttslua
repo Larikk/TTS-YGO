@@ -4,7 +4,7 @@ return {
     code = "SDGR",
     name = "Geargia Rampage",
     releaseDate = "2014-10-17",
-    image = imagehost .. "/textures/decks/structure/028-SDGR.jpg",
+    image = imageHost .. "/textures/decks/structure/028-SDGR.jpg",
     cards = [[
 #created by ...
 #main

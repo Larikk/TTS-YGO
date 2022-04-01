@@ -4,7 +4,7 @@ return {
     code = "YSKR",
     name = "Starter Deck Kaiba Reloaded",
     releaseDate = "2013-12-06",
-    image = imagehost .. "/textures/decks/starter/017-YSKR.jpg",
+    image = imageHost .. "/textures/decks/starter/017-YSKR.jpg",
     cards = [[
 #created by ...
 #main

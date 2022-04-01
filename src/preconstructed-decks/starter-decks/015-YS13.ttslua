@@ -4,7 +4,7 @@ return {
     code = "YS13",
     name = "Super Starter: V for Victory",
     releaseDate = "2013-06-14",
-    image = imagehost .. "/textures/decks/starter/015-YS13.jpg",
+    image = imageHost .. "/textures/decks/starter/015-YS13.jpg",
     cards = [[
 #created by ...
 #main

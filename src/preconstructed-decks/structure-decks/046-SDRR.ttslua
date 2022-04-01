@@ -4,7 +4,7 @@ return {
     code = "SDRR",
     name = "Rokket Revolt",
     releaseDate = "2019-08-16",
-    image = imagehost .. "/textures/decks/structure/046-SDRR.jpg",
+    image = imageHost .. "/textures/decks/structure/046-SDRR.jpg",
     cards = [[
 #created by ...
 #main

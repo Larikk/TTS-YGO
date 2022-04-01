@@ -4,7 +4,7 @@ return {
     code = "SDDC",
     name = "Dragons Collide",
     releaseDate = "2012-02-07",
-    image = imagehost .. "/textures/decks/structure/021-SDDC.jpg",
+    image = imageHost .. "/textures/decks/structure/021-SDDC.jpg",
     cards = [[
 #created by ...
 #main

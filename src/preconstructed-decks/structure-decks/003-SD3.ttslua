@@ -4,7 +4,7 @@ return {
     code = "SD3",
     name = "Blaze of Destruction",
     releaseDate = "2005-05-09",
-    image = imagehost .. "/textures/decks/structure/003-SD3.jpg",
+    image = imageHost .. "/textures/decks/structure/003-SD3.jpg",
     cards = [[
 #created by ...
 #main

@@ -4,7 +4,7 @@ return {
     code = "SDLS",
     name = "Lost Sanctuary",
     releaseDate = "2011-06-14",
-    image = imagehost .. "/textures/decks/structure/019-SDLS.jpg",
+    image = imageHost .. "/textures/decks/structure/019-SDLS.jpg",
     cards = [[
 #created by ...
 #main

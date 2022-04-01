@@ -4,7 +4,7 @@ return {
     code = "SDCS",
     name = "Cyber Strike",
     releaseDate = "2021-10-15",
-    image = imagehost .. "/textures/decks/structure/052-SDCS.jpg",
+    image = imageHost .. "/textures/decks/structure/052-SDCS.jpg",
     cards = [[
 #created by ...
 #main

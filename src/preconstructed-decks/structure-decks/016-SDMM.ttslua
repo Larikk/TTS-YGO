@@ -4,7 +4,7 @@ return {
     code = "SDMM",
     name = "Machina Mayhem",
     releaseDate = "2010-02-23",
-    image = imagehost .. "/textures/decks/structure/016-SDMM.jpg",
+    image = imageHost .. "/textures/decks/structure/016-SDMM.jpg",
     cards = [[
 #created by ...
 #main

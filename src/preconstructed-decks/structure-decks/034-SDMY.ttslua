@@ -4,7 +4,7 @@ return {
     code = "SDMY",
     name = "Yugi Muto",
     releaseDate = "2016-10-21",
-    image = imagehost .. "/textures/decks/structure/034-SDMY.jpg",
+    image = imageHost .. "/textures/decks/structure/034-SDMY.jpg",
     cards = [[
 #created by ...
 #main

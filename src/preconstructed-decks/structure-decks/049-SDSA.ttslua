@@ -4,7 +4,7 @@ return {
     code = "SDSA",
     name = "Sacred Beasts",
     releaseDate = "2020-07-10",
-    image = imagehost .. "/textures/decks/structure/049-SDSA.jpg",
+    image = imageHost .. "/textures/decks/structure/049-SDSA.jpg",
     cards = [[
 #created by ...
 #main

@@ -4,7 +4,7 @@ return {
     code = "SDFC",
     name = "Freezing Chains",
     releaseDate = "2021-02-19",
-    image = imagehost .. "/textures/decks/structure/051-SDFC.jpg",
+    image = imageHost .. "/textures/decks/structure/051-SDFC.jpg",
     cards = [[
 #created by ...
 #main

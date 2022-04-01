@@ -4,7 +4,7 @@ return {
     code = "SDJ",
     name = "Starter Deck: Joey",
     releaseDate = "2003-03-30",
-    image = imagehost .. "/textures/decks/starter/003-SDJ.jpg",
+    image = imageHost .. "/textures/decks/starter/003-SDJ.jpg",
     cards = [[
 #created by ...
 #main

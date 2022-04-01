@@ -4,7 +4,7 @@ return {
     code = "SDCR",
     name = "Cyber Dragon Revolution",
     releaseDate = "2014-02-07",
-    image = imagehost .. "/textures/decks/structure/026-SDCR.jpg",
+    image = imageHost .. "/textures/decks/structure/026-SDCR.jpg",
     cards = [[
 #created by ...
 #main

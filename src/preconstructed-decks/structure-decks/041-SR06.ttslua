@@ -4,7 +4,7 @@ return {
     code = "SR06",
     name = "Lair of Darkness",
     releaseDate = "2018-04-20",
-    image = imagehost .. "/textures/decks/structure/041-SR06.jpg",
+    image = imageHost .. "/textures/decks/structure/041-SR06.jpg",
     cards = [[
 #created by ...
 #main

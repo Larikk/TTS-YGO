@@ -4,7 +4,7 @@ return {
     code = "SDRL",
     name = "Rise of the Dragon Lords",
     releaseDate = "2007-10-24",
-    image = imagehost .. "/textures/decks/structure/011-SDRL.jpg",
+    image = imageHost .. "/textures/decks/structure/011-SDRL.jpg",
     cards = [[
 #created by ...
 #main

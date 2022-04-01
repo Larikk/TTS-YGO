@@ -4,7 +4,7 @@ return {
     code = "SDDL",
     name = "Dragunity Legion",
     releaseDate = "2011-03-08",
-    image = imagehost .. "/textures/decks/structure/018-SDDL.jpg",
+    image = imageHost .. "/textures/decks/structure/018-SDDL.jpg",
     cards = [[
 #created by ...
 #main

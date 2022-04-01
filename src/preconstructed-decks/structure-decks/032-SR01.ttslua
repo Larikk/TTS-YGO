@@ -4,7 +4,7 @@ return {
     code = "SR01",
     name = "Emperor of Darkness",
     releaseDate = "2016-01-29",
-    image = imagehost .. "/textures/decks/structure/032-SR01.jpg",
+    image = imageHost .. "/textures/decks/structure/032-SR01.jpg",
     cards = [[
 #created by ...
 #main

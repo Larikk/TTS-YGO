@@ -4,7 +4,7 @@ return {
     code = "SDSE",
     name = "Synchron Extreme",
     releaseDate = "2015-08-28",
-    image = imagehost .. "/textures/decks/structure/030-SDSE.jpg",
+    image = imageHost .. "/textures/decks/structure/030-SDSE.jpg",
     cards = [[
 #created by ...
 #main

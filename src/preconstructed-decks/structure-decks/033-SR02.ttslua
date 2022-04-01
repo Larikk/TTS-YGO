@@ -4,7 +4,7 @@ return {
     code = "SR02",
     name = "Rise of the True Dragons",
     releaseDate = "2016-07-08",
-    image = imagehost .. "/textures/decks/structure/033-SR02.jpg",
+    image = imageHost .. "/textures/decks/structure/033-SR02.jpg",
     cards = [[
 #created by ...
 #main

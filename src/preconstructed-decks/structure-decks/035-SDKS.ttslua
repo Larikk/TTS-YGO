@@ -4,7 +4,7 @@ return {
     code = "SDKS",
     name = "Seto Kaiba",
     releaseDate = "2016-10-21",
-    image = imagehost .. "/textures/decks/structure/035-SDKS.jpg",
+    image = imageHost .. "/textures/decks/structure/035-SDKS.jpg",
     cards = [[
 #created by ...
 #main

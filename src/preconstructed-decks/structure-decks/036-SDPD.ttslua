@@ -4,7 +4,7 @@ return {
     code = "SDPD",
     name = "Pendulum Domination",
     releaseDate = "2017-01-20",
-    image = imagehost .. "/textures/decks/structure/036-SDPD.jpg",
+    image = imageHost .. "/textures/decks/structure/036-SDPD.jpg",
     cards = [[
 #created by ...
 #main

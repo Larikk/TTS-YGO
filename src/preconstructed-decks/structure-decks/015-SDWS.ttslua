@@ -4,7 +4,7 @@ return {
     code = "SDWS",
     name = "Warriors' Strike",
     releaseDate = "2009-10-27",
-    image = imagehost .. "/textures/decks/structure/015-SDWS.jpg",
+    image = imageHost .. "/textures/decks/structure/015-SDWS.jpg",
     cards = [[
 #created by ...
 #main

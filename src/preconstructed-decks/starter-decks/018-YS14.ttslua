@@ -4,7 +4,7 @@ return {
     code = "YS14",
     name = "Super Starter: Space-Time Showdown",
     releaseDate = "2014-07-11",
-    image = imagehost .. "/textures/decks/starter/018-YS14.jpg",
+    image = imageHost .. "/textures/decks/starter/018-YS14.jpg",
     cards = [[
 #created by ...
 #main

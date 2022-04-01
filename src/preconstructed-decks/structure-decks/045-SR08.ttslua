@@ -4,7 +4,7 @@ return {
     code = "SR08",
     name = "Order of the Spellcasters",
     releaseDate = "2019-04-19",
-    image = imagehost .. "/textures/decks/structure/045-SR08.jpg",
+    image = imageHost .. "/textures/decks/structure/045-SR08.jpg",
     cards = [[
 #created by ...
 #main

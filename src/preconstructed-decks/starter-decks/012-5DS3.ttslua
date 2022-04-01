@@ -4,7 +4,7 @@ return {
     code = "5DS3",
     name = "Starter Deck: Duelist Toolbox",
     releaseDate = "2010-06-01",
-    image = imagehost .. "/textures/decks/starter/012-5DS3.jpg",
+    image = imageHost .. "/textures/decks/starter/012-5DS3.jpg",
     cards = [[
 #created by ...
 #main

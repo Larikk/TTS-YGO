@@ -4,7 +4,7 @@ return {
     code = "YS16",
     name = "Starter Deck: Yuya",
     releaseDate = "2016-05-27",
-    image = imagehost .. "/textures/decks/starter/021-YS16.jpg",
+    image = imageHost .. "/textures/decks/starter/021-YS16.jpg",
     cards = [[
 #created by ...
 #main

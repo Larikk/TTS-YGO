@@ -4,7 +4,7 @@ return {
     code = "SDGU",
     name = "Gates of the Underworld",
     releaseDate = "2011-10-18",
-    image = imagehost .. "/textures/decks/structure/020-SDGU.jpg",
+    image = imageHost .. "/textures/decks/structure/020-SDGU.jpg",
     cards = [[
 #created by ...
 #main

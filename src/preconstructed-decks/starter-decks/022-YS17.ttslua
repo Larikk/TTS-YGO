@@ -4,7 +4,7 @@ return {
     code = "YS17",
     name = "Starter Deck: Link Strike",
     releaseDate = "2017-07-21",
-    image = imagehost .. "/textures/decks/starter/022-YS17.jpg",
+    image = imageHost .. "/textures/decks/starter/022-YS17.jpg",
     cards = [[
 #created by ...
 #main

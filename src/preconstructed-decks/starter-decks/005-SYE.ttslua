@@ -4,7 +4,7 @@ return {
     code = "SYE",
     name = "Starter Deck: Yugi Evolution",
     releaseDate = "2004-03-01",
-    image = imagehost .. "/textures/decks/starter/005-SYE.jpg",
+    image = imageHost .. "/textures/decks/starter/005-SYE.jpg",
     cards = [[
 #created by ...
 #main

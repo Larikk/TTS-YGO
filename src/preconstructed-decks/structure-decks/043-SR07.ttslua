@@ -4,7 +4,7 @@ return {
     code = "SR07",
     name = "Zombie Horde",
     releaseDate = "2018-11-02",
-    image = imagehost .. "/textures/decks/structure/043-SR07.jpg",
+    image = imageHost .. "/textures/decks/structure/043-SR07.jpg",
     cards = [[
 #created by ...
 #main

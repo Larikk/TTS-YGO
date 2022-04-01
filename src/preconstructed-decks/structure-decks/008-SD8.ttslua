@@ -4,7 +4,7 @@ return {
     code = "SD8",
     name = "Lord of the Storm",
     releaseDate = "2006-07-12",
-    image = imagehost .. "/textures/decks/structure/008-SD8.jpg",
+    image = imageHost .. "/textures/decks/structure/008-SD8.jpg",
     cards = [[
 #created by ...
 #main

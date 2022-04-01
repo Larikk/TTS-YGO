@@ -4,7 +4,7 @@ return {
     code = "SDP",
     name = "Starter Deck: Pegasus",
     releaseDate = "2003-03-30",
-    image = imagehost .. "/textures/decks/starter/004-SDP.jpg",
+    image = imageHost .. "/textures/decks/starter/004-SDP.jpg",
     cards = [[
 #created by ...
 #main

@@ -4,7 +4,7 @@ return {
     code = "SDCL",
     name = "Cyberse Link",
     releaseDate = "2017-11-03",
-    image = imagehost .. "/textures/decks/structure/039-SDCL.jpg",
+    image = imageHost .. "/textures/decks/structure/039-SDCL.jpg",
     cards = [[
 #created by ...
 #main

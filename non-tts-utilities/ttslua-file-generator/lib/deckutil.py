@@ -152,7 +152,7 @@ return {{
     code = "{deck['code']}",
     name = "{deck['name']}",
     releaseDate = "{deck['release-date']}",
-    image = imagehost .. "{deck['image']}",
+    image = imageHost .. "{deck['image']}",
     cards = [[
 {deck['ydk']}
 ]]

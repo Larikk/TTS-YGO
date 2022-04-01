@@ -4,7 +4,7 @@ return {
     code = "SD6",
     name = "Spellcaster's Judgment",
     releaseDate = "2006-01-18",
-    image = imagehost .. "/textures/decks/structure/006-SD6.jpg",
+    image = imageHost .. "/textures/decks/structure/006-SD6.jpg",
     cards = [[
 #created by ...
 #main

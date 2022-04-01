@@ -4,7 +4,7 @@ return {
     code = "SDDE",
     name = "The Dark Emperor",
     releaseDate = "2008-04-02",
-    image = imagehost .. "/textures/decks/structure/012-SDDE.jpg",
+    image = imageHost .. "/textures/decks/structure/012-SDDE.jpg",
     cards = [[
 #created by ...
 #main

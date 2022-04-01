@@ -4,7 +4,7 @@ return {
     code = "SD5",
     name = "Warrior's Triumph",
     releaseDate = "2005-10-28",
-    image = imagehost .. "/textures/decks/structure/005-SD5.jpg",
+    image = imageHost .. "/textures/decks/structure/005-SD5.jpg",
     cards = [[
 #created by ...
 #main

@@ -4,7 +4,7 @@ return {
     code = "SDSC",
     name = "Spellcaster's Command",
     releaseDate = "2009-03-31",
-    image = imagehost .. "/textures/decks/structure/014-SDSC.jpg",
+    image = imageHost .. "/textures/decks/structure/014-SDSC.jpg",
     cards = [[
 #created by ...
 #main

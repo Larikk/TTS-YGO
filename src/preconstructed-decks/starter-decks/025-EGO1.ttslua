@@ -4,7 +4,7 @@ return {
     code = "EGO1",
     name = "Egyptian God Deck: Obelisk the Tormentor",
     releaseDate = "2021-06-18",
-    image = imagehost .. "/textures/decks/starter/025-EGO1.jpg",
+    image = imageHost .. "/textures/decks/starter/025-EGO1.jpg",
     cards = [[
 #created by ...
 #main

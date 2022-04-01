@@ -4,7 +4,7 @@ return {
     code = "SDRE",
     name = "Realm of the Sea Emperor",
     releaseDate = "2012-10-16",
-    image = imagehost .. "/textures/decks/structure/023-SDRE.jpg",
+    image = imageHost .. "/textures/decks/structure/023-SDRE.jpg",
     cards = [[
 #created by ...
 #main

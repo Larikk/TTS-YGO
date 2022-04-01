@@ -4,7 +4,7 @@ return {
     code = "YS18",
     name = "Starter Deck: Codebreaker",
     releaseDate = "2018-07-13",
-    image = imagehost .. "/textures/decks/starter/023-YS18.jpg",
+    image = imageHost .. "/textures/decks/starter/023-YS18.jpg",
     cards = [[
 #created by ...
 #main

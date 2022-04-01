@@ -4,7 +4,7 @@ return {
     code = "SD10",
     name = "Machine Re-Volt",
     releaseDate = "2007-01-17",
-    image = imagehost .. "/textures/decks/structure/010-SD10.jpg",
+    image = imageHost .. "/textures/decks/structure/010-SD10.jpg",
     cards = [[
 #created by ...
 #main

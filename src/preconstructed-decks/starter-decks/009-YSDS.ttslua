@@ -4,7 +4,7 @@ return {
     code = "YSDS",
     name = "Starter Deck - Syrus Truesdale",
     releaseDate = "2007-07-25",
-    image = imagehost .. "/textures/decks/starter/009-YSDS.jpg",
+    image = imageHost .. "/textures/decks/starter/009-YSDS.jpg",
     cards = [[
 #created by ...
 #main

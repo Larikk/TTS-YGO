@@ -4,7 +4,7 @@ return {
     code = "SD09",
     name = "Dinosaur's Rage",
     releaseDate = "2006-10-20",
-    image = imagehost .. "/textures/decks/structure/009-SD09.jpg",
+    image = imageHost .. "/textures/decks/structure/009-SD09.jpg",
     cards = [[
 #created by ...
 #main

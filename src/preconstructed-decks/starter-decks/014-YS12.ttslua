@@ -4,7 +4,7 @@ return {
     code = "YS12",
     name = "Starter Deck: Xyz Symphony",
     releaseDate = "2012-04-17",
-    image = imagehost .. "/textures/decks/starter/014-YS12.jpg",
+    image = imageHost .. "/textures/decks/starter/014-YS12.jpg",
     cards = [[
 #created by ...
 #main
