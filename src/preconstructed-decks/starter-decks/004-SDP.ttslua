@@ -1,8 +1,10 @@
+local imageHost = require("TTS-YGO/src/common/ImageHost")
+
 return {
     code = "SDP",
     name = "Starter Deck: Pegasus",
     releaseDate = "2003-03-30",
-    image = "http://cloud-3.steamusercontent.com/ugc/1778352920516508869/CD572B25BCE37EF5D6889A0EA20F04C5FC2376A5/",
+    image = imagehost .. "/textures/decks/starter/004-SDP.jpg",
     cards = [[
 #created by ...
 #main

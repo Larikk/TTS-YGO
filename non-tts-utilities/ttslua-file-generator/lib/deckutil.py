@@ -1,6 +1,7 @@
 import requests
 from functools import cmp_to_key
 
+
 def printDeck(deck):
     print("Name", deck['name'])
     print("Code", deck['code'])
@@ -21,15 +22,20 @@ def printDeck(deck):
 
     print(cards)
 
-#Sorts by rarity and then set code
-rarityOrder = ["Secret Rare", "Ultra Rare", "Shatterfoil Rare", "Super Rare", "Rare", "Common"]
+
+# Sorts by rarity and then set code
+rarityOrder = ["Secret Rare", "Ultra Rare",
+               "Shatterfoil Rare", "Super Rare", "Rare", "Common"]
+
+
 def compareCards(a, b):
     deltaRarity = a['__r'] - b['__r']
-    
+
     if deltaRarity == 0:
         return a['__n'] - b['__n']
-    
+
     return deltaRarity
+
 
 def sortCards(deck):
     cards = deck['cards']
@@ -48,6 +54,7 @@ def sortCards(deck):
 
     return sorted(cards, key=cmp_to_key(compareCards))
 
+
 def isExtraDeckCard(cardType):
     types = ["Fusion", "Synchro", "XYZ", "Link"]
 
@@ -58,6 +65,7 @@ def isExtraDeckCard(cardType):
             break
     return isExtra
 
+
 def extractCardId(card):
     cardVariants = card['card_images']
     ids = map(lambda e: e['id'], cardVariants)
@@ -67,8 +75,9 @@ def extractCardId(card):
     # Polymerization alt artwork is fine because alt id is higher than main id
     if id == 36996508:
         id = 46986414
-    
+
     return str(id)
+
 
 def attachAdditionalData(deck):
     cards = deck['cards']
@@ -76,8 +85,9 @@ def attachAdditionalData(deck):
     names = [card['Name'] for card in cards]
     names = "|".join(names)
 
-    r = requests.get("https://db.ygoprodeck.com/api/v7/cardinfo.php", params={"name": names, "misc": "yes"})
-    
+    r = requests.get("https://db.ygoprodeck.com/api/v7/cardinfo.php",
+                     params={"name": names, "misc": "yes"})
+
     nameToDataMapping = {}
     json = r.json()
 
@@ -96,7 +106,7 @@ def attachAdditionalData(deck):
         data = nameToDataMapping[name]
         card['id'] = extractCardId(data)
         card['isExtraDeckCard'] = isExtraDeckCard(data['type'])
-    
+
 
 def asYdkFile(deck):
     attachAdditionalData(deck)
@@ -108,7 +118,8 @@ def asYdkFile(deck):
         id = card['id']
         isExtra = card['isExtraDeckCard']
         n = 1
-        if 'Qty' in card: n = int(card['Qty'])
+        if 'Qty' in card:
+            n = int(card['Qty'])
         for _ in range(n):
             if isExtra:
                 extra.append(id)
@@ -124,7 +135,7 @@ def asYdkFile(deck):
         extra = "#extra\n" + "\n".join(extra) + "\n"
     else:
         extra = "#extra\n"
-    
+
     result = "#created by ...\n"
     result += main
     result += extra
@@ -132,13 +143,16 @@ def asYdkFile(deck):
 
     return result
 
+
 def asTtsLuaFile(deck):
     return f"""\
+local imageHost = require("TTS-YGO/src/common/ImageHost")
+
 return {{
     code = "{deck['code']}",
     name = "{deck['name']}",
     releaseDate = "{deck['release-date']}",
-    image = "{deck['image']}",
+    image = imagehost .. "{deck['image']}",
     cards = [[
 {deck['ydk']}
 ]]

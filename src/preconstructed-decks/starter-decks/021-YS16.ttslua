@@ -1,8 +1,10 @@
+local imageHost = require("TTS-YGO/src/common/ImageHost")
+
 return {
     code = "YS16",
     name = "Starter Deck: Yuya",
     releaseDate = "2016-05-27",
-    image = "http://cloud-3.steamusercontent.com/ugc/1778352920516507303/2B3B45DE5815F78811FA10134DC1402E210F4281/",
+    image = imagehost .. "/textures/decks/starter/021-YS16.jpg",
     cards = [[
 #created by ...
 #main

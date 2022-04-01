@@ -1,8 +1,10 @@
+local imageHost = require("TTS-YGO/src/common/ImageHost")
+
 return {
     code = "5DS3",
     name = "Starter Deck: Duelist Toolbox",
     releaseDate = "2010-06-01",
-    image = "http://cloud-3.steamusercontent.com/ugc/1778352920516507969/EA12BAF29A22858E0D57B9CCE490075E29F21D75/",
+    image = imagehost .. "/textures/decks/starter/012-5DS3.jpg",
     cards = [[
 #created by ...
 #main

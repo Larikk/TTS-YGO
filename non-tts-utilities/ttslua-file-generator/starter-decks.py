@@ -17,7 +17,8 @@ interactive = False
 imageMappings = files.getImageMappings("starter-decks.csv")
 
 # Run even if programm terminates unsuccessfully
-atexit.register(files.compileDeckList, folder, "src/preconstructed-decks/starter-decks")
+atexit.register(files.compileDeckList, folder,
+                "src/preconstructed-decks/starter-decks")
 
 nextReleaseOutliers = {
     "Starter Deck: Kaiba Evolution": "Starter Deck 2006",
@@ -30,6 +31,7 @@ nextReleaseOutliers = {
     "Egyptian God Deck: Slifer the Sky Dragon": "Egyptian God Deck: Obelisk the Tormentor",
     "Egyptian God Deck: Obelisk the Tormentor": None,
 }
+
 
 def handleDeck(title):
     deck = {}
@@ -61,12 +63,10 @@ def handleDeck(title):
             print(e)
             print(traceback.format_exc())
 
-    
-    deck['image'] = imageMappings[deck['code']]
+    deck['image'] = f'/textures/decks/starter/{counter:03d}-{deck["code"]}.jpg'
     deck['cards'] = deckutil.sortCards(deck)
     deck['ydk'] = deckutil.asYdkFile(deck)
     deckutil.printDeck(deck)
-
 
     # Write tts file
     content = deckutil.asTtsLuaFile(deck)
@@ -85,10 +85,11 @@ def handleDeck(title):
 
 while True:
     deck = handleDeck(title)
-    
+
     if interactive:
         inp = input("Enter to continue, anything else to quit: ")
-        if "next" not in deck or inp != "": break
+        if "next" not in deck or inp != "":
+            break
     else:
         time.sleep(1)
 

@@ -1,8 +1,10 @@
+local imageHost = require("TTS-YGO/src/common/ImageHost")
+
 return {
     code = "YS15L",
     name = "Dark Legion Starter Deck",
     releaseDate = "2015-05-29",
-    image = "http://cloud-3.steamusercontent.com/ugc/1778352920516507368/0D6C101FE4A156AC1314CD36862D5A5BA80D332C/",
+    image = imagehost .. "/textures/decks/starter/020-YS15L.jpg",
     cards = [[
 #created by ...
 #main

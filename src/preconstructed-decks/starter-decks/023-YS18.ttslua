@@ -1,8 +1,10 @@
+local imageHost = require("TTS-YGO/src/common/ImageHost")
+
 return {
     code = "YS18",
     name = "Starter Deck: Codebreaker",
     releaseDate = "2018-07-13",
-    image = "http://cloud-3.steamusercontent.com/ugc/1778352920516507155/A381558A18B97E34363B9C6741DE1792663EEBD2/",
+    image = imagehost .. "/textures/decks/starter/023-YS18.jpg",
     cards = [[
 #created by ...
 #main

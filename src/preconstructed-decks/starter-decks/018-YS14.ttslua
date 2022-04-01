@@ -1,8 +1,10 @@
+local imageHost = require("TTS-YGO/src/common/ImageHost")
+
 return {
     code = "YS14",
     name = "Super Starter: Space-Time Showdown",
     releaseDate = "2014-07-11",
-    image = "http://cloud-3.steamusercontent.com/ugc/1778352920516507504/FA67561017A4A057862067F6D647314410401656/",
+    image = imagehost .. "/textures/decks/starter/018-YS14.jpg",
     cards = [[
 #created by ...
 #main

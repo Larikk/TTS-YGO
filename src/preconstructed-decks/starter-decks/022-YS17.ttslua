@@ -1,8 +1,10 @@
+local imageHost = require("TTS-YGO/src/common/ImageHost")
+
 return {
     code = "YS17",
     name = "Starter Deck: Link Strike",
     releaseDate = "2017-07-21",
-    image = "http://cloud-3.steamusercontent.com/ugc/1778352920516507231/D3258F132695D77B0FEF041FB4C0C38A1E37FDB1/",
+    image = imagehost .. "/textures/decks/starter/022-YS17.jpg",
     cards = [[
 #created by ...
 #main

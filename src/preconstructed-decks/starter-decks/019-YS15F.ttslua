@@ -1,8 +1,10 @@
+local imageHost = require("TTS-YGO/src/common/ImageHost")
+
 return {
     code = "YS15F",
     name = "Saber Force Starter Deck",
     releaseDate = "2015-05-29",
-    image = "http://cloud-3.steamusercontent.com/ugc/1778352920516507440/9308570019D155809677BBB43DE57DEC48EF2306/",
+    image = imagehost .. "/textures/decks/starter/019-YS15F.jpg",
     cards = [[
 #created by ...
 #main
