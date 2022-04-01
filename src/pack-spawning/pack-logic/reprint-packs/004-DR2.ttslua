@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/reprint-packs/_Logic")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,7 +12,7 @@ function PackGenerator:new()
     o.setCodePrefix = "DR2-EN"
     o.setNameUrl = "Dark Revelation Volume 2"
     o.releaseDate = "2005-10-20"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353420787261297/60D88B5AA42AE7CBC66C724B4F94DA8298B7D59B/"
+    o.packTextures = imageHost .. "/textures/packs/reprintpacks/004-DR2.jpg"
     o.boxTexture = nil
 
     return o

@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/reprint-packs/_Logic")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,7 +12,7 @@ function PackGenerator:new()
     o.setCodePrefix = "DB2-EN"
     o.setNameUrl = "Dark Beginning 2"
     o.releaseDate = "2005-07-27"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353420787261422/85A58B607F0EB5DF1C1F62A251C5036606E92485/"
+    o.packTextures = imageHost .. "/textures/packs/reprintpacks/002-DB2.jpg"
     o.boxTexture = nil
 
     return o
