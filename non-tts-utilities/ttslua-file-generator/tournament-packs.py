@@ -18,6 +18,7 @@ packImageMappings = files.getImageMappings("champion-packs-packs.csv")
 nextReleaseOutliers = {
 }
 
+
 def handleBooster(title):
     booster = {}
 
@@ -30,7 +31,7 @@ def handleBooster(title):
         booster['code-long'] = booster['code'] + "-"
     else:
         booster['code-long'] = booster['code'] + "-EN"
-    
+
     booster['image'] = wiki.extractImage(soup, name)
     booster['release-date'] = wiki.extractReleaseDate(soup)
 
@@ -45,8 +46,7 @@ def handleBooster(title):
             print(e)
             print(traceback.format_exc())
 
-    
-    booster['pack-texture'] = packImageMappings[booster['code']]
+    booster['pack-texture'] = f"/textures/packs/championpacks/{counter:03d}-{booster['code']}.jpg"
     booster['box-texture'] = "nil"
 
     boosterutil.printBooster(booster)
@@ -61,11 +61,13 @@ def handleBooster(title):
 
 while True:
     booster = handleBooster(title)
-    
+
     if interactive:
-        if "next" not in booster: break
+        if "next" not in booster:
+            break
         inp = input("Enter to continue, anything else to quit: ")
-        if inp != "": break
+        if inp != "":
+            break
     else:
         time.sleep(2)
 
