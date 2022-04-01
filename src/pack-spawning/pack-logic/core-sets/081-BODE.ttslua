@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicG")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "BODE-EN"
     o.setNameUrl = "Burst of Destiny"
     o.releaseDate = "2021-11-05"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353420792682018/3597B56750986A0DABF76439679C60E15FF61191/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353420792744320/8A84EBF87F8CF2AD5D9A4E7211E1B80E39A8E886/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/081-BODE.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/081-BODE.png"
 
     return o
 end

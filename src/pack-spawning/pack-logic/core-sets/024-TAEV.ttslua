@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicD")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "TAEV-EN"
     o.setNameUrl = "Tactical Evolution"
     o.releaseDate = "2007-08-15"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962157209/018AEE4ECADE9F36BD22FDB10F3A83ED65D92379/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962340341/945572D543B1FCD3E8BC4DD7CC9FF36572D84A5A/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/024-TAEV.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/024-TAEV.png"
 
     return o
 end

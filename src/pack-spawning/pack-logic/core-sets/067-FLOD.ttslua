@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicE")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "FLOD-EN"
     o.setNameUrl = "Flames of Destruction"
     o.releaseDate = "2018-05-04"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353420792683658/99E3BC24ED89E769BEC00BF0857B3D54B18E8CC5/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353420792746119/12C07DAE8BC8C2434CCE3739D6231E25E6F10E65/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/067-FLOD.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/067-FLOD.png"
 
     return o
 end

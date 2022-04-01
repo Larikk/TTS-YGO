@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicE")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "EXFO-EN"
     o.setNameUrl = "Extreme Force"
     o.releaseDate = "2018-02-02"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353420792683742/44C41BD83179FE21651842DD72A9AD9EBF4EE57B/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353420792746218/4F4EF9369075194C29BB883B1B48AD9F101700C8/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/066-EXFO.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/066-EXFO.png"
 
     return o
 end

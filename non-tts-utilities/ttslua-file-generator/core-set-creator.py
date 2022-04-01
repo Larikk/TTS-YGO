@@ -25,6 +25,7 @@ shortSetCode = {
     "Ancient Sanctuary",
 }
 
+
 def parentLogic(counter):
     if 1 <= counter <= 11:
         return "A"
@@ -41,20 +42,22 @@ def parentLogic(counter):
     elif 75 <= counter:
         return "G"
 
+
 def handleBooster(title):
     booster = {}
 
     soup = wiki.getSoup(title)
     name = title
+    code = wiki.extractCode(soup)
     booster['name'] = name
     booster['name-url'] = name
-    booster['code'] = wiki.extractCode(soup)
+    booster['code'] = code
 
     if name in shortSetCode:
         booster['code-long'] = booster['code'] + "-"
     else:
         booster['code-long'] = booster['code'] + "-EN"
-    
+
     booster['image'] = wiki.extractImage(soup, name)
     booster['release-date'] = wiki.extractReleaseDate(soup)
 
@@ -70,19 +73,20 @@ def handleBooster(title):
             print(traceback.format_exc())
 
     if booster['code'] in packImageMappings:
-        booster['pack-texture'] = packImageMappings[booster['code']]
+        booster['pack-texture'] = f'imageHost .. "/textures/packs/coresets/{counter:03d}-{code}.jpg"'
     else:
         booster['pack-texture'] = "nil"
-    
+
     if booster['code'] in boxImageMappings:
-        booster['box-texture'] = boxImageMappings[booster['code']]
+        booster['box-texture'] = f'imageHost .. "/textures/boxes/coresets/{counter:03d}-{code}.png"'
     else:
         booster['box-texture'] = "nil"
 
     boosterutil.printBooster(booster)
 
     # Write tts file
-    content = boosterutil.asTtsLuaFile(booster, folder, "_CoreSetLogic" + parentLogic(counter))
+    content = boosterutil.asTtsLuaFile(
+        booster, folder, "_CoreSetLogic" + parentLogic(counter))
     filename = f"{counter:03d}-{booster['code']}.ttslua"
     files.write(path, filename, content)
 
@@ -91,13 +95,15 @@ def handleBooster(title):
 
 while True:
     booster = handleBooster(title)
-    
+
     if interactive:
-        if "next" not in booster: break
+        if "next" not in booster:
+            break
         inp = input("Enter to continue, anything else to quit: ")
-        if inp != "": break
+        if inp != "":
+            break
     else:
-        time.sleep(2)
+        time.sleep(1)
 
     title = booster['next']
     counter += 1

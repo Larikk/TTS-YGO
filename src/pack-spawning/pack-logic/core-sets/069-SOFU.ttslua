@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicE")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "SOFU-EN"
     o.setNameUrl = "Soul Fusion"
     o.releaseDate = "2018-10-19"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353420792683452/AFC3C8D5D99F3107157AAC86D3A9CE5512B380F1/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353420792745840/5E7BD5B8FBFF35E2AB1D157907FAD4D91BC43BCB/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/069-SOFU.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/069-SOFU.png"
 
     return o
 end

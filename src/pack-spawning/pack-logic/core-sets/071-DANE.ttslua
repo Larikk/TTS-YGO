@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicE")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "DANE-EN"
     o.setNameUrl = "Dark Neostorm"
     o.releaseDate = "2019-05-03"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353420792683236/9819945864F91EF7DA2A577325EB2FFF934C4E9E/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353420792745652/A8536895B8BCCD15001FCAE2256AB7A164CA9435/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/071-DANE.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/071-DANE.png"
 
     return o
 end

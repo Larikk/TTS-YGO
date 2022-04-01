@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicD")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "CBLZ-EN"
     o.setNameUrl = "Cosmo Blazer"
     o.releaseDate = "2013-01-25"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962153623/6449D2B7052FF7061BF5809BB16B79BF42F4578A/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962337261/D6C95CEEC658E629B0B3528040856A6D76423847/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/046-CBLZ.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/046-CBLZ.png"
 
     return o
 end

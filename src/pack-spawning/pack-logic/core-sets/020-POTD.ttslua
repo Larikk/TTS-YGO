@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicB")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "POTD-EN"
     o.setNameUrl = "Power of the Duelist"
     o.releaseDate = "2006-08-16"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962157566/9E022D8BEE150A9BDF6CEEFA95086A4C467529A5/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962340949/839C9458A047D842B76A2CFF125DAC7474404690/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/020-POTD.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/020-POTD.png"
 
     return o
 end

@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicG")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "ROTD-EN"
     o.setNameUrl = "Rise of the Duelist"
     o.releaseDate = "2020-08-07"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353420792682712/F9FCA4413E4E316A8A667D5745C89CA7797218D7/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353420792745115/C39D0C83D5A472E5E038921026E78606177F04B4/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/076-ROTD.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/076-ROTD.png"
 
     return o
 end

@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicA")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "MRD-EN"
     o.setNameUrl = "Metal Raiders"
     o.releaseDate = "2002-06-26"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962159374/E7F9C9A56B709D4EBFFDDD577BB9DB7B161BAE5B/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962342688/05ADD782ED79C6DF01C22BB46F3C19953135B42E/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/002-MRD.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/002-MRD.png"
 
     return o
 end

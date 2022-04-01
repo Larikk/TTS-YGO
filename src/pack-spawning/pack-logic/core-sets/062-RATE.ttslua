@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicE")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "RATE-EN"
     o.setNameUrl = "Raging Tempest"
     o.releaseDate = "2017-02-10"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353420792684106/3EE033E2820A94D5CA4273BA60729E8DEEFF13F2/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353420792746843/CCEFBB68EB59EEA067D4032B2A864C6E52A64D16/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/062-RATE.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/062-RATE.png"
 
     return o
 end

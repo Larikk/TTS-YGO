@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicD")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "PTDN-EN"
     o.setNameUrl = "Phantom Darkness"
     o.releaseDate = "2008-02-13"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962156988/38BF5D83AC43CCC9FF24D5920EA416CB1CBAEE57/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962340056/A2006A50F3423F810DFD370D3B594C9E62CD0D2E/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/026-PTDN.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/026-PTDN.png"
 
     return o
 end

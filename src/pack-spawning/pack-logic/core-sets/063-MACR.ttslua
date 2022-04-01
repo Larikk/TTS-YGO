@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicE")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "MACR-EN"
     o.setNameUrl = "Maximum Crisis"
     o.releaseDate = "2017-05-05"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353420792683980/8B90FED80C3186F3C3D3D8E36BEF5704EF6888B4/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353420792746634/90E41B70347D9F3B049A8A85A8E4E49473D1404C/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/063-MACR.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/063-MACR.png"
 
     return o
 end

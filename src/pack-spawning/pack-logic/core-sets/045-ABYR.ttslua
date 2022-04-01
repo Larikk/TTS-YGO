@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicD")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "ABYR-EN"
     o.setNameUrl = "Abyss Rising"
     o.releaseDate = "2012-11-09"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962153762/0975E1C75DBBE34F14A243D33F9C30512CD840C8/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962337347/C35BD56FB88C08C6901BE096ADF7ECA9BE0075D5/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/045-ABYR.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/045-ABYR.png"
 
     return o
 end

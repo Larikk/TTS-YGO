@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicD")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "STOR-EN"
     o.setNameUrl = "Storm of Ragnarok"
     o.releaseDate = "2011-02-08"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962155604/C39C144BF7FADAE26C71C6FFBD2FF0835D275682/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962338523/313513562DA6B2EAEA7E1776FFDF3213C9A7A173/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/038-STOR.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/038-STOR.png"
 
     return o
 end

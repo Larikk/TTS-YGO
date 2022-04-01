@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicA")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "AST-"
     o.setNameUrl = "Ancient Sanctuary"
     o.releaseDate = "2004-06-01"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962158319/F89DFD284F3839BA6C8311F3302A98CB0A74FA39/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962341782/867EFF8E1FBB4AEF9EAE4069C1F85079B5862BDE/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/011-AST.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/011-AST.png"
 
     return o
 end

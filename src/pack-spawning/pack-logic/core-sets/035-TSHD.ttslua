@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicD")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "TSHD-EN"
     o.setNameUrl = "The Shining Darkness"
     o.releaseDate = "2010-05-11"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962155904/44E4A46FC67FF081021BC267D69F760BE7101C16/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962338882/DC0DF66DEF158828B47EE44FAD2D49C454E7BFE6/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/035-TSHD.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/035-TSHD.png"
 
     return o
 end

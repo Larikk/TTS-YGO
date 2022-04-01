@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicB")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "EEN-EN"
     o.setNameUrl = "Elemental Energy"
     o.releaseDate = "2005-11-16"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962157858/A5A27FF4CE41F4AA5FFF0B9CE954083D7909FBDD/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962341230/CAAB9A42419030C55C22EAA68AC6F7909C26F984/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/017-EEN.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/017-EEN.png"
 
     return o
 end

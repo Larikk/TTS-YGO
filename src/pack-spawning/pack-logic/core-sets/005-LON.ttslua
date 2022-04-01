@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicA")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "LON-EN"
     o.setNameUrl = "Labyrinth of Nightmare"
     o.releaseDate = "2003-03-01"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962159315/73476218D42688D77F8EF5BD543B45034084828A/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962342390/A9F97523223E85653250D08242478EF5CB64198C/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/005-LON.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/005-LON.png"
 
     return o
 end

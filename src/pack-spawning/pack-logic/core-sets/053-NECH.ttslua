@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicD")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "NECH-EN"
     o.setNameUrl = "The New Challengers"
     o.releaseDate = "2014-11-07"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353420792685027/7DB482EB3FCBC81EBB01779C15AE5323B8279915/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962336424/39F956678965D252993799D33B3A20D2789BE40E/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/053-NECH.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/053-NECH.png"
 
     return o
 end

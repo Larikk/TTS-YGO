@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicD")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "PHSW-EN"
     o.setNameUrl = "Photon Shockwave"
     o.releaseDate = "2011-11-15"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962154407/7B47ACC19634EAD1EC79FD32525A2F602EAA08CD/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962337916/1FCEDF96DE56D3F171F0BAEB816E3E2C13D10AD9/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/041-PHSW.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/041-PHSW.png"
 
     return o
 end

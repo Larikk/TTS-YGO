@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicA")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "SRL-EN"
     o.setNameUrl = "Spell Ruler"
     o.releaseDate = "2002-09-16"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962159539/FF2D4717C9B851A55D67210595C29EC1B7347D84/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962342579/CA06DEFF32AB5FAC63D6D0C70D84A49E49F22298/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/003-SRL.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/003-SRL.png"
 
     return o
 end

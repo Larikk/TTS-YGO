@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicD")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "ABPF-EN"
     o.setNameUrl = "Absolute Powerforce"
     o.releaseDate = "2010-02-16"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962156135/AA5A5224870E0E90ED56514FDAD36F891FC7D4A0/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962339098/59E9196A16E54C9272461F1B588C728B789505F3/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/034-ABPF.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/034-ABPF.png"
 
     return o
 end

@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicD")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "ORCS-EN"
     o.setNameUrl = "Order of Chaos"
     o.releaseDate = "2012-01-24"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962154266/14B7325561077D2F99337806F8822E1FBABDF3A7/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962337795/A583CA05EBE0864EE2D53C04497622909B3CAFC6/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/042-ORCS.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/042-ORCS.png"
 
     return o
 end

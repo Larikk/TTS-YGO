@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicA")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "MFC-"
     o.setNameUrl = "Magician's Force"
     o.releaseDate = "2003-10-10"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962158835/E55B0EB90198E4361C94B04F7A0B32DC696D72D1/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962342081/C0721C5DFA0E78A2D20D78DA06F9F4BB0D87D7A4/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/008-MFC.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/008-MFC.png"
 
     return o
 end

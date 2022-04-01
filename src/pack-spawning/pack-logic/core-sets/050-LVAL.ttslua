@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicD")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "LVAL-EN"
     o.setNameUrl = "Legacy of the Valiant"
     o.releaseDate = "2014-01-24"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962153020/28F1D02B9CD9A16A68FACA21F5494AAABA83E825/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962336721/F62C09A2EDB1A5335AED7438F42B154D2BA614ED/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/050-LVAL.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/050-LVAL.png"
 
     return o
 end

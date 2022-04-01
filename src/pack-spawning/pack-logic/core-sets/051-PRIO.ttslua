@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicD")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "PRIO-EN"
     o.setNameUrl = "Primal Origin"
     o.releaseDate = "2014-05-16"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962152943/473EBA41187A09564CFCD725714F613989F010CE/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962336630/41157E8FCB16C943693F213F72C3CB8D62D2D484/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/051-PRIO.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/051-PRIO.png"
 
     return o
 end

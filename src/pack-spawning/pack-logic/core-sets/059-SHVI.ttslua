@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicE")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "SHVI-EN"
     o.setNameUrl = "Shining Victories"
     o.releaseDate = "2016-05-06"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353420792684433/C272AFDD3BD812DAB93ACF8B4A0DD74ABCCF9F12/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353420792747207/642D0C3665BB9C6FA8C4007305EDD8A5D64B1749/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/059-SHVI.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/059-SHVI.png"
 
     return o
 end

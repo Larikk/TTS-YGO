@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicD")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "DOCS-EN"
     o.setNameUrl = "Dimension of Chaos"
     o.releaseDate = "2015-11-06"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353420792684630/2D85F0845EE3EDBD4E15F473CC2A49944302B3AD/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962335822/E9E4B0E70408769EA9009E6E032413F5ADA6DE47/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/057-DOCS.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/057-DOCS.png"
 
     return o
 end

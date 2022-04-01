@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicF")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "CHIM-EN"
     o.setNameUrl = "Chaos Impact"
     o.releaseDate = "2019-10-25"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353420792683021/544582DB94D649D8F00BFA8E52E5E23ACBFEDBF4/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353420792745446/7EC2FBB52E6843C631B118AE14729A734D610A51/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/073-CHIM.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/073-CHIM.png"
 
     return o
 end

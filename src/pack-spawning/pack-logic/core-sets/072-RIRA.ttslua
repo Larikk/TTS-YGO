@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicF")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "RIRA-EN"
     o.setNameUrl = "Rising Rampage"
     o.releaseDate = "2019-07-26"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353420792683114/3A497273CA9AA714D153F5CCB0310E48A33861C1/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353420792745531/906A7848594BFF0AA85CA48FA047391F042DB7D9/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/072-RIRA.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/072-RIRA.png"
 
     return o
 end

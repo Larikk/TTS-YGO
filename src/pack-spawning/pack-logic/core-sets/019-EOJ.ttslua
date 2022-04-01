@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicB")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "EOJ-EN"
     o.setNameUrl = "Enemy of Justice"
     o.releaseDate = "2006-05-17"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962157630/1D9660EE5BE0A4AA8EDB05790E51B95EDD771C60/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962341033/5D6FB8DB8EAE2736C5F3CF930FF5BA6923086578/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/019-EOJ.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/019-EOJ.png"
 
     return o
 end

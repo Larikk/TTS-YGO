@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicE")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "COTD-EN"
     o.setNameUrl = "Code of the Duelist"
     o.releaseDate = "2017-08-04"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353420792683901/5D8462A9BD35FF727AB2AE9AA7FF5FFC9CA8BF46/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353420792746399/18C7D18547514B2BB3F0A91E9FE3D2DB376CA486/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/064-COTD.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/064-COTD.png"
 
     return o
 end

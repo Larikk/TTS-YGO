@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicA")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "LOB-EN"
     o.setNameUrl = "Legend of Blue Eyes White Dragon"
     o.releaseDate = "2002-03-08"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962152266/610300BA8C240ADBFA8F58542EF7F72F17128A88/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962335950/274998FE3F2AE0A39DA686FFAF243B20C0AE0410/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/001-LOB.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/001-LOB.png"
 
     return o
 end

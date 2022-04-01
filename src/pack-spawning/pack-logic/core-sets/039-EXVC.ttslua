@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicD")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "EXVC-EN"
     o.setNameUrl = "Extreme Victory"
     o.releaseDate = "2011-05-10"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962155414/B025A3352D4D3F170848B9CE1DD9643117542E20/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962338300/559DEB68DD66CFF5CA20E6A5B32F097E631F3524/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/039-EXVC.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/039-EXVC.png"
 
     return o
 end

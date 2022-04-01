@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicG")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "BLVO-EN"
     o.setNameUrl = "Blazing Vortex"
     o.releaseDate = "2021-02-05"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353420792682488/6D6B882ADC6A239DEFC0AB0F20FD501DF01C12E6/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353420792744883/548F101A08E2A939C26F6193E956E5329DFF4C13/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/078-BLVO.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/078-BLVO.png"
 
     return o
 end

@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicD")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "SHSP-EN"
     o.setNameUrl = "Shadow Specters"
     o.releaseDate = "2013-11-08"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962153289/EC4C0FFEA9DF044591FEC7146A4A6DD6ABE31E95/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962336904/55D0C6F6C18006AAB97D72E83AEDAADE66692164/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/049-SHSP.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/049-SHSP.png"
 
     return o
 end

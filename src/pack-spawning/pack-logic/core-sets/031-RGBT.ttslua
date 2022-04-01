@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicD")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "RGBT-EN"
     o.setNameUrl = "Raging Battle"
     o.releaseDate = "2009-05-12"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962156539/553A8A549076803D1AB34C6D2AE5BFB0C2AD4379/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962339396/D8DD6998E8E7E675D9BC66A174E8BC3AFB709B96/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/031-RGBT.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/031-RGBT.png"
 
     return o
 end

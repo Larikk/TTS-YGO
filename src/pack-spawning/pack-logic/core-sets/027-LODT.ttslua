@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicD")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "LODT-EN"
     o.setNameUrl = "Light of Destruction"
     o.releaseDate = "2008-05-13"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962156920/C1AD5BB5A02CFA4281B6F9235E51D6A493FD61E6/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962339816/8CF4906A12907D4DD9D34921224C61EB2B548211/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/027-LODT.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/027-LODT.png"
 
     return o
 end

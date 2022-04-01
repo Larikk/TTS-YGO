@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicE")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "SAST-EN"
     o.setNameUrl = "Savage Strike"
     o.releaseDate = "2019-02-01"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353420792683316/5FCBE730F6D31CF801411467D56AC5F49B838E06/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353420792745751/C3926D2032F3635D0EDBEC05F9262E0EC57C73FA/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/070-SAST.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/070-SAST.png"
 
     return o
 end

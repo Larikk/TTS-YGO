@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicD")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "CROS-EN"
     o.setNameUrl = "Crossed Souls"
     o.releaseDate = "2015-05-15"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353420792684822/C809EC7C89C4764808A90F5D516FB1305C30ACF7/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962336196/31B35F5C335F35ECA463CD1B1BE3FDC8766BB9EE/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/055-CROS.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/055-CROS.png"
 
     return o
 end

@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicG")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "LIOV-EN"
     o.setNameUrl = "Lightning Overdrive"
     o.releaseDate = "2021-06-04"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353420792682395/DE87ECA83672C9BCADD9D23FC2DC480632C4A754/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353420792744766/E6F32726BC3247E05C2C438AF1D740097FE97B8C/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/079-LIOV.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/079-LIOV.png"
 
     return o
 end

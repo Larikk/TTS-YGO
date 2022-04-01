@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicG")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "ETCO-EN"
     o.setNameUrl = "Eternity Code"
     o.releaseDate = "2020-06-05"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353420792682810/4D4E07662A7B3B46C2584254AEAC54B20712DAE9/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353420792745199/3223B10CB9ECE6CE83F0D3E5EA1928DCFACF0FE0/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/075-ETCO.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/075-ETCO.png"
 
     return o
 end

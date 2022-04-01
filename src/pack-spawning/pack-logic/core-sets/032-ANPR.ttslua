@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicD")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "ANPR-EN"
     o.setNameUrl = "Ancient Prophecy"
     o.releaseDate = "2009-09-01"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353140962156426/CC155D8ABFDDA103E9D8145E98947E01597AFF75/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353140962339302/6600684615EF1FB4FEB64C01730AEA88ACC5C08E/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/032-ANPR.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/032-ANPR.png"
 
     return o
 end

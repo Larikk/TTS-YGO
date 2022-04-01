@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicE")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,8 +12,8 @@ function PackGenerator:new()
     o.setCodePrefix = "CYHO-EN"
     o.setNameUrl = "Cybernetic Horizon"
     o.releaseDate = "2018-07-27"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778353420792683533/1BBE8AAE63A517DA4D5E961005A7989A8A19D29C/"
-    o.boxTexture = "http://cloud-3.steamusercontent.com/ugc/1778353420792745941/3FF149532F32EA9623B1A3B1387889EB41C6D98C/"
+    o.packTextures = imageHost .. "/textures/packs/coresets/068-CYHO.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/068-CYHO.png"
 
     return o
 end
