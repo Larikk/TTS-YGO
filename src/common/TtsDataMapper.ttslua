@@ -103,7 +103,7 @@ function module.card(card)
     local customDeckId = getFreeCustomDeckId()
 
     local data = {
-        Name = "CardCustom",
+        Name = "Card",
         Nickname = hovertext,
         Transform = TRANSFORM_ATTRIBUTE_DUMMY,
         CardID = customDeckId * 100,
