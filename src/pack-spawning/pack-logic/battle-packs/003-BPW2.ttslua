@@ -1,4 +1,5 @@
 local AbstractPackGenerator = require("TTS-YGO/src/pack-spawning/common/AbstractPackGenerator")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local SET_NAME = "War of the Giants: Round 2"
 
@@ -6,7 +7,7 @@ local SET_CODE_PREFIX = "BPW2-EN"
 
 local SET_NAME_URL = SET_NAME
 
-local PACK_TEXTURES = "http://cloud-3.steamusercontent.com/ugc/1778353420787607777/04BDC13E2EC5F74BB1D87E791A6D2B935352E868/"
+local PACK_TEXTURES = imageHost .. "/textures/packs/battlepacks/003-BPW2.jpg"
 
 local BOX_TEXTURE = nil
 

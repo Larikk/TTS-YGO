@@ -1,4 +1,5 @@
 local AbstractPackGenerator = require("TTS-YGO/src/pack-spawning/common/AbstractPackGenerator")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local SET_NAME = "Battle Pack 3: Monster League"
 
@@ -7,21 +8,21 @@ local SET_CODE_PREFIX = "BP03-EN"
 local SET_NAME_URL = SET_NAME
 
 local PACK_TEXTURES = {
-    "http://cloud-3.steamusercontent.com/ugc/1778353420787607676/E323D164E67A64CC040B9C5CA5EFB41BB4BD88EE/",
-    "http://cloud-3.steamusercontent.com/ugc/1778353420787607603/7652E671D5A1E1FD0DBD4C9FB29C773DBF94984A/",
-    "http://cloud-3.steamusercontent.com/ugc/1778353420787607511/FAB42AB796C907B32E9D91C283A206E3BBB5D6C9/",
-    "http://cloud-3.steamusercontent.com/ugc/1778353420787607416/9A06B9F128684BCEFAD41AE310816044BF402E5C/",
-    "http://cloud-3.steamusercontent.com/ugc/1778353420787607329/6A9B5264CE8AFE151C1515391046C3BD58F67291/",
-    "http://cloud-3.steamusercontent.com/ugc/1778353420787607249/AA86E42F4DC710B7538E6F136F4958E6CDF9DB33/",
-    "http://cloud-3.steamusercontent.com/ugc/1778353420787607171/A0752AECC60DA011D354BAA98291345E681861C4/",
-    "http://cloud-3.steamusercontent.com/ugc/1778353420787607076/0BB4BEB3E065104AA31CC90B57B6C5BFC58AAFC4/",
-    "http://cloud-3.steamusercontent.com/ugc/1778353420787606958/A378AFB1BD49568057A09CFEC0A356042A3FF7A4/",
-    "http://cloud-3.steamusercontent.com/ugc/1778353420787606861/6D046BDDEE9A3F413B997D93F6F0C73C03CFE0B0/",
-    "http://cloud-3.steamusercontent.com/ugc/1778353420787606697/BF9C50DC86079F58EE4AC2625CE394430A16F878/",
-    "http://cloud-3.steamusercontent.com/ugc/1778353420787606487/552C96E464919C221D29D6B0410346FF8640059C/",
+    imageHost .. "/textures/packs/battlepacks/004-BP03A.jpg",
+    imageHost .. "/textures/packs/battlepacks/004-BP03B.jpg",
+    imageHost .. "/textures/packs/battlepacks/004-BP03C.jpg",
+    imageHost .. "/textures/packs/battlepacks/004-BP03D.jpg",
+    imageHost .. "/textures/packs/battlepacks/004-BP03E.jpg",
+    imageHost .. "/textures/packs/battlepacks/004-BP03F.jpg",
+    imageHost .. "/textures/packs/battlepacks/004-BP03G.jpg",
+    imageHost .. "/textures/packs/battlepacks/004-BP03H.jpg",
+    imageHost .. "/textures/packs/battlepacks/004-BP03I.jpg",
+    imageHost .. "/textures/packs/battlepacks/004-BP03J.jpg",
+    imageHost .. "/textures/packs/battlepacks/004-BP03K.jpg",
+    imageHost .. "/textures/packs/battlepacks/004-BP03L.jpg",
 }
 
-local BOX_TEXTURE = "http://cloud-3.steamusercontent.com/ugc/1778353420787611119/ACFE025B3C2E92F1A7F42CFDFCF07A3B86BAC5B8/"
+local BOX_TEXTURE = imageHost .. "/textures/boxes/battlepacks/003-BP03.png"
 
 local CARDS_IN_PACKS = 5
 
