@@ -1,8 +1,10 @@
+local imageHost = require("TTS-YGO/src/common/ImageHost")
+
 return {
     code = "SD2",
     name = "Zombie Madness",
     releaseDate = "2005-01-01",
-    image = "http://cloud-3.steamusercontent.com/ugc/1778352920516611104/E8EAB760170F53C350E5D09B634A2B0623DFD9EC/",
+    image = imagehost .. "/textures/decks/structure/002-SD2.jpg",
     cards = [[
 #created by ...
 #main

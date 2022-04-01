@@ -1,8 +1,10 @@
+local imageHost = require("TTS-YGO/src/common/ImageHost")
+
 return {
     code = "SDRR",
     name = "Rokket Revolt",
     releaseDate = "2019-08-16",
-    image = "http://cloud-3.steamusercontent.com/ugc/1778352920516607037/FBB05F190C086B6EAA464334336EFD48C6146127/",
+    image = imagehost .. "/textures/decks/structure/046-SDRR.jpg",
     cards = [[
 #created by ...
 #main

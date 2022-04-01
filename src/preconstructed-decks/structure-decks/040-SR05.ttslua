@@ -1,8 +1,10 @@
+local imageHost = require("TTS-YGO/src/common/ImageHost")
+
 return {
     code = "SR05",
     name = "Wave of Light",
     releaseDate = "2018-01-19",
-    image = "http://cloud-3.steamusercontent.com/ugc/1778352920516607587/C22E69301650C4F4A9E88D403579349610EEFD3E/",
+    image = imagehost .. "/textures/decks/structure/040-SR05.jpg",
     cards = [[
 #created by ...
 #main

@@ -1,8 +1,10 @@
+local imageHost = require("TTS-YGO/src/common/ImageHost")
+
 return {
     code = "SR02",
     name = "Rise of the True Dragons",
     releaseDate = "2016-07-08",
-    image = "http://cloud-3.steamusercontent.com/ugc/1778352920516608194/235F5CDD726CF2CBCC94FC5F643DED0C9BE4B256/",
+    image = imagehost .. "/textures/decks/structure/033-SR02.jpg",
     cards = [[
 #created by ...
 #main

@@ -1,8 +1,10 @@
+local imageHost = require("TTS-YGO/src/common/ImageHost")
+
 return {
     code = "SD7",
     name = "Invincible Fortress",
     releaseDate = "2006-05-15",
-    image = "http://cloud-3.steamusercontent.com/ugc/1778352920516610693/C73CF413F6718C43A191CACAD6FE7BD1CD6F7665/",
+    image = imagehost .. "/textures/decks/structure/007-SD7.jpg",
     cards = [[
 #created by ...
 #main

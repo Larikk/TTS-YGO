@@ -1,8 +1,10 @@
+local imageHost = require("TTS-YGO/src/common/ImageHost")
+
 return {
     code = "SDCR",
     name = "Cyber Dragon Revolution",
     releaseDate = "2014-02-07",
-    image = "http://cloud-3.steamusercontent.com/ugc/1778352920516608888/CE7520E29847C40612C51E8FD33447B177A8B0E3/",
+    image = imagehost .. "/textures/decks/structure/026-SDCR.jpg",
     cards = [[
 #created by ...
 #main

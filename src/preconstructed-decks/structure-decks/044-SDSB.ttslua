@@ -1,8 +1,10 @@
+local imageHost = require("TTS-YGO/src/common/ImageHost")
+
 return {
     code = "SDSB",
     name = "Soulburner",
     releaseDate = "2019-02-15",
-    image = "http://cloud-3.steamusercontent.com/ugc/1778352920516607226/1D61F63A7D363FCE116F1869AB83A237DDCE2A1E/",
+    image = imagehost .. "/textures/decks/structure/044-SDSB.jpg",
     cards = [[
 #created by ...
 #main

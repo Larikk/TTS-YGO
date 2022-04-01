@@ -1,8 +1,10 @@
+local imageHost = require("TTS-YGO/src/common/ImageHost")
+
 return {
     code = "SDLS",
     name = "Lost Sanctuary",
     releaseDate = "2011-06-14",
-    image = "http://cloud-3.steamusercontent.com/ugc/1778352920516609483/FE1F47344E70F13753DDFE44BDC4D4535A215689/",
+    image = imagehost .. "/textures/decks/structure/019-SDLS.jpg",
     cards = [[
 #created by ...
 #main

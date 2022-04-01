@@ -1,8 +1,10 @@
+local imageHost = require("TTS-YGO/src/common/ImageHost")
+
 return {
     code = "SD8",
     name = "Lord of the Storm",
     releaseDate = "2006-07-12",
-    image = "http://cloud-3.steamusercontent.com/ugc/1778352920516610595/859777170CAD09F38D70BBDD08395784306A6649/",
+    image = imagehost .. "/textures/decks/structure/008-SD8.jpg",
     cards = [[
 #created by ...
 #main

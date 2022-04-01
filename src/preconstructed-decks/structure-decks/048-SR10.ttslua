@@ -1,8 +1,10 @@
+local imageHost = require("TTS-YGO/src/common/ImageHost")
+
 return {
     code = "SR10",
     name = "Mechanized Madness",
     releaseDate = "2020-04-17",
-    image = "http://cloud-3.steamusercontent.com/ugc/1778352920516606849/85459A3EF45FFAB1BA8AF9DD00B161FA0B9812E4/",
+    image = imagehost .. "/textures/decks/structure/048-SR10.jpg",
     cards = [[
 #created by ...
 #main

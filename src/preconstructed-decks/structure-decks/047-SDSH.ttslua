@@ -1,8 +1,10 @@
+local imageHost = require("TTS-YGO/src/common/ImageHost")
+
 return {
     code = "SDSH",
     name = "Shaddoll Showdown",
     releaseDate = "2020-02-14",
-    image = "http://cloud-3.steamusercontent.com/ugc/1778352920516606957/7469F9D68FEEF208AA9AD061DE01D26AF7DC9F38/",
+    image = imagehost .. "/textures/decks/structure/047-SDSH.jpg",
     cards = [[
 #created by ...
 #main

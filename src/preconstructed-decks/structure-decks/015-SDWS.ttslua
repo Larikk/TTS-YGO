@@ -1,8 +1,10 @@
+local imageHost = require("TTS-YGO/src/common/ImageHost")
+
 return {
     code = "SDWS",
     name = "Warriors' Strike",
     releaseDate = "2009-10-27",
-    image = "http://cloud-3.steamusercontent.com/ugc/1778352920516609921/BD8A8C748B8E639310D1EF94CB4DA8F2CEC1DBBD/",
+    image = imagehost .. "/textures/decks/structure/015-SDWS.jpg",
     cards = [[
 #created by ...
 #main

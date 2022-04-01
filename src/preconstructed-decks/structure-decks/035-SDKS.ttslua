@@ -1,8 +1,10 @@
+local imageHost = require("TTS-YGO/src/common/ImageHost")
+
 return {
     code = "SDKS",
     name = "Seto Kaiba",
     releaseDate = "2016-10-21",
-    image = "http://cloud-3.steamusercontent.com/ugc/1778352920516608044/83B06549EF9E8F4FF6DBA3E0696A82FFDD9893AA/",
+    image = imagehost .. "/textures/decks/structure/035-SDKS.jpg",
     cards = [[
 #created by ...
 #main

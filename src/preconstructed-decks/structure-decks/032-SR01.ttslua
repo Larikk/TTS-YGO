@@ -1,8 +1,10 @@
+local imageHost = require("TTS-YGO/src/common/ImageHost")
+
 return {
     code = "SR01",
     name = "Emperor of Darkness",
     releaseDate = "2016-01-29",
-    image = "http://cloud-3.steamusercontent.com/ugc/1778352920516608276/8A9D5A4E11E1BBE9BDB1A5D9F49C22BACB5B6FBA/",
+    image = imagehost .. "/textures/decks/structure/032-SR01.jpg",
     cards = [[
 #created by ...
 #main

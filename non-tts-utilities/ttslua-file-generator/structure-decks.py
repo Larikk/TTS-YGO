@@ -18,7 +18,8 @@ interactive = False
 imageMappings = files.getImageMappings("structure-decks.csv")
 
 # Run even if programm terminates unsuccessfully
-atexit.register(files.compileDeckList, folder, "src/preconstructed-decks/structure-decks")
+atexit.register(files.compileDeckList, folder,
+                "src/preconstructed-decks/structure-decks")
 
 nextReleaseOutliers = {
     "Machine Re-Volt": "Structure Deck: Rise of the Dragon Lords",
@@ -42,11 +43,13 @@ missingCardList = {
     "Lord of the Storm",
 }
 
+
 def handleDeck(title):
     deck = {}
 
     soup = wiki.getSoup(title)
-    name = re.sub(r"[\s]*(\(TCG\)|Structure Deck)[:]*[\s]*[-]*[\s]*", "", title)
+    name = re.sub(
+        r"[\s]*(\(TCG\)|Structure Deck)[:]*[\s]*[-]*[\s]*", "", title)
     deck['name'] = name
     deck['code'] = wiki.extractCode(soup)
 
@@ -85,12 +88,10 @@ def handleDeck(title):
             print(e)
             print(traceback.format_exc())
 
-    
-    deck['image'] = imageMappings[deck['code']]
+    deck['image'] = f'/textures/decks/structure/{counter:03d}-{deck["code"]}.jpg'
     deck['cards'] = deckutil.sortCards(deck)
     deck['ydk'] = deckutil.asYdkFile(deck)
     deckutil.printDeck(deck)
-
 
     # Write tts file
     content = deckutil.asTtsLuaFile(deck)
@@ -108,11 +109,13 @@ def handleDeck(title):
 
 while True:
     deck = handleDeck(title)
-    
+
     if interactive:
-        if "next" not in deck: break
+        if "next" not in deck:
+            break
         inp = input("Enter to continue, anything else to quit: ")
-        if inp != "": break
+        if inp != "":
+            break
     else:
         time.sleep(1)
 

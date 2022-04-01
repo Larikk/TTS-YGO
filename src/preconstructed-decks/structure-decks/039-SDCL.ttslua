@@ -1,8 +1,10 @@
+local imageHost = require("TTS-YGO/src/common/ImageHost")
+
 return {
     code = "SDCL",
     name = "Cyberse Link",
     releaseDate = "2017-11-03",
-    image = "http://cloud-3.steamusercontent.com/ugc/1778352920516607690/C04894F1864073E370FEA63FAD44B2802C0B800E/",
+    image = imagehost .. "/textures/decks/structure/039-SDCL.jpg",
     cards = [[
 #created by ...
 #main

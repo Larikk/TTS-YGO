@@ -1,8 +1,10 @@
+local imageHost = require("TTS-YGO/src/common/ImageHost")
+
 return {
     code = "SDCS",
     name = "Cyber Strike",
     releaseDate = "2021-10-15",
-    image = "http://cloud-3.steamusercontent.com/ugc/1816637110763814484/350080A7508AFABCA86CEA6A0E17A3A25AB5D21D/",
+    image = imagehost .. "/textures/decks/structure/052-SDCS.jpg",
     cards = [[
 #created by ...
 #main
