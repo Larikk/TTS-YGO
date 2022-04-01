@@ -8,9 +8,9 @@ local SET_CODE_PREFIX = "BP02-EN"
 local SET_NAME_URL = SET_NAME
 
 local PACK_TEXTURES = {
+    imageHost .. "/textures/packs/battlepacks/002-BP02.jpg",
     imageHost .. "/textures/packs/battlepacks/002-BP02A.jpg",
     imageHost .. "/textures/packs/battlepacks/002-BP02B.jpg",
-    imageHost .. "/textures/packs/battlepacks/002-BP02C.jpg",
 }
 
 local BOX_TEXTURE = imageHost .. "/textures/boxes/battlepacks/002-BP02.png"
