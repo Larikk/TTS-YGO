@@ -4,6 +4,7 @@ local mathutil = require("TTS-YGO/src/common/Math")
 local io = require("TTS-YGO/src/common/IO")
 local idFinder = require("TTS-YGO/src/common/TtsDataDeckIdFinder")
 local state = require("TTS-YGO/src/gui/State")
+local json = require("TTS-YGO/src/common/Json")
 
 local module = {}
 
@@ -75,6 +76,18 @@ local function getCardback()
     return cardback
 end
 
+function getCardMetaData(card)
+    local data = {
+        id = card.id,
+        name = card.name,
+        rarity = card.rarity,
+        atk = card.atk,
+        def = card.def,
+    }
+
+    return json.encode(data)
+end
+
 function module.card(card)
     local ok, hovertext = pcall(cardHoverText.create, card)
 
@@ -94,6 +107,7 @@ function module.card(card)
         Nickname = hovertext,
         Transform = TRANSFORM_ATTRIBUTE_DUMMY,
         CardID = customDeckId * 100,
+        Memo = getCardMetaData(card),
         CustomDeck = {
             [customDeckId] = {
                 FaceURL = card.image,

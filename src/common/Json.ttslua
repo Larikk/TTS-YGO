@@ -11,4 +11,8 @@ function module.decode(str)
     return json.parse(str)
 end
 
+function module.encode(tbl)
+    return json.serialize(tbl)
+end
+
 return module
