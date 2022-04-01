@@ -1,3 +1,5 @@
+local imageHost = require("TTS-YGO/src/common/ImageHost")
+
 cardParser = {}
 
 -- Takes the data from the YGOPRODECK API and transform it to a condensed object with the relevant data
@@ -6,6 +8,12 @@ local ATTRIBUTES_TO_BE_COPIED = {
     "name", "type", "attribute", "race", "atk", "def",
     "level", "scale", "linkval", "desc"
 }
+
+local URL_BASE = imageHost .. "/images/cards/"
+
+local function getArtworkUrl(id)
+    return URL_BASE .. id
+end
 
 function cardParser.parseCard(apiData)
     return cardParser.parseCardWithAllArtworks(apiData)[1]
@@ -26,7 +34,7 @@ function cardParser.parseCardWithAllArtworks(apiData)
     for _, image in ipairs(images) do
         local card = {}
         card.id = tostring(image.id)
-        card.image = image.image_url
+        card.image = getArtworkUrl(card.id)
         for _, att in ipairs(ATTRIBUTES_TO_BE_COPIED) do
             card[att] = apiData[att]
         end
