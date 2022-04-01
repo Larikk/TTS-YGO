@@ -73,12 +73,12 @@ def handleBooster(title):
             print(traceback.format_exc())
 
     if booster['code'] in packImageMappings:
-        booster['pack-texture'] = f'imageHost .. "/textures/packs/coresets/{counter:03d}-{code}.jpg"'
+        booster['pack-texture'] = f"/textures/packs/coresets/{counter:03d}-{code}.jpg"
     else:
         booster['pack-texture'] = "nil"
 
     if booster['code'] in boxImageMappings:
-        booster['box-texture'] = f'imageHost .. "/textures/boxes/coresets/{counter:03d}-{code}.png"'
+        booster['box-texture'] = f"/textures/boxes/coresets/{counter:03d}-{code}.png"
     else:
         booster['box-texture'] = "nil"
 
