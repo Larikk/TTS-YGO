@@ -1,4 +1,5 @@
 local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/tournament-packs/_Logic")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 local PackGenerator = ParentGenerator:new()
 
@@ -11,7 +12,7 @@ function PackGenerator:new()
     o.setCodePrefix = "TP2-"
     o.setNameUrl = "Tournament Pack: 2nd Season"
     o.releaseDate = "2002-10-01"
-    o.packTextures = "http://cloud-3.steamusercontent.com/ugc/1778352920516694268/4DF3353C1CDE406DB5B82E68954BA829556DC6CF/"
+    o.packTextures = imageHost .. "/textures/packs/tournamentpacks/002-TP2.jpg"
     o.boxTexture = nil
 
     return o
