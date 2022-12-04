@@ -23,6 +23,10 @@ def ensureSingleSearchResult(resultSet, name):
 
 
 def getSoup(title):
+    if title is None:
+        print("No title provided.")
+        exit(0)
+
     params = [
         ("action", "parse"),
         ("format", "json"),
@@ -150,7 +154,8 @@ def getTableHeaders(row):
     headers = [e.text.strip() for e in cells]
 
     replacements = {
-        "Set number": "Card number"
+        "Set number": "Card number",
+        "Qty": "Quantity",
     }
 
     result = []
@@ -162,6 +167,13 @@ def getTableHeaders(row):
             result.append(header)
 
     return result
+
+
+def indexOf(list, element):
+    try:
+        return list.index(element)
+    except ValueError:
+        return -1
 
 
 def extractCards(soup, tableOverride=None):
@@ -183,6 +195,12 @@ def extractCards(soup, tableOverride=None):
 
     headers = getTableHeaders(rows[0])
 
+    cardNumberIndex = indexOf(headers, "Card number")
+    nameIndex = indexOf(headers, "Name")
+    rarityIndex = indexOf(headers, "Rarity")
+    categoryIndex = indexOf(headers, "Category")
+    quantityIndex = indexOf(headers, "Quantity")
+
     def linkExtractor(e): return e.a.text.strip()
     def directExtractor(e): return e.text.strip()
     extractors = [
@@ -197,13 +215,21 @@ def extractCards(soup, tableOverride=None):
     cards = []
     for row in dataRows:
         card = {}
-        i = 0
-        for cell in row(recursive=False):
-            text = extractors[i](cell)
-            card[headers[i]] = text
-            i = i+1
-        if card[headers[0]].endswith("TKN"):
+        cells = row(recursive=False)
+        card["Card number"] = directExtractor(cells[cardNumberIndex])
+
+        if card["Card number"].endswith("TKN"):
             continue
+
+        card["Name"] = linkExtractor(cells[nameIndex])
+        card["Rarity"] = linkExtractor(cells[rarityIndex])
+
+        if categoryIndex > 0:
+            card["Category"] = linkExtractor(cells[categoryIndex])
+
+        if quantityIndex > 0:
+            card["Quantity"] = directExtractor(cells[quantityIndex])
+
         cards.append(card)
 
     return cards

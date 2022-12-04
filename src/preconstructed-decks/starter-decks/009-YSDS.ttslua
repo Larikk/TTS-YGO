@@ -2,7 +2,7 @@ local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 return {
     code = "YSDS",
-    name = "Starter Deck - Syrus Truesdale",
+    name = "Starter Deck: Syrus Truesdale",
     releaseDate = "2007-07-25",
     image = imageHost .. "/textures/decks/starter/009-YSDS.jpg",
     cards = [[

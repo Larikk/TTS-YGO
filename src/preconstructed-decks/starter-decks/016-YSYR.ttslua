@@ -2,7 +2,7 @@ local imageHost = require("TTS-YGO/src/common/ImageHost")
 
 return {
     code = "YSYR",
-    name = "Starter Deck Yugi Reloaded",
+    name = "Starter Deck: Yugi Reloaded",
     releaseDate = "2013-12-06",
     image = imageHost .. "/textures/decks/starter/016-YSYR.jpg",
     cards = [[

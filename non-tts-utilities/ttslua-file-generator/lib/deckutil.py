@@ -1,3 +1,7 @@
+import json
+import os
+import re
+import time
 import requests
 from functools import cmp_to_key
 
@@ -16,16 +20,23 @@ def printDeck(deck):
         cards += card['Name'].ljust(60) + " "
         cards += card['Rarity'].ljust(25) + " "
         cards += card['Category'].ljust(30) + " "
-        if 'Qty' in card:
-            cards += card['Qty'] + " "
+        if 'Quantity' in card:
+            cards += card['Quantity'] + " "
         cards += "\n"
 
     print(cards)
 
 
 # Sorts by rarity and then set code
-rarityOrder = ["Secret Rare", "Ultra Rare",
-               "Shatterfoil Rare", "Super Rare", "Rare", "Common"]
+rarityOrder = [
+    "Secret Rare",
+    "Ultimate Rare",
+    "Ultra Rare",
+    "Shatterfoil Rare",
+    "Super Rare",
+    "Rare",
+    "Common",
+]
 
 
 def compareCards(a, b):
@@ -79,19 +90,33 @@ def extractCardId(card):
     return str(id)
 
 
+CACHE_FOLDER = "cache/"
+os.makedirs(CACHE_FOLDER, exist_ok=True)
+
+
 def attachAdditionalData(deck):
     cards = deck['cards']
 
     names = [card['Name'] for card in cards]
     names = "|".join(names)
 
-    r = requests.get("https://db.ygoprodeck.com/api/v7/cardinfo.php",
-                     params={"name": names, "misc": "yes"})
+    url = f"https://db.ygoprodeck.com/api/v7/cardinfo.php?&misc=yes"
+    cachedFileName = CACHE_FOLDER + re.sub(r"[^a-zA-Z0-9]", "", url)
+    content = None
+    if os.path.exists(cachedFileName):
+        with open(cachedFileName, "r") as f:
+            content = f.read()
+    else:
+        r = requests.get(url)
+        content = r.text
+        with open(cachedFileName, "w") as f:
+            f.write(content)
+        time.sleep(1)
 
     nameToDataMapping = {}
-    json = r.json()
+    cardsFromApi = json.loads(content)["data"]
 
-    for cardData in json['data']:
+    for cardData in cardsFromApi:
         name = cardData['name'].lower()
         nameToDataMapping[name] = cardData
 
@@ -118,8 +143,8 @@ def asYdkFile(deck):
         id = card['id']
         isExtra = card['isExtraDeckCard']
         n = 1
-        if 'Qty' in card:
-            n = int(card['Qty'])
+        if 'Quantity' in card:
+            n = int(card['Quantity'])
         for _ in range(n):
             if isExtra:
                 extra.append(id)
