@@ -26,12 +26,12 @@ nextReleaseOutliers = {
     "Seto Kaiba": "Structure Deck: Pendulum Domination",
     "Machina Mayhem": "Structure Deck: Marik (TCG)",
     "Dragunity Legion": "Structure Deck: Lost Sanctuary (TCG)",
-    "Realm of the Sea Emperor": "Structure Deck: Onslaught of the Fire Kings (TCG)",
+    "Realm of the Sea Emperor": "Onslaught of the Fire Kings Structure Deck",
     "Seto Kaiba": "Pendulum Domination Structure Deck",
     "Cyberse Link": "Structure Deck: Wave of Light",
     "Powercode Link": "Structure Deck: Zombie Horde",
     "Soulburner": "Structure Deck: Order of the Spellcasters",
-    "Cyber Strike": None,
+    "Dark World": None,
 }
 
 # this structure dont have the card list on their page bc something is broken on the wiki
@@ -116,8 +116,6 @@ while True:
         inp = input("Enter to continue, anything else to quit: ")
         if inp != "":
             break
-    else:
-        time.sleep(1)
 
     title = deck['next']
     counter += 1

@@ -121,9 +121,14 @@ def extractReleaseDate(soup):
         raise RuntimeError("Could not extract release date")
 
     dateRow = extractDataFromInfoboxRow(dateRow)
-    dateRow = datetime.datetime.strptime(dateRow, "%B %d, %Y")
-    dateRow = dateRow.strftime("%Y-%m-%d")
-    return dateRow
+    try:
+        date = datetime.datetime.strptime(dateRow, "%B %d, %Y")
+    except:
+        date = datetime.datetime.strptime(dateRow, "%B %Y")
+        date.replace(day=1)
+
+    date = date.strftime("%Y-%m-%d")
+    return date
 
 
 def extractCode(soup):
@@ -189,7 +194,10 @@ def extractCards(soup, tableOverride=None):
     else:
         # no tabs, occurs when something releases only in one language
         tables = soup.find_all(table, class_="card-list")
-        table = ensureSingleSearchResult(tables, "Card Table")
+        if len(tables) > 2 and soup.find("span", id="Preconstructed_Deck"):
+            table = tables[2]
+        else:
+            table = ensureSingleSearchResult(tables, "Card Table")
 
     rows = table.tbody(recursive=False)
 
@@ -203,13 +211,6 @@ def extractCards(soup, tableOverride=None):
 
     def linkExtractor(e): return e.a.text.strip()
     def directExtractor(e): return e.text.strip()
-    extractors = [
-        directExtractor,
-        linkExtractor,
-        linkExtractor,
-        linkExtractor,
-        directExtractor
-    ]
 
     dataRows = rows[1:]
     cards = []
@@ -225,7 +226,10 @@ def extractCards(soup, tableOverride=None):
         card["Rarity"] = linkExtractor(cells[rarityIndex])
 
         if categoryIndex > 0:
-            card["Category"] = linkExtractor(cells[categoryIndex])
+            category = directExtractor(cells[categoryIndex])
+            if category == "Token" or category == "Counter":
+                continue
+            card["Category"] = category
 
         if quantityIndex > 0:
             card["Quantity"] = directExtractor(cells[quantityIndex])

@@ -3,7 +3,7 @@ local imageHost = require("TTS-YGO/src/common/ImageHost")
 return {
     code = "SD5",
     name = "Warrior's Triumph",
-    releaseDate = "2005-10-28",
+    releaseDate = "2005-11-02",
     image = imageHost .. "/textures/decks/structure/005-SD5.jpg",
     cards = [[
 #created by ...

@@ -52,4 +52,7 @@ return {
     require("TTS-YGO/src/preconstructed-decks/structure-decks/050-SDCH"),
     require("TTS-YGO/src/preconstructed-decks/structure-decks/051-SDFC"),
     require("TTS-YGO/src/preconstructed-decks/structure-decks/052-SDCS"),
+    require("TTS-YGO/src/preconstructed-decks/structure-decks/053-SDAZ"),
+    require("TTS-YGO/src/preconstructed-decks/structure-decks/054-SDCB"),
+    require("TTS-YGO/src/preconstructed-decks/structure-decks/055-SR13"),
 }
