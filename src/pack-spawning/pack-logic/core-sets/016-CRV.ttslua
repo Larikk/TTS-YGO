@@ -11,7 +11,7 @@ function PackGenerator:new()
     o.setName = "Cybernetic Revolution"
     o.setCodePrefix = "CRV-EN"
     o.setNameUrl = "Cybernetic Revolution"
-    o.releaseDate = "2005-08-06"
+    o.releaseDate = "2005-08-17"
     o.packTextures = imageHost .. "/textures/packs/coresets/016-CRV.jpg"
     o.boxTexture = imageHost .. "/textures/boxes/coresets/016-CRV.png"
 

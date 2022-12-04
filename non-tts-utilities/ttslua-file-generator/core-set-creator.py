@@ -58,7 +58,7 @@ def handleBooster(title):
     else:
         booster['code-long'] = booster['code'] + "-EN"
 
-    booster['image'] = wiki.extractImage(soup, name)
+    #booster['image'] = wiki.extractImage(soup, name)
     booster['release-date'] = wiki.extractReleaseDate(soup)
 
     if name in nextReleaseOutliers:
@@ -72,15 +72,8 @@ def handleBooster(title):
             print(e)
             print(traceback.format_exc())
 
-    if booster['code'] in packImageMappings:
-        booster['pack-texture'] = f"/textures/packs/coresets/{counter:03d}-{code}.jpg"
-    else:
-        booster['pack-texture'] = "nil"
-
-    if booster['code'] in boxImageMappings:
-        booster['box-texture'] = f"/textures/boxes/coresets/{counter:03d}-{code}.png"
-    else:
-        booster['box-texture'] = "nil"
+    booster['pack-texture'] = f"/textures/packs/coresets/{counter:03d}-{code}.jpg"
+    booster['box-texture'] = f"/textures/boxes/coresets/{counter:03d}-{code}.png"
 
     boosterutil.printBooster(booster)
 
@@ -102,8 +95,6 @@ while True:
         inp = input("Enter to continue, anything else to quit: ")
         if inp != "":
             break
-    else:
-        time.sleep(1)
 
     title = booster['next']
     counter += 1

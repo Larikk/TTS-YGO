@@ -1,0 +1,21 @@
+local ParentGenerator = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/_CoreSetLogicG")
+local imageHost = require("TTS-YGO/src/common/ImageHost")
+
+local PackGenerator = ParentGenerator:new()
+
+function PackGenerator:new()
+    local o = ParentGenerator:new()
+    setmetatable(o, self)
+    self.__index = self
+
+    o.setName = "Battle of Chaos"
+    o.setCodePrefix = "BACH-EN"
+    o.setNameUrl = "Battle of Chaos"
+    o.releaseDate = "2022-02-11"
+    o.packTextures = imageHost .. "/textures/packs/coresets/082-BACH.jpg"
+    o.boxTexture = imageHost .. "/textures/boxes/coresets/082-BACH.png"
+
+    return o
+end
+
+return PackGenerator
