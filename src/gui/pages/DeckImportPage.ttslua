@@ -81,11 +81,8 @@ local function createBody()
                 attributes = {
                     id = MODE_DROPDOWN,
                     onValueChanged = "handleEvent",
-                    minHeight = "200",
-                    minWidth = "500",
-                    fontSize = "100",
-                    itemHeight = "200",
-                    dropdownHeight = "800", -- Must be itemHeight * #items
+                    class = "dropdown",
+                    dropdownHeight = "800", -- Must be 200 * #items
                 },
                 children = {
                     {

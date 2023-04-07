@@ -37,22 +37,22 @@ end
 local function processResponse(data, nonPresentCardIds, cb, cbParams)
     -- Turn array of ids into Map with id as key
     local requestedIds = {}
-    for _,id in ipairs(nonPresentCardIds) do
+    for _, id in ipairs(nonPresentCardIds) do
         requestedIds[id] = 1
     end
 
     -- data is array of cards
-    for _,cardData in ipairs(data) do
+    for _, cardData in ipairs(data) do
         -- We can get multiple cards as a result because we try to parse all artworks as separate cards
         local cards = cardParser.parseCardWithAllArtworks(cardData)
-        for _,card in ipairs(cards) do
+        for _, card in ipairs(cards) do
             insertIntoCache(card)
             requestedIds[card.id] = nil
         end
     end
 
     -- leftovers that the API did not recognize
-    for id,_ in pairs(requestedIds) do
+    for id, _ in pairs(requestedIds) do
         io.warning("Card with id " .. id .. " could not be downloaded. Will be skipped during spawning.")
         cache[id] = INVALID_ID
     end
@@ -65,7 +65,7 @@ end
 local function processResponseByName(data, name, cb, cbParams)
     local cardData = data[1]
     local cards = cardParser.parseCardWithAllArtworks(cardData)
-    for _,card in ipairs(cards) do
+    for _, card in ipairs(cards) do
         insertIntoCache(card)
     end
 
@@ -99,7 +99,7 @@ end
 local function getNonPresentIds(cardIds)
     local nonPresentCardIds = {}
 
-    for _,id in ipairs(cardIds) do
+    for _, id in ipairs(cardIds) do
         if cache[id] == nil then
             table.insert(nonPresentCardIds, id)
         end
@@ -137,7 +137,7 @@ function module.ensureCardsArePresent(cardIds, cb, cbParams)
 end
 
 function module.ensureCardIsPresent(id, cb, cbParams)
-    module.ensureCardsArePresent({id}, cb, cbParams)
+    module.ensureCardsArePresent({ id }, cb, cbParams)
 end
 
 function module.ensureCardIsPresentByName(name, cb, cbParams)
@@ -205,6 +205,12 @@ function module.getCardsByFname(fname)
     end
 
     return cards
+end
+
+function module.clear()
+    cache = {}
+    nameCache = {}
+    fnameCache = {}
 end
 
 return module

@@ -16,13 +16,23 @@ local SPAWN_Y = "settings:spawn-y"
 local SPAWN_Z = "settings:spawn-z"
 local SPAWN_ROTATION = "settings:spawn-rotation"
 local SPAWN_CARDBACK = "settings:cardback"
+local LANGUAGE_SELECTION = "settings:language-selection"
 
 -- stats
 local SAVE_ID = "stats:save-id"
 local SAVE_ID_CREATION = "stats:save-id-creation"
 
 local persistentValues = {
-    PACK_MODE, DECK_IMPORT_MODE, SPAWN_X, SPAWN_Y, SPAWN_Z, SPAWN_ROTATION, SPAWN_CARDBACK, SAVE_ID, SAVE_ID_CREATION
+    PACK_MODE,
+    DECK_IMPORT_MODE,
+    SPAWN_X,
+    SPAWN_Y,
+    SPAWN_Z,
+    SPAWN_ROTATION,
+    SPAWN_CARDBACK,
+    LANGUAGE_SELECTION,
+    SAVE_ID,
+    SAVE_ID_CREATION
 }
 
 -- default values
@@ -35,6 +45,7 @@ local defaults = {
     [SPAWN_Z] = "0",
     [SPAWN_ROTATION] = "0",
     [SPAWN_CARDBACK] = "",
+    [LANGUAGE_SELECTION] = "en",
     [SAVE_ID] = nil,
     [SAVE_ID_CREATION] = nil,
 }

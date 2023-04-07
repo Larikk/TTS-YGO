@@ -4,7 +4,7 @@ function module.distinct(input)
     local output = {}
     local encountered = {}
 
-    for _,v in ipairs(input) do
+    for _, v in ipairs(input) do
         if not encountered[v] then
             table.insert(output, v)
             encountered[v] = true
@@ -46,6 +46,13 @@ function module.copy(tbl)
         copy[k] = v
     end
     return copy
+end
+
+function module.indexOf(tbl, element)
+    for i, v in ipairs(tbl) do
+        if v == element then return i end
+    end
+    return nil
 end
 
 -- source: https://stackoverflow.com/a/6081639

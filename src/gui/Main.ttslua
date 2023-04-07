@@ -79,7 +79,7 @@ function onLoad(saveState)
     self.UI.setXml(mainXml)
 
     local cond = || not self.UI.loading
-    local func = || switchPage(nil, nil, "packs")
+    local func = || switchPage(nil, nil, "settings")
     Wait.frames(|| Wait.condition(func, cond, 240), 5)
 
     stats.load()
