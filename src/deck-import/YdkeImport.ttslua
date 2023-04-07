@@ -1,0 +1,83 @@
+local stringUtil = require("TTS-YGO/src/common/StringUtil")
+local mathUtil = require("TTS-YGO/src/common/Math")
+local base64 = require("TTS-YGO/src/common/Base64")
+local commonDeckImport = require("TTS-YGO/src/deck-import/CommonDeckImport")
+
+
+local module = {}
+
+local linkPrefix = "ydke://"
+
+-- Special split that keeps empty string between seperators and relies on having the separator at the end
+-- https://stackoverflow.com/a/40151628
+local function split(str)
+    local parts = {}
+    for w in str:gmatch("(.-)!") do
+        table.insert(parts, w)
+    end
+    return parts
+end
+
+local function convertBytesToCardId(s)
+    local sum = 0
+    for i = 1, #s do
+        local byte = string.byte(s, i)
+        sum = sum + mathUtil.lshift(byte, 8 * (i - 1))
+    end
+    return tostring(math.floor(sum))
+end
+
+local function extractCardIdsFromBase64Section(sectionEncodedInBase64)
+    if not sectionEncodedInBase64 or sectionEncodedInBase64 == "" then
+        return {}
+    end
+
+    local s = base64.decode(sectionEncodedInBase64)
+    local n = #s / 4
+    local ids = {}
+
+    for i = 0, n - 1 do
+        local start = 1 + 4 * i
+        local stop = start + 3
+        local sub = string.sub(s, start, stop)
+        local id = convertBytesToCardId(sub)
+        table.insert(ids, id)
+    end
+
+    return ids
+end
+
+function module.parse(ydkeLink)
+    if not stringUtil.startsWith(ydkeLink, linkPrefix) then
+        error("YDKe links must start with '" .. linkPrefix .. "'")
+    end
+
+    ydkeLink = string.sub(ydkeLink, #linkPrefix + 1)
+    local sections = split(ydkeLink)
+    log(sections)
+
+    local decks = {}
+
+    for i, deckName in ipairs({ "main", "extra", "side" }) do
+        local cardIdsOfSingleDeck = extractCardIdsFromBase64Section(sections[i])
+        if (#cardIdsOfSingleDeck > 0) then
+            decks[deckName] = cardIdsOfSingleDeck
+        end
+    end
+
+    return decks
+end
+
+function module.spawn(ydkeLink, pos, rotation)
+    local ran, value = pcall(module.parse, ydkeLink)
+
+    if not ran then
+        error("YDKe link could not be parsed: " .. value)
+    end
+
+    local decks = value
+
+    commonDeckImport.spawn(decks, pos, rotation)
+end
+
+return module

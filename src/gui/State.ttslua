@@ -6,6 +6,10 @@ local module = {}
 -- Values: box, cardlist, cardlist-partitioned
 local PACK_MODE = "pack:mode"
 
+-- Used in DeckImportPage
+-- Values: ydk-file, ydke
+local DECK_IMPORT_MODE = "deck-import:mode"
+
 -- same as in SettingsPage.ttslua
 local SPAWN_X = "settings:spawn-x"
 local SPAWN_Y = "settings:spawn-y"
@@ -18,13 +22,14 @@ local SAVE_ID = "stats:save-id"
 local SAVE_ID_CREATION = "stats:save-id-creation"
 
 local persistentValues = {
-     PACK_MODE, SPAWN_X, SPAWN_Y, SPAWN_Z, SPAWN_ROTATION, SPAWN_CARDBACK, SAVE_ID, SAVE_ID_CREATION
+    PACK_MODE, DECK_IMPORT_MODE, SPAWN_X, SPAWN_Y, SPAWN_Z, SPAWN_ROTATION, SPAWN_CARDBACK, SAVE_ID, SAVE_ID_CREATION
 }
 
 -- default values
 local defaults = {
     -- persistent values, get saved and loaded with the room
     [PACK_MODE] = "box",
+    [DECK_IMPORT_MODE] = "ydk-file",
     [SPAWN_X] = "0",
     [SPAWN_Y] = "10",
     [SPAWN_Z] = "0",
@@ -60,14 +65,14 @@ end
 function module.save()
     local save = {}
 
-    for _,v in ipairs(persistentValues) do save[v] = state[v] end
+    for _, v in ipairs(persistentValues) do save[v] = state[v] end
 
     return JSON.encode(save)
 end
 
 function module.reset()
     state = {}
-    for k,v in pairs(defaults) do state[k] = v end
+    for k, v in pairs(defaults) do state[k] = v end
 end
 
 function module.loadFromSave(save)
@@ -76,7 +81,7 @@ function module.loadFromSave(save)
     if save == nil or save == "" then return end
 
     save = JSON.decode(save)
-    for _,v in ipairs(persistentValues) do if save[v] then state[v] = save[v] end end
+    for _, v in ipairs(persistentValues) do if save[v] then state[v] = save[v] end end
 end
 
 return module

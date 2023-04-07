@@ -1,4 +1,4 @@
-local ydkImport = require("TTS-YGO/src/ydk-import/YdkImport")
+local ydkImport = require("TTS-YGO/src/deck-import/YdkImport")
 
 local module = {}
 

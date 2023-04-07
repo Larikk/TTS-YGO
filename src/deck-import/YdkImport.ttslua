@@ -1,28 +1,13 @@
 local stringUtil = require("TTS-YGO/src/common/StringUtil")
-local cardImportCache = require("TTS-YGO/src/common/CardImportCache")
-local io = require("TTS-YGO/src/common/IO")
-local TtsSpawner = require("TTS-YGO/src/common/TtsSpawner")
+local commonDeckImport = require("TTS-YGO/src/deck-import/CommonDeckImport")
 
 
 local module = {}
 
-local function mapIdsToCards(ids)
-    local cards = {}
-
-    for _,id in ipairs(ids) do
-        local card = cardImportCache.getCard(id)
-        if card ~= nil then
-            table.insert(cards, card)
-        end
-    end
-
-    return cards
-end
-
 local function trimAndRemoveEmpty(lines)
     local result = {}
 
-    for i,line in ipairs(lines) do
+    for i, line in ipairs(lines) do
         local s = stringUtil.trim(line)
         if string.len(s) > 0 then
             table.insert(result, s)
@@ -36,7 +21,7 @@ local function isSection(str)
     return stringUtil.startsWith(str, "#") or stringUtil.startsWith(str, "!")
 end
 
-local function parse(ydkFileContent)
+function module.parse(ydkFileContent)
     local result = {}
 
     local lines = stringUtil.splitByNewLine(ydkFileContent)
@@ -83,7 +68,7 @@ local function parse(ydkFileContent)
 end
 
 function module.spawn(ydkFileContent, pos, rotation)
-    local ran, value = pcall(parse, ydkFileContent)
+    local ran, value = pcall(module.parse, ydkFileContent)
 
     if not ran then
         error("YDK FIle could not be parsed: " .. value)
@@ -91,35 +76,7 @@ function module.spawn(ydkFileContent, pos, rotation)
 
     local decks = value
 
-    local cardIds = {}
-
-    for _,deck in pairs(decks) do
-        for _,id in ipairs(deck) do
-            table.insert(cardIds, id)
-        end
-    end
-
-    local cb = function()
-        --executed after cache was populated
-        local spawnPositions = {
-            main = pos,
-            extra = pos + Vector(-5, 0, 0),
-            side = pos + Vector(5, 0, 0),
-        }
-
-        local spawner = TtsSpawner:new()
-        for deckName,pos in pairs(spawnPositions) do
-            local deck = decks[deckName]
-            if deck ~= nil and #deck > 0 then
-                io.info("Spawning " .. deckName .. " deck...")
-                local onSuccess = || io.success("Finished " .. deckName .. " deck!")
-                deck = mapIdsToCards(deck)
-                spawner:spawnDeck(deck, pos, rotation, onSuccess)
-            end
-        end
-    end
-
-    cardImportCache.ensureCardsArePresent(cardIds, cb)
+    commonDeckImport.spawn(decks, pos, rotation)
 end
 
 return module

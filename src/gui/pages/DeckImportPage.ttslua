@@ -1,6 +1,7 @@
 local guiUtil = require("TTS-YGO/src/gui/GUIUtil")
 local state = require("TTS-YGO/src/gui/State")
-local ydkImport = require("TTS-YGO/src/ydk-import/YdkImport")
+local ydkImport = require("TTS-YGO/src/deck-import/YdkImport")
+local ydkeImport = require("TTS-YGO/src/deck-import/YdkeImport")
 
 
 local module = {}
@@ -8,11 +9,20 @@ local module = {}
 local page = nil
 
 -- IDs of elements
-local PAGE_ID = "ydk-file-import"
+local PAGE_ID = "deck-import"
 local DECK_INPUT = PAGE_ID .. ":deck-input"
+local MODE_DROPDOWN = PAGE_ID .. ":mode"
 local IMPORT_BUTTON = PAGE_ID .. ":import-button"
 local CLEAR_BUTTON = PAGE_ID .. ":clear-button"
 
+local LABEL_YDK_FILE = "YDK File"
+local LABEL_YDKE = "YDKe Link"
+
+local INDEX_YDK_FILE = 0
+local INDEX_YDKE = 1
+
+local MODE_YDK_FILE = "ydk-file"
+local MODE_YDKE = "ydke"
 
 local function createBody()
     local title = {
@@ -20,7 +30,7 @@ local function createBody()
         attributes = {
             class = "box-title",
         },
-        value = "Insert the contents of your YDK file here"
+        value = "Insert a YDKe link or the contents of a YDK file here"
     }
 
     local input = {
@@ -34,11 +44,74 @@ local function createBody()
         }
     }
 
-    local buttons = {
+    local modeSelection = {
         tag = "HorizontalLayout",
+        attributes = {
+            flexibleWidth = "1",
+            childAlignment = "MiddleLeft",
+            spacing = "40",
+        },
         children = {
-            guiUtil.createButton(IMPORT_BUTTON, "Import", "green", "MiddleLeft"),
-            guiUtil.createButton(CLEAR_BUTTON, "Clear", "red", "MiddleRight"),
+            {
+                tag = "Text",
+                value = "Mode: ",
+                attributes = {
+                    fontSize = "100",
+                }
+            },
+            {
+                tag = "Dropdown",
+                attributes = {
+                    id = MODE_DROPDOWN,
+                    onValueChanged = "handleEvent",
+                    minHeight = "200",
+                    minWidth = "500",
+                    fontSize = "100",
+                    itemHeight = "200",
+                    dropdownHeight = "800", -- Must be itemHeight * #items
+                },
+                children = {
+                    {
+                        tag = "Option",
+                        value = LABEL_YDK_FILE,
+                        attributes = {
+                            selected = "true",
+                            id = MODE_YDK_FILE,
+                        }
+                    },
+                    {
+                        tag = "Option",
+                        value = LABEL_YDKE,
+                        attributes = {
+                            id = MODE_YDKE,
+                        }
+                    },
+                }
+            }
+        }
+    }
+
+    local actionButtons = {
+        tag = "HorizontalLayout",
+        attributes = {
+            childAlignment = "MiddleRight",
+            flexibleWidth = "1",
+            spacing = "20",
+        },
+        children = {
+            guiUtil.createButton(CLEAR_BUTTON, "Clear", "red"),
+            guiUtil.createButton(IMPORT_BUTTON, "Import", "green"),
+        }
+    }
+
+    local buttonBar = {
+        tag = "HorizontalLayout",
+        attributes = {
+            flexibleWidth = "1",
+        },
+        children = {
+            modeSelection,
+            actionButtons,
         }
     }
 
@@ -47,7 +120,7 @@ local function createBody()
         attributes = {
             class = "page-body"
         },
-        children = {title, input, buttons},
+        children = { title, input, buttonBar },
     }
 end
 
@@ -67,6 +140,21 @@ end
 
 function module.afterRender()
     self.UI.setAttribute(DECK_INPUT, "text", state.get(DECK_INPUT))
+
+    local dropdownValue = INDEX_YDK_FILE
+    if state.get(MODE_DROPDOWN) == MODE_YDKE then
+        dropdownValue = INDEX_YDKE
+    end
+    self.UI.setAttribute(MODE_DROPDOWN, "value", dropdownValue)
+end
+
+function setMode(option)
+    local mode = MODE_YDK_FILE
+    if option == LABEL_YDKE then
+        mode = MODE_YDKE
+    end
+
+    state.put(MODE_DROPDOWN, mode)
 end
 
 function spawnDeck()
@@ -74,7 +162,13 @@ function spawnDeck()
     local rotation = state.getSpawnRotation()
     rotation = rotation + Vector(0, 0, 180)
     local deck = state.get(DECK_INPUT)
-    ydkImport.spawn(deck, pos, rotation)
+    local mode = state.get(MODE_DROPDOWN)
+
+    if mode == MODE_YDKE then
+        ydkeImport.spawn(deck, pos, rotation)
+    else
+        ydkImport.spawn(deck, pos, rotation)
+    end
 end
 
 function clearInput()
@@ -85,6 +179,7 @@ end
 function module.getPageObject()
     if page == nil then
         module.eventHandlers = {
+            [MODE_DROPDOWN] = setMode,
             [IMPORT_BUTTON] = spawnDeck,
             [CLEAR_BUTTON] = clearInput,
         }

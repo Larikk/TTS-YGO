@@ -19,7 +19,7 @@ local pages = {
     ["packs"] = packSpawnPage,
     ["preconstructed-decks"] = preconstructedDecksPage,
     ["card-import"] = cardImportPage,
-    ["ydk-file-import"] = deckImportPage,
+    ["deck-import"] = deckImportPage,
     ["settings"] = settingsPage,
 }
 

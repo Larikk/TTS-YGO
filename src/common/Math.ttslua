@@ -34,4 +34,12 @@ function mathUtil.randomSequence(n, max)
     return sequence
 end
 
+function mathUtil.lshift(x, by)
+    return x * 2 ^ by
+end
+
+function mathUtil.rshift(x, by)
+    return math.floor(x / 2 ^ by)
+end
+
 return mathUtil
