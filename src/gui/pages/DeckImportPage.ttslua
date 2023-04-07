@@ -24,6 +24,22 @@ local INDEX_YDKE = 1
 local MODE_YDK_FILE = "ydk-file"
 local MODE_YDKE = "ydke"
 
+local YDK_FILE_MODE_PLACEHOLDER = [[
+#created by Larikk
+#main
+89631139
+89631139
+89631139
+#extra
+23995346
+23995346
+!side
+55144522
+38517737
+38517737
+]]
+local YDKE_MODE_PLACEHOLDER = "ydke://o6lXBaOpVwWjqVcF!0iNuAdIjbgE=!SnBJA+m7SwLpu0sC!"
+
 local function createBody()
     local title = {
         tag = "Text",
@@ -38,6 +54,7 @@ local function createBody()
         attributes = {
             id = DECK_INPUT,
             class = "deck-input",
+            placeholder = "foo",
             onValueChanged = "handleInputChange",
             flexibleHeight = "1",
             flexibleWidth = "1",
@@ -138,6 +155,14 @@ local function createPage()
     }
 end
 
+function updateDeckInputPlaceholder()
+    local inputPlaceholder = YDK_FILE_MODE_PLACEHOLDER
+    if state.get(MODE_DROPDOWN) == MODE_YDKE then
+        inputPlaceholder = YDKE_MODE_PLACEHOLDER
+    end
+    self.UI.setAttribute(DECK_INPUT, "placeholder", inputPlaceholder)
+end
+
 function module.afterRender()
     self.UI.setAttribute(DECK_INPUT, "text", state.get(DECK_INPUT))
 
@@ -146,6 +171,7 @@ function module.afterRender()
         dropdownValue = INDEX_YDKE
     end
     self.UI.setAttribute(MODE_DROPDOWN, "value", dropdownValue)
+    updateDeckInputPlaceholder()
 end
 
 function setMode(option)
@@ -155,6 +181,7 @@ function setMode(option)
     end
 
     state.put(MODE_DROPDOWN, mode)
+    updateDeckInputPlaceholder()
 end
 
 function spawnDeck()
