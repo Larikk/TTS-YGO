@@ -1,2 +1,3 @@
 **/*.pyc
 ImageHost.ttslua
+.vscode/
