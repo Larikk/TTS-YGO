@@ -9,7 +9,7 @@ function PackGenerator:new()
     self.__index = self
 
     o.setName = "Battle of Chaos"
-    o.setCodePrefix = "BACH-EN"
+    o.setCodePrefix = { "BACH-EN", "25TH-EN001" }
     o.setNameUrl = "Battle of Chaos"
     o.releaseDate = "2022-02-11"
     o.packTextures = imageHost .. "/textures/packs/coresets/082-BACH.jpg"

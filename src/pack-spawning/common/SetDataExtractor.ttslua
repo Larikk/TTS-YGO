@@ -1,19 +1,29 @@
 local io = require("TTS-YGO/src/common/IO")
+local stringUtil = require("TTS-YGO/src/common/StringUtil")
 
 SetDataExtractor = {}
 
-local function isSetCodeMatching(cardCode, prefix)
-    return string.sub(cardCode, 1, string.len(cardCode)-3) == prefix
+local function isSetCodeMatching(cardCode, prefixes)
+    for _, prefix in ipairs(prefixes) do
+        if stringUtil.startsWith(cardCode, prefix) then
+            return true
+        end
+    end
+    return false
 end
 
 -- extracts all available rarities and other set related data
-function SetDataExtractor:extract(cardApiData, name, codePrefix)
+function SetDataExtractor:extract(cardApiData, name, codePrefixes)
+    if (type(codePrefixes) == "string") then
+        codePrefixes = { codePrefixes }
+    end
+
     local entries = {}
 
-    for i, set in ipairs(cardApiData.card_sets) do
-        if set.set_name == name and isSetCodeMatching(set.set_code, codePrefix) then
+    for _, set in ipairs(cardApiData.card_sets) do
+        if set.set_name == name and isSetCodeMatching(set.set_code, codePrefixes) then
             local rarity = self.replacements[set.set_rarity] or set.set_rarity -- replace if necessary
-            if not self.ignoreList[rarity] then -- only add if the rarity is not ignored
+            if not self.ignoreList[rarity] then                                -- only add if the rarity is not ignored
                 local entry = {}
                 entry.rarity = rarity
                 entry.setCode = set.set_code
@@ -22,7 +32,7 @@ function SetDataExtractor:extract(cardApiData, name, codePrefix)
         end
     end
 
-    for i,v in pairs(self.postListeners) do entries = v(entries) end
+    for i, v in pairs(self.postListeners) do entries = v(entries) end
 
     if #entries == 0 then
         io.warning(string.format("Warning: Could not extract rarity/setcode of %s. It may be that this card won't be in the card pool.", cardApiData.name))
@@ -39,7 +49,7 @@ end
 
 function SetDataExtractor:ignore(...)
     local list = {}
-    for i,v in ipairs({...}) do
+    for i, v in ipairs({ ... }) do
         list[v] = true
     end
     self.ignoreList = list
@@ -50,7 +60,7 @@ function SetDataExtractor:addPostListener(listener)
     if (type(listener) == "function") then
         table.insert(self.postListeners, listener)
     else
-        io.error(listener.." is not a function.")
+        io.error(listener .. " is not a function.")
     end
 
     return self
