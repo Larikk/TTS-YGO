@@ -414,6 +414,31 @@ gen = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/081-BODE"):new()
 packGenerators['BODE'] = gen
 gen.assetCode = 'BODE'
 table.insert(sections['Core Sets'], gen)
+
+gen = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/082-BACH"):new()
+packGenerators['BACH'] = gen
+gen.assetCode = 'BACH'
+table.insert(sections['Core Sets'], gen)
+
+gen = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/083-DIFO"):new()
+packGenerators['DIFO'] = gen
+gen.assetCode = 'DIFO'
+table.insert(sections['Core Sets'], gen)
+
+gen = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/084-POTE"):new()
+packGenerators['POTE'] = gen
+gen.assetCode = 'POTE'
+table.insert(sections['Core Sets'], gen)
+
+gen = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/085-DABL"):new()
+packGenerators['DABL'] = gen
+gen.assetCode = 'DABL'
+table.insert(sections['Core Sets'], gen)
+
+gen = require("TTS-YGO/src/pack-spawning/pack-logic/core-sets/086-PHHY"):new()
+packGenerators['PHHY'] = gen
+gen.assetCode = 'PHHY'
+table.insert(sections['Core Sets'], gen)
 --##################
 
 
