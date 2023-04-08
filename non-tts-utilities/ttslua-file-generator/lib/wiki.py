@@ -48,17 +48,20 @@ def getSoup(title):
             content = f.read()
     else:
         print("downloading")
-        r = requests.get(url)
+        headers = {
+            "User-Agent": "Manually ran script for a Tabletop Simulator mod (https://steamcommunity.com/sharedfiles/filedetails/?id=2205827151). Is only used during development. Contact: larikk.dev@gmail.com"
+        }
+        r = requests.get(url, headers=headers)
 
         if not r.ok:
-            raise RuntimeError("Request failed.\n" + r)
+            raise RuntimeError("Request failed.\n" + r.text)
 
         json = r.json()
         content = json["parse"]["text"]["*"]
         content = "<body>" + content + "</body>"
         with open(cachedFileName, "w") as f:
             f.write(content)
-        time.sleep(1.5)
+        time.sleep(3)
 
     soup = BeautifulSoup(content, features="html.parser")
 
