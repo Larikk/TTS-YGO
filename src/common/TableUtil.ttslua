@@ -1,3 +1,5 @@
+local mathutil = require("TTS-YGO/src/common/Math")
+
 local module = {}
 
 function module.distinct(input)
@@ -53,6 +55,11 @@ function module.indexOf(tbl, element)
         if v == element then return i end
     end
     return nil
+end
+
+function module.getRandomElement(tbl)
+    local x = mathutil.randomInt(#tbl)
+    return tbl[x]
 end
 
 -- source: https://stackoverflow.com/a/6081639

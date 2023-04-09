@@ -1,4 +1,4 @@
-mathUtil = {}
+local mathUtil = {}
 
 math.randomseed(os.time())
 
@@ -15,7 +15,7 @@ end
 -- Return a sequence of n numbers with distinct and unordered values between [1, max]
 function mathUtil.randomSequence(n, max)
     if n > max then
-        error( string.format("randomSequence(): n %d is larger than max %d", n, max))
+        error(string.format("randomSequence(): n %d is larger than max %d", n, max))
     end
 
     local sequence = {}

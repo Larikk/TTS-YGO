@@ -1,3 +1,4 @@
+local tableUtil = require("TTS-YGO/src/common/TableUtil")
 local guiUtil = require("TTS-YGO/src/gui/GUIUtil")
 local state = require("TTS-YGO/src/gui/State")
 local preconstructedDecks = require("TTS-YGO/src/preconstructed-decks/Decks")
@@ -20,7 +21,7 @@ end
 local function hide(filter)
     filter = filter:lower()
 
-    for name,code in pairs(nameCodeMapping) do
+    for name, code in pairs(nameCodeMapping) do
         if string.find(name, filter, 0, true) then
             self.UI.show(code)
         else
@@ -30,7 +31,7 @@ local function hide(filter)
 end
 
 local function showAll()
-    for _,code in pairs(nameCodeMapping) do
+    for _, code in pairs(nameCodeMapping) do
         self.UI.show(code)
     end
 end
@@ -44,9 +45,9 @@ local function applyFilter(filter)
     end
 end
 
-local function createButton(deck)
+local function createDeckButton(deck)
     local id = PAGE_ID .. ":" .. deck.code
-    module.eventHandlers[id] = || spawnDeck(deck.code)
+    module.eventHandlers[id] = function() spawnDeck(deck.code) end
     nameCodeMapping[deck.name:lower()] = id
 
     return {
@@ -86,6 +87,53 @@ local function createButton(deck)
     }
 end
 
+local function createRandomDeckButton(sectionName, decks)
+    sectionName = string.gsub(sectionName, " ", "_")
+    local localId = "__random_" .. sectionName
+    local globalId = PAGE_ID .. ":" .. localId
+    module.eventHandlers[globalId] = function()
+        local deck = tableUtil.getRandomElement(decks)
+        spawnDeck(deck.code)
+    end
+
+    return {
+        tag = "Button",
+        attributes = {
+            id = globalId,
+            class = "pack-button",
+            onClick = "handleEvent"
+        },
+        children = {
+            {
+                tag = "VerticalLayout",
+                attributes = {
+                    class = "pack-button"
+                },
+                children = {
+                    {
+                        tag = "Text",
+                        attributes = {
+                            text = "?",
+                            class = "pack-name",
+                            fontSize = "500",
+                            flexibleHeight = "1",
+                            flexibleWidth = "1",
+                        }
+                    },
+                    {
+                        tag = "Text",
+                        attributes = {
+                            text = "Random Deck",
+                            class = "pack-name",
+                            flexibleWidth = "1",
+                        }
+                    }
+                }
+            }
+        }
+    }
+end
+
 local function createSection(title, buttons)
     return {
         tag = "VerticalLayout",
@@ -114,27 +162,31 @@ local function createSection(title, buttons)
     }
 end
 
+local function createDeckSelectionSection(sectionName, decks)
+    local buttons = {}
+    for _, deck in ipairs(decks) do
+        local button = createDeckButton(deck)
+        table.insert(buttons, button)
+    end
+
+    local randomDeckButton = createRandomDeckButton(sectionName, decks)
+    table.insert(buttons, randomDeckButton)
+    return createSection("Starter Decks", buttons)
+end
+
 local function createDeckSelection()
     local children = {}
 
     -- Starter Decks
-    local starterDeckButtons = {}
     local starterDecks = preconstructedDecks.getStarterDecks()
-    for _,deck in ipairs(starterDecks) do
-        local button = createButton(deck)
-        table.insert(starterDeckButtons, button)
-    end
-    table.insert(children, createSection("Starter Decks", starterDeckButtons))
+    local starterDecksSelectionSection = createDeckSelectionSection("Starter Decks", starterDecks)
+    table.insert(children, starterDecksSelectionSection)
+
 
     -- Structure Decks
-    local structureDeckButtons = {}
     local structureDecks = preconstructedDecks.getStructureDecks()
-    for _,deck in ipairs(structureDecks) do
-        local button = createButton(deck)
-        table.insert(structureDeckButtons, button)
-    end
-    table.insert(children, createSection("Structure Decks", structureDeckButtons))
-
+    local structureDecksSelectionSection = createDeckSelectionSection("Structure Decks", structureDecks)
+    table.insert(children, structureDecksSelectionSection)
 
     return {
         tag = "VerticalScrollView",
@@ -173,7 +225,7 @@ local function createNavBar()
         }
     }
 
-    local additionalElements = {searchLabel, searchField}
+    local additionalElements = { searchLabel, searchField }
 
     return guiUtil.createNavBar(title, additionalElements)
 end
