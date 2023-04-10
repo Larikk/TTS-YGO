@@ -10,11 +10,11 @@ local function spawn(data, pos, rotation, callback)
     pos = Vector(pos) or Vector(DEFAULT_SPAWN_POS)
     rotation = Vector(rotation) or Vector(DEFAULT_SPAWN_ROTATION)
 
-    spawnParams = {
+    local spawnParams = {
         data = data,
         position = pos,
         rotation = rotation,
-        scale = {x = 1, y = 1, z = 1},
+        scale = { x = 1, y = 1, z = 1 },
         sound = false,
         snap_to_grid = true,
         callback_function = callback
@@ -36,7 +36,6 @@ function TtsSpawner:spawnBox(packs, pos, rotation, callback)
     local data = ttsDataMapper.box(packs, self.setName, self.boxTexture, self.packTextures)
     spawn(data, pos, rotation, callback)
 end
-
 
 function TtsSpawner:spawnDeck(deck, pos, rotation, callback)
     if #deck == 1 then

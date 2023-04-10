@@ -23,7 +23,7 @@ local function ping()
         id = state.get(STATE_KEY),
         num_players = #Player.getPlayers(),
     }
-    WebRequest.post(STAT_URL, form, |ret|l(ret.text))
+    WebRequest.post(STAT_URL, form, function(ret) l(ret.text) end)
 end
 
 local function save_id(w)
@@ -59,16 +59,17 @@ function module.load(initial_wait, interval)
         end
     end
 
-     if id == nil or id == "" then
-        function get_id()
+    if id == nil or id == "" then
+        local function get_id()
             if onlyDeveloperPresent() then
                 l("Only developer present, skipping session creation.")
                 return
             end
             l("Starting new session")
-            WebRequest.post(STAT_URL, {moment="start", num_players = #Player.getPlayers(), delay=initial_wait}, save_id)
+            WebRequest.post(STAT_URL, { moment = "start", num_players = #Player.getPlayers(), delay = initial_wait }, save_id)
             Wait.time(ping, interval, -1)
         end
+
         Wait.time(get_id, initial_wait)
     else
         l("Resuming session")

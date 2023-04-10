@@ -44,7 +44,7 @@ function switchPage(_, _, id)
 
     self.UI.setXmlTable(xmlTable)
     if type(page.afterRender) == "function" then
-        Wait.frames(||page.afterRender(), 2)
+        Wait.frames(function() page.afterRender() end, 2)
     end
 end
 
@@ -78,9 +78,9 @@ function onLoad(saveState)
     assets.initAssets()
     self.UI.setXml(mainXml)
 
-    local cond = || not self.UI.loading
-    local func = || switchPage(nil, nil, "settings")
-    Wait.frames(|| Wait.condition(func, cond, 240), 5)
+    local cond = function() return not self.UI.loading end
+    local func = function() switchPage(nil, nil, "settings") end
+    Wait.frames(function() Wait.condition(func, cond, 240) end, 5)
 
     stats.load()
 end

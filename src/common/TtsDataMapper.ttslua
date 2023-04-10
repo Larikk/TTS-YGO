@@ -76,7 +76,7 @@ local function getCardback()
     return cardback
 end
 
-function getCardMetaData(card)
+local function getCardMetaData(card)
     local data = {
         id = card.id,
         name = card.name,
@@ -128,8 +128,8 @@ function module.deck(deck)
     local data = {
         Name = "Deck",
         Transform = TRANSFORM_ATTRIBUTE_DUMMY,
-        DeckIDs = {}, -- integers: 1000, 800, 600, 400, 200
-        CustomDeck = {}, -- objects with FaceURL and BackURL; Index: 10, 8, 6, 4, 2
+        DeckIDs = {},          -- integers: 1000, 800, 600, 400, 200
+        CustomDeck = {},       -- objects with FaceURL and BackURL; Index: 10, 8, 6, 4, 2
         ContainedObjects = {}, -- objects with Nickname (string) and CardID (see DeckIDS): 1, 2, 3...
     }
 
@@ -139,7 +139,7 @@ function module.deck(deck)
     -- Iterating backwards does not work
     local reversedDeck = {}
     for i = 1, n do
-        reversedDeck[i] = deck[n+1-i]
+        reversedDeck[i] = deck[n + 1 - i]
     end
     deck = reversedDeck
 
@@ -232,7 +232,6 @@ function module.box(box, name, boxTexture, packTextures)
     data.ContainedObjects = content
 
     return data
-
 end
 
 return module

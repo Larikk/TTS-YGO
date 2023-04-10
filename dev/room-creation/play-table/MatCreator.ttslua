@@ -22,15 +22,15 @@ local function row(points, middle)
 
     table.insert(points, point(middle))
     table.insert(points, point(middle + mov))
-    table.insert(points, point(middle + 2*mov))
+    table.insert(points, point(middle + 2 * mov))
     table.insert(points, point(middle - mov))
-    table.insert(points, point(middle - 2*mov))
+    table.insert(points, point(middle - 2 * mov))
 end
 
 local function column(points, top, n, backwards)
     local mov = v(0, 0, -0.325)
     if backwards then mov = mov * -1 end
-    for i=1,n do
+    for i = 1, n do
         table.insert(points, point(top))
         top = top + mov
     end
@@ -65,14 +65,15 @@ end
 
 
 function module.create(pos, rotation)
-    spawnParams = {
+    local spawnParams = {
         type = "Custom_Tile",
         position = pos + v(0, 2, 0),
         rotation = rotation,
-        scale = {x = 12.5, y = 1, z = 12.5},
+        scale = { x = 12.5, y = 1, z = 12.5 },
         sound = false,
         snap_to_grid = true,
-        callback_function = function(obj) end
+        callback_function = function(obj)
+        end
     }
     local mat = spawnObject(spawnParams)
     mat.setCustomObject({
@@ -85,7 +86,6 @@ function module.create(pos, rotation)
         mat.setLock(true)
         mat.setLuaScript(util.getNonInteractableLuaScript())
     end, 2)
-
 end
 
 return module

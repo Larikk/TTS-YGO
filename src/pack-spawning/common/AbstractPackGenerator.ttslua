@@ -23,7 +23,7 @@ end
 -------------------------------------------------------------------------------
 function AbstractPackGenerator:copyCard(card)
     local copy = {}
-    for k,v in pairs(card) do copy[k] = v end
+    for k, v in pairs(card) do copy[k] = v end
     return copy
 end
 
@@ -74,9 +74,9 @@ function AbstractPackGenerator:pickRarity(ratios)
     end
 
     io.warning(
-      "An error occurred while determining a random rarity for a single card. "..
-      "Ratios may be misconfigured (Have to add up to 1.0). Defaulting to highest: "..fallbackRarity..
-      ". Provided ratios:\n"..io.tableToString(ratios)
+        "An error occurred while determining a random rarity for a single card. " ..
+        "Ratios may be misconfigured (Have to add up to 1.0). Defaulting to highest: " .. fallbackRarity ..
+        ". Provided ratios:\n" .. io.tableToString(ratios)
     )
 
     return fallbackRarity
@@ -87,7 +87,6 @@ function AbstractPackGenerator:extractSetData(cardApiData)
     -- setName is primarily for display purposes
     return self.setDataExtractor:extract(cardApiData, self.setNameUrl, self.setCodePrefix)
 end
-
 
 -- Can be overridden by subclasses if necessary
 function AbstractPackGenerator:parseCardList(cardList)
@@ -144,7 +143,7 @@ end
 function AbstractPackGenerator:assembleBox()
     local packs = {}
     for i = 1, self.packsInBox do
-      table.insert(packs, self:assemblePack())
+        table.insert(packs, self:assemblePack())
     end
     self:boxPostConditions(packs)
     return packs
@@ -159,7 +158,7 @@ function AbstractPackGenerator:generate(f)
         end
         self:initCardsMap(f2)
     elseif self.cardsMap == nil and self.downloadLock then
-        Wait.condition(f, || not self.downloadLock, 60)
+        Wait.condition(f, function() return not self.downloadLock end, 60)
     else
         f()
     end
@@ -192,7 +191,7 @@ function AbstractPackGenerator:generateBoosterPack(pos, rotation)
             cardsInPack = self.cardsInPacks,
             packsInBox = self.packsInBox
         })
-        spawner:spawnPack(pack, pos, rotation, || io.success("Pack is ready!"))
+        spawner:spawnPack(pack, pos, rotation, function() io.success("Pack is ready!") end)
     end
 
     self:generate(f)
@@ -214,7 +213,7 @@ function AbstractPackGenerator:generateBoosterBox(pos, rotation)
             cardsInPack = self.cardsInPacks,
             packsInBox = self.packsInBox
         })
-        spawner:spawnBox(packs, pos, rotation, || io.success("Box is ready!"))
+        spawner:spawnBox(packs, pos, rotation, function() io.success("Box is ready!") end)
     end
 
     self:generate(f)
@@ -239,12 +238,12 @@ function AbstractPackGenerator:generateCardListPartitioned(pos, rotation)
         rarities = sorting.sortRarities(rarities)
 
         local positions = geometry.arrangePositionsForSpawning({
-                n = #rarities,
-                center = pos,
-                yRotation = rotation.y,
-                hDelta = 3,
-                vDelta = 5,
-                itemsPerRow = 4,
+            n = #rarities,
+            center = pos,
+            yRotation = rotation.y,
+            hDelta = 3,
+            vDelta = 5,
+            itemsPerRow = 4,
         })
 
         for i, rarity in ipairs(rarities) do
@@ -276,7 +275,6 @@ function AbstractPackGenerator:printDebugInformation()
 
     self:generate(f)
 end
-
 
 function AbstractPackGenerator:new(o)
     local o = o or {}

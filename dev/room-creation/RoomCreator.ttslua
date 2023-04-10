@@ -20,18 +20,17 @@ local function spawnStuff8p()
     rotation = rotation + Vector(0, 180, 0)
     local colors = util.getPlayerColors()
 
-    for i=1,4 do
+    for i = 1, 4 do
         local temp = pos:copy()
-        Wait.time(||playTable.create(temp, rotation, colors[i], colors[i+4]), 3)
+        Wait.time(function() playTable.create(temp, rotation, colors[i], colors[i + 4]) end, 3)
         pos = pos + Vector(0, 0, 64)
     end
-
 end
 
 local function spawnStuff2p()
     local pos = Vector(0, 0, 0)
     local rotation = Vector(0, 0, 0)
-    local colors = {"Blue", "Red"}
+    local colors = { "Blue", "Red" }
 
     playTable2p.create(pos, rotation, "Blue", "Red")
 end
@@ -63,7 +62,7 @@ local function common()
     Tables.setTable("None")
     Backgrounds.setBackground("Museum")
     Wait.time(
-        ||Backgrounds.setCustomURL("http://cloud-3.steamusercontent.com/ugc/1804229846320834487/463F17DD295878A1FA27B4825CC3496905BC5E13/"),
+        function() Backgrounds.setCustomURL("http://cloud-3.steamusercontent.com/ugc/1804229846320834487/463F17DD295878A1FA27B4825CC3496905BC5E13/") end,
         2
     )
 
@@ -74,7 +73,7 @@ local function common()
 
     -- Hands are not spawned in the first frame
     local f = function()
-        for _,hand in ipairs(Hands.getHands()) do
+        for _, hand in ipairs(Hands.getHands()) do
             hand.destruct()
         end
     end
@@ -84,14 +83,14 @@ end
 
 function module.create8p()
     common()
-    Info.number_of_players = {2, 8}
+    Info.number_of_players = { 2, 8 }
     Physics.play_area = 1
     Wait.frames(spawnStuff8p, 5)
 end
 
 function module.create2p()
     common()
-    Info.number_of_players = {2, 2}
+    Info.number_of_players = { 2, 2 }
     Wait.frames(spawnStuff2p, 5)
 end
 

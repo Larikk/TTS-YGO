@@ -213,7 +213,7 @@ local function createPackSelection()
     local children = {}
 
     for _, v in ipairs(order) do
-        section = sections[v]
+        local section = sections[v]
         local buttons = {}
 
         for _, gen in ipairs(section) do

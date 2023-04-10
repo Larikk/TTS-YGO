@@ -152,7 +152,7 @@ local function createPage()
     }
 end
 
-function updateDeckInputPlaceholder()
+local function updateDeckInputPlaceholder()
     local inputPlaceholder = YDK_FILE_MODE_PLACEHOLDER
     if state.get(MODE_DROPDOWN) == MODE_YDKE then
         inputPlaceholder = YDKE_MODE_PLACEHOLDER
@@ -171,7 +171,7 @@ function module.afterRender()
     updateDeckInputPlaceholder()
 end
 
-function setMode(option)
+local function setMode(option)
     local mode = MODE_YDK_FILE
     if option == LABEL_YDKE then
         mode = MODE_YDKE
@@ -181,7 +181,7 @@ function setMode(option)
     updateDeckInputPlaceholder()
 end
 
-function spawnDeck()
+local function spawnDeck()
     local pos = state.getSpawnPosition()
     local rotation = state.getSpawnRotation()
     rotation = rotation + Vector(0, 0, 180)
@@ -195,7 +195,7 @@ function spawnDeck()
     end
 end
 
-function clearInput()
+local function clearInput()
     self.UI.setAttribute(DECK_INPUT, "text", "")
     state.put(DECK_INPUT, "")
 end

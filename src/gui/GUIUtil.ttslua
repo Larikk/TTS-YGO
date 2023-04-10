@@ -1,4 +1,3 @@
-
 local util = {}
 
 function util.getElementById(id, root)
@@ -11,7 +10,7 @@ function util.getElementById(id, root)
     -- This section skips the Defaults tag because it does not have any GUI elements
     if root[1] ~= nil then
         for _, child in ipairs(root) do
-            if child.tag != "Defaults" then
+            if child.tag ~= "Defaults" then
                 local temp = util.getElementById(id, child)
                 if temp ~= nil then return temp end
             end
@@ -44,7 +43,7 @@ function util.createNavBar(title, additionalChildren)
         value = title
     })
 
-    for _,e in pairs(additionalChildren) do table.insert(children, e) end
+    for _, e in pairs(additionalChildren) do table.insert(children, e) end
 
     return {
         tag = "HorizontalLayout",

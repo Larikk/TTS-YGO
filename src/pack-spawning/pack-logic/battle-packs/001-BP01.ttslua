@@ -69,7 +69,7 @@ function PackGenerator:parseCard(cardApiData)
     local setData = self:extractSetData(cardApiData)[1]
     if setData == nil then return end
 
-    setCodeNumber = tonumber(setData.setCode:sub(-3)) -- get last three digits as number
+    local setCodeNumber = tonumber(setData.setCode:sub(-3)) -- get last three digits as number
 
     local slot = nil
     local rarity = nil

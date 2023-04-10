@@ -5,9 +5,9 @@ local module = {}
 -----------------------------
 
 local function moveX(obj, distance)
-    pos_target = obj.getTransformRight()
-    pos_current = obj.getPosition()
-    pos = {
+    local pos_target = obj.getTransformRight()
+    local pos_current = obj.getPosition()
+    local pos = {
         x = pos_current.x + pos_target.x * distance,
         y = pos_current.y + pos_target.y * distance,
         z = pos_current.z + pos_target.z * distance,
@@ -16,9 +16,9 @@ local function moveX(obj, distance)
 end
 
 local function moveY(obj, distance)
-    pos_target = obj.getTransformUp()
-    pos_current = obj.getPosition()
-    pos = {
+    local pos_target = obj.getTransformUp()
+    local pos_current = obj.getPosition()
+    local pos = {
         x = pos_current.x + pos_target.x * distance,
         y = pos_current.y + pos_target.y * distance,
         z = pos_current.z + pos_target.z * distance,
@@ -27,9 +27,9 @@ local function moveY(obj, distance)
 end
 
 local function moveZ(obj, distance)
-    pos_target = obj.getTransformForward()
-    pos_current = obj.getPosition()
-    pos = {
+    local pos_target = obj.getTransformForward()
+    local pos_current = obj.getPosition()
+    local pos = {
         x = pos_current.x + pos_target.x * distance,
         y = pos_current.y + pos_target.y * distance,
         z = pos_current.z + pos_target.z * distance,
@@ -61,7 +61,6 @@ function module.moveBackwards(obj, distance)
     moveZ(obj, -distance)
 end
 
-
 -------------------------
 -- Position translation
 -------------------------
@@ -70,7 +69,7 @@ end
 -- (0, 0) => center
 -- (1, 1) => upper right corner
 function module.relativeLocalToWorldPosition2D(obj, size, x2d, y2d)
-    relativePos = Vector(x2d, 1, y2d)
+    local relativePos = Vector(x2d, 1, y2d)
 
     local movement = Vector(size):scale(relativePos):scale(0.5)
 
@@ -98,7 +97,7 @@ end
 -------------------------
 
 function module.getPlayerColors()
-    return {"Green", "Teal", "Blue", "Purple", "White", "Red", "Orange", "Yellow"}
+    return { "Green", "Teal", "Blue", "Purple", "White", "Red", "Orange", "Yellow" }
 end
 
 function module.getNonInteractableLuaScript()

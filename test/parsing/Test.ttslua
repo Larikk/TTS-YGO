@@ -4,8 +4,8 @@ local cardParser = require("TTS-YGO/src/common/CardParser")
 local cardHoverText = require("TTS-YGO/src/common/CardHoverText")
 local dataMapper = require("TTS-YGO/src/common/TtsDataMapper")
 
-function testUnicodeEscaping()
-    local f = function(case, expected) return {case = case, expected = expected} end
+local function testUnicodeEscaping()
+    local f = function(case, expected) return { case = case, expected = expected } end
     local testCases = {
         f([[\u25cf]], [[\u{25cf}]]),
         f([[\u25cf\u25cf\u25cf]], [[\u{25cf}\u{25cf}\u{25cf}]]),
@@ -26,7 +26,7 @@ function testUnicodeEscaping()
     end
 end
 
-function testSingleCard(id)
+local function testSingleCard(id)
     local f = function(cards)
         local card = cards[1]
 
@@ -44,12 +44,12 @@ function testSingleCard(id)
     apiUtil.cardinfo(s, f)
 end
 
-function parseCard(card)
+local function parseCard(card)
     card = cardParser.parseCard(card)
     return cardHoverText.create(card)
 end
 
-function testAllCards()
+local function testAllCards()
     local f = function(cards)
         local successCount = 0
         local failedCount = 0

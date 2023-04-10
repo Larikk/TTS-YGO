@@ -1,6 +1,6 @@
 local imageHost = require("TTS-YGO/src/common/ImageHost")
 
-cardParser = {}
+local cardParser = {}
 
 -- Takes the data from the YGOPRODECK API and transform it to a condensed object with the relevant data
 

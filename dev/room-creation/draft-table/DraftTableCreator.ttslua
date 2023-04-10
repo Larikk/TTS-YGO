@@ -18,7 +18,7 @@ local function createCardGrid(zone)
     local pos = util.relativeLocalToWorldPosition2D(zone, size, -1, -1)
     local rotation = zone.getRotation()
 
-    spawnParams = {
+    local spawnParams = {
         json              = cardGridJson,
         position          = pos,
         rotation          = rotation,
@@ -28,9 +28,9 @@ local function createCardGrid(zone)
         callback_function = function(grid)
             local f = function()
                 local size = v(grid.getBoundsNormalized().size)
-                util.moveForwards(grid, size.z/2)
-                util.moveRight(grid, size.x/2)
-                Wait.time(||grid.setLock(true), 2)
+                util.moveForwards(grid, size.z / 2)
+                util.moveRight(grid, size.x / 2)
+                Wait.time(function() grid.setLock(true) end, 2)
             end
             Wait.time(f, 2)
         end
@@ -39,7 +39,7 @@ local function createCardGrid(zone)
 end
 
 local function createHiddenZone(pos, rotation, left, color)
-    spawnParams = {
+    local spawnParams = {
         type = "FogOfWarTrigger",
         position = pos,
         rotation = rotation,
@@ -48,12 +48,12 @@ local function createHiddenZone(pos, rotation, left, color)
         snap_to_grid = true,
         callback_function = function(zone)
             zone.setValue(color)
-            util.moveBackwards(zone, zone.getScale().z/2)
-            if left then util.moveLeft(zone, zone.getScale().x/2) else util.moveRight(zone, zone.getScale().x/2) end
-            util.moveUp(zone, zone.getScale().y/1.8)
+            util.moveBackwards(zone, zone.getScale().z / 2)
+            if left then util.moveLeft(zone, zone.getScale().x / 2) else util.moveRight(zone, zone.getScale().x / 2) end
+            util.moveUp(zone, zone.getScale().y / 1.8)
 
-            Wait.frames(||createCardGrid(zone), 2)
-         end
+            Wait.frames(function() createCardGrid(zone) end, 2)
+        end
     }
     spawnObject(spawnParams)
 end
@@ -65,7 +65,7 @@ local function createHiddenZones(plate)
     local rotation = plate.getRotation()
     local size = plate.getBoundsNormalized().size
 
-    for i=1,4 do
+    for i = 1, 4 do
         local pos = util.relativeLocalToWorldPosition2D(plate, size, x2d, y2d)
         createHiddenZone(pos, rotation, true, color[i])
         x2d = x2d - 0.42
@@ -75,22 +75,21 @@ local function createHiddenZones(plate)
     y2d = -1.0
     rotation = rotation + v(0, 180, 0)
 
-    for i=5,8 do
+    for i = 5, 8 do
         local pos = util.relativeLocalToWorldPosition2D(plate, size, x2d, y2d)
         createHiddenZone(pos, rotation, false, color[i])
         x2d = x2d - 0.42
     end
-
 end
 
 local function createText(plate)
     local parentSize = plate.getBoundsNormalized().size
     local pos = util.relativeLocalToWorldPosition2D(plate, parentSize, -0.85, -0.2)
 
-    spawnParams = {
+    local spawnParams = {
         type = "3DText",
         position = pos + v(0, 2, 0),
-        rotation = plate.getRotation() + v(90,0,-90),
+        rotation = plate.getRotation() + v(90, 0, -90),
         sound = false,
         snap_to_grid = true,
         callback_function = function(text)
@@ -108,7 +107,7 @@ local function createTablet(plate)
     local parentSize = plate.getBoundsNormalized().size
     local pos = util.relativeLocalToWorldPosition2D(plate, parentSize, -0.8, 0.4)
 
-    spawnParams = {
+    local spawnParams = {
         type = "Custom_Model",
         position = pos + v(0, 2, 0),
         rotation = plate.getRotation() + v(0, 90, 0),
@@ -138,7 +137,7 @@ local function createTablet(plate)
 end
 
 local function createPlate(table)
-    spawnParams = {
+    local spawnParams = {
         type = "Custom_Model",
         position = table.getPosition() + v(0, 0.1, 0),
         rotation = table.getRotation(),
@@ -155,7 +154,6 @@ local function createPlate(table)
         material = 1,
         specular_intensity = 0,
         specular_sharpness = 3,
-
     })
 
     local f = function()
@@ -171,14 +169,14 @@ local function createPlate(table)
 end
 
 local function createTable(pos, rotation)
-    spawnParams = {
+    local spawnParams = {
         type = "Custom_Assetbundle",
         position = pos,
         rotation = rotation,
         scale = tableScale,
         sound = false,
         snap_to_grid = true,
-        callback_function = |table| createPlate(table)
+        callback_function = function(table) createPlate(table) end
     }
     local table = spawnObject(spawnParams)
     table.locked = true

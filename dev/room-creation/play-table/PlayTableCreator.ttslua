@@ -11,7 +11,7 @@ local tableScale = v(0.8, 1, 0.7)
 local plateScale = v(0.18, 0.20, 0.1575)
 
 local function createCoin(pos, rotation)
-    spawnParams = {
+    local spawnParams = {
         type = "Quarter",
         position = pos + v(0, 5, 0),
         rotation = rotation,
@@ -22,14 +22,14 @@ local function createCoin(pos, rotation)
 end
 
 local function createInfiniteBag(pos, rotation, content)
-    spawnParams = {
+    local spawnParams = {
         type = "Infinite_Bag",
         position = pos + v(0, 5, 0),
         rotation = rotation,
         sound = false,
         snap_to_grid = true,
         callback_function = function(bag)
-            spawnParams = {
+            local spawnParams = {
                 type = content,
                 position = pos + v(0, 10, 0),
                 rotation = rotation,
@@ -43,11 +43,11 @@ local function createInfiniteBag(pos, rotation, content)
 end
 
 local function createCalculator(pos, rotation)
-    spawnParams = {
+    local spawnParams = {
         json              = calculatorJson,
         position          = pos + v(0, 5, 0),
         rotation          = rotation,
-        scale             = cardGridScale,
+        --scale             = cardGridScale,
         sound             = false,
         snap_to_grid      = true,
         callback_function = function(calculator)
@@ -61,7 +61,7 @@ local function createCalculator(pos, rotation)
 end
 
 local function createHand(pos, rotation, color)
-    spawnParams = {
+    local spawnParams = {
         type = "HandTrigger",
         position = pos + v(0, 5, 0),
         rotation = rotation,
@@ -70,13 +70,13 @@ local function createHand(pos, rotation, color)
         snap_to_grid = true,
         callback_function = function(zone)
             zone.setValue(color)
-         end
+        end
     }
     spawnObject(spawnParams)
 end
 
 local function createPlate(table, color1, color2)
-    spawnParams = {
+    local spawnParams = {
         type = "Custom_Model",
         position = table.getPosition() + v(0, 0.1, 0),
         rotation = table.getRotation(),
@@ -93,7 +93,6 @@ local function createPlate(table, color1, color2)
         material = 1,
         specular_intensity = 0,
         specular_sharpness = 3,
-
     })
 
     local f = function()
@@ -132,14 +131,14 @@ local function createPlate(table, color1, color2)
 end
 
 local function createTable(pos, rotation, color1, color2)
-    spawnParams = {
+    local spawnParams = {
         type = "Custom_Assetbundle",
         position = pos,
         rotation = rotation,
         scale = tableScale,
         sound = false,
         snap_to_grid = true,
-        callback_function = |table| createPlate(table, color1, color2)
+        callback_function = function(table) createPlate(table, color1, color2) end
     }
     local table = spawnObject(spawnParams)
     table.locked = true
