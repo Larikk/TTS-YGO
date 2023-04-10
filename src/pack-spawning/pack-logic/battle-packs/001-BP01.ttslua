@@ -91,7 +91,7 @@ function PackGenerator:parseCard(cardApiData)
     local card = cardParser.parseCard(cardApiData)
     card.rarity = rarity
     card.slot = slot
-    card.setCode = setCode
+    card.setCode = setData.setCode
 
     return card
 end
@@ -107,6 +107,7 @@ function PackGenerator:parseCardList(cardList)
 
     for i, cardApiData in ipairs(cardList) do
         local card = self:parseCard(cardApiData)
+        ---@diagnostic disable-next-line: need-check-nil
         self:putCardIntoCardsMap(card, cardsMap, card.slot)
     end
 
