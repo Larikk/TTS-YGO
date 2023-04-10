@@ -108,6 +108,19 @@ local function testEmptyDeck()
     assertEquals(tag, expected, f, input)
 end
 
+local function testShouldBeAbleToHandleIdsWithLessThanEightDigits()
+    local tag = "ShouldBeAbleToHandleIdsWithLessThanEightDigits"
+    local f = ydkeImport.parse
+
+    local input = "ydke://n2sAAJ9rAAA=!!!"
+
+    local expected = {
+        main = { "27551", "27551" },
+    }
+
+    assertEquals(tag, expected, f, input)
+end
+
 print("Running YdkeLinkImportTest...")
 testAllSectionsPresent()
 testMainMissing()
@@ -117,4 +130,5 @@ testOnlyMainPresent()
 testOnlyExtraPresent()
 testOnlySidePresent()
 testEmptyDeck()
+testShouldBeAbleToHandleIdsWithLessThanEightDigits()
 print("Finished YdkeLinkImportTest")
