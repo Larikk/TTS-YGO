@@ -127,7 +127,7 @@ local function createLanguageSetting()
 
     local title = "Card Tooltip Language (Beta)"
     local description =
-    "Changes the language of the tooltop of cards. Some cards are only available in English. Alternative Languages are German (de), French (fr), Italian (it) and Portuguese (pt)."
+    "Changes the language of the tooltip of cards. Some cards are only available in English. Alternative Languages are German (de), French (fr), Italian (it) and Portuguese (pt)."
     return guiUtil.createBox(title, description, languageSelection)
 end
 
