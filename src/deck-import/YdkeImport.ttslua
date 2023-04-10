@@ -1,6 +1,7 @@
 local stringUtil = require("TTS-YGO/src/common/StringUtil")
 local mathUtil = require("TTS-YGO/src/common/Math")
-local base64 = require("TTS-YGO/src/common/Base64")
+local tableUtil = require("TTS-YGO/src/common/TableUtil")
+local base64 = require("ge_tts/Base64")
 local commonDeckImport = require("TTS-YGO/src/deck-import/CommonDeckImport")
 
 
@@ -8,10 +9,9 @@ local module = {}
 
 local linkPrefix = "ydke://"
 
-local function convertBytesToCardId(s)
+local function convertBytesToCardId(bytes)
     local sum = 0
-    for i = 1, #s do
-        local byte = string.byte(s, i)
+    for i, byte in ipairs(bytes) do
         sum = sum + mathUtil.lshift(byte, 8 * (i - 1))
     end
     return tostring(math.floor(sum))
@@ -22,19 +22,19 @@ local function extractCardIdsFromBase64Section(sectionEncodedInBase64)
         return {}
     end
 
-    local s = base64.decode(sectionEncodedInBase64)
-    local n = #s / 4
-    local ids = {}
+    local bytesOfAllCardIds = base64.decode(sectionEncodedInBase64)
+    local numberOfIds = #bytesOfAllCardIds / 4
+    local cardIds = {}
 
-    for i = 0, n - 1 do
+    for i = 0, numberOfIds - 1 do
         local start = 1 + 4 * i
         local stop = start + 3
-        local sub = string.sub(s, start, stop)
-        local id = convertBytesToCardId(sub)
-        table.insert(ids, id)
+        local bytesOfSingleCardId = tableUtil.subTable(bytesOfAllCardIds, start, stop)
+        local cardId = convertBytesToCardId(bytesOfSingleCardId)
+        table.insert(cardIds, cardId)
     end
 
-    return ids
+    return cardIds
 end
 
 function module.parse(ydkeLink)

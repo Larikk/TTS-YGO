@@ -62,6 +62,14 @@ function module.getRandomElement(tbl)
     return tbl[x]
 end
 
+function module.subTable(tbl, from, to)
+    local result = {}
+    for i = from, to do
+        table.insert(result, tbl[i])
+    end
+    return result
+end
+
 -- source: https://stackoverflow.com/a/6081639
 -- Added brackets around numerical keys
 function module.serializeTable(val, name, skipnewlines, depth)
