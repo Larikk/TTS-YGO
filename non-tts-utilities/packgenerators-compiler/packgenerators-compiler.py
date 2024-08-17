@@ -11,7 +11,7 @@ sections = [
 ]
 
 logic_dir = "../../src/pack-spawning/pack-logic/"
-output_path = "../../src/gui/PackGenerators.ttslua"
+output_path = "../../src/gui/PackGenerators.lua"
 
 taken_codes = {} # set for checking if each code is unique
 processed_files = []
@@ -60,7 +60,7 @@ for section in sections:
     path = logic_dir + section
     output += f"\n-- {section}"
     for pack in sorted(os.listdir(path)):
-        if re.match(r"^[0-9]{3}-.+\.ttslua$", pack):
+        if re.match(r"^[0-9]{3}-.+\.lua$", pack):
             output += createEntry(pack, section)
             processed_files.append(section + "/" + pack)
         else:

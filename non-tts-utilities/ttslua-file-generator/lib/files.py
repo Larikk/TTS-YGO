@@ -11,7 +11,7 @@ def write(folder, name, content):
 
 def compileDeckList(folder, prefix):
     files = sorted(os.listdir(folder))
-    files = filter(lambda f: re.match(r"^[0-9]{3}-.+\.ttslua$", f), files)
+    files = filter(lambda f: re.match(r"^[0-9]{3}-.+\.lua$", f), files)
     files = map(lambda f: f.split(".")[0], files)
     files = map(lambda f: f'require("TTS-YGO/{prefix}/{f}"),', files)
 
@@ -22,7 +22,7 @@ return {{
     {sep.join(files)}
 }}
 """
-    write(folder, "_all.ttslua", content)
+    write(folder, "_all.lua", content)
 
 def getImageMappings(file):
     lines = []

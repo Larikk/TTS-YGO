@@ -1,3 +1,6 @@
 **/*.pyc
-ImageHost.ttslua
+ImageHost.lua
 .vscode/
+
+# vscode extension get-folder
+Tabletop Simulator Mod

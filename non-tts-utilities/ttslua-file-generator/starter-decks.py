@@ -70,7 +70,7 @@ def handleDeck(title):
 
     # Write tts file
     content = deckutil.asTtsLuaFile(deck)
-    filename = f"{counter:03d}-{deck['code']}.ttslua"
+    filename = f"{counter:03d}-{deck['code']}.lua"
     files.write(folder, filename, content)
 
     # Write ydk file

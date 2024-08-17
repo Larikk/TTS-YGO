@@ -80,7 +80,7 @@ def handleBooster(title):
     # Write tts file
     content = boosterutil.asTtsLuaFile(
         booster, folder, "_CoreSetLogic" + parentLogic(counter))
-    filename = f"{counter:03d}-{booster['code']}.ttslua"
+    filename = f"{counter:03d}-{booster['code']}.lua"
     files.write(path, filename, content)
 
     return booster
