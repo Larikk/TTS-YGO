@@ -10,7 +10,7 @@ local PACK_MODE = "pack:mode"
 -- Values: ydk-file, ydke
 local DECK_IMPORT_MODE = "deck-import:mode"
 
--- same as in SettingsPage.ttslua
+-- same as in SettingsPage.lua
 local SPAWN_X = "settings:spawn-x"
 local SPAWN_Y = "settings:spawn-y"
 local SPAWN_Z = "settings:spawn-z"
