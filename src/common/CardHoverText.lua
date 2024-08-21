@@ -68,6 +68,8 @@ function module.create(card)
 
     if card.type == "Trap Card" or card.type == "Spell Card" or card.type == "Skill Card" then
         result = result .. spellTrapText(card)
+    elseif card.type == "Token" then
+        result = result .. "Token\n"
     else
         result = result .. monsterText(card)
     end
