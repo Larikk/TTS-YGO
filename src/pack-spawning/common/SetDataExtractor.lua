@@ -18,18 +18,33 @@ function SetDataExtractor:extract(cardApiData, name, codePrefixes)
         codePrefixes = { codePrefixes }
     end
 
-    local entries = {}
+    local entriesByRarity = {}
 
     for _, set in ipairs(cardApiData.card_sets) do
         if set.set_name == name and isSetCodeMatching(set.set_code, codePrefixes) then
-            local rarity = self.replacements[set.set_rarity] or set.set_rarity -- replace if necessary
-            if not self.ignoreList[rarity] then                                -- only add if the rarity is not ignored
+            local replacementRarity = self.replacements[set.set_rarity]
+            local rarity = nil
+            if replacementRarity then
+                -- multiple set entries can exist with the same replaced rarity (e.g. Short Print and Super Short Print)
+                -- avoid adding multiple entries with the same replaced rarity
+                if not entriesByRarity[replacementRarity] then
+                    rarity = replacementRarity
+                end
+            else
+                rarity = set.set_rarity
+            end
+            if rarity and not self.ignoreList[rarity] then -- only add if the rarity is not ignored
                 local entry = {}
                 entry.rarity = rarity
                 entry.setCode = set.set_code
-                table.insert(entries, entry)
+                entriesByRarity[entry.rarity] = entry
             end
         end
+    end
+
+    local entries = {}
+    for _, entry in pairs(entriesByRarity) do
+        table.insert(entries, entry)
     end
 
     for i, v in pairs(self.postListeners) do entries = v(entries) end
