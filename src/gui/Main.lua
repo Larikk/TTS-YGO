@@ -33,15 +33,16 @@ function switchPage(_, _, id)
 
     local xmlTable = self.UI.getXmlTable()
 
-    -- Enable all buttons to ensure they're never stuck in a non-interactable state after switching pages
     for buttonId, _ in pairs(pages) do
         local button = guiUtil.getElementById(buttonId, xmlTable)
-        button.attributes.interactable = "true"
+        if buttonId == id then
+            -- Disable pressed button
+            button.attributes.interactable = "false"
+        else
+            -- Enable all other buttons to ensure they're never stuck in a non-interactable state after switching pages
+            button.attributes.interactable = 'true'
+        end
     end
-
-    -- Disable pressed button
-    local pressedButton = guiUtil.getElementById(id, xmlTable)
-    pressedButton.attributes.interactable = "false"
 
     -- Update UI
     local pageContainer = guiUtil.getElementById("page-container", xmlTable)
