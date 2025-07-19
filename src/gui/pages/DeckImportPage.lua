@@ -54,7 +54,7 @@ local function createBody()
         attributes = {
             id = DECK_INPUT,
             class = "deck-input",
-            placeholder = "foo",
+            placeholderText = "foo",
             onValueChanged = "handleInputChange",
             flexibleHeight = "1",
             flexibleWidth = "1",

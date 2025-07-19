@@ -95,7 +95,7 @@ local function createCardbackSetting()
             id = CARDBACK_INPUT,
             class = "settings-textfield",
             onValueChanged = "handleInputChange",
-            placeholder = "https://example.com/cardback.png",
+            placeholderText = "https://example.com/cardback.png",
         },
         value = "",
     }
