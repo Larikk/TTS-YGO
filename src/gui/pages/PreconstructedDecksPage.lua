@@ -171,7 +171,7 @@ local function createDeckSelectionSection(sectionName, decks)
 
     local randomDeckButton = createRandomDeckButton(sectionName, decks)
     table.insert(buttons, randomDeckButton)
-    return createSection("Starter Decks", buttons)
+    return createSection(sectionName, buttons)
 end
 
 local function createDeckSelection()

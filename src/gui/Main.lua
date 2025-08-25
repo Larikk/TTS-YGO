@@ -13,8 +13,6 @@ local deckImportPage = require("TTS-YGO/src/gui/pages/DeckImportPage")
 local settingsPage = require("TTS-YGO/src/gui/pages/SettingsPage")
 
 
-local selectedButtonId = nil
-
 local pages = {
     ["packs"] = packSpawnPage,
     ["preconstructed-decks"] = preconstructedDecksPage,
@@ -24,23 +22,31 @@ local pages = {
 }
 
 function switchPage(_, _, id)
+    -- Check if the page exists first
+    local page = pages[id]
+
+    if not page then error("Page " .. id .. " does not exist") end
+
+    local pageObject = page.getPageObject()
+
+    if not pageObject then error("Page " .. id .. " was not created properly") end
+
     local xmlTable = self.UI.getXmlTable()
 
-    -- Enable previously selected button and save the state of the old page
-    if selectedButtonId ~= nil then
-        local selectedButton = guiUtil.getElementById(selectedButtonId, xmlTable)
-        selectedButton.attributes.interactable = "true"
+    for buttonId, _ in pairs(pages) do
+        local button = guiUtil.getElementById(buttonId, xmlTable)
+        if buttonId == id then
+            -- Disable pressed button
+            button.attributes.interactable = "false"
+        else
+            -- Enable all other buttons to ensure they're never stuck in a non-interactable state after switching pages
+            button.attributes.interactable = 'true'
+        end
     end
 
-    -- Disable pressed button
-    local pressedButton = guiUtil.getElementById(id, xmlTable)
-    pressedButton.attributes.interactable = "false"
-    selectedButtonId = pressedButton.attributes.id
-
     -- Update UI
-    local page = pages[id]
     local pageContainer = guiUtil.getElementById("page-container", xmlTable)
-    pageContainer.children = page.getPageObject()
+    pageContainer.children = pageObject
 
     self.UI.setXmlTable(xmlTable)
     if type(page.afterRender) == "function" then
