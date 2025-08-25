@@ -74,11 +74,11 @@ function module.create(card)
         result = result .. monsterText(card)
     end
 
-    if card.rarity ~= nil and #card.rarity > 0 then
+    if card.rarity ~= nil then
         result = result .. card.rarity .. "\n"
     end
 
-    if card.setCode ~= nil and #card.setCode > 0 then
+    if card.setCode ~= nil then
         result = result .. card.setCode .. "\n"
     end
 
