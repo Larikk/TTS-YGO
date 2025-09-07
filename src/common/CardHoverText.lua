@@ -1,4 +1,5 @@
 local stringUtil = require("TTS-YGO/src/common/StringUtil")
+local StringBuilder = require("TTS-YGO/src/common/StringBuilder")
 
 local module = {}
 
@@ -6,46 +7,41 @@ local module = {}
 -- the info text includes name, attributes, type, stats etc
 -- and is displayed in the name of the object when the player hovers over it
 
-local function linkMonsterText(card)
-    local str = card.type .. "\n"
-    str = str .. card.attribute .. " " .. card.race .. "\n"
-    str = str .. "ATK/" .. card.atk
-    str = str .. " LINK-" .. card.linkval .. "\n"
-
-    return str
+local function linkMonsterText(sb, card)
+    sb:append(card.type):append("\n")
+    sb:append(card.attribute):append(" "):append(card.race):append("\n")
+    sb:append("ATK/"):append(card.atk):append(" LINK-"):append(card.linkval):append("\n")
 end
 
-local function monsterText(card)
+local function monsterText(sb, card)
     local isXYZ = stringUtil.contains(card.type, "XYZ")
     local isPendulum = stringUtil.contains(card.type, "Pendulum")
     local isLink = stringUtil.contains(card.type, "Link")
 
     if isLink then
-        return linkMonsterText(card)
+        return linkMonsterText(sb, card)
     end
 
-    local starType = isXYZ and "Rank" or "Level"
+    local starType
+    if isXYZ then
+        starType = "Rank"
+    else
+        starType = "Level"
+    end
 
-    local str = card.type .. "\n"
-    str = str .. string.format("%s %s [%s %d]\n", card.attribute, card.race, starType, card.level)
-    str = str .. "ATK/" .. card.atk
-    str = str .. " DEF/" .. card.def .. "\n"
+    sb:append(card.type):append("\n")
+    sb:append(card.attribute):append(" "):append(card.race)
+    sb:append(" ["):append(starType):append(" "):append(card.level):append("]\n")
+    sb:append("ATK/"):append(card.atk):append(" DEF/"):append(card.def):append("\n")
 
     if isPendulum then
-        str = str .. "Pendulum Scale: " .. card.scale .. "\n"
+        sb:append("Pendulum Scale: "):append(card.scale):append("\n")
     end
-
-    return str
 end
 
-local function spellTrapText(card)
-    local str = ""
-
-    if card.race ~= nil then str = str .. card.race .. " " end
-
-    str = str .. card.type .. "\n"
-
-    return str
+local function spellTrapText(sb, card)
+    if card.race ~= nil then sb:append(card.race):append(" ") end
+    sb:append(card.type):append("\n")
 end
 
 -- When using the search window for a deck the tooltip with the TTS name (which includes card name and effect here)
@@ -64,27 +60,30 @@ local function padName(name)
 end
 
 function module.create(card)
-    local result = padName(card.name) .. "\n"
+    local sb = StringBuilder:new()
+
+    local paddedName = padName(card.name)
+    sb:append(paddedName):append("\n")
 
     if card.type == "Trap Card" or card.type == "Spell Card" or card.type == "Skill Card" then
-        result = result .. spellTrapText(card)
+        spellTrapText(sb, card)
     elseif card.type == "Token" then
-        result = result .. "Token\n"
+        sb:append("Token\n")
     else
-        result = result .. monsterText(card)
+        monsterText(sb, card)
     end
 
     if card.rarity ~= nil then
-        result = result .. card.rarity .. "\n"
+        sb:append(card.rarity):append("\n")
     end
 
     if card.setCode ~= nil then
-        result = result .. card.setCode .. "\n"
+        sb:append(card.setCode):append("\n")
     end
 
-    result = result .. "\n" .. card.desc
+    sb:append("\n"):append(card.desc)
 
-    return result
+    return sb:toString()
 end
 
 return module
