@@ -5,6 +5,7 @@ local io = require("TTS-YGO/src/common/IO")
 local idFinder = require("TTS-YGO/src/common/TtsDataDeckIdFinder")
 local state = require("TTS-YGO/src/gui/State")
 local json = require("TTS-YGO/src/common/Json")
+local containerScripts = require("TTS-YGO/src/common/ContainerScripts")
 
 local module = {}
 
@@ -19,27 +20,6 @@ local TRANSFORM_ATTRIBUTE_DUMMY = {
     scaleY = 1,
     scaleZ = 1,
 }
-
-
--- LUA Script for spawned containers
-local CONTAINER_LUA_SCRIPT = [[
-function filterObjectEnter(o)
-    return false
-end
-
-function onObjectLeaveContainer(container, object)
-    if self ~= container then return end
-
-    local rotation = container.getRotation()
-    rotation = Vector(0, rotation.y, 0)
-    object.setRotation(rotation)
-
-    if self.getQuantity() < 1 then
-        self.destruct()
-    end
-end
-]]
-
 
 local highestDeckId = {
     value = -1,
@@ -182,7 +162,7 @@ function module.pack(pack, name, packTextures)
         Bag = {
             Order = 0,
         },
-        LuaScript = CONTAINER_LUA_SCRIPT,
+        LuaScript = containerScripts.packLuaScript,
         ContainedObjects = nil,
     }
 
@@ -218,7 +198,7 @@ function module.box(box, name, boxTexture, packTextures)
         Bag = {
             Order = 0,
         },
-        LuaScript = CONTAINER_LUA_SCRIPT,
+        LuaScript = containerScripts.boxLuaScript,
         ContainedObjects = nil,
     }
 
