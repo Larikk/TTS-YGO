@@ -7,10 +7,19 @@ local module = {}
 -- the info text includes name, attributes, type, stats etc
 -- and is displayed in the name of the object when the player hovers over it
 
+-- for atk and def
+local function formatCombatStat(stat)
+    if (stat == -1) then
+        return "?"
+    else
+        return stat
+    end
+end
+
 local function linkMonsterText(sb, card)
     sb:append(card.type):append("\n")
     sb:append(card.attribute):append(" "):append(card.race):append("\n")
-    sb:append("ATK/"):append(card.atk):append(" LINK-"):append(card.linkval):append("\n")
+    sb:append("ATK/"):append(formatCombatStat(card.atk)):append(" LINK-"):append(card.linkval):append("\n")
 end
 
 local function monsterText(sb, card)
@@ -32,7 +41,7 @@ local function monsterText(sb, card)
     sb:append(card.type):append("\n")
     sb:append(card.attribute):append(" "):append(card.race)
     sb:append(" ["):append(starType):append(" "):append(card.level):append("]\n")
-    sb:append("ATK/"):append(card.atk):append(" DEF/"):append(card.def):append("\n")
+    sb:append("ATK/"):append(formatCombatStat(card.atk)):append(" DEF/"):append(formatCombatStat(card.def)):append("\n")
 
     if isPendulum then
         sb:append("Pendulum Scale: "):append(card.scale):append("\n")
