@@ -202,7 +202,7 @@ function sortedCards(cards)
 
     for i, card in ipairs(cards) do
         cardsWithMetadata[i] = {
-            metadata = json.parse(card.Memo),
+            metadata = JSON.decode(card.Memo),
             ttsData = card,
         }
     end
