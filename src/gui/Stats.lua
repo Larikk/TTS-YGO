@@ -4,7 +4,7 @@ local module = {}
 
 -- Taken and adjusted from https://github.com/Eldinnie/ttsluastuff/tree/master/stattracker
 
-local STAT_URL = "https://script.google.com/macros/s/AKfycbw-noLG3J8ZeQ-SxbCyLyIZyldGl2s31HDoX91iNA/exec"
+local STAT_URL = "https://script.google.com/macros/s/AKfycbwbTAHvt8hzDnYLyUh6msTY0Tj9WSnVuhD62M4VsFTBJ1Ryd4SWe0Yg4lMa4B2-SgsxqA/exec"
 local DEBUG = false
 
 local STATE_KEY = "stats:save-id"
